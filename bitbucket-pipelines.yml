@@ -1,0 +1,26 @@
+image: node:10.15.3
+
+pipelines:
+  custom:
+    deploy-to-ftp:
+      - step:
+          name: Build
+          script:
+            - npm install
+            - npm run build $BUILD_CONFIG
+          artifacts:
+          - $LOCAL_PATH
+      - step:
+          name: Deploy
+          script:
+            - pipe: atlassian/ftp-deploy:0.2.1
+              variables:
+                USER: agenciarazzo@agenciarazzo.com.br
+                PASSWORD: senhaRazzo
+                SERVER: agenciarazzo.com.br
+                REMOTE_PATH: $REMOTE_PATH
+                LOCAL_PATH: $LOCAL_PATH
+    deploy-to-heroku:
+      - step:
+          script:
+            - git push -f https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git $BITBUCKET_BRANCH:master
