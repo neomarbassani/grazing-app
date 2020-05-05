@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.KeyboardAvoidingView`
+  flex: 1;
+  width: 100%;
   align-items: center;
   justify-content: flex-start;
-  margin: 5px 16px 0px 16px;
 `;

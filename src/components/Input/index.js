@@ -4,16 +4,17 @@ import { useField } from '@unform/core';
 import {
   Container,
   InputField,
-  Label,
   ToogleVisility,
   Content,
   ToogleVisilityImage,
   InputError,
 } from './styles';
 
+import Label from '../Label';
+
 import eye from '../../assets/eye.png';
 
-export default function Input({ label, type, name, ...rest }) {
+export default function Input({ label, type, name, next, ...rest }) {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const inputRef = useRef(null);
@@ -63,6 +64,10 @@ export default function Input({ label, type, name, ...rest }) {
           defaultValue={defaultValue}
           type={type}
           secureTextEntry={passwordVisibility}
+          placeholderTextColor="#c4c4c4"
+          autoCapitalize={
+            type === 'email' || type === 'password' ? 'none' : 'words'
+          }
           onChangeText={(value) => {
             if (inputRef.current) {
               inputRef.current.value = value;

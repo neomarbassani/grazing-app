@@ -20,26 +20,25 @@ export const Content = styled.View`
   width: 100%;
 `;
 
-export const ToogleVisility = styled.TouchableOpacity``;
+export const ToogleVisility = styled.TouchableOpacity`
+  width: 80px;
+  height: 40px;
+  margin-left: -16px;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
 
-export const ToogleVisilityImage = styled.Image``;
+export const ToogleVisilityImage = styled.Image`
+  padding: 2px;
+`;
 
 export const InputField = styled.TextInput`
-  width: 90%;
+  width: 100%;
   height: 42px;
   border: none;
   background-color: transparent;
   color: ${colors.placeholder};
-`;
-
-export const Label = styled.Text`
-  font-family: 'Work Sans';
-  font-style: normal;
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 19px;
-  color: ${colors.label};
-  margin-bottom: 7px;
 `;
 
 export const InputError = styled.Text`

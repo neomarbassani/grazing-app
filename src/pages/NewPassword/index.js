@@ -19,11 +19,12 @@ export default function SignIn({ navigation }) {
       formRef.current.setErrors({});
 
       const schema = Yup.object().shape({
-        email: Yup.string()
-          .email('Insira um e-mail válido.')
-          .required('Um e-mail é obrigatório'),
+        password: Yup.string().required('Uma senha é obrigatório'),
 
-        password: Yup.string().required('Informe sua senha'),
+        passwordConfirmation: Yup.string().oneOf(
+          [Yup.ref('password'), null],
+          'Senhas não conferem',
+        ),
       });
 
       await schema.validate(data, {
@@ -45,7 +46,7 @@ export default function SignIn({ navigation }) {
         console.log(err.inner);
       }
     }
-    navigation.navigate('PhoneConfirmation');
+    navigation.navigate('Login');
   }
 
   function focusInput(field) {
@@ -57,34 +58,30 @@ export default function SignIn({ navigation }) {
     <Container>
       <ContentTop>
         <LogoHeader />
-        <Title value="Login" size={24} mb={16} />
+        <Title value="Nova senha" size={24} mb={16} />
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input
-            name="email"
-            type="email"
-            label="E-mail"
-            placeholder="email@exemplo.com.br"
-            returnKeyType="next"
-            onSubmitEditing={() => focusInput('password')}
-          />
           <Input
             name="password"
             type="password"
             placeholder="*********"
-            label="Senha"
+            label="Nova senha"
+            returnKeyType="next"
+            onSubmitEditing={() => focusInput('passwordConfirmation')}
+          />
+          <Input
+            name="passwordConfirmation"
+            type="password"
+            placeholder="*********"
+            label="Confirmar nova senha"
           />
         </Form>
-        <Link
-          content="Esqueci minha senha"
-          onPress={() => navigation.navigate('RecoveryPassword')}
-          color="#D69D2B"
-          mt={5}
-        />
       </ContentTop>
 
       <ContentBottom>
-        <Link content="Criar uma conta" mb={24} />
-        <Button content="Login" onPress={() => formRef.current.submitForm()} />
+        <Button
+          content="Salvar nova senha"
+          onPress={() => formRef.current.submitForm()}
+        />
       </ContentBottom>
     </Container>
   );

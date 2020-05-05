@@ -22,15 +22,12 @@ export default function SignIn({ navigation }) {
         email: Yup.string()
           .email('Insira um e-mail válido.')
           .required('Um e-mail é obrigatório'),
-
-        password: Yup.string().required('Informe sua senha'),
       });
 
       await schema.validate(data, {
         abortEarly: false,
       });
 
-      navigation.navigate('PhoneConfirmation');
       console.log(data);
     } catch (err) {
       const validationErrors = {};
@@ -45,46 +42,35 @@ export default function SignIn({ navigation }) {
         console.log(err.inner);
       }
     }
-    navigation.navigate('PhoneConfirmation');
-  }
 
-  function focusInput(field) {
-    const focusInputField = formRef.current.getFieldRef(field);
-    focusInputField.focus();
+    navigation.navigate('NewPassword');
   }
 
   return (
     <Container>
       <ContentTop>
         <LogoHeader />
-        <Title value="Login" size={24} mb={16} />
+        <Title value="Recuperar Senha" size={24} mb={16} />
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input
             name="email"
             type="email"
             label="E-mail"
             placeholder="email@exemplo.com.br"
-            returnKeyType="next"
-            onSubmitEditing={() => focusInput('password')}
-          />
-          <Input
-            name="password"
-            type="password"
-            placeholder="*********"
-            label="Senha"
           />
         </Form>
-        <Link
-          content="Esqueci minha senha"
-          onPress={() => navigation.navigate('RecoveryPassword')}
-          color="#D69D2B"
-          mt={5}
-        />
       </ContentTop>
 
       <ContentBottom>
-        <Link content="Criar uma conta" mb={24} />
-        <Button content="Login" onPress={() => formRef.current.submitForm()} />
+        <Link
+          content="Voltar para Login"
+          mb={24}
+          onPress={() => navigation.navigate('Login')}
+        />
+        <Button
+          content="Recuperar Senha"
+          onPress={() => formRef.current.submitForm()}
+        />
       </ContentBottom>
     </Container>
   );
