@@ -11,9 +11,7 @@ export const BoxTitle = styled.View`
 `;
 
 export const Text = styled.Text`
-  font-family: 'Work Sans';
-  font-style: normal;
-  font-weight: bold;
+  font-family: 'WorkSans-Bold';
   font-size: ${(props) => props.size}px;
   line-height: 28px;
   color: ${colors.title};

@@ -1,18 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useField } from '@unform/core';
+import Icon from 'react-native-vector-icons/Feather';
 
 import {
   Container,
   InputField,
   ToogleVisility,
   Content,
-  ToogleVisilityImage,
   InputError,
 } from './styles';
 
 import Label from '../Label';
-
-import eye from '../../assets/eye.png';
 
 export default function Input({ label, type, name, next, ...rest }) {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
@@ -78,7 +76,11 @@ export default function Input({ label, type, name, next, ...rest }) {
         {type === 'password' && (
           <ToogleVisility
             onPress={() => setPasswordVisibility(!passwordVisibility)}>
-            <ToogleVisilityImage source={eye} />
+            {passwordVisibility ? (
+              <Icon name="eye-off" size={16} color="#888899" />
+            ) : (
+              <Icon name="eye" size={16} color="#888899" />
+            )}
           </ToogleVisility>
         )}
       </Content>

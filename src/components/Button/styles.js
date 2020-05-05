@@ -10,9 +10,7 @@ export const Container = styled.TouchableOpacity`
 `;
 
 export const Text = styled.Text`
-  font-family: 'Work Sans';
-  font-style: normal;
-  font-weight: bold;
+  font-family: 'WorkSans-Bold';
   font-size: 20px;
   line-height: 23px;
   text-align: center;

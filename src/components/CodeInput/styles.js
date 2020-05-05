@@ -11,4 +11,5 @@ export const NumberInput = styled.TextInput`
   justify-content: center;
   align-items: center;
   color: ${colors.placeholder};
+  font-family: 'WorkSans-Bold';
 `;

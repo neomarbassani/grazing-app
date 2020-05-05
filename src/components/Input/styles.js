@@ -29,20 +29,17 @@ export const ToogleVisility = styled.TouchableOpacity`
   justify-content: center;
 `;
 
-export const ToogleVisilityImage = styled.Image`
-  padding: 2px;
-`;
-
 export const InputField = styled.TextInput`
   width: 100%;
   height: 42px;
   border: none;
   background-color: transparent;
   color: ${colors.placeholder};
+  font-family: 'WorkSans-Regular';
 `;
 
 export const InputError = styled.Text`
-  font-family: 'Work Sans';
+  font-family: 'WorkSans-Bold';
   font-style: normal;
   font-size: 12px;
   color: ${colors.error};
