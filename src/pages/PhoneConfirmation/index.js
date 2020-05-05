@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import auth from '@react-native-firebase/auth';
 
 import {
   Cursor,
@@ -18,12 +19,32 @@ import Label from '../../components/Label';
 const CELL_COUNT = 6;
 
 export default function SignIn({ navigation }) {
-  const [value, setValue] = useState('');
-  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
+  const [confirm, setConfirm] = useState(null);
+  const [code, setCode] = useState('');
+
+  const ref = useBlurOnFulfill({ code, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    value,
-    setValue,
+    code,
+    setCode,
   });
+
+  async function signInWithPhoneNumber(phoneNumber) {
+    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    setConfirm(confirmation);
+  }
+
+  useEffect(() => {
+    signInWithPhoneNumber('+5538999459885');
+  }, []);
+
+  async function confirmCode() {
+    try {
+      await confirm.confirm(code);
+      navigation.navigate('Login');
+    } catch (error) {
+      console.log('Invalid code.');
+    }
+  }
 
   return (
     <Container>
@@ -36,8 +57,8 @@ export default function SignIn({ navigation }) {
           <BoxCodeField
             ref={ref}
             {...props}
-            value={value}
-            onChangeText={setValue}
+            value={code}
+            onChangeText={setCode}
             cellCount={CELL_COUNT}
             keyboardType="number-pad"
             renderCell={({ index, symbol, isFocused }) => (
@@ -51,12 +72,7 @@ export default function SignIn({ navigation }) {
       </ContentTop>
 
       <ContentBottom>
-        <Button
-          content="Entrar"
-          onPress={() => {
-            console.log(value);
-          }}
-        />
+        <Button content="Entrar" onPress={() => confirmCode()} />
       </ContentBottom>
     </Container>
   );
