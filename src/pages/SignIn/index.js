@@ -45,7 +45,6 @@ export default function SignIn({ navigation }) {
         console.log(err.inner);
       }
     }
-    navigation.navigate('PhoneConfirmation');
   }
 
   function focusInput(field) {
@@ -83,7 +82,11 @@ export default function SignIn({ navigation }) {
       </ContentTop>
 
       <ContentBottom>
-        <Link content="Criar uma conta" mb={24} />
+        <Link
+          content="Criar uma conta"
+          mb={24}
+          onPress={() => navigation.navigate('Register')}
+        />
         <Button content="Login" onPress={() => formRef.current.submitForm()} />
       </ContentBottom>
     </Container>

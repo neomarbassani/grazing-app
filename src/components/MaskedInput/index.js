@@ -1,27 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useField } from '@unform/core';
-import Icon from 'react-native-vector-icons/Feather';
 
-import {
-  Container,
-  InputField,
-  ToogleVisility,
-  Content,
-  InputError,
-} from './styles';
+import { Container, InputField, Content, InputError } from './styles';
 
 import Label from '../Label';
 
-export default function Input({ label, type, name, next, ...rest }) {
-  const [passwordVisibility, setPasswordVisibility] = useState(false);
-
+export default function MaskedInput({ label, name, next, ...rest }) {
   const inputRef = useRef(null);
-
+  const [phone, setPhone] = useState('');
   const { fieldName, registerField, defaultValue, error } = useField(name);
-
-  useEffect(() => {
-    type === 'password' ? setPasswordVisibility(true) : null;
-  }, [type]);
 
   useEffect(() => {
     inputRef.current.value = defaultValue;
@@ -60,29 +47,17 @@ export default function Input({ label, type, name, next, ...rest }) {
         <InputField
           ref={inputRef}
           defaultValue={defaultValue}
-          type={type === 'email' ? 'email-address' : null}
-          secureTextEntry={passwordVisibility}
           placeholderTextColor="#c4c4c4"
-          autoCapitalize={
-            type === 'email' || type === 'password' ? 'none' : 'words'
-          }
-          onChangeText={(value) => {
+          includeRawValueInChangeText={true}
+          value={phone}
+          onChangeText={(maskedValue, value) => {
+            setPhone(maskedValue);
             if (inputRef.current) {
               inputRef.current.value = value;
             }
           }}
           {...rest}
         />
-        {type === 'password' && (
-          <ToogleVisility
-            onPress={() => setPasswordVisibility(!passwordVisibility)}>
-            {passwordVisibility ? (
-              <Icon name="eye-off" size={16} color="#888899" />
-            ) : (
-              <Icon name="eye" size={16} color="#888899" />
-            )}
-          </ToogleVisility>
-        )}
       </Content>
       {error && <InputError>{error}</InputError>}
     </Container>

@@ -1,11 +1,13 @@
 import styled from 'styled-components/native';
 import { colors } from '../../../styles';
 
-export const Container = styled.SafeAreaView`
-  flex: 1;
+export const Container = styled.KeyboardAvoidingView`
   width: 100%;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 16px;
+  flex: 1;
   background-color: ${colors.background};
+`;
+
+export const ScroolView = styled.ScrollView`
+  width: 100%;
+  flex: 1;
 `;

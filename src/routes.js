@@ -4,15 +4,20 @@ import Login from './pages/SignIn';
 import PhoneConfirmation from './pages/PhoneConfirmation';
 import RecoveryPassword from './pages/RecoveryPassword';
 import NewPassword from './pages/NewPassword';
+import Register from './pages/Register';
 
 export default () =>
   createAppContainer(
     createSwitchNavigator({
       SignIn: createSwitchNavigator({
         Login,
-        PhoneConfirmation,
+        NewPassword: {
+          screen: NewPassword,
+          path: 'new-password',
+        },
         RecoveryPassword,
-        NewPassword,
+        PhoneConfirmation,
+        Register,
       }),
     }),
   );

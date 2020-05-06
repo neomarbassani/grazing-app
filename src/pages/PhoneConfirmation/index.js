@@ -68,7 +68,7 @@ export default function SignIn({ navigation }) {
             )}
           />
         </VerificationCodeArea>
-        <Link content="Não recebi o código" color="#D69D2B" mt={15} />
+        <Link content="Não recebi o código" disabled color="#D69D2B" mt={15} />
       </ContentTop>
 
       <ContentBottom>

@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.Text`
   font-family: 'WorkSans-Bold';
-
+  padding: 5px;
   justify-content: center;
   font-size: 16px;
   line-height: 19px;

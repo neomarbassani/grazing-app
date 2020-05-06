@@ -6,13 +6,19 @@ import { Provider } from 'react-redux';
 
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { colors } from './styles';
+
 import App from './App';
 import { store, persistor } from './store';
 
 const Index = () => (
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <StatusBar />
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor={colors.background}
+        translucent={true}
+      />
       <App />
     </PersistGate>
   </Provider>
