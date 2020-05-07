@@ -1,11 +1,12 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useField } from '@unform/core';
 
 import { Container, InputField, InputError } from './styles';
 
 import Label from '../Label';
 
-export default function SelectInput({ label, name, next, ...rest }) {
+export default function InputPicker({ label, name, data, ...rest }) {
+  const [selectedValue, setSelectedValue] = useState({});
   const inputRef = useRef(null);
 
   const { fieldName, registerField, defaultValue, error } = useField(name);
@@ -43,15 +44,25 @@ export default function SelectInput({ label, name, next, ...rest }) {
   return (
     <Container>
       {label && <Label>{label}</Label>}
+
       <InputField
         ref={inputRef}
+        defaultValue={defaultValue}
+        selectedValue={selectedValue}
         onValueChange={(value) => {
+          setSelectedValue(value);
           if (inputRef.current) {
             inputRef.current.value = value;
           }
         }}
-        {...rest}
-      />
+        {...rest}>
+        <InputField.Item label="Selecione" value={null} />
+        {data &&
+          data.map((item) => (
+            <InputField.Item key={item} label={item} value={item} />
+          ))}
+      </InputField>
+
       {error && <InputError>{error}</InputError>}
     </Container>
   );

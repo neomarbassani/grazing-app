@@ -1,17 +1,22 @@
 import styled from 'styled-components/native';
-import RNPickerSelect from 'react-native-picker-select';
+import { Picker } from '@react-native-community/picker';
 
 import { colors } from '../../styles';
 
 export const Container = styled.View`
   margin-bottom: 45px;
   align-items: flex-start;
+  height: 42px;
   width: 100%;
 `;
 
-export const SelectInput = styled(RNPickerSelect)`
+export const InputField = styled(Picker)`
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 5px;
+  width: 100%;
   height: 42px;
-  border: none;
+  color: ${colors.placeholder};
   font-family: 'WorkSans-Regular';
 `;
 

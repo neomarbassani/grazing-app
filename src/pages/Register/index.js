@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Form } from '@unform/mobile';
 import { Scope } from '@unform/core';
 
@@ -11,25 +11,62 @@ import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
 import Input from '../../components/Input';
 import MaskedInput from '../../components/MaskedInput';
-import SelectInput from '../../components/SelectInput';
+import InputPicker from '../../components/InputPicker';
 
 import Link from '../../components/Link';
 import Button from '../../components/Button';
 
-export default function SignIn({ navigation }) {
+import locations from '../../services/locations';
+
+export default function Register({ navigation }) {
   const formRef = useRef(null);
+  const [cities, setCities] = useState([]);
+  const [states, setStates] = useState([]);
+
+  useEffect(() => {
+    const statesArray = locations.reduce((acc, state) => {
+      return [...acc, state.nome];
+    }, []);
+    setStates(statesArray);
+  }, []);
+
+  const handleAvailableCities = (stateName) => {
+    if (stateName) {
+      const availableCities = locations.find(
+        (state) => state.nome === stateName,
+      ).cidades;
+
+      setCities(availableCities);
+    }
+  };
 
   async function handleSubmit(data) {
     try {
       formRef.current.setErrors({});
 
       const schema = Yup.object().shape({
-        name: Yup.string().required('Nome completo é obrigatório'),
+        name: Yup.string()
+          .required('Nome completo é obrigatório')
+          .min(3, 'Insira seu nome')
+          .max(200, 'Insira seu nome'),
         email: Yup.string()
           .email('Insira um e-mail válido.')
           .required('Um e-mail é obrigatório'),
-        phone: Yup.string().required('Telefone é obrigatório'),
-        password: Yup.string().required('Informe sua senha'),
+        address: Yup.object().shape({
+          state: Yup.string('Cidade é obrigatório')
+            .required('Estado é obrigatório')
+            .nullable(),
+          city: Yup.string('Cidade é obrigatório')
+            .required('Cidade é obrigatório')
+            .nullable(),
+        }),
+        phone: Yup.string()
+          .required('Telefone é obrigatório')
+          .min(10, 'Telefone é obrigatório')
+          .max(11, 'Telefone é obrigatório'),
+        password: Yup.string()
+          .required('Informe sua senha')
+          .min(8, 'No mínimo 8 caracteres'),
         passwordConfirmation: Yup.string().oneOf(
           [Yup.ref('password'), null],
           'Senhas não conferem',
@@ -79,21 +116,22 @@ export default function SignIn({ navigation }) {
           type="email"
           label="E-mail"
           placeholder="email@exemplo.com.br"
-          returnKeyType="next"
-          onSubmitEditing={() => focusInput('phone')}
         />
         <MaskedInput
           name="phone"
           label="Telefone"
           type={'cel-phone'}
           placeholder="(00) 00000-0000"
-          returnKeyType="next"
-          onSubmitEditing={() => focusInput('password')}
         />
-        <Scope>
+        <Scope path="address">
           <AddressFields>
-            <SelectInput />
-            <SelectInput />
+            <InputPicker
+              label="Estado"
+              placeholder="email@exemplo.com.br"
+              data={states}
+              name="state"
+            />
+            <InputPicker label="Cidade" data={cities} name="city" />
           </AddressFields>
         </Scope>
         <Input
