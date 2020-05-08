@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Form } from '@unform/mobile';
 import { Scope } from '@unform/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 import * as Yup from 'yup';
 
@@ -18,10 +19,21 @@ import Button from '../../components/Button';
 
 import locations from '../../services/locations';
 
+import AuthActions from '../../store/ducks/auth';
+
 export default function Register({ navigation }) {
+  const dispatch = useDispatch();
+
+  const loading = useSelector((state) => state.auth.loading);
+
   const formRef = useRef(null);
+  const stateInputRef = useRef(null);
+  const cityInputRef = useRef(null);
+
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
 
   useEffect(() => {
     const statesArray = locations.reduce((acc, state) => {
@@ -29,6 +41,11 @@ export default function Register({ navigation }) {
     }, []);
     setStates(statesArray);
   }, []);
+
+  useEffect(() => {
+    formRef.current.setFieldValue('address.city', selectedCity);
+    formRef.current.setFieldValue('address.state', selectedState);
+  }, [selectedCity, selectedState]);
 
   const handleAvailableCities = (stateName) => {
     if (stateName) {
@@ -52,14 +69,6 @@ export default function Register({ navigation }) {
         email: Yup.string()
           .email('Insira um e-mail válido.')
           .required('Um e-mail é obrigatório'),
-        address: Yup.object().shape({
-          state: Yup.string('Cidade é obrigatório')
-            .required('Estado é obrigatório')
-            .nullable(),
-          city: Yup.string('Cidade é obrigatório')
-            .required('Cidade é obrigatório')
-            .nullable(),
-        }),
         phone: Yup.string()
           .required('Telefone é obrigatório')
           .min(10, 'Telefone é obrigatório')
@@ -77,8 +86,9 @@ export default function Register({ navigation }) {
         abortEarly: false,
       });
 
-      navigation.navigate('PhoneConfirmation');
       console.log(data);
+
+      // dispatch(AuthActions.signInRequest(userData));
     } catch (err) {
       const validationErrors = {};
 
@@ -88,8 +98,6 @@ export default function Register({ navigation }) {
         });
 
         formRef.current.setErrors(validationErrors);
-
-        console.log(err.inner);
       }
     }
   }
@@ -127,11 +135,23 @@ export default function Register({ navigation }) {
           <AddressFields>
             <InputPicker
               label="Estado"
-              placeholder="email@exemplo.com.br"
+              width={40}
               data={states}
-              name="state"
+              selectedValue={selectedState}
+              onValueChange={(value) => {
+                setSelectedState(value);
+                handleAvailableCities(value);
+              }}
             />
-            <InputPicker label="Cidade" data={cities} name="city" />
+            <InputPicker
+              label="Cidade"
+              data={cities}
+              width={55}
+              selectedValue={selectedCity}
+              onValueChange={(value) => {
+                setSelectedCity(value);
+              }}
+            />
           </AddressFields>
         </Scope>
         <Input
@@ -156,6 +176,7 @@ export default function Register({ navigation }) {
       />
       <Button
         content="Criar conta"
+        loading={loading}
         onPress={() => formRef.current.submitForm()}
       />
     </Container>

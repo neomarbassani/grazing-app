@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
-import { Form } from '@unform/mobile';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { Form } from '@unform/mobile';
 import * as Yup from 'yup';
 
 import { Container, ContentBottom, ContentTop } from '../../layout/Auth';
@@ -11,10 +12,16 @@ import Input from '../../components/Input';
 import Link from '../../components/Link';
 import Button from '../../components/Button';
 
+import AuthActions from '../../store/ducks/auth';
+
 export default function SignIn({ navigation }) {
+  const dispatch = useDispatch();
+
   const formRef = useRef(null);
 
-  async function handleSubmit(data) {
+  const loading = useSelector((state) => state.auth.loading);
+
+  async function handleSubmit({ email, password }) {
     try {
       formRef.current.setErrors({});
 
@@ -26,12 +33,14 @@ export default function SignIn({ navigation }) {
         password: Yup.string().required('Informe sua senha'),
       });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+      await schema.validate(
+        { email, password },
+        {
+          abortEarly: false,
+        },
+      );
 
-      navigation.navigate('PhoneConfirmation');
-      console.log(data);
+      dispatch(AuthActions.signInRequest(email, password));
     } catch (err) {
       const validationErrors = {};
 
@@ -41,8 +50,6 @@ export default function SignIn({ navigation }) {
         });
 
         formRef.current.setErrors(validationErrors);
-
-        console.log(err.inner);
       }
     }
   }
@@ -63,12 +70,14 @@ export default function SignIn({ navigation }) {
             type="email"
             label="E-mail"
             placeholder="email@exemplo.com.br"
+            underlineColorAndroid="transparent"
             returnKeyType="next"
             onSubmitEditing={() => focusInput('password')}
           />
           <Input
             name="password"
             type="password"
+            underlineColorAndroid="transparent"
             placeholder="*********"
             label="Senha"
           />
@@ -87,7 +96,11 @@ export default function SignIn({ navigation }) {
           mb={24}
           onPress={() => navigation.navigate('Register')}
         />
-        <Button content="Login" onPress={() => formRef.current.submitForm()} />
+        <Button
+          content="Login"
+          onPress={() => formRef.current.submitForm()}
+          loading={loading}
+        />
       </ContentBottom>
     </Container>
   );

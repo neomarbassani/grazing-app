@@ -7,7 +7,7 @@ export const Container = styled.View`
   margin-bottom: 45px;
   align-items: flex-start;
   height: 42px;
-  width: 100%;
+  width: ${(props) => (props.width ? props.width : 0)}%;
 `;
 
 export const InputField = styled(Picker)`

@@ -5,19 +5,29 @@ import PhoneConfirmation from './pages/PhoneConfirmation';
 import RecoveryPassword from './pages/RecoveryPassword';
 import NewPassword from './pages/NewPassword';
 import Register from './pages/Register';
+import Home from './pages/Home';
 
-export default () =>
+export default (signedIn, autenticated) =>
   createAppContainer(
-    createSwitchNavigator({
-      SignIn: createSwitchNavigator({
-        Login,
-        NewPassword: {
-          screen: NewPassword,
-          path: 'new-password',
-        },
-        RecoveryPassword,
+    createSwitchNavigator(
+      {
+        Auth: createSwitchNavigator({
+          Login,
+          NewPassword,
+          RecoveryPassword,
+          Register,
+        }),
         PhoneConfirmation,
-        Register,
-      }),
-    }),
+        App: createSwitchNavigator({
+          Home,
+        }),
+      },
+      {
+        initialRouteName: signedIn
+          ? autenticated
+            ? 'App'
+            : 'PhoneConfirmation'
+          : 'Auth',
+      },
+    ),
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import auth from '@react-native-firebase/auth';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Cursor,
@@ -40,7 +41,6 @@ export default function SignIn({ navigation }) {
   async function confirmCode() {
     try {
       await confirm.confirm(code);
-      navigation.navigate('Login');
     } catch (error) {
       console.log('Invalid code.');
     }
