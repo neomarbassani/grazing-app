@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Alert } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { useDispatch, useSelector } from 'react-redux';
+
+import AuthActions from '../../store/ducks/auth';
 
 import {
   Cursor,
@@ -21,12 +24,16 @@ const CELL_COUNT = 6;
 
 export default function SignIn({ navigation }) {
   const [confirm, setConfirm] = useState(null);
-  const [code, setCode] = useState('');
+  const [value, setValue] = useState('');
+  const dispatch = useDispatch();
 
-  const ref = useBlurOnFulfill({ code, cellCount: CELL_COUNT });
+  const phone = useSelector((state) => state.auth.user.phone);
+  const loading = useSelector((state) => state.auth.loading);
+
+  const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-    code,
-    setCode,
+    value,
+    setValue,
   });
 
   async function signInWithPhoneNumber(phoneNumber) {
@@ -35,14 +42,15 @@ export default function SignIn({ navigation }) {
   }
 
   useEffect(() => {
-    signInWithPhoneNumber('+5538999459885');
-  }, []);
+    signInWithPhoneNumber(`+55${phone}`);
+  }, [phone]);
 
   async function confirmCode() {
     try {
-      await confirm.confirm(code);
+      await confirm.confirm(value);
+      dispatch(AuthActions.autenticationRequest());
     } catch (error) {
-      console.log('Invalid code.');
+      Alert.alert('Erro', 'Código Invalido');
     }
   }
 
@@ -57,8 +65,8 @@ export default function SignIn({ navigation }) {
           <BoxCodeField
             ref={ref}
             {...props}
-            value={code}
-            onChangeText={setCode}
+            value={value}
+            onChangeText={setValue}
             cellCount={CELL_COUNT}
             keyboardType="number-pad"
             renderCell={({ index, symbol, isFocused }) => (
@@ -72,7 +80,11 @@ export default function SignIn({ navigation }) {
       </ContentTop>
 
       <ContentBottom>
-        <Button content="Entrar" onPress={() => confirmCode()} />
+        <Button
+          content="Entrar"
+          loading={loading}
+          onPress={() => confirmCode()}
+        />
       </ContentBottom>
     </Container>
   );

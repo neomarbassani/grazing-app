@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1032387309195-9log9ckqn3siv3riv847tu4liqgm0hrb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grazing",
+            "certificate_hash": "e210ab1b86ea5f5d58c624f03263b87cfedc8c67"
+          }
+        },
+        {
           "client_id": "1032387309195-v8fbghmcvusva2ds9j3ir254iv62qaht.apps.googleusercontent.com",
           "client_type": 3
         }

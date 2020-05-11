@@ -23,20 +23,18 @@ export function* signIn({ email, password }) {
   }
 }
 
-export function* signUp({ userData }) {
+export function* signUp(data) {
   try {
-    const response = yield call(api.post, 'user', {
-      userData,
-    });
+    const response = yield call(api.post, 'user', data.userData);
 
     const { token, user } = response.data;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
-    yield put(AuthActions.signInSuccess(token, user));
+    yield put(AuthActions.signUpSuccess(token, user));
   } catch (err) {
     Alert.alert('Erro', 'Houve um erro no cadastro, verifique seus dados');
-    yield put(AuthActions.signInFailure());
+    yield put(AuthActions.signUpFailure());
   }
 }
 
@@ -53,3 +51,7 @@ export function setToken({ payload }) {
 }
 
 export function signOut() {}
+
+export function* userAutentication() {
+  yield put(AuthActions.autenticationSucess());
+}

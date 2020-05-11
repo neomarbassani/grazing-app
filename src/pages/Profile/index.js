@@ -8,7 +8,7 @@ const Home = () => {
   console.log(user);
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text>Hello {user.name} voce esta no inicio</Text>
+      <Text>Hello {user.name} voce esta no perfil</Text>
     </View>
   );
 };

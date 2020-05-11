@@ -27,8 +27,6 @@ export default function Register({ navigation }) {
   const loading = useSelector((state) => state.auth.loading);
 
   const formRef = useRef(null);
-  const stateInputRef = useRef(null);
-  const cityInputRef = useRef(null);
 
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
@@ -37,27 +35,22 @@ export default function Register({ navigation }) {
 
   useEffect(() => {
     const statesArray = locations.reduce((acc, state) => {
-      return [...acc, state.nome];
+      return [...acc, state.sigla];
     }, []);
     setStates(statesArray);
   }, []);
 
-  useEffect(() => {
-    formRef.current.setFieldValue('address.city', selectedCity);
-    formRef.current.setFieldValue('address.state', selectedState);
-  }, [selectedCity, selectedState]);
-
   const handleAvailableCities = (stateName) => {
     if (stateName) {
       const availableCities = locations.find(
-        (state) => state.nome === stateName,
+        (state) => state.sigla === stateName,
       ).cidades;
 
       setCities(availableCities);
     }
   };
 
-  async function handleSubmit(data) {
+  async function handleSubmit(userData) {
     try {
       formRef.current.setErrors({});
 
@@ -75,20 +68,24 @@ export default function Register({ navigation }) {
           .max(11, 'Telefone é obrigatório'),
         password: Yup.string()
           .required('Informe sua senha')
-          .min(8, 'No mínimo 8 caracteres'),
-        passwordConfirmation: Yup.string().oneOf(
-          [Yup.ref('password'), null],
-          'Senhas não conferem',
-        ),
+          .min(6, 'No mínimo 6 caracteres'),
+        passwordConfirmation: Yup.string()
+          .oneOf([Yup.ref('password'), null], 'Senhas não conferem')
+          .required('Confirme sua senha'),
       });
 
-      await schema.validate(data, {
+      await schema.validate(userData, {
         abortEarly: false,
       });
 
-      console.log(data);
+      delete userData.passwordConfirmation;
 
-      // dispatch(AuthActions.signInRequest(userData));
+      userData.address = {
+        state: selectedState,
+        city: selectedCity,
+      };
+
+      dispatch(AuthActions.signUpRequest(userData));
     } catch (err) {
       const validationErrors = {};
 
@@ -135,8 +132,9 @@ export default function Register({ navigation }) {
           <AddressFields>
             <InputPicker
               label="Estado"
-              width={40}
               data={states}
+              width={40}
+              prompt="Escolha um estado"
               selectedValue={selectedState}
               onValueChange={(value) => {
                 setSelectedState(value);
@@ -147,6 +145,7 @@ export default function Register({ navigation }) {
               label="Cidade"
               data={cities}
               width={55}
+              prompt="Escolha uma cidade"
               selectedValue={selectedCity}
               onValueChange={(value) => {
                 setSelectedCity(value);
@@ -159,6 +158,8 @@ export default function Register({ navigation }) {
           type="password"
           placeholder="*********"
           label="Senha"
+          returnKeyType="next"
+          onSubmitEditing={() => focusInput('passwordConfirmation')}
         />
         <Input
           name="passwordConfirmation"

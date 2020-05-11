@@ -6,6 +6,8 @@ const { Types, Creators } = createActions({
   signInRequest: ['email', 'password'],
   signInSuccess: ['token', 'user'],
   signInFailure: [],
+  autenticationSucess: [],
+  autenticationRequest: [],
   signUpRequest: ['userData'],
   signUpSuccess: ['token', 'user'],
   signUpFailure: [],
@@ -41,7 +43,13 @@ export const logout = (state) =>
   state.merge({
     token: null,
     signed: false,
+    autenticated: false,
   });
+
+export const autenticatedRequest = (state) => state.merge({ loading: true });
+
+export const autenticatedSucess = (state) =>
+  state.merge({ autenticated: true, loading: false });
 
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {
@@ -52,4 +60,6 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGN_UP_SUCCESS]: success,
   [Types.SIGN_UP_FAILURE]: failure,
   [Types.SIGN_OUT]: logout,
+  [Types.AUTENTICATION_REQUEST]: autenticatedRequest,
+  [Types.AUTENTICATION_SUCESS]: autenticatedSucess,
 });

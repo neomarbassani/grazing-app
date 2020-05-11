@@ -9,7 +9,7 @@ const prefix = Platform.OS === 'ios' ? 'grazing://' : 'grazing://grazing/';
 export default function App() {
   const { signed, autenticated } = useSelector((state) => state.auth);
 
-  const Routes = createRouter(false, autenticated);
+  const Routes = createRouter(signed, autenticated);
 
   return <Routes uriPrefix={prefix} />;
 }
