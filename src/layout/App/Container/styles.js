@@ -10,6 +10,4 @@ export const Container = styled.KeyboardAvoidingView`
 export const ScroolView = styled.ScrollView`
   width: 100%;
   flex: 1;
-  background-color: #fff;
-  border-radius: 30px;
 `;

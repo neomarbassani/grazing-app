@@ -57,8 +57,7 @@ export default function Register({ navigation }) {
       const schema = Yup.object().shape({
         name: Yup.string()
           .required('Nome completo é obrigatório')
-          .min(3, 'Insira seu nome')
-          .max(200, 'Insira seu nome'),
+          .min(5, 'Insira seu nome'),
         email: Yup.string()
           .email('Insira um e-mail válido.')
           .required('Um e-mail é obrigatório'),

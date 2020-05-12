@@ -43,6 +43,7 @@ export default function SignIn({ navigation }) {
 
   useEffect(() => {
     signInWithPhoneNumber(`+55${phone}`);
+    console.log(phone);
   }, [phone]);
 
   async function confirmCode() {

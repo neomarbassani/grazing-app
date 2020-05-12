@@ -15,7 +15,8 @@ public class MainActivity extends ReactActivity {
   protected String getMainComponentName() {
     return "grazing";
   }
-   @Override
+  
+  @Override
   protected ReactActivityDelegate createReactActivityDelegate() {
     return new ReactActivityDelegate(this, getMainComponentName()) {
       @Override

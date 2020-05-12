@@ -5,9 +5,15 @@ import { Container, InputField, Content, InputError } from './styles';
 
 import Label from '../Label';
 
-export default function MaskedInput({ label, name, next, ...rest }) {
+export default function MaskedInput({
+  label,
+  name,
+  next,
+  inittialState = '',
+  ...rest
+}) {
   const inputRef = useRef(null);
-  const [phone, setPhone] = useState('');
+  const [phone, setPhone] = useState(inittialState);
   const { fieldName, registerField, defaultValue, error } = useField(name);
 
   useEffect(() => {
