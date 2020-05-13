@@ -55,3 +55,30 @@ export function signOut() {}
 export function* userAutentication() {
   yield put(AuthActions.autenticationSucess());
 }
+
+export function* editUserData(data) {
+  try {
+    if (data.userData.current_password !== null) {
+      yield call(api.put, 'user/change-password', {
+        _id: data.id,
+        current_password: data.userData.current_password,
+        new_password: data.userData.new_password,
+      });
+    }
+
+    const response = yield call(api.put, 'user', {
+      _id: data.id,
+      name: data.userData.name,
+      phone: data.userData.phone,
+    });
+
+    yield put(AuthActions.editSuccess(response.data));
+
+    Alert.alert('Sucesso', 'Alteração concluida com sucesso!');
+  } catch (error) {
+    yield put(AuthActions.editFailure());
+    console.log(data.userData.name);
+
+    Alert.alert('Erro', 'Houve um erro na alteração , verifique seus dados');
+  }
+}

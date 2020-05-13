@@ -33,6 +33,8 @@ const Profile = () => {
 
   const dispatch = useDispatch();
 
+  const loading = useSelector((state) => state.auth.loading);
+
   async function handleSubmit(userData) {
     try {
       formRef.current.setErrors({});
@@ -45,10 +47,12 @@ const Profile = () => {
         phone: Yup.string()
           .min(10, 'Telefone é obrigatório')
           .max(11, 'Telefone é obrigatório'),
-        oldPassword: Yup.string().min(6, 'No mínimo 6 caracteres'),
-        newPassword: Yup.string().min(6, 'No mínimo 6 caracteres'),
-        newPasswordConfirmation: Yup.string().oneOf(
-          [Yup.ref('password'), null],
+        current_password: Yup.string()
+          .min(6, 'No mínimo 6 caracteres')
+          .nullable(),
+        new_password: Yup.string().min(6, 'No mínimo 6 caracteres'),
+        new_password_confirmation: Yup.string().oneOf(
+          [Yup.ref('new_password'), null],
           'Senhas não conferem',
         ),
       });
@@ -56,6 +60,8 @@ const Profile = () => {
       await schema.validate(userData, {
         abortEarly: false,
       });
+
+      dispatch(AuthActions.editRequest(userData, user._id));
     } catch (err) {
       const validationErrors = {};
 
@@ -92,7 +98,9 @@ const Profile = () => {
             name: user.name,
             email: user.email,
             phone: user.phone,
-          }}>
+            current_password: null,
+          }}
+          onSubmit={handleSubmit}>
           <SectionTitle>INFORMAÇÕES PESSOAIS</SectionTitle>
           <Input
             name="name"
@@ -118,7 +126,7 @@ const Profile = () => {
           />
           <SectionTitle>ALTERAR SENHA</SectionTitle>
           <Input
-            name="oldPassword"
+            name="current_password"
             label="Senha atual"
             type="password"
             placeholder="*******"
@@ -126,7 +134,7 @@ const Profile = () => {
             returnKeyType="done"
           />
           <Input
-            name="newPassword"
+            name="new_password"
             type="password"
             placeholder="*******"
             label="Nova senha"
@@ -134,7 +142,7 @@ const Profile = () => {
             returnKeyType="next"
           />
           <Input
-            name="newPasswordConfirmation"
+            name="new_password_confirmation"
             placeholder="*******"
             type="password"
             label="Confirmar nova senha"
@@ -143,7 +151,13 @@ const Profile = () => {
           />
         </Form>
       </Content>
-      <Button content="Salvar" />
+      <Button
+        content="Salvar"
+        onPress={() => {
+          formRef.current.submitForm();
+        }}
+        loading={loading}
+      />
       <Link
         content="Sair"
         mt={24}

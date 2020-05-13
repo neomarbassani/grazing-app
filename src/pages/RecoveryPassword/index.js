@@ -42,8 +42,6 @@ export default function SignIn({ navigation }) {
         console.log(err.inner);
       }
     }
-
-    navigation.navigate('NewPassword');
   }
 
   return (
