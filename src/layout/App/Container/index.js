@@ -4,9 +4,16 @@ import React from 'react';
 import { Container, ScroolView } from './styles';
 import Background from '../Background';
 
+import { StatusBar } from 'react-native';
+
 export default function AuthContainer({ children }) {
   return (
     <Background>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="#fff"
+        translucent={true}
+      />
       <Container>
         <ScroolView
           showsHorizontalScrollIndicator={false}
@@ -14,7 +21,7 @@ export default function AuthContainer({ children }) {
           contentContainerStyle={{
             flexGrow: 1,
             justifyContent: 'flex-start',
-            padding: 20,
+            padding: 30,
             alignItems: 'center',
           }}>
           {children}

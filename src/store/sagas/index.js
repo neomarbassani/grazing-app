@@ -9,6 +9,7 @@ import {
   signUp,
   userAutentication,
   editUserData,
+  updateProfilePhoto,
 } from './auth';
 
 export default function* rootSaga() {
@@ -19,5 +20,6 @@ export default function* rootSaga() {
     takeLatest(AuthTypes.SIGN_OUT, signOut),
     takeLatest(AuthTypes.AUTENTICATION_REQUEST, userAutentication),
     takeLatest(AuthTypes.EDIT_REQUEST, editUserData),
+    takeLatest(AuthTypes.UPDATE_PHOTO_REQUEST, updateProfilePhoto),
   ]);
 }

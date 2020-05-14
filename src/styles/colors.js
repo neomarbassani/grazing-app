@@ -7,7 +7,7 @@ const colors = {
   title: '#C94324',
   label: '#774D37',
   background: '#e5e5e5',
-  placeholder: '#C4C4C4',
+  placeholder: '#888899',
   link: '#D69D2B',
   text: '#888899',
   error: '#FC0C0C',

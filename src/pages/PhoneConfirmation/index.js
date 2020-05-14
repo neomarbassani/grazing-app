@@ -26,9 +26,9 @@ export default function SignIn({ navigation }) {
   const [confirm, setConfirm] = useState(null);
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
   const phone = useSelector((state) => state.auth.user.phone);
-  const loading = useSelector((state) => state.auth.loading);
 
   const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -47,10 +47,13 @@ export default function SignIn({ navigation }) {
 
   async function confirmCode() {
     try {
+      setLoading(true);
       await confirm.confirm(value);
       dispatch(AuthActions.autenticationRequest());
+      setLoading(false);
     } catch (error) {
       Alert.alert('Erro', 'Código Invalido');
+      setLoading(false);
     }
   }
 

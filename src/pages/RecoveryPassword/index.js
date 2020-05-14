@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Form } from '@unform/mobile';
+import { Alert } from 'react-native';
 
 import * as Yup from 'yup';
 
@@ -11,10 +12,14 @@ import Input from '../../components/Input';
 import Link from '../../components/Link';
 import Button from '../../components/Button';
 
+import api from '../../services/api';
+
 export default function SignIn({ navigation }) {
   const formRef = useRef(null);
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(data) {
+    setLoading(true);
     try {
       formRef.current.setErrors({});
 
@@ -28,7 +33,22 @@ export default function SignIn({ navigation }) {
         abortEarly: false,
       });
 
-      console.log(data);
+      await api.post('user/forgot-password', {
+        email: data.email,
+      });
+
+      setLoading(false);
+
+      Alert.alert(
+        'Sucesso',
+        `Um link foi enviado para o email ${data.email} para você redefinir sua senha`,
+        [
+          {
+            text: 'Ok',
+            onPress: () => navigation.navigate('Login'),
+          },
+        ],
+      );
     } catch (err) {
       const validationErrors = {};
 
@@ -68,6 +88,7 @@ export default function SignIn({ navigation }) {
         <Button
           content="Recuperar Senha"
           onPress={() => formRef.current.submitForm()}
+          loading={loading}
         />
       </ContentBottom>
     </Container>

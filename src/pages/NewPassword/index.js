@@ -8,11 +8,14 @@ import { Container, ContentBottom, ContentTop } from '../../layout/Auth';
 import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
 import Input from '../../components/Input';
-import Link from '../../components/Link';
 import Button from '../../components/Button';
+
+import api from '../../services/api';
 
 export default function SignIn({ navigation }) {
   const formRef = useRef(null);
+
+  const { token } = navigation.state.params;
 
   async function handleSubmit(data) {
     try {
@@ -31,7 +34,7 @@ export default function SignIn({ navigation }) {
         abortEarly: false,
       });
 
-      navigation.navigate('PhoneConfirmation');
+      navigation.navigate('SignIn');
       console.log(data);
     } catch (err) {
       const validationErrors = {};

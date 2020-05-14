@@ -82,3 +82,25 @@ export function* editUserData(data) {
     Alert.alert('Erro', 'Houve um erro na alteração , verifique seus dados');
   }
 }
+
+export function* updateProfilePhoto(data) {
+  try {
+    const profile_photo = data.photo;
+
+    console.log(profile_photo);
+    const response = yield call(api.put, 'user/profile-photo', {
+      _id: data.id,
+      profile_photo,
+    });
+
+    Alert.alert('Sucesso', 'Foto de perfil alterada com sucesso');
+    yield put(AuthActions.successEdit(response.data));
+  } catch (error) {
+    yield put(AuthActions.editFailure());
+
+    Alert.alert(
+      'Erro',
+      'Houve um erro na alteração da foto de perfil, tente novamente',
+    );
+  }
+}

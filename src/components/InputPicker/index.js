@@ -22,7 +22,7 @@ export default function InputPicker({ label, name, data, width, ...rest }) {
               <InputFieldItem key={item} label={item} value={item} />
             ))}
         </InputField>
-        <IconPicker name="chevron-down" size={24} color="#c4c4c4" />
+        <IconPicker name="chevron-down" size={24} color="#888899" />
       </Content>
     </Container>
   );

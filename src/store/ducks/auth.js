@@ -14,6 +14,9 @@ const { Types, Creators } = createActions({
   editRequest: ['userData', 'id'],
   editSuccess: ['user'],
   editFailure: [],
+  updatePhotoRequest: ['photo', 'id'],
+  updatePhotoSuccess: ['user'],
+  updatePhotoFailure: [],
   signOut: [],
 });
 
@@ -32,13 +35,11 @@ export const INITIAL_STATE = Immutable({
 /* Reducers */
 export const request = (state) => state.merge({ loading: true });
 
-export const successEdit = (state, { user }) => {
-  console.log(user);
-  return state.merge({
+export const successEdit = (state, { user }) =>
+  state.merge({
     loading: false,
     user,
   });
-};
 
 export const success = (state, { token, user }) =>
   state.merge({
@@ -73,6 +74,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.EDIT_REQUEST]: request,
   [Types.EDIT_SUCCESS]: successEdit,
   [Types.EDIT_FAILURE]: failure,
+  [Types.UPDATE_PHOTO_REQUEST]: request,
+  [Types.UPDATE_PHOTO_SUCCESS]: successEdit,
+  [Types.UPDATE_PHOTO_FAILURE]: failure,
   [Types.SIGN_OUT]: logout,
   [Types.AUTENTICATION_REQUEST]: autenticatedRequest,
   [Types.AUTENTICATION_SUCESS]: autenticatedSucess,

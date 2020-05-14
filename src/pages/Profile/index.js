@@ -1,4 +1,7 @@
 import React, { useRef } from 'react';
+import { Alert } from 'react-native';
+import ImagePicker from 'react-native-image-picker';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Form } from '@unform/mobile';
@@ -10,16 +13,14 @@ import Icon from 'react-native-vector-icons/Feather';
 
 import Container from '../../layout/App/Container';
 
-import profilePhotoPlaceholder from '../../assets/placeholder-profile.png';
-
 import Input from '../../components/Input';
 import MaskedInput from '../../components/MaskedInput';
 import Button from '../../components/Button';
 import Link from '../../components/Link';
+import Avatar from '../../components/Avatar';
 
 import {
   ChangePhotoButton,
-  ProfilePhoto,
   PhotoContainer,
   TopContent,
   UserNameField,
@@ -50,7 +51,13 @@ const Profile = () => {
         current_password: Yup.string()
           .min(6, 'No mínimo 6 caracteres')
           .nullable(),
-        new_password: Yup.string().min(6, 'No mínimo 6 caracteres'),
+        new_password: Yup.string()
+          .min(6, 'No mínimo 6 caracteres')
+          .when('current_password', (current_password, field) =>
+            current_password !== null
+              ? field.required('Insira sua nova senha')
+              : field,
+          ),
         new_password_confirmation: Yup.string().oneOf(
           [Yup.ref('new_password'), null],
           'Senhas não conferem',
@@ -75,17 +82,67 @@ const Profile = () => {
     }
   }
 
+  async function sendPhoto(data) {
+    try {
+      const body = new FormData();
+
+      body.append('profile_photo', {
+        uri: data.uri,
+        type: data.type,
+        name: data.fileName,
+      });
+
+      dispatch(AuthActions.updatePhotoRequest(body, user._id));
+
+      Alert.alert('Sucesso', 'Foto de perfil alterada com sucesso');
+    } catch (error) {
+      Alert.alert('Error', 'Ocorreu algum erro ,tente novamente mais tarde.');
+    }
+  }
+
+  function takePhoto() {
+    ImagePicker.launchCamera({}, (res) => {
+      if (!res.didCancel) {
+        sendPhoto(res);
+      }
+    });
+  }
+
+  function selectPhoto() {
+    ImagePicker.launchImageLibrary({}, (res) => {
+      if (!res.didCancel) {
+        sendPhoto(res);
+      }
+    });
+  }
+
+  async function changePhoto() {
+    Alert.alert(
+      'Atualizar foto de perfil',
+      'Como deseja atualizar a foto de perfil?',
+      [
+        {
+          text: 'Cancelar',
+          style: 'cancel',
+        },
+        {
+          text: 'Selecionar',
+          onPress: () => selectPhoto(),
+        },
+        {
+          text: 'Tirar',
+          onPress: () => takePhoto(),
+        },
+      ],
+    );
+  }
+
   return (
     <Container>
       <TopContent>
         <PhotoContainer>
-          <ProfilePhoto
-            source={
-              (user.profile_photo && { uri: user.profile_photo }) ||
-              profilePhotoPlaceholder
-            }
-          />
-          <ChangePhotoButton>
+          <Avatar size={120} />
+          <ChangePhotoButton onPress={() => changePhoto()}>
             <Icon name="camera" size={16} color="#ffffff" />
           </ChangePhotoButton>
         </PhotoContainer>

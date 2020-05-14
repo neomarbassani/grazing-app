@@ -15,12 +15,6 @@ export const Content = styled.View`
 
 export const PhotoContainer = styled.View``;
 
-export const ProfilePhoto = styled.Image`
-  width: 120px;
-  height: 120px;
-  border-radius: 60px;
-`;
-
 export const ChangePhotoButton = styled.TouchableOpacity`
   width: 30px;
   height: 30px;

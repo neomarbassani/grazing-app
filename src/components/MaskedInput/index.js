@@ -53,7 +53,7 @@ export default function MaskedInput({
         <InputField
           ref={inputRef}
           defaultValue={defaultValue}
-          placeholderTextColor="#c4c4c4"
+          placeholderTextColor="#888899"
           includeRawValueInChangeText={true}
           value={phone}
           onChangeText={(maskedValue, value) => {

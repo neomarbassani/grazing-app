@@ -62,7 +62,7 @@ export default function Input({ label, type, name, next, ...rest }) {
           defaultValue={defaultValue}
           type={type === 'email' ? 'email-address' : null}
           secureTextEntry={passwordVisibility}
-          placeholderTextColor="#c4c4c4"
+          placeholderTextColor="#888899"
           autoCapitalize={
             type === 'email' || type === 'password' ? 'none' : 'words'
           }
