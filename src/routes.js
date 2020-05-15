@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -13,6 +14,8 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Historic from './pages/Historic';
 import Profile from './pages/Profile';
+import ChooseBovineType from './pages/ChooseBovineType';
+import ChoosePastureType from './pages/ChoosePastureType';
 
 import Avatar from './components/Avatar';
 import NavigationHeaderLogo from './components/NavigationHeaderLogo';
@@ -29,10 +32,33 @@ const config = {
   },
 };
 
-function navigationOpts({ navigation }) {
+function InittialNavigationOptions({ navigation }) {
   return {
     headerRight: () => <Avatar size={38} mr={10} />,
     headerTitle: () => <NavigationHeaderLogo size={38} />,
+    headerStyle: {
+      backgroundColor: '#fff',
+      elevation: 0,
+      borderBottomWidth: 0,
+      shadowOpacity: 0,
+    },
+    shownHeader: false,
+    transitionSpec: {
+      open: config,
+      close: config,
+    },
+  };
+}
+
+function NavOpts({ navigation }) {
+  return {
+    headerRight: () => <Avatar size={38} mr={10} />,
+    headerBackImage: () => (
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Icon size={26} name="arrow-left" />
+      </TouchableOpacity>
+    ),
+    headerTitle: () => null,
     headerStyle: {
       backgroundColor: '#fff',
       elevation: 0,
@@ -63,7 +89,15 @@ const App = createBottomTabNavigator(
       screen: createStackNavigator({
         Home: {
           screen: Home,
-          navigationOptions: navigationOpts,
+          navigationOptions: InittialNavigationOptions,
+        },
+        ChooseBovineType: {
+          screen: ChooseBovineType,
+          navigationOptions: NavOpts,
+        },
+        ChoosePastureType: {
+          screen: ChoosePastureType,
+          navigationOptions: NavOpts,
         },
       }),
     },
