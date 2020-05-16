@@ -16,6 +16,8 @@ import Historic from './pages/Historic';
 import Profile from './pages/Profile';
 import ChooseBovineType from './pages/ChooseBovineType';
 import ChoosePastureType from './pages/ChoosePastureType';
+import Result from './pages/Result';
+
 import SupplementSupplyQuantity from './pages/Forms/SupplementSupplyQuantity';
 
 import Avatar from './components/Avatar';
@@ -193,6 +195,7 @@ export default (signedIn, autenticated) =>
           screen: App,
           path: 'app',
         },
+        Result,
       },
       {
         initialRouteName: signedIn

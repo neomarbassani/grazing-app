@@ -37,6 +37,8 @@ const SupplementSupplyQuantity = ({ navigation }) => {
       });
 
       console.log(calcData);
+
+      navigation.navigate('Result');
     } catch (err) {
       const validationErrors = {};
 
@@ -90,7 +92,7 @@ const SupplementSupplyQuantity = ({ navigation }) => {
           keyboardType="number-pad"
           name="days_of_stay"
           label="Dias de permanecias"
-          placeholder="Digite a qunatidade de dias de permanencia"
+          placeholder="Digite a quantidade de dias de permanencia"
         />
       </Form>
       <Button content="Calcular" onPress={() => formRef.current.submitForm()} />
