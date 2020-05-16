@@ -16,6 +16,7 @@ import Historic from './pages/Historic';
 import Profile from './pages/Profile';
 import ChooseBovineType from './pages/ChooseBovineType';
 import ChoosePastureType from './pages/ChoosePastureType';
+import SupplementSupplyQuantity from './pages/Forms/SupplementSupplyQuantity';
 
 import Avatar from './components/Avatar';
 import NavigationHeaderLogo from './components/NavigationHeaderLogo';
@@ -73,6 +74,25 @@ function NavOpts({ navigation }) {
   };
 }
 
+function NavOptsHistory({ navigation }) {
+  return {
+    headerRight: () => <Avatar size={38} mr={10} />,
+    headerBackImage: () => null,
+    headerTitle: () => null,
+    headerStyle: {
+      backgroundColor: '#fff',
+      elevation: 0,
+      borderBottomWidth: 0,
+      shadowOpacity: 0,
+    },
+    shownHeader: false,
+    transitionSpec: {
+      open: config,
+      close: config,
+    },
+  };
+}
+
 const Auth = createSwitchNavigator({
   Login,
   NewPassword: {
@@ -99,10 +119,19 @@ const App = createBottomTabNavigator(
           screen: ChoosePastureType,
           navigationOptions: NavOpts,
         },
+        SupplementSupplyQuantity: {
+          screen: SupplementSupplyQuantity,
+          navigationOptions: NavOpts,
+        },
       }),
     },
     Histórico: {
-      screen: Historic,
+      screen: createStackNavigator({
+        Historic: {
+          screen: Historic,
+          navigationOptions: NavOptsHistory,
+        },
+      }),
     },
     Perfil: {
       screen: Profile,

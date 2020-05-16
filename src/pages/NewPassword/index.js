@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { Alert } from 'react-native';
 import { Form } from '@unform/mobile';
 
 import * as Yup from 'yup';
@@ -14,10 +15,12 @@ import api from '../../services/api';
 
 export default function SignIn({ navigation }) {
   const formRef = useRef(null);
+  const [loading, setLoading] = useState(false);
 
   const { token } = navigation.state.params;
 
   async function handleSubmit(data) {
+    setLoading(true);
     try {
       formRef.current.setErrors({});
 
@@ -34,8 +37,19 @@ export default function SignIn({ navigation }) {
         abortEarly: false,
       });
 
-      navigation.navigate('SignIn');
-      console.log(data);
+      await api.post('user/recover-password', {
+        token,
+        password: data.password,
+      });
+
+      Alert.alert('Sucesso', 'Senha alterada com sucesso', [
+        {
+          text: 'Ok',
+          onPress: () => navigation.navigate('Login'),
+        },
+      ]);
+
+      setLoading(false);
     } catch (err) {
       const validationErrors = {};
 
@@ -45,11 +59,10 @@ export default function SignIn({ navigation }) {
         });
 
         formRef.current.setErrors(validationErrors);
-
-        console.log(err.inner);
       }
+      Alert.alert('Erro', 'Erro ao alterar senha, tente novamente', []);
+      setLoading(false);
     }
-    navigation.navigate('Login');
   }
 
   function focusInput(field) {
@@ -84,6 +97,7 @@ export default function SignIn({ navigation }) {
         <Button
           content="Salvar nova senha"
           onPress={() => formRef.current.submitForm()}
+          loading={loading}
         />
       </ContentBottom>
     </Container>

@@ -1,14 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Text } from 'react-native';
 
 import Container from '../../layout/App/Container';
 
+import Title from '../../components/Title';
+
 const Profile = () => {
-  const user = useSelector((state) => state.auth.user);
   return (
     <Container>
-      <Text>Hello {user.name} voce esta no perfil</Text>
+      <Title size={24} value="Histórico" />
     </Container>
   );
 };

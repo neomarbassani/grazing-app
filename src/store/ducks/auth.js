@@ -56,6 +56,7 @@ export const logout = (state) =>
     token: null,
     signed: false,
     autenticated: false,
+    user: {},
   });
 
 export const autenticatedRequest = (state) => state.merge({ loading: true });

@@ -85,9 +85,10 @@ export function* editUserData(data) {
 
 export function* updateProfilePhoto(data) {
   try {
-    const profile_photo = data.photo;
+    const profile_photo = data.photo._parts[0][1];
 
     console.log(profile_photo);
+
     const response = yield call(api.put, 'user/profile-photo', {
       _id: data.id,
       profile_photo,

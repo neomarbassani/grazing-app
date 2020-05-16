@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Form } from '@unform/mobile';
-import { Alert } from 'react-native';
+import { Alert, Platform } from 'react-native';
 
 import * as Yup from 'yup';
 
@@ -35,6 +35,7 @@ export default function SignIn({ navigation }) {
 
       await api.post('user/forgot-password', {
         email: data.email,
+        device: Platform.OS,
       });
 
       setLoading(false);
@@ -58,9 +59,8 @@ export default function SignIn({ navigation }) {
         });
 
         formRef.current.setErrors(validationErrors);
-
-        console.log(err.inner);
       }
+      setLoading(false);
     }
   }
 

@@ -32,6 +32,8 @@ const Profile = () => {
   const user = useSelector((state) => state.auth.user);
   const formRef = useRef(null);
 
+  console.log(user);
+
   const dispatch = useDispatch();
 
   const loading = useSelector((state) => state.auth.loading);
@@ -89,9 +91,9 @@ const Profile = () => {
       body.append('profile_photo', {
         uri: data.uri,
         type: data.type,
-        name: data.fileName,
       });
 
+      console.log(body);
       dispatch(AuthActions.updatePhotoRequest(body, user._id));
 
       Alert.alert('Sucesso', 'Foto de perfil alterada com sucesso');
@@ -137,6 +139,16 @@ const Profile = () => {
     );
   }
 
+  function focusInput(field) {
+    const focusInputField = formRef.current.getFieldRef(field);
+
+    if (typeof focusInputField.focus === 'function') {
+      focusInputField.focus();
+    } else {
+      focusInputField.getElement().focus();
+    }
+  }
+
   return (
     <Container>
       <TopContent>
@@ -164,6 +176,7 @@ const Profile = () => {
             label="Nome"
             underlineColorAndroid="transparent"
             returnKeyType="next"
+            onSubmitEditing={() => focusInput('phone')}
           />
           <Input
             name="email"
@@ -178,7 +191,7 @@ const Profile = () => {
             label="Telefone"
             type={'cel-phone'}
             underlineColorAndroid="transparent"
-            returnKeyType="next"
+            returnKeyType="done"
             inittialState={user.phone}
           />
           <SectionTitle>ALTERAR SENHA</SectionTitle>
@@ -187,8 +200,10 @@ const Profile = () => {
             label="Senha atual"
             type="password"
             placeholder="*******"
+            autoCorrect={false}
             underlineColorAndroid="transparent"
             returnKeyType="done"
+            onSubmitEditing={() => focusInput('new_password')}
           />
           <Input
             name="new_password"
@@ -196,11 +211,14 @@ const Profile = () => {
             placeholder="*******"
             label="Nova senha"
             underlineColorAndroid="transparent"
+            autoCorrect={false}
             returnKeyType="next"
+            onSubmitEditing={() => focusInput('new_password_confirmation')}
           />
           <Input
             name="new_password_confirmation"
             placeholder="*******"
+            autoCorrect={false}
             type="password"
             label="Confirmar nova senha"
             underlineColorAndroid="transparent"

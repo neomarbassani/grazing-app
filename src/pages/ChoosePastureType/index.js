@@ -17,14 +17,36 @@ const ChoosePastureType = ({ navigation }) => {
       <Content>
         <SubTitle value="Tipo de pastagem" size={16} />
         <ContentToSelect>
-          <ChooseItemButton content="Campo Nativo" onPress={() => {}} />
-          <ChooseItemButton content="Aveia-Azevém" onPress={() => {}} />
-          <ChooseItemButton content="Sudão" onPress={() => {}} />
+          <ChooseItemButton
+            content="Campo Nativo"
+            onPress={() => {
+              navigation.navigate('SupplementSupplyQuantity', TitleOfPage);
+            }}
+          />
+          <ChooseItemButton
+            content="Aveia-Azevém"
+            onPress={() => {
+              navigation.navigate('SupplementSupplyQuantity', TitleOfPage);
+            }}
+          />
+          <ChooseItemButton
+            content="Sudão"
+            onPress={() => {
+              navigation.navigate('SupplementSupplyQuantity', TitleOfPage);
+            }}
+          />
           <ChooseItemButton
             content="Campo nativo melhorado"
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('SupplementSupplyQuantity', TitleOfPage);
+            }}
           />
-          <ChooseItemButton content="Sorgo" onPress={() => {}} />
+          <ChooseItemButton
+            content="Sorgo"
+            onPress={() => {
+              navigation.navigate('SupplementSupplyQuantity', TitleOfPage);
+            }}
+          />
         </ContentToSelect>
       </Content>
     </Container>
