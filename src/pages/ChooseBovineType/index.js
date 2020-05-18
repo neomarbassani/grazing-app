@@ -1,5 +1,7 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
+import CalcActions from '../../store/ducks/calc';
 import Container from '../../layout/App/Container';
 
 import Title from '../../components/Title';
@@ -8,8 +10,10 @@ import ChooseItemButton from '../../components/ChooseItemButton';
 
 import { Content, ContentToSelect } from './styles';
 
-const ChooseBovineType = ({ navigation }) => {
-  const TitleOfPage = navigation.state.params;
+const ChoosePastureType = ({ navigation }) => {
+  const TitleOfPage = useSelector((state) => state.calc.calc.value);
+
+  const dispatch = useDispatch();
 
   return (
     <Container>
@@ -17,20 +21,60 @@ const ChooseBovineType = ({ navigation }) => {
       <Content>
         <SubTitle value="Bovino de leite" size={16} />
         <ContentToSelect>
-          <ChooseItemButton content="Novilha" onPress={() => {}} />
-          <ChooseItemButton content="Vaca em lactação" onPress={() => {}} />
+          <ChooseItemButton
+            content="Novilha"
+            onPress={() => {
+              navigation.navigate('ChoosePastureType');
+
+              dispatch(
+                CalcActions.setAnimalConfig({
+                  name: 'Bovino de leite',
+                  value: 'Novilha',
+                }),
+              );
+            }}
+          />
+          <ChooseItemButton
+            content="Vaca em lactação"
+            onPress={() => {
+              navigation.navigate('ChoosePastureType');
+
+              dispatch(
+                CalcActions.setAnimalConfig({
+                  name: 'Bovino de leite',
+                  value: 'Vaca em lactação',
+                }),
+              );
+            }}
+          />
         </ContentToSelect>
         <SubTitle value="Bovino de corte" size={16} />
         <ContentToSelect>
-          <ChooseItemButton content="Terneiro" onPress={() => {}} />
+          <ChooseItemButton
+            content="Terneiro"
+            onPress={() => {
+              navigation.navigate('ChoosePastureType');
+
+              dispatch(
+                CalcActions.setAnimalConfig({
+                  name: 'Bovino de corte',
+                  value: 'Terneiro',
+                }),
+              );
+            }}
+          />
           <ChooseItemButton
             content="Novilho"
-            onPress={() =>
-              navigation.navigate(
-                'ChoosePastureType',
-                'Quantidade de suplemento',
-              )
-            }
+            onPress={() => {
+              navigation.navigate('ChoosePastureType');
+
+              dispatch(
+                CalcActions.setAnimalConfig({
+                  name: 'Bovino de corte',
+                  value: 'Novilho',
+                }),
+              );
+            }}
           />
         </ContentToSelect>
       </Content>
@@ -38,4 +82,4 @@ const ChooseBovineType = ({ navigation }) => {
   );
 };
 
-export default ChooseBovineType;
+export default ChoosePastureType;

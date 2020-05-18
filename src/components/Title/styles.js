@@ -15,4 +15,5 @@ export const Text = styled.Text`
   font-size: ${(props) => (props.size ? props.size : 0)}px;
   line-height: 28px;
   color: ${colors.title};
+  text-align: center;
 `;

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import CalcActions from '../../store/ducks/calc';
 
 import Container from '../../layout/App/Container';
 
@@ -9,6 +11,7 @@ import ChooseItemButton from '../../components/ChooseItemButton';
 import { Content, ContentToSelect } from './styles';
 
 const Home = ({ navigation }) => {
+  const dispatch = useDispatch();
   return (
     <Container>
       <Title size={24} value="Realizar novo cálculo" />
@@ -17,35 +20,111 @@ const Home = ({ navigation }) => {
         <ContentToSelect>
           <ChooseItemButton
             content="Número de animais no sistema"
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('ChooseBovineType');
+
+              dispatch(
+                CalcActions.setCalcConfig({
+                  name: 'Pastoreio rotativo',
+                  value: 'Número de animais no sistema',
+                }),
+              );
+            }}
           />
           <ChooseItemButton
             content="Número de dias dos animais nas faixas"
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('ChooseBovineType');
+
+              dispatch(
+                CalcActions.setCalcConfig({
+                  name: 'Pastoreio rotativo',
+                  value: 'Número de dias dos animais nas faixas',
+                }),
+              );
+            }}
           />
           <ChooseItemButton
             content="Número total de faixas"
-            onPress={() => {}}
+            onPress={() => {
+              navigation.navigate('ChooseBovineType');
+
+              dispatch(
+                CalcActions.setCalcConfig({
+                  name: 'Pastoreio rotativo',
+                  value: 'Número total de faixas',
+                }),
+              );
+            }}
           />
-          <ChooseItemButton content="Quantidade de ração" onPress={() => {}} />
-          <ChooseItemButton content="Área do potreiro" onPress={() => {}} />
+          <ChooseItemButton
+            content="Quantidade de ração"
+            onPress={() => {
+              navigation.navigate('ChooseBovineType');
+
+              dispatch(
+                CalcActions.setCalcConfig({
+                  name: 'Pastoreio rotativo',
+                  value: 'Quantidade de ração',
+                }),
+              );
+            }}
+          />
+          <ChooseItemButton
+            content="Área do potreiro"
+            onPress={() => {
+              navigation.navigate('ChooseBovineType');
+
+              dispatch(
+                CalcActions.setCalcConfig({
+                  name: 'Pastoreio rotativo',
+                  value: 'Área do potreiro',
+                }),
+              );
+            }}
+          />
         </ContentToSelect>
         <SubTitle value="Pastoreio continuo" size={16} />
         <ContentToSelect>
           <ChooseItemButton
-            content="Dimencionar tamanho do potreiro"
-            onPress={() => {}}
+            content="Dimensionar tamanho do potreiro"
+            onPress={() => {
+              navigation.navigate('ChooseBovineType');
+
+              dispatch(
+                CalcActions.setCalcConfig({
+                  name: 'Pastoreio continuo',
+                  value: 'Dimensionar tamanho do potreiro',
+                }),
+              );
+            }}
           />
           <ChooseItemButton
             content="Quantidade de suplemento"
-            onPress={() =>
-              navigation.navigate(
-                'ChooseBovineType',
-                'Quantidade de suplemento',
-              )
-            }
+            onPress={() => {
+              navigation.navigate('ChooseBovineType');
+
+              dispatch(
+                CalcActions.setCalcConfig({
+                  name: 'Pastoreio continuo',
+                  value: 'Quantidade de suplemento',
+                }),
+              );
+            }}
           />
-          <ChooseItemButton content="Ajustar locatação" onPress={() => {}} />
+          <ChooseItemButton
+            content="Ajustar locatação"
+            onPress={() => {
+              navigation.navigate('ChooseBovineType');
+
+              dispatch(
+                CalcActions.setCalcConfig({
+                  name: 'Pastoreio continuo',
+                  value: 'Ajustar locatação',
+                }),
+              );
+            }}
+          />
         </ContentToSelect>
       </Content>
     </Container>

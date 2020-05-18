@@ -1,4 +1,7 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import CalcActions from '../../store/ducks/calc';
 
 import Container from '../../layout/App/Container';
 
@@ -8,8 +11,10 @@ import ChooseItemButton from '../../components/ChooseItemButton';
 
 import { Content, ContentToSelect } from './styles';
 
-const ChoosePastureType = ({ navigation }) => {
-  const TitleOfPage = navigation.state.params;
+const SupplementSupplyQuantity = ({ navigation }) => {
+  const TitleOfPage = useSelector((state) => state.calc.calc.value);
+
+  const dispatch = useDispatch();
 
   return (
     <Container>
@@ -20,31 +25,66 @@ const ChoosePastureType = ({ navigation }) => {
           <ChooseItemButton
             content="Campo Nativo"
             onPress={() => {
-              navigation.navigate('SupplementSupplyQuantity', TitleOfPage);
+              navigation.navigate('SupplementSupplyQuantity');
+
+              dispatch(
+                CalcActions.setPastureConfig({
+                  name: 'Tipo de pastagem',
+                  value: 'Campo Nativo',
+                }),
+              );
             }}
           />
           <ChooseItemButton
             content="Aveia-Azevém"
             onPress={() => {
-              navigation.navigate('SupplementSupplyQuantity', TitleOfPage);
+              navigation.navigate('SupplementSupplyQuantity');
+
+              dispatch(
+                CalcActions.setPastureConfig({
+                  name: 'Tipo de pastagem',
+                  value: 'Aveia-Azevém',
+                }),
+              );
             }}
           />
           <ChooseItemButton
             content="Sudão"
             onPress={() => {
-              navigation.navigate('SupplementSupplyQuantity', TitleOfPage);
+              navigation.navigate('SupplementSupplyQuantity');
+
+              dispatch(
+                CalcActions.setPastureConfig({
+                  name: 'Tipo de pastagem',
+                  value: 'Sudão',
+                }),
+              );
             }}
           />
           <ChooseItemButton
             content="Campo nativo melhorado"
             onPress={() => {
-              navigation.navigate('SupplementSupplyQuantity', TitleOfPage);
+              navigation.navigate('SupplementSupplyQuantity');
+
+              dispatch(
+                CalcActions.setPastureConfig({
+                  name: 'Tipo de pastagem',
+                  value: 'Campo nativo melhorado',
+                }),
+              );
             }}
           />
           <ChooseItemButton
             content="Sorgo"
             onPress={() => {
-              navigation.navigate('SupplementSupplyQuantity', TitleOfPage);
+              navigation.navigate('SupplementSupplyQuantity');
+
+              dispatch(
+                CalcActions.setPastureConfig({
+                  name: 'Tipo de pastagem',
+                  value: 'Sorgo',
+                }),
+              );
             }}
           />
         </ContentToSelect>
@@ -53,4 +93,4 @@ const ChoosePastureType = ({ navigation }) => {
   );
 };
 
-export default ChoosePastureType;
+export default SupplementSupplyQuantity;

@@ -1,6 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
 import { Form } from '@unform/core';
 import * as Yup from 'yup';
+
+import CalcActions from '../../../store/ducks/calc';
 
 import Container from '../../../layout/App/Container';
 
@@ -9,11 +13,16 @@ import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import MaskedInput from '../../../components/MaskedInput';
 
+import { supplementQuantityCalc } from '../../../services/calcs';
+
 const SupplementSupplyQuantity = ({ navigation }) => {
-  const title = navigation.state.params;
+  const [loading, setLoading] = useState(false);
+  const title = useSelector((state) => state.calc.calc.value);
   const formRef = useRef(null);
+  const dispatch = useDispatch();
 
   async function handleSubmit(calcData) {
+    setLoading(true);
     try {
       formRef.current.setErrors({});
 
@@ -36,9 +45,47 @@ const SupplementSupplyQuantity = ({ navigation }) => {
         abortEarly: false,
       });
 
-      console.log(calcData);
+      dispatch(
+        CalcActions.setInputs([
+          {
+            key: 'start_date',
+            name: 'Início do pastoreio',
+            value: calcData.start_date,
+          },
+          {
+            key: 'animals_quantity',
+            name: 'Número de animais',
+            value: calcData.animals_quantity,
+          },
+          {
+            key: 'weigth',
+            name: 'Peso medio dos animais',
+            value: calcData.weigth,
+          },
+          {
+            key: 'grazing_height',
+            name: 'Altura da pastagem',
+            value: calcData.grazing_height,
+          },
+          {
+            key: 'number_of_tracks',
+            name: 'Numero de faixas',
+            value: calcData.number_of_tracks,
+          },
+          {
+            key: 'days_of_stay',
+            name: 'Dias de permanecias',
+            value: calcData.days_of_stay,
+          },
+        ]),
+      );
+
+      const results = supplementQuantityCalc(calcData);
+
+      dispatch(CalcActions.setResults([results]));
 
       navigation.navigate('Result');
+      setLoading(false);
     } catch (err) {
       const validationErrors = {};
 
@@ -49,6 +96,8 @@ const SupplementSupplyQuantity = ({ navigation }) => {
 
         formRef.current.setErrors(validationErrors);
       }
+
+      setLoading(false);
     }
   }
   return (
@@ -95,7 +144,11 @@ const SupplementSupplyQuantity = ({ navigation }) => {
           placeholder="Digite a quantidade de dias de permanencia"
         />
       </Form>
-      <Button content="Calcular" onPress={() => formRef.current.submitForm()} />
+      <Button
+        content="Calcular"
+        onPress={() => formRef.current.submitForm()}
+        loading={loading}
+      />
     </Container>
   );
 };

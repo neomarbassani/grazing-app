@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { StatusBar } from 'react-native';
 
 import backgroundResult from '../../assets/backgroundResult.png';
 import logoResults from '../../assets/logoResults.png';
@@ -14,19 +16,28 @@ import {
 } from './styles';
 
 const Result = ({ navigation }) => {
+  const calcState = useSelector((state) => state.calc);
+  console.log(calcState);
   return (
-    <ContainerBackground source={backgroundResult}>
-      <Container>
-        <Logo source={logoResults} />
-        <ResultBoxTitle>Seu resultado foi:</ResultBoxTitle>
-        <ResultBox>
-          <ResultText>59 animais</ResultText>
-        </ResultBox>
-        <Link onPress={() => navigation.navigate('Home')}>
-          Ir para a tela inicial
-        </Link>
-      </Container>
-    </ContainerBackground>
+    <>
+      <StatusBar
+        barStyle="light-content"
+        backgroundColor="#281100"
+        translucent={true}
+      />
+      <ContainerBackground source={backgroundResult}>
+        <Container>
+          <Logo source={logoResults} />
+          <ResultBoxTitle>Seu resultado foi:</ResultBoxTitle>
+          <ResultBox>
+            <ResultText>{calcState.results[0].value} animais</ResultText>
+          </ResultBox>
+          <Link onPress={() => navigation.navigate('Home')}>
+            Ir para a tela inicial
+          </Link>
+        </Container>
+      </ContainerBackground>
+    </>
   );
 };
 
