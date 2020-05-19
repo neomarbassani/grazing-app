@@ -6,10 +6,12 @@ export function supplementQuantityCalc(calcData) {
   const numberOfTracks = parseInt(calcData.number_of_tracks);
   const daysOfStay = parseInt(calcData.days_of_stay);
 
+  const result =
+    animalsQuantity + weigth + grazingHeight + numberOfTracks + daysOfStay;
+
   const supplementQuantityValue = {
     name: 'Quantidade total de animais',
-    value:
-      animalsQuantity + weigth + grazingHeight + numberOfTracks + daysOfStay,
+    value: result.toString(),
   };
 
   return supplementQuantityValue;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CalcActions from '../../store/ducks/calc';
 
 import Container from '../../layout/App/Container';
@@ -7,11 +7,16 @@ import Container from '../../layout/App/Container';
 import Title from '../../components/Title';
 import SubTitle from '../../components/SubTitle';
 import ChooseItemButton from '../../components/ChooseItemButton';
+import FreePlanBox from '../../components/FreePlanBox';
 
 import { Content, ContentToSelect } from './styles';
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
+  const historic = useSelector((state) => state.calcHistory);
+
+  console.log(historic);
+
   return (
     <Container>
       <Title size={24} value="Realizar novo cálculo" />
@@ -127,6 +132,7 @@ const Home = ({ navigation }) => {
           />
         </ContentToSelect>
       </Content>
+      <FreePlanBox />
     </Container>
   );
 };

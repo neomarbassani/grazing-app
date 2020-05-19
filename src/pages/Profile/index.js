@@ -18,6 +18,7 @@ import MaskedInput from '../../components/MaskedInput';
 import Button from '../../components/Button';
 import Link from '../../components/Link';
 import Avatar from '../../components/Avatar';
+import PlanInfoBox from '../../components/PlanInfoBox';
 
 import {
   ChangePhotoButton,
@@ -233,6 +234,7 @@ const Profile = () => {
         }}
         loading={loading}
       />
+      <PlanInfoBox />
       <Link
         content="Sair"
         mt={24}

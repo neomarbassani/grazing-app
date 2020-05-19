@@ -1,9 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { StatusBar } from 'react-native';
 
 import backgroundResult from '../../assets/backgroundResult.png';
 import logoResults from '../../assets/logoResults.png';
+
+import CalcHistoryActions from '../../store/ducks/calcHistory';
 
 import {
   Container,
@@ -17,7 +19,13 @@ import {
 
 const Result = ({ navigation }) => {
   const calcState = useSelector((state) => state.calc);
-  console.log(calcState);
+
+  function handleSaveHistory() {
+    dispatch(CalcHistoryActions.addCalcToHistoryRequest(calcState));
+    navigation.navigate('Home');
+  }
+
+  const dispatch = useDispatch();
   return (
     <>
       <StatusBar
@@ -32,9 +40,7 @@ const Result = ({ navigation }) => {
           <ResultBox>
             <ResultText>{calcState.results[0].value} animais</ResultText>
           </ResultBox>
-          <Link onPress={() => navigation.navigate('Home')}>
-            Ir para a tela inicial
-          </Link>
+          <Link onPress={handleSaveHistory}>Ir para a tela inicial</Link>
         </Container>
       </ContainerBackground>
     </>

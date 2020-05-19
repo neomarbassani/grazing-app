@@ -8,17 +8,23 @@ import Container from '../../layout/App/Container';
 import Title from '../../components/Title';
 import SubTitle from '../../components/SubTitle';
 import ChooseItemButton from '../../components/ChooseItemButton';
+import CalcRoutesTop from '../../components/CalcRoutesTop';
 
 import { Content, ContentToSelect } from './styles';
 
 const SupplementSupplyQuantity = ({ navigation }) => {
   const TitleOfPage = useSelector((state) => state.calc.calc.value);
+  const RouteCalcLabel = useSelector((state) => state.calc.calc.name);
+  const RouteAnimalLabel = useSelector((state) => state.calc.animal.value);
 
   const dispatch = useDispatch();
+
+  const items = [RouteCalcLabel, RouteAnimalLabel];
 
   return (
     <Container>
       <Title size={24} value={TitleOfPage} />
+      <CalcRoutesTop items={items} />
       <Content>
         <SubTitle value="Tipo de pastagem" size={16} />
         <ContentToSelect>

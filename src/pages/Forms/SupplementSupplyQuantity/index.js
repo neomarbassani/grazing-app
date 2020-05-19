@@ -12,14 +12,21 @@ import Title from '../../../components/Title';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
 import MaskedInput from '../../../components/MaskedInput';
+import CalcRoutesTop from '../../../components/CalcRoutesTop';
 
 import { supplementQuantityCalc } from '../../../services/calcs';
 
 const SupplementSupplyQuantity = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const title = useSelector((state) => state.calc.calc.value);
+  const RouteCalcLabel = useSelector((state) => state.calc.calc.name);
+  const RouteAnimalLabel = useSelector((state) => state.calc.animal.value);
+  const RoutePastureLabel = useSelector((state) => state.calc.pasture.value);
+
   const formRef = useRef(null);
   const dispatch = useDispatch();
+
+  const items = [RouteCalcLabel, RouteAnimalLabel, RoutePastureLabel];
 
   async function handleSubmit(calcData) {
     setLoading(true);
@@ -100,9 +107,21 @@ const SupplementSupplyQuantity = ({ navigation }) => {
       setLoading(false);
     }
   }
+
+  function focusInput(field) {
+    const focusInputField = formRef.current.getFieldRef(field);
+
+    if (typeof focusInputField.focus === 'function') {
+      focusInputField.focus();
+    } else {
+      focusInputField.getElement().focus();
+    }
+  }
   return (
     <Container>
-      <Title value={title} size={24} mb={20} />
+      <Title value={title} size={24} />
+      <CalcRoutesTop items={items} />
+
       <Form ref={formRef} onSubmit={handleSubmit}>
         <MaskedInput
           name="start_date"
@@ -112,36 +131,47 @@ const SupplementSupplyQuantity = ({ navigation }) => {
           options={{
             format: 'DD/MM/YYYY',
           }}
+          onSubmitEditing={() => focusInput('animals_quantity')}
+          returnKeyType="next"
         />
         <Input
           keyboardType="number-pad"
           name="animals_quantity"
           label="Número de animais"
           placeholder="Digite o numero de animais"
+          onSubmitEditing={() => focusInput('weigth')}
+          returnKeyType="next"
         />
         <Input
           keyboardType="number-pad"
           name="weigth"
           label="Peso medio dos animais"
           placeholder="Digite o peso médio dos animais em kilogramas"
+          onSubmitEditing={() => focusInput('grazing_height')}
+          returnKeyType="next"
         />
         <Input
           keyboardType="number-pad"
           name="grazing_height"
           label="Altura da pastagem"
           placeholder="Digite a altura da pastagem em centimetros"
+          onSubmitEditing={() => focusInput('number_of_tracks')}
+          returnKeyType="next"
         />
         <Input
           keyboardType="number-pad"
           name="number_of_tracks"
           label="Numero de faixas"
           placeholder="Digite o numero de faixas"
+          onSubmitEditing={() => focusInput('days_of_stay')}
+          returnKeyType="next"
         />
         <Input
           keyboardType="number-pad"
           name="days_of_stay"
           label="Dias de permanecias"
           placeholder="Digite a quantidade de dias de permanencia"
+          returnKeyType="done"
         />
       </Form>
       <Button

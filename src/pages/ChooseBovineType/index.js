@@ -7,17 +7,22 @@ import Container from '../../layout/App/Container';
 import Title from '../../components/Title';
 import SubTitle from '../../components/SubTitle';
 import ChooseItemButton from '../../components/ChooseItemButton';
+import CalcRoutesTop from '../../components/CalcRoutesTop';
 
 import { Content, ContentToSelect } from './styles';
 
 const ChoosePastureType = ({ navigation }) => {
   const TitleOfPage = useSelector((state) => state.calc.calc.value);
+  const RouteCalcLabel = useSelector((state) => state.calc.calc.name);
 
   const dispatch = useDispatch();
+
+  const items = [RouteCalcLabel];
 
   return (
     <Container>
       <Title size={24} value={TitleOfPage} />
+      <CalcRoutesTop items={items} />
       <Content>
         <SubTitle value="Bovino de leite" size={16} />
         <ContentToSelect>
