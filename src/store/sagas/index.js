@@ -1,4 +1,4 @@
-import { all, takeLatest, spawn } from 'redux-saga/effects';
+import { all, takeLatest, fork } from 'redux-saga/effects';
 
 import { AuthTypes } from '../ducks/auth';
 import { CalcHistoryTypes } from '../ducks/calcHistory';
@@ -19,7 +19,7 @@ import { startWatchingNetworkConnectivity } from './offline';
 
 export default function* rootSaga() {
   return yield all([
-    spawn(startWatchingNetworkConnectivity),
+    fork(startWatchingNetworkConnectivity),
     takeLatest('persist/REHYDRATE', setToken),
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
     takeLatest(AuthTypes.SIGN_UP_REQUEST, signUp),

@@ -13,9 +13,6 @@ import { Content, ContentToSelect } from './styles';
 
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
-  const historic = useSelector((state) => state.calcHistory);
-
-  console.log(historic);
 
   return (
     <Container>

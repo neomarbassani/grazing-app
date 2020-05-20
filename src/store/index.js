@@ -17,7 +17,7 @@ import rootSaga from './sagas';
 
 const transformerConfig = {
   whitelistPerReducer: {
-    reducer: ['auth', 'calcHistory'],
+    reducer: ['auth', 'calcHistory', 'offline'],
   },
 };
 
