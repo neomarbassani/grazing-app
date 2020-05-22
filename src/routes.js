@@ -17,6 +17,7 @@ import Profile from './pages/Profile';
 import ChooseBovineType from './pages/ChooseBovineType';
 import ChoosePastureType from './pages/ChoosePastureType';
 import Result from './pages/Result';
+import Offline from './pages/Offline';
 
 import SupplementSupplyQuantity from './pages/Forms/SupplementSupplyQuantity';
 
@@ -182,8 +183,26 @@ const App = createBottomTabNavigator(
   },
 );
 
-export default (signedIn, autenticated) =>
-  createAppContainer(
+export default (signedIn, autenticated, isConnected) => {
+  const initialRoute = () => {
+    if (isConnected) {
+      if (signedIn) {
+        if (autenticated) {
+          return 'App';
+        }
+        return 'PhoneConfirmation';
+      }
+      return 'Auth';
+    }
+
+    if (signedIn && autenticated) {
+      return 'App';
+    }
+
+    return 'Offline';
+  };
+
+  return createAppContainer(
     createSwitchNavigator(
       {
         Auth: {
@@ -196,13 +215,11 @@ export default (signedIn, autenticated) =>
           path: 'app',
         },
         Result,
+        Offline,
       },
       {
-        initialRouteName: signedIn
-          ? autenticated
-            ? 'App'
-            : 'PhoneConfirmation'
-          : 'Auth',
+        initialRouteName: initialRoute(),
       },
     ),
   );
+};
