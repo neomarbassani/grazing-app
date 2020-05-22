@@ -8,6 +8,7 @@ export const Container = styled.View`
   border-radius: 5px;
   align-items: center;
   justify-content: space-around;
+  margin-top: 20px;
 `;
 
 export const Text = styled.Text`

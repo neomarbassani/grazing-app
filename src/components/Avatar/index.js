@@ -15,7 +15,7 @@ const Avatar = ({ size, round, mr, ...rest }) => {
       {...rest}
       source={
         (user.profile_photo && {
-          uri: `${user.profile_photo}?time=${new Date()}`,
+          uri: `${user.profile_photo}?updated_at=${user.updated_at}`,
         }) ||
         profilePhotoPlaceholder
       }
