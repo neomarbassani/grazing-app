@@ -6,13 +6,18 @@ import {
   seamlessImmutableTransformCreator,
 } from 'redux-persist-seamless-immutable';
 import createSagaMiddleware from 'redux-saga';
+import {
+  suspendSaga,
+  offlineMiddleware,
+  consumeActionMiddleware,
+} from 'redux-offline-queue';
 
 import rootReducer from './ducks';
 import rootSaga from './sagas';
 
 const transformerConfig = {
   whitelistPerReducer: {
-    reducer: ['auth'],
+    reducer: ['auth', 'calcHistory', 'offline'],
   },
 };
 
@@ -29,7 +34,11 @@ const middlewares = [];
 
 const sagaMiddleware = createSagaMiddleware();
 
-middlewares.push(sagaMiddleware);
+middlewares.push(offlineMiddleware());
+
+middlewares.push(suspendSaga(sagaMiddleware));
+
+middlewares.push(consumeActionMiddleware());
 
 const composer = compose(applyMiddleware(...middlewares));
 

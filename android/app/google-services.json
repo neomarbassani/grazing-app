@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1032387309195",
+    "firebase_url": "https://grazing-1b290.firebaseio.com",
+    "project_id": "grazing-1b290",
+    "storage_bucket": "grazing-1b290.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032387309195:android:0511d36b880c8d7e14ee8e",
+        "android_client_info": {
+          "package_name": "com.grazing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1032387309195-9log9ckqn3siv3riv847tu4liqgm0hrb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.grazing",
+            "certificate_hash": "e210ab1b86ea5f5d58c624f03263b87cfedc8c67"
+          }
+        },
+        {
+          "client_id": "1032387309195-v8fbghmcvusva2ds9j3ir254iv62qaht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkKBUKTDmAMW6ZMx4u95QFfPMti4k0HiI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1032387309195-v8fbghmcvusva2ds9j3ir254iv62qaht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,13 +1,15 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { useSelector } from 'react-redux';
 
 import createRouter from './routes';
 
 export default function App() {
-  const signed = useSelector((state) => state.auth.signed);
-  console.log(signed);
+  const { signed, autenticated } = useSelector((state) => state.auth);
 
-  const Routes = createRouter();
+  const prefix = Platform.OS === 'ios' ? 'grazing://' : 'grazing://grazing/';
 
-  return <Routes />;
+  const Routes = createRouter(signed, autenticated);
+
+  return <Routes uriPrefix={prefix} />;
 }
