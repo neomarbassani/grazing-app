@@ -44,8 +44,8 @@ def flipper_post_install(installer)
   end
 end
 
-target 'grazing' do
-  # Pods for grazing
+target 'Grazing' do
+  # Pods for Grazing
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -77,7 +77,7 @@ target 'grazing' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  target 'grazingTests' do
+  target 'GrazingTests' do
     inherit! :complete
     # Pods for testing
   end
@@ -94,10 +94,10 @@ target 'grazing' do
   end
 end
 
-target 'grazing-tvOS' do
-  # Pods for grazing-tvOS
+target 'Grazing-tvOS' do
+  # Pods for Grazing-tvOS
 
-  target 'grazing-tvOSTests' do
+  target 'Grazing-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

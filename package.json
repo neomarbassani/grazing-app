@@ -1,5 +1,5 @@
 {
-  "name": "grazing",
+  "name": "Grazing",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,6 +10,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "react": "16.11.0",
+    "react-native": "0.62.2",
     "@react-native-community/async-storage": "^1.10.3",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-native-community/netinfo": "^5.9.0",
@@ -22,8 +24,6 @@
     "axios": "^0.19.2",
     "lottie-react-native": "^3.4.0",
     "polished": "^3.6.3",
-    "react": "16.9.0",
-    "react-native": "0.61.5",
     "react-native-confirmation-code-field": "^6.1.1",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-image-picker": "^2.3.1",
@@ -47,14 +47,14 @@
     "yup": "^0.29.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/runtime": "^7.9.6",
-    "@react-native-community/eslint-config": "^1.1.0",
-    "babel-jest": "^26.0.1",
-    "eslint": "^7.0.0",
-    "jest": "^26.0.1",
-    "metro-react-native-babel-preset": "^0.59.0",
-    "react-test-renderer": "16.13.1"
+    "@babel/core": "^7.6.2",
+    "@babel/runtime": "^7.6.2",
+    "@react-native-community/eslint-config": "^0.0.5",
+    "babel-jest": "^24.9.0",
+    "eslint": "^6.5.1",
+    "jest": "^24.9.0",
+    "metro-react-native-babel-preset": "^0.58.0",
+    "react-test-renderer": "16.11.0"
   },
   "jest": {
     "preset": "react-native"
