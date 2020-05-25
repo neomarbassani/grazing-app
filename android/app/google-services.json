@@ -1,42 +1,50 @@
 {
   "project_info": {
-    "project_number": "1032387309195",
-    "firebase_url": "https://grazing-1b290.firebaseio.com",
-    "project_id": "grazing-1b290",
-    "storage_bucket": "grazing-1b290.appspot.com"
+    "project_number": "24583892743",
+    "firebase_url": "https://grazing-168bd.firebaseio.com",
+    "project_id": "grazing-168bd",
+    "storage_bucket": "grazing-168bd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1032387309195:android:0511d36b880c8d7e14ee8e",
+        "mobilesdk_app_id": "1:24583892743:android:7cf58f2b0c45749a109fa2",
         "android_client_info": {
-          "package_name": "com.grazing"
+          "package_name": "com.agenciarazzo.grazing"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1032387309195-9log9ckqn3siv3riv847tu4liqgm0hrb.apps.googleusercontent.com",
+          "client_id": "24583892743-5ltl5f4t7sjqkn3anthpntd379vnnqm9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.grazing",
-            "certificate_hash": "e210ab1b86ea5f5d58c624f03263b87cfedc8c67"
+            "package_name": "com.agenciarazzo.grazing",
+            "certificate_hash": "0a75357e1d3a508271332a504fc858b277afd8ca"
           }
         },
         {
-          "client_id": "1032387309195-v8fbghmcvusva2ds9j3ir254iv62qaht.apps.googleusercontent.com",
+          "client_id": "24583892743-j5rdrq9dovdirnfcl84mvtvhgch3fva7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.agenciarazzo.grazing",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "24583892743-shn65gsvgaeph4grr0ps2mnh95k5rva1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAkKBUKTDmAMW6ZMx4u95QFfPMti4k0HiI"
+          "current_key": "AIzaSyBRweMvDpEbzjcQHeNXTg-0_UvviSXmfBM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1032387309195-v8fbghmcvusva2ds9j3ir254iv62qaht.apps.googleusercontent.com",
+              "client_id": "24583892743-shn65gsvgaeph4grr0ps2mnh95k5rva1.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
