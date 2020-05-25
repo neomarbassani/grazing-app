@@ -13,7 +13,7 @@ import {
   updateProfilePhoto,
 } from './auth';
 
-import { saveCalcToHistory } from './calcHistory';
+import { saveCalcToHistory, saveOfflineCalcs } from './calcHistory';
 
 import { startWatchingNetworkConnectivity } from './offline';
 
@@ -28,5 +28,9 @@ export default function* rootSaga() {
     takeLatest(AuthTypes.EDIT_REQUEST, editUserData),
     takeLatest(AuthTypes.UPDATE_PHOTO_REQUEST, updateProfilePhoto),
     takeLatest(CalcHistoryTypes.ADD_CALC_TO_HISTORY_REQUEST, saveCalcToHistory),
+    takeLatest(
+      CalcHistoryTypes.ADD_OFFLINE_CALC_TO_HISTORY_REQUEST,
+      saveOfflineCalcs,
+    ),
   ]);
 }

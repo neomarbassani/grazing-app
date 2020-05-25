@@ -6,12 +6,12 @@ import Title from '../../components/Title';
 import HistoricFilter from '../../components/HistoricFilter';
 import HistoricFlatlist from '../../components/HistoricFlatlist';
 
-const Profile = () => {
+const Profile = ({ navigation }) => {
   return (
     <Container>
       <Title size={24} value="Histórico" />
       <HistoricFilter />
-      <HistoricFlatlist />
+      <HistoricFlatlist navigation={navigation} />
     </Container>
   );
 };
