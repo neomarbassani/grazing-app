@@ -7,14 +7,13 @@ import { colors } from '../../styles';
 export const Container = styled.View`
   margin-top: 20px;
   flex-direction: row;
-  width: 55%;
+  width: 45%;
   justify-content: space-between;
   align-items: center;
-  padding: 0 10px;
 `;
 
 export const InputPicker = styled(Picker)`
-  width: 100%;
+  width: 110%;
   height: 42px;
   color: ${colors.placeholder};
   background-color: transparent;
@@ -24,5 +23,5 @@ export const InputFieldItem = styled(Picker.Item)``;
 
 export const InputPickerIcon = styled(Icon)`
   position: absolute;
-  right: 5px;
+  right: 0%;
 `;

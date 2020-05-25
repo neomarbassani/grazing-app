@@ -7,6 +7,7 @@ export const Container = styled.KeyboardAvoidingView`
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
   z-index: 0;
+  justify-content: flex-start;
 `;
 
 export const ScroolView = styled.ScrollView`

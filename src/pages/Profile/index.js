@@ -47,13 +47,18 @@ const Profile = () => {
         name: Yup.string()
           .min(3, 'Insira seu nome')
           .max(200, 'Insira seu nome'),
+
         email: Yup.string().email('Insira um e-mail válido.'),
+
         phone: Yup.string()
           .min(10, 'Telefone é obrigatório')
           .max(11, 'Telefone é obrigatório'),
+
         current_password: Yup.string()
           .min(6, 'No mínimo 6 caracteres')
-          .nullable(),
+          .nullable()
+          .default(() => null),
+
         new_password: Yup.string()
           .min(6, 'No mínimo 6 caracteres')
           .when('current_password', (current_password, field) =>
@@ -61,9 +66,18 @@ const Profile = () => {
               ? field.required('Insira sua nova senha')
               : field,
           ),
-        new_password_confirmation: Yup.string().oneOf(
-          [Yup.ref('new_password'), null],
-          'Senhas não conferem',
+
+        new_password_confirmation: Yup.string().when(
+          'current_password',
+          (current_password, field) =>
+            current_password !== null
+              ? field
+                  .oneOf(
+                    [Yup.ref('new_password')],
+                    'As senhas devem ser iguais',
+                  )
+                  .required('Confirme sua senha')
+              : field,
         ),
       });
 
@@ -99,7 +113,7 @@ const Profile = () => {
 
       Alert.alert('Sucesso', 'Foto de perfil alterada com sucesso');
     } catch (error) {
-      Alert.alert('Error', 'Ocorreu algum erro ,tente novamente mais tarde.');
+      Alert.alert('Error', 'Ocorreu algum erro,tente novamente mais tarde.');
     }
   }
 
