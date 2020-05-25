@@ -17,10 +17,7 @@ export function* saveCalcToHistory({ calcState }) {
       },
     ]);
 
-    console.log(response.data);
-
-    // yield put(CalcHistoryActions.addCalcToHistorySuccess(response.data[0]));
-    console.log('ok');
+    console.log(response.data[0]);
   } catch (err) {
     yield put(CalcHistoryActions.addCalcToHistoryFailure());
     console.log('error');

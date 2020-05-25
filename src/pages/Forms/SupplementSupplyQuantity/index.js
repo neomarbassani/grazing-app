@@ -34,7 +34,9 @@ const SupplementSupplyQuantity = ({ navigation }) => {
       formRef.current.setErrors({});
 
       const schema = Yup.object().shape({
-        start_date: Yup.string().required('Insira uma data de início'),
+        start_date: Yup.date('Insira uma data válida').required(
+          'Insira uma data de início',
+        ),
         animals_quantity: Yup.number().required(
           'Insira a quantidade de animais',
         ),

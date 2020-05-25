@@ -9,6 +9,7 @@ export const Container = styled.View`
   flex-wrap: wrap;
   margin-bottom: 10px;
 `;
+
 export const Text = styled.Text`
   font-family: 'WorkSans-Bold';
   font-size: 14px;
