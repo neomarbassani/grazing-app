@@ -39,7 +39,7 @@ const HistoricFlatlist = ({ navigation }) => {
 
   const getHistoric = async () => {
     const response = await api.get(
-      `history?perPage=2&page=${page}&grouped=true`,
+      `history?perPage=10&page=${page}&grouped=true`,
     );
 
     return response.data.data;
