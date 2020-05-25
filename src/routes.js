@@ -18,6 +18,7 @@ import ChooseBovineType from './pages/ChooseBovineType';
 import ChoosePastureType from './pages/ChoosePastureType';
 import Result from './pages/Result';
 import Offline from './pages/Offline';
+import HistoricItemDetails from './pages/HistoricItemDetails';
 
 import SupplementSupplyQuantity from './pages/Forms/SupplementSupplyQuantity';
 
@@ -40,6 +41,29 @@ function InittialNavigationOptions({ navigation }) {
   return {
     headerRight: () => <Avatar size={38} mr={10} />,
     headerTitle: () => <NavigationHeaderLogo size={38} />,
+    headerStyle: {
+      backgroundColor: '#fff',
+      elevation: 0,
+      borderBottomWidth: 0,
+      shadowOpacity: 0,
+    },
+    shownHeader: false,
+    transitionSpec: {
+      open: config,
+      close: config,
+    },
+  };
+}
+
+function HistoricNavigationOptions({ navigation }) {
+  return {
+    headerRight: () => <Avatar size={38} mr={10} />,
+    headerBackImage: () => (
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <Icon size={26} name="arrow-left" />
+      </TouchableOpacity>
+    ),
+    headerTitle: () => null,
     headerStyle: {
       backgroundColor: '#fff',
       elevation: 0,
@@ -77,25 +101,6 @@ function NavOpts({ navigation }) {
   };
 }
 
-function NavOptsHistory({ navigation }) {
-  return {
-    headerRight: () => <Avatar size={38} mr={10} />,
-    headerBackImage: () => null,
-    headerTitle: () => null,
-    headerStyle: {
-      backgroundColor: '#fff',
-      elevation: 0,
-      borderBottomWidth: 0,
-      shadowOpacity: 0,
-    },
-    shownHeader: false,
-    transitionSpec: {
-      open: config,
-      close: config,
-    },
-  };
-}
-
 const Auth = createSwitchNavigator({
   Login,
   NewPassword: {
@@ -104,6 +109,17 @@ const Auth = createSwitchNavigator({
   },
   RecoveryPassword,
   Register,
+});
+
+const HistoricRoutes = createStackNavigator({
+  Historic: {
+    screen: Historic,
+    navigationOptions: HistoricNavigationOptions,
+  },
+  HistoricItemDetails: {
+    screen: HistoricItemDetails,
+    navigationOptions: HistoricNavigationOptions,
+  },
 });
 
 const App = createBottomTabNavigator(
@@ -128,13 +144,8 @@ const App = createBottomTabNavigator(
         },
       }),
     },
-    Histórico: {
-      screen: createStackNavigator({
-        Historic: {
-          screen: Historic,
-          navigationOptions: NavOptsHistory,
-        },
-      }),
+    Historico: {
+      screen: HistoricRoutes,
     },
     Perfil: {
       screen: Profile,
@@ -149,7 +160,7 @@ const App = createBottomTabNavigator(
 
         if (routeName === 'Início') {
           iconName = 'home';
-        } else if (routeName === 'Histórico') {
+        } else if (routeName === 'Historico') {
           iconName = 'file-text';
         } else if (routeName === 'Perfil') {
           iconName = 'user';

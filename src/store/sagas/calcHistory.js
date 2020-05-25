@@ -5,7 +5,7 @@ import CalcHistoryActions from '../../store/ducks/calcHistory';
 
 export function* saveCalcToHistory({ calcState }) {
   try {
-    const response = yield call(api.post, 'history', [
+    yield call(api.post, 'history', [
       {
         config: {
           calc: calcState.calc,
@@ -16,8 +16,20 @@ export function* saveCalcToHistory({ calcState }) {
         results: calcState.results,
       },
     ]);
+  } catch (err) {
+    yield put(CalcHistoryActions.addCalcToHistoryFailure());
+  }
+}
 
-    console.log(response.data[0]);
+export function* saveOfflineCalcs({ calcState }) {
+  try {
+    yield put(
+      CalcHistoryActions.addOfflineCalcToHistorySuccess({
+        calcState,
+      }),
+    );
+
+    console.log('ok');
   } catch (err) {
     yield put(CalcHistoryActions.addCalcToHistoryFailure());
     console.log('error');

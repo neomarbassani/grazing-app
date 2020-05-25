@@ -5,6 +5,8 @@ import { markActionsOffline } from 'redux-offline-queue';
 const { Types, Creators } = createActions({
   addCalcToHistoryRequest: ['calcState'],
   addCalcToHistorySuccess: ['calcResponse'],
+  addOfflineCalcToHistoryRequest: ['calcState'],
+  addOfflineCalcToHistorySuccess: ['calcState'],
   addCalcToHistoryFailure: [],
 });
 
@@ -25,21 +27,32 @@ export const addCalcRequest = (state) =>
     loading: true,
   });
 
+export const addOfflineCalcRequest = (state) =>
+  state.merge({
+    loading: true,
+  });
+
 export const addCalcFailure = (state) =>
   state.merge({
     loading: false,
   });
 
-export const addCalcSuccess = (state, { calcResponse }) =>
-  state
-    .update('calcHistory', (calcHistory) => [...calcHistory, calcResponse])
-    .merge({
-      loading: false,
-    });
+export const addOfflineCalcSuccess = (state, { calcState }) =>
+  state.merge({
+    loading: false,
+    calcHistory: calcState,
+  });
+
+export const addCalcSuccess = (state) =>
+  state.merge({
+    loading: false,
+  });
 
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.ADD_CALC_TO_HISTORY_REQUEST]: addCalcRequest,
   [Types.ADD_CALC_TO_HISTORY_SUCCESS]: addCalcSuccess,
   [Types.ADD_CALC_TO_HISTORY_FAILURE]: addCalcFailure,
+  [Types.ADD_OFFLINE_CALC_TO_HISTORY_REQUEST]: addOfflineCalcRequest,
+  [Types.ADD_OFFLINE_CALC_TO_HISTORY_SUCCESS]: addOfflineCalcSuccess,
 });

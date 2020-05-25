@@ -15,7 +15,7 @@ export const DateGroup = styled.Text`
 
 export const Group = styled.View``;
 
-export const Item = styled.View`
+export const Item = styled.TouchableOpacity`
   height: 70px;
   flex-direction: row;
   align-items: center;
@@ -91,4 +91,13 @@ export const ResultTextContent = styled.Text`
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
+`;
+
+export const NoContentText = styled.Text`
+  font-family: 'WorkSans';
+  font-size: 18px;
+
+  color: #774d37;
+  align-self: center;
+  margin-top: 20px;
 `;
