@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 
-import { colors } from '../../styles';
+import {colors} from '../../styles';
+import {TextInputMask} from 'react-native-masked-text';
 
 export const Container = styled.View`
   margin-bottom: 45px;
@@ -43,4 +44,12 @@ export const InputError = styled.Text`
   font-style: normal;
   font-size: 12px;
   color: ${colors.error};
+`;
+export const InputFieldMask = styled(TextInputMask)`
+  width: 100%;
+  height: 42px;
+  border: none;
+  background-color: transparent;
+  color: ${colors.placeholder};
+  font-family: 'WorkSans-Regular';
 `;

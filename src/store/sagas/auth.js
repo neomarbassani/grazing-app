@@ -1,18 +1,19 @@
-import { Alert } from 'react-native';
+import {Alert} from 'react-native';
 
-import { call, put } from 'redux-saga/effects';
+import {call, put} from 'redux-saga/effects';
 
 import api from '../../services/api';
 import AuthActions from '../../store/ducks/auth';
+import auth from '@react-native-firebase/auth';
 
-export function* signIn({ email, password }) {
+export function* signIn({email, password}) {
   try {
     const response = yield call(api.post, 'me', {
       email,
       password,
     });
 
-    const { token, user } = response.data;
+    const {token, user} = response.data;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
@@ -25,9 +26,10 @@ export function* signIn({ email, password }) {
 
 export function* signUp(data) {
   try {
+    console.log(data);
     const response = yield call(api.post, 'user', data.userData);
 
-    const { token, user } = response.data;
+    const {token, user} = response.data;
 
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
@@ -38,19 +40,25 @@ export function* signUp(data) {
   }
 }
 
-export function setToken({ payload }) {
+export function setToken({payload}) {
   if (!payload) {
     return;
   }
 
-  const { token } = payload.auth;
+  const {token} = payload.auth;
 
   if (token) {
     api.defaults.headers.Authorization = `Bearer ${token}`;
   }
 }
 
-export function signOut() {}
+export function* signOut() {
+  try {
+    yield auth().signOut();
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 export function* userAutentication() {
   yield put(AuthActions.autenticationSucess());

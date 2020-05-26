@@ -1,17 +1,16 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Form } from '@unform/mobile';
-import { Scope } from '@unform/core';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useRef, useEffect, useState} from 'react';
+import {Form} from '@unform/mobile';
+import {Scope} from '@unform/core';
+import {useDispatch, useSelector} from 'react-redux';
 
 import * as Yup from 'yup';
 
-import { Container } from '../../layout/Auth';
-import { AddressFields } from './styles';
+import {Container} from '../../layout/Auth';
+import {AddressFields} from './styles';
 
 import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
 import Input from '../../components/Input';
-import MaskedInput from '../../components/MaskedInput';
 import InputPicker from '../../components/InputPicker';
 
 import Link from '../../components/Link';
@@ -21,10 +20,10 @@ import locations from '../../services/locations';
 
 import AuthActions from '../../store/ducks/auth';
 
-export default function Register({ navigation }) {
+export default function Register({navigation}) {
   const dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.auth.loading);
+  const loading = useSelector(state => state.auth.loading);
 
   const formRef = useRef(null);
 
@@ -40,11 +39,10 @@ export default function Register({ navigation }) {
     setStates(statesArray);
   }, []);
 
-  const handleAvailableCities = (stateName) => {
+  const handleAvailableCities = stateName => {
     if (stateName) {
-      const availableCities = locations.find(
-        (state) => state.sigla === stateName,
-      ).cidades;
+      const availableCities = locations.find(state => state.sigla === stateName)
+        .cidades;
 
       setCities(availableCities);
     }
@@ -89,7 +87,7 @@ export default function Register({ navigation }) {
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
+        err.inner.forEach(error => {
           validationErrors[error.path] = error.message;
         });
 
@@ -100,7 +98,12 @@ export default function Register({ navigation }) {
 
   function focusInput(field) {
     const focusInputField = formRef.current.getFieldRef(field);
-    focusInputField.focus();
+
+    if (typeof focusInputField.focus === 'function') {
+      focusInputField.focus();
+    } else {
+      focusInputField.getElement().focus();
+    }
   }
 
   return (
@@ -113,18 +116,22 @@ export default function Register({ navigation }) {
           label="Nome completo"
           placeholder="Seu nome completo"
           returnKeyType="next"
+          blurOnSubmit={false}
           onSubmitEditing={() => focusInput('email')}
         />
         <Input
           name="email"
           type="email"
           label="E-mail"
+          blurOnSubmit={false}
+          returnKeyType="next"
           placeholder="email@exemplo.com.br"
+          onSubmitEditing={() => focusInput('phone')}
         />
-        <MaskedInput
+        <Input
           name="phone"
           label="Telefone"
-          type={'cel-phone'}
+          maskType={'cel-phone'}
           placeholder="(00) 00000-0000"
         />
         <Scope path="address">
@@ -135,7 +142,7 @@ export default function Register({ navigation }) {
               width={40}
               prompt="Escolha um estado"
               selectedValue={selectedState}
-              onValueChange={(value) => {
+              onValueChange={value => {
                 setSelectedState(value);
                 handleAvailableCities(value);
               }}
@@ -146,7 +153,7 @@ export default function Register({ navigation }) {
               width={55}
               prompt="Escolha uma cidade"
               selectedValue={selectedCity}
-              onValueChange={(value) => {
+              onValueChange={value => {
                 setSelectedCity(value);
               }}
             />
@@ -157,6 +164,7 @@ export default function Register({ navigation }) {
           type="password"
           placeholder="*********"
           label="Senha"
+          blurOnSubmit={false}
           returnKeyType="next"
           onSubmitEditing={() => focusInput('passwordConfirmation')}
         />

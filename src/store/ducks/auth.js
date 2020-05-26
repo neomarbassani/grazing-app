@@ -1,8 +1,8 @@
-import { createActions, createReducer } from 'reduxsauce';
+import {createActions, createReducer} from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
 /* Types & Actions Creators */
-const { Types, Creators } = createActions({
+const {Types, Creators} = createActions({
   signInRequest: ['email', 'password'],
   signInSuccess: ['token', 'user'],
   signInFailure: [],
@@ -33,15 +33,15 @@ export const INITIAL_STATE = Immutable({
 });
 
 /* Reducers */
-export const request = (state) => state.merge({ loading: true });
+export const request = state => state.merge({loading: true});
 
-export const successEdit = (state, { user }) =>
+export const successEdit = (state, {user}) =>
   state.merge({
     loading: false,
     user,
   });
 
-export const success = (state, { token, user }) =>
+export const success = (state, {token, user}) =>
   state.merge({
     signed: true,
     loading: false,
@@ -49,9 +49,9 @@ export const success = (state, { token, user }) =>
     user,
   });
 
-export const failure = (state) => state.merge({ loading: false });
+export const failure = state => state.merge({loading: false});
 
-export const logout = (state) =>
+export const logout = state =>
   state.merge({
     token: null,
     signed: false,
@@ -59,10 +59,10 @@ export const logout = (state) =>
     user: {},
   });
 
-export const autenticatedRequest = (state) => state.merge({ loading: true });
+export const autenticatedRequest = state => state.merge({loading: true});
 
-export const autenticatedSucess = (state) =>
-  state.merge({ autenticated: true, loading: false });
+export const autenticatedSucess = state =>
+  state.merge({autenticated: true, loading: false});
 
 /* Reducers to types */
 export const reducer = createReducer(INITIAL_STATE, {

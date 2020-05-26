@@ -1,5 +1,6 @@
 import React from 'react';
 import {Provider} from 'react-redux';
+import {YellowBox} from 'react-native';
 
 import {PersistGate} from 'redux-persist/integration/react';
 
@@ -15,3 +16,6 @@ const Index = () => (
 );
 
 export default Index;
+
+console.disableYellowBox = true;
+YellowBox.ignoreWarnings(['Warning']);

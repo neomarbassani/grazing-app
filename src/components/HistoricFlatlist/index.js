@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { ActivityIndicator } from 'react-native';
+import {ActivityIndicator} from 'react-native';
 
 import {
   Container,
@@ -27,15 +27,15 @@ import cowImage from '../../assets/cow.png';
 
 import CalcHistoryActions from '../../store/ducks/calcHistory';
 
-const HistoricFlatlist = ({ navigation }) => {
+const HistoricFlatlist = ({navigation}) => {
   const [historic, setHistoric] = useState([]);
   const [page, setPage] = useState(1);
 
   const dispatch = useDispatch();
 
-  const { isConnected } = useSelector((state) => state.offline);
+  const {isConnected} = useSelector(state => state.offline);
 
-  const { calcState } = useSelector((state) => state.calcHistory.calcState);
+  const {calcState} = useSelector(state => state.calcHistory);
 
   const getHistoric = async () => {
     const response = await api.get(
@@ -101,10 +101,10 @@ const HistoricFlatlist = ({ navigation }) => {
       // )}
       // onEndReached={handleRefreshHistory}
       // onEndReachedThreshold={0.1}
-      renderItem={({ item }) => (
+      renderItem={({item}) => (
         <Group>
           <DateGroup>{formateDate(item.created_at)}</DateGroup>
-          {item.calcs.map((historicItem) => (
+          {item.calcs.map(historicItem => (
             <Item
               key={historicItem._id}
               onPress={() =>
@@ -130,7 +130,7 @@ const HistoricFlatlist = ({ navigation }) => {
           ))}
         </Group>
       )}
-      keyExtractor={(item) => item.created_at}
+      keyExtractor={item => item.created_at}
     />
   );
 };

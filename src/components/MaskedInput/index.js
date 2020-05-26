@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useField } from '@unform/core';
+import React, {useState, useRef, useEffect} from 'react';
+import {useField} from '@unform/core';
 
-import { Container, InputField, Content, InputError } from './styles';
+import {Container, InputField, Content, InputError} from './styles';
 
 import Label from '../Label';
 
@@ -14,7 +14,7 @@ export default function MaskedInput({
 }) {
   const inputRef = useRef(null);
   const [phone, setPhone] = useState(inittialState);
-  const { fieldName, registerField, defaultValue, error } = useField(name);
+  const {fieldName, registerField, defaultValue, error} = useField(name);
 
   useEffect(() => {
     inputRef.current.value = defaultValue;
@@ -35,7 +35,7 @@ export default function MaskedInput({
       },
 
       setValue(ref, value) {
-        ref.setNativeProps({ text: value });
+        ref.setNativeProps({text: value});
 
         inputRef.current.value = value;
       },

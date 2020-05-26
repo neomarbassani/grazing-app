@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, {useRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { Form } from '@unform/mobile';
+import {Form} from '@unform/mobile';
 import * as Yup from 'yup';
 
-import { Container, ContentBottom, ContentTop } from '../../layout/Auth';
+import {Container, ContentBottom, ContentTop} from '../../layout/Auth';
 
 import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
@@ -14,14 +14,14 @@ import Button from '../../components/Button';
 
 import AuthActions from '../../store/ducks/auth';
 
-export default function SignIn({ navigation }) {
+export default function SignIn({navigation}) {
   const dispatch = useDispatch();
 
   const formRef = useRef(null);
 
-  const loading = useSelector((state) => state.auth.loading);
+  const loading = useSelector(state => state.auth.loading);
 
-  async function handleSubmit({ email, password }) {
+  async function handleSubmit({email, password}) {
     try {
       formRef.current.setErrors({});
 
@@ -34,7 +34,7 @@ export default function SignIn({ navigation }) {
       });
 
       await schema.validate(
-        { email, password },
+        {email, password},
         {
           abortEarly: false,
         },
@@ -45,7 +45,7 @@ export default function SignIn({ navigation }) {
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
+        err.inner.forEach(error => {
           validationErrors[error.path] = error.message;
         });
 
@@ -72,6 +72,7 @@ export default function SignIn({ navigation }) {
             placeholder="email@exemplo.com.br"
             underlineColorAndroid="transparent"
             returnKeyType="next"
+            blurOnSubmit={false}
             onSubmitEditing={() => focusInput('password')}
           />
           <Input

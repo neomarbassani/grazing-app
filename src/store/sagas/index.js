@@ -1,7 +1,7 @@
-import { all, takeLatest, fork } from 'redux-saga/effects';
+import {all, takeLatest, fork} from 'redux-saga/effects';
 
-import { AuthTypes } from '../ducks/auth';
-import { CalcHistoryTypes } from '../ducks/calcHistory';
+import {AuthTypes} from '../ducks/auth';
+import {CalcHistoryTypes} from '../ducks/calcHistory';
 
 import {
   setToken,
@@ -13,9 +13,9 @@ import {
   updateProfilePhoto,
 } from './auth';
 
-import { saveCalcToHistory, saveOfflineCalcs } from './calcHistory';
+import {saveCalcToHistory, saveOfflineCalcs} from './calcHistory';
 
-import { startWatchingNetworkConnectivity } from './offline';
+import {startWatchingNetworkConnectivity} from './offline';
 
 export default function* rootSaga() {
   return yield all([
