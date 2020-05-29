@@ -1,25 +1,36 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import {useSelector} from 'react-redux';
 
-import { Container } from './styles';
+import {Container, ContainerLoading} from './styles';
 
 import profilePhotoPlaceholder from '../../assets/placeholder-profile.png';
+import {TouchableOpacity, ActivityIndicator} from 'react-native';
 
-const Avatar = ({ size, round, mr, ...rest }) => {
-  const user = useSelector((state) => state.auth.user);
+const Avatar = ({size, action, round, mr, loading, ...rest}) => {
+  const user = useSelector(state => state.auth.user);
 
   return (
-    <Container
-      size={size}
-      mr={mr}
-      {...rest}
-      source={
-        (user.profile_photo && {
-          uri: `${user.profile_photo}?updated_at=${user.updated_at}`,
-        }) ||
-        profilePhotoPlaceholder
-      }
-    />
+    <>
+      {loading ? (
+        <ContainerLoading size={size} mr={mr}>
+          <ActivityIndicator size="large" color="#281100" />
+        </ContainerLoading>
+      ) : (
+        <TouchableOpacity onPress={action}>
+          <Container
+            size={size}
+            mr={mr}
+            {...rest}
+            source={
+              (user.profile_photo && {
+                uri: `${user.profile_photo}?updated_at=${user.updated_at}`,
+              }) ||
+              profilePhotoPlaceholder
+            }
+          />
+        </TouchableOpacity>
+      )}
+    </>
   );
 };
 

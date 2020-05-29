@@ -47,7 +47,9 @@ const config = {
 
 function InittialNavigationOptions({navigation}) {
   return {
-    headerRight: () => <Avatar size={38} mr={10} />,
+    headerRight: () => (
+      <Avatar action={() => navigation.navigate('Perfil')} size={38} mr={10} />
+    ),
     headerTitle: () => <NavigationHeaderLogo size={38} />,
     headerStyle: {
       backgroundColor: '#fff',
@@ -65,7 +67,9 @@ function InittialNavigationOptions({navigation}) {
 
 function HistoricNavigationOptions({navigation}) {
   return {
-    headerRight: () => <Avatar size={38} mr={10} />,
+    headerRight: () => (
+      <Avatar action={() => navigation.navigate('Perfil')} size={38} mr={10} />
+    ),
     headerBackImage: () => (
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon size={26} name="arrow-left" />
@@ -88,7 +92,9 @@ function HistoricNavigationOptions({navigation}) {
 
 function NavOpts({navigation}) {
   return {
-    headerRight: () => <Avatar size={38} mr={10} />,
+    headerRight: () => (
+      <Avatar action={() => navigation.navigate('Perfil')} size={38} mr={10} />
+    ),
     headerBackImage: () => (
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Icon size={26} name="arrow-left" />
@@ -128,8 +134,6 @@ const AppStack = () => {
     <Tab.Navigator
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
-          console.log(color);
-
           let iconName;
 
           if (route.name === 'Início') {

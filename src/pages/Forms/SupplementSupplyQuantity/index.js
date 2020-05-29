@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, {useRef, useState} from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { Form } from '@unform/core';
+import {useSelector, useDispatch} from 'react-redux';
+import {Form} from '@unform/core';
 import * as Yup from 'yup';
 
 import CalcActions from '../../../store/ducks/calc';
@@ -14,14 +14,14 @@ import Button from '../../../components/Button';
 import MaskedInput from '../../../components/MaskedInput';
 import CalcRoutesTop from '../../../components/CalcRoutesTop';
 
-import { supplementQuantityCalc } from '../../../services/calcs';
+import {supplementQuantityCalc} from '../../../services/calcs';
 
-const SupplementSupplyQuantity = ({ navigation }) => {
+const SupplementSupplyQuantity = ({navigation}) => {
   const [loading, setLoading] = useState(false);
-  const title = useSelector((state) => state.calc.calc.value);
-  const RouteCalcLabel = useSelector((state) => state.calc.calc.name);
-  const RouteAnimalLabel = useSelector((state) => state.calc.animal.value);
-  const RoutePastureLabel = useSelector((state) => state.calc.pasture.value);
+  const title = useSelector(state => state.calc.calc.value);
+  const RouteCalcLabel = useSelector(state => state.calc.calc.name);
+  const RouteAnimalLabel = useSelector(state => state.calc.animal.value);
+  const RoutePastureLabel = useSelector(state => state.calc.pasture.value);
 
   const formRef = useRef(null);
   const dispatch = useDispatch();
@@ -99,7 +99,7 @@ const SupplementSupplyQuantity = ({ navigation }) => {
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
+        err.inner.forEach(error => {
           validationErrors[error.path] = error.message;
         });
 
@@ -148,7 +148,7 @@ const SupplementSupplyQuantity = ({ navigation }) => {
           keyboardType="number-pad"
           name="weigth"
           label="Peso medio dos animais"
-          placeholder="Digite o peso médio dos animais em kilogramas"
+          placeholder="Digite o peso médio dos animais em kg"
           onSubmitEditing={() => focusInput('grazing_height')}
           returnKeyType="next"
         />
@@ -156,7 +156,7 @@ const SupplementSupplyQuantity = ({ navigation }) => {
           keyboardType="number-pad"
           name="grazing_height"
           label="Altura da pastagem"
-          placeholder="Digite a altura da pastagem em centimetros"
+          placeholder="Digite a altura da pastagem em cm"
           onSubmitEditing={() => focusInput('number_of_tracks')}
           returnKeyType="next"
         />

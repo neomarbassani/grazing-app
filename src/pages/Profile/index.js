@@ -1,10 +1,10 @@
-import React, { useRef } from 'react';
-import { Alert } from 'react-native';
+import React, {useRef} from 'react';
+import {Alert} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import { Form } from '@unform/mobile';
+import {Form} from '@unform/mobile';
 import * as Yup from 'yup';
 
 import AuthActions from '../../store/ducks/auth';
@@ -30,14 +30,12 @@ import {
 } from './styles';
 
 const Profile = () => {
-  const user = useSelector((state) => state.auth.user);
+  const user = useSelector(state => state.auth.user);
   const formRef = useRef(null);
-
-  console.log(user);
 
   const dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.auth.loading);
+  const loading = useSelector(state => state.auth.loading);
 
   async function handleSubmit(userData) {
     try {
@@ -90,7 +88,7 @@ const Profile = () => {
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
+        err.inner.forEach(error => {
           validationErrors[error.path] = error.message;
         });
 
@@ -101,24 +99,14 @@ const Profile = () => {
 
   async function sendPhoto(data) {
     try {
-      const body = new FormData();
-
-      body.append('profile_photo', {
-        uri: data.uri,
-        type: data.type,
-      });
-
-      console.log(body);
-      dispatch(AuthActions.updatePhotoRequest(body, user._id));
-
-      Alert.alert('Sucesso', 'Foto de perfil alterada com sucesso');
+      dispatch(AuthActions.updatePhotoRequest(data, user._id));
     } catch (error) {
       Alert.alert('Error', 'Ocorreu algum erro,tente novamente mais tarde.');
     }
   }
 
   function takePhoto() {
-    ImagePicker.launchCamera({}, (res) => {
+    ImagePicker.launchCamera({}, res => {
       if (!res.didCancel) {
         sendPhoto(res);
       }
@@ -126,7 +114,7 @@ const Profile = () => {
   }
 
   function selectPhoto() {
-    ImagePicker.launchImageLibrary({}, (res) => {
+    ImagePicker.launchImageLibrary({}, res => {
       if (!res.didCancel) {
         sendPhoto(res);
       }
@@ -168,7 +156,7 @@ const Profile = () => {
     <Container>
       <TopContent>
         <PhotoContainer>
-          <Avatar size={120} />
+          <Avatar loading={loading} size={120} />
           <ChangePhotoButton onPress={() => changePhoto()}>
             <Icon name="camera" size={16} color="#ffffff" />
           </ChangePhotoButton>

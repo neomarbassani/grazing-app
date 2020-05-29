@@ -1,9 +1,9 @@
-import { call, put } from 'redux-saga/effects';
+import {call, put} from 'redux-saga/effects';
 
 import api from '../../services/api';
 import CalcHistoryActions from '../../store/ducks/calcHistory';
 
-export function* saveCalcToHistory({ calcState }) {
+export function* saveCalcToHistory({calcState}) {
   try {
     yield call(api.post, 'history', [
       {
@@ -21,15 +21,13 @@ export function* saveCalcToHistory({ calcState }) {
   }
 }
 
-export function* saveOfflineCalcs({ calcState }) {
+export function* saveOfflineCalcs({calcState}) {
   try {
     yield put(
       CalcHistoryActions.addOfflineCalcToHistorySuccess({
         calcState,
       }),
     );
-
-    console.log('ok');
   } catch (err) {
     yield put(CalcHistoryActions.addCalcToHistoryFailure());
     console.log('error');

@@ -26,7 +26,6 @@ export function* signIn({email, password}) {
 
 export function* signUp(data) {
   try {
-    console.log(data);
     const response = yield call(api.post, 'user', data.userData);
 
     const {token, user} = response.data;
@@ -85,26 +84,28 @@ export function* editUserData(data) {
     Alert.alert('Sucesso', 'Alteração concluida com sucesso!');
   } catch (error) {
     yield put(AuthActions.editFailure());
-    console.log(data.userData.name);
-
     Alert.alert('Erro', 'Houve um erro na alteração , verifique seus dados');
   }
 }
 
 export function* updateProfilePhoto(data) {
   try {
-    const profile_photo = data.photo._parts[0][1];
+    const body = new FormData();
 
-    console.log(profile_photo);
+    body.append('_id', data.id);
 
-    const response = yield call(api.put, 'user/profile-photo', {
-      _id: data.id,
-      profile_photo,
+    body.append('profile_photo', {
+      uri: data.photo.uri,
+      type: data.photo.type,
+      name: data.photo.fileName,
     });
 
-    Alert.alert('Sucesso', 'Foto de perfil alterada com sucesso');
-    yield put(AuthActions.successEdit(response.data));
+    const response = yield call(api.put, 'user/profile-photo', body);
+
+    //Alert.alert('Sucesso', 'Foto de perfil alterada com sucesso');
+    yield put(AuthActions.updatePhotoSuccess(response.data.user));
   } catch (error) {
+    console.log(error);
     yield put(AuthActions.editFailure());
 
     Alert.alert(
