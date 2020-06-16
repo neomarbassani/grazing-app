@@ -5,16 +5,16 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import * as Yup from 'yup';
 
-import {Container} from '../../layout/Auth';
-import {AddressFields} from './styles';
+import Container from '../../layout/Auth';
+import {Logo, FormArea} from './styles';
 
 import Title from '../../components/Title';
-import LogoHeader from '../../components/LogoHeader';
 import Input from '../../components/Input';
 import InputPicker from '../../components/InputPicker';
-
 import Link from '../../components/Link';
 import Button from '../../components/Button';
+
+import logo from '../../assets/logoHorizontal.png';
 
 import locations from '../../services/locations';
 
@@ -108,34 +108,34 @@ export default function Register({navigation}) {
 
   return (
     <Container>
-      <LogoHeader />
-      <Title value="Criar uma conta" size={24} mb={16} />
+      <Logo source={logo} />
+      <Title value="Criar uma nova conta" size={16} mb={16} />
       <Form ref={formRef} onSubmit={handleSubmit}>
-        <Input
-          name="name"
-          label="Nome completo"
-          placeholder="Seu nome completo"
-          returnKeyType="next"
-          blurOnSubmit={false}
-          onSubmitEditing={() => focusInput('email')}
-        />
-        <Input
-          name="email"
-          type="email"
-          label="E-mail"
-          blurOnSubmit={false}
-          returnKeyType="next"
-          placeholder="email@exemplo.com.br"
-          onSubmitEditing={() => focusInput('phone')}
-        />
-        <Input
-          name="phone"
-          label="Telefone"
-          maskType={'cel-phone'}
-          placeholder="(00) 00000-0000"
-        />
-        <Scope path="address">
-          <AddressFields>
+        <FormArea>
+          <Input
+            name="name"
+            label="Nome completo"
+            placeholder="Seu nome completo"
+            returnKeyType="next"
+            blurOnSubmit={false}
+            onSubmitEditing={() => focusInput('email')}
+          />
+          <Input
+            name="email"
+            type="email"
+            label="E-mail"
+            blurOnSubmit={false}
+            returnKeyType="next"
+            placeholder="email@exemplo.com.br"
+            onSubmitEditing={() => focusInput('phone')}
+          />
+          <Input
+            name="phone"
+            label="Telefone"
+            maskType={'cel-phone'}
+            placeholder="(00) 00000-0000"
+          />
+          <Scope path="address">
             <InputPicker
               label="Estado"
               data={states}
@@ -157,35 +157,36 @@ export default function Register({navigation}) {
                 setSelectedCity(value);
               }}
             />
-          </AddressFields>
-        </Scope>
-        <Input
-          name="password"
-          type="password"
-          placeholder="*********"
-          label="Senha"
-          blurOnSubmit={false}
-          returnKeyType="next"
-          onSubmitEditing={() => focusInput('passwordConfirmation')}
-        />
-        <Input
-          name="passwordConfirmation"
-          type="password"
-          placeholder="*********"
-          label="Confirmar Senha"
-        />
+          </Scope>
+          <Input
+            name="password"
+            type="password"
+            placeholder="*********"
+            label="Senha"
+            blurOnSubmit={false}
+            returnKeyType="next"
+            onSubmitEditing={() => focusInput('passwordConfirmation')}
+          />
+          <Input
+            name="passwordConfirmation"
+            type="password"
+            placeholder="*********"
+            label="Confirmar Senha"
+          />
+        </FormArea>
       </Form>
 
       <Link
         content="Já tenho uma conta"
         mb={24}
-        mt={24}
+        mt={20}
         onPress={() => navigation.navigate('Login')}
       />
       <Button
         content="Criar conta"
         loading={loading}
         onPress={() => formRef.current.submitForm()}
+        mb={16}
       />
     </Container>
   );

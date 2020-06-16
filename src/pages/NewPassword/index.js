@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { Alert } from 'react-native';
-import { Form } from '@unform/mobile';
+import React, {useRef, useState} from 'react';
+import {Alert} from 'react-native';
+import {Form} from '@unform/mobile';
 
 import * as Yup from 'yup';
 
-import { Container, ContentBottom, ContentTop } from '../../layout/Auth';
+import Container from '../../layout/Auth';
 
 import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
@@ -13,11 +13,11 @@ import Button from '../../components/Button';
 
 import api from '../../services/api';
 
-export default function SignIn({ navigation }) {
+export default function SignIn({navigation}) {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
 
-  const { token } = navigation.state.params;
+  /* const {token} = navigation.state.params; */
 
   async function handleSubmit(data) {
     setLoading(true);
@@ -37,10 +37,10 @@ export default function SignIn({ navigation }) {
         abortEarly: false,
       });
 
-      await api.post('user/recover-password', {
+      /* await api.post('user/recover-password', {
         token,
         password: data.password,
-      });
+      }); */
 
       Alert.alert('Sucesso', 'Senha alterada com sucesso', [
         {
@@ -54,13 +54,13 @@ export default function SignIn({ navigation }) {
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
+        err.inner.forEach(error => {
           validationErrors[error.path] = error.message;
         });
 
         formRef.current.setErrors(validationErrors);
       }
-      Alert.alert('Erro', 'Erro ao alterar senha, tente novamente', []);
+      Alert.alert('Erro', 'Erro ao alterar senha, tente novamente');
       setLoading(false);
     }
   }
@@ -72,34 +72,32 @@ export default function SignIn({ navigation }) {
 
   return (
     <Container>
-      <ContentTop>
-        <LogoHeader />
-        <Title value="Nova senha" size={24} mb={16} />
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input
-            name="password"
-            type="password"
-            placeholder="*********"
-            label="Nova senha"
-            returnKeyType="next"
-            onSubmitEditing={() => focusInput('passwordConfirmation')}
-          />
-          <Input
-            name="passwordConfirmation"
-            type="password"
-            placeholder="*********"
-            label="Confirmar nova senha"
-          />
-        </Form>
-      </ContentTop>
-
-      <ContentBottom>
-        <Button
-          content="Salvar nova senha"
-          onPress={() => formRef.current.submitForm()}
-          loading={loading}
+      <LogoHeader mt={50} mb={40} />
+      <Title value="Criar nova senha" size={14} mb={16} />
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <Input
+          name="password"
+          type="password"
+          placeholder="*********"
+          label="Nova senha"
+          returnKeyType="next"
+          onSubmitEditing={() => focusInput('passwordConfirmation')}
         />
-      </ContentBottom>
+        <Input
+          name="passwordConfirmation"
+          type="password"
+          placeholder="*********"
+          label="Confirmar nova senha"
+        />
+      </Form>
+
+      <Button
+        content="Salvar nova senha"
+        onPress={() => formRef.current.submitForm()}
+        loading={loading}
+        mt="auto"
+        mb={16}
+      />
     </Container>
   );
 }
