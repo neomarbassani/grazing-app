@@ -16,9 +16,17 @@ export const Content = styled.View`
   align-items: center;
   padding: 0 12px 0 12px;
   background: #ffffff;
-  border: 1px solid #e6e6e6;
+  border: 2px solid #d9d9d9;
   border-radius: 5px;
   width: 100%;
+`;
+
+export const Label = styled.Text`
+  font-family: 'WorkSans-Bold';
+  font-size: 16px;
+  line-height: 19px;
+  color: #281100;
+  margin-bottom: 7px;
 `;
 
 export const ToogleVisility = styled.TouchableOpacity`

@@ -9,9 +9,8 @@ import {
   Content,
   InputError,
   InputFieldMask,
+  Label,
 } from './styles';
-
-import Label from '../Label';
 
 export default function Input({label, type, name, next, maskType, ...rest}) {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
@@ -65,8 +64,11 @@ export default function Input({label, type, name, next, maskType, ...rest}) {
             includeRawValueInChangeText={true}
             type={maskType}
             value={mask}
-            onChangeText={e => {
-              setMask(e);
+            onChangeText={value => {
+              setMask(value);
+              if (inputRef.current) {
+                inputRef.current.value = value;
+              }
             }}
             {...rest}
           />
