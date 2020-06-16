@@ -1,6 +1,6 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { StatusBar } from 'react-native';
+import {useSelector, useDispatch} from 'react-redux';
+import {StatusBar} from 'react-native';
 
 import backgroundResult from '../../assets/backgroundResult.png';
 import logoResults from '../../assets/logoResults.png';
@@ -17,8 +17,8 @@ import {
   Link,
 } from './styles';
 
-const Result = ({ navigation }) => {
-  const calcState = useSelector((state) => state.calc);
+const Result = ({navigation}) => {
+  const calcState = useSelector(state => state.calc);
 
   function handleSaveHistory() {
     dispatch(CalcHistoryActions.addCalcToHistoryRequest(calcState));

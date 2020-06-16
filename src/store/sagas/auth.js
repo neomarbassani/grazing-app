@@ -35,6 +35,7 @@ export function* signUp(data) {
     yield put(AuthActions.signUpSuccess(token, user));
   } catch (err) {
     Alert.alert('Erro', 'Houve um erro no cadastro, verifique seus dados');
+
     yield put(AuthActions.signUpFailure());
   }
 }
