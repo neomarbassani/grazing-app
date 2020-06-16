@@ -11,7 +11,6 @@ import Container from '../../../layout/App/Container';
 import Title from '../../../components/Title';
 import Input from '../../../components/Input';
 import Button from '../../../components/Button';
-import MaskedInput from '../../../components/MaskedInput';
 import CalcRoutesTop from '../../../components/CalcRoutesTop';
 
 import {supplementQuantityCalc} from '../../../services/calcs';
@@ -125,11 +124,11 @@ const SupplementSupplyQuantity = ({navigation}) => {
       <CalcRoutesTop items={items} />
 
       <Form ref={formRef} onSubmit={handleSubmit}>
-        <MaskedInput
+        <Input
           name="start_date"
           label="Início do pastoreio"
           placeholder="20/10/2020"
-          type={'datetime'}
+          maskedType={'datetime'}
           options={{
             format: 'DD/MM/YYYY',
           }}

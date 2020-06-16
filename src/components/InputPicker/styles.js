@@ -1,14 +1,14 @@
 import styled from 'styled-components/native';
-import { Picker } from '@react-native-community/picker';
+import {Picker} from '@react-native-community/picker';
 import Icon from 'react-native-vector-icons/Feather';
 
-import { colors } from '../../styles';
+import {colors} from '../../styles';
 
 export const Container = styled.View`
   margin-bottom: 45px;
   align-items: flex-start;
   height: 42px;
-  width: ${(props) => (props.width ? props.width : 0)}%;
+  width: ${props => (props.width ? props.width : 0)}%;
 `;
 
 export const Content = styled.View`
@@ -20,6 +20,14 @@ export const Content = styled.View`
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
+`;
+
+export const Label = styled.Text`
+  font-family: 'WorkSans-Bold';
+  font-size: 16px;
+  line-height: 19px;
+  color: #888899;
+  margin-bottom: 7px;
 `;
 
 export const InputField = styled(Picker)`

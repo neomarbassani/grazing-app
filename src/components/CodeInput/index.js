@@ -1,12 +1,12 @@
-import React, { useRef, useEffect } from 'react';
-import { useField } from '@unform/core';
+import React, {useRef, useEffect} from 'react';
+import {useField} from '@unform/core';
 
-import { NumberInput } from './styles';
+import {NumberInput} from './styles';
 
-const Input = ({ name, ...rest }) => {
+const Input = ({name, ...rest}) => {
   const inputRef = useRef(null);
 
-  const { fieldName, registerField, defaultValue, error } = useField(name);
+  const {fieldName, registerField, defaultValue, error} = useField(name);
 
   useEffect(() => {
     inputRef.current.value = defaultValue;
@@ -27,7 +27,7 @@ const Input = ({ name, ...rest }) => {
       },
 
       setValue(ref, value) {
-        ref.setNativeProps({ text: value });
+        ref.setNativeProps({text: value});
 
         inputRef.current.value = value;
       },
@@ -46,7 +46,7 @@ const Input = ({ name, ...rest }) => {
       ref={inputRef}
       defaultValue={defaultValue}
       placeholderTextColor="#c4c4c4"
-      onChangeText={(value) => {
+      onChangeText={value => {
         if (inputRef.current) {
           inputRef.current.value = value;
         }

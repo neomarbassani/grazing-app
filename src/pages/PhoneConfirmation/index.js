@@ -13,13 +13,12 @@ import {
 } from 'react-native-confirmation-code-field';
 
 import {Container, ContentBottom, ContentTop} from '../../layout/Auth';
-import {Input, BoxCodeField, VerificationCodeArea} from './styles';
+import {Input, BoxCodeField, VerificationCodeArea, Label} from './styles';
 
 import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
 import Link from '../../components/Link';
 import Button from '../../components/Button';
-import Label from '../../components/Label';
 
 const CELL_COUNT = 6;
 

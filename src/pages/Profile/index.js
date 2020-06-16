@@ -14,7 +14,6 @@ import Icon from 'react-native-vector-icons/Feather';
 import Container from '../../layout/App/Container';
 
 import Input from '../../components/Input';
-import MaskedInput from '../../components/MaskedInput';
 import Button from '../../components/Button';
 import Link from '../../components/Link';
 import Avatar from '../../components/Avatar';
@@ -189,10 +188,10 @@ const Profile = () => {
             underlineColorAndroid="transparent"
             returnKeyType="next"
           />
-          <MaskedInput
+          <Input
             name="phone"
             label="Telefone"
-            type={'cel-phone'}
+            maskedType={'cel-phone'}
             underlineColorAndroid="transparent"
             returnKeyType="done"
             inittialState={user.phone}

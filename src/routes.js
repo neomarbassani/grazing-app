@@ -9,8 +9,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import Wellcome from './pages/Wellcome';
 import Login from './pages/SignIn';
 import PhoneConfirmation from './pages/PhoneConfirmation';
-/* import RecoveryPassword from './pages/RecoveryPassword';
-import NewPassword from './pages/NewPassword';
+import RecoveryPassword from './pages/RecoveryPassword';
+/* import NewPassword from './pages/NewPassword';
 import Register from './pages/Register'; */
 import Home from './pages/Home';
 import Historic from './pages/Historic';
@@ -125,8 +125,8 @@ const WellcomeStack = () => {
       <Stack.Screen name="Wellcome" component={Wellcome} />
       <Stack.Screen name="Login" component={Login} />
       {/* <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="NewPassword" component={NewPassword} />
-      <Stack.Screen name="RecoveryPassword" component={RecoveryPassword} /> */}
+      <Stack.Screen name="NewPassword" component={NewPassword} /> */}
+      <Stack.Screen name="RecoveryPassword" component={RecoveryPassword} />
     </Stack.Navigator>
   );
 };
