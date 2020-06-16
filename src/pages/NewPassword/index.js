@@ -13,11 +13,13 @@ import Button from '../../components/Button';
 
 import api from '../../services/api';
 
-export default function SignIn({navigation}) {
+export default function SignIn({navigation, route}) {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
 
-  /* const {token} = navigation.state.params; */
+  const {token} = route.params;
+
+  console.log(token);
 
   async function handleSubmit(data) {
     setLoading(true);
@@ -37,10 +39,10 @@ export default function SignIn({navigation}) {
         abortEarly: false,
       });
 
-      /* await api.post('user/recover-password', {
+      await api.post('user/recovery-password', {
         token,
         password: data.password,
-      }); */
+      });
 
       Alert.alert('Sucesso', 'Senha alterada com sucesso', [
         {

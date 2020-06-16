@@ -222,7 +222,7 @@ const HistoricStack = () => {
   );
 };
 
-export default function Routes({isConnected, signed, autenticated}) {
+export default function Routes({isConnected, signed, autenticated, linking}) {
   const initialRoute = () => {
     if (signed) {
       if (autenticated) {
@@ -242,7 +242,7 @@ export default function Routes({isConnected, signed, autenticated}) {
   };
 
   return (
-    <NavigationContainer ref={navigationRef}>
+    <NavigationContainer ref={navigationRef} linking={linking}>
       {isConnected ? initialRoute() : initialRouteConnected()}
     </NavigationContainer>
   );
