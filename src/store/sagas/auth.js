@@ -6,10 +6,10 @@ import api from '../../services/api';
 import AuthActions from '../../store/ducks/auth';
 import auth from '@react-native-firebase/auth';
 
-export function* signIn({email, password}) {
+export function* signIn({phone, password}) {
   try {
     const response = yield call(api.post, 'me', {
-      email,
+      phone,
       password,
     });
 

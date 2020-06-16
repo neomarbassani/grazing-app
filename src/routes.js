@@ -41,8 +41,8 @@ const config = {
     damping: 500,
     mass: 3,
     overshootClamping: true,
-    restDisplacementThreshold: 0.01,
-    restSpeedThreshold: 0.01,
+    restDisplacementThreshold: 0.1,
+    restSpeedThreshold: 0.1,
   },
 };
 

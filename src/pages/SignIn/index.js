@@ -20,26 +20,24 @@ export default function SignIn({navigation}) {
 
   const loading = useSelector(state => state.auth.loading);
 
-  async function handleSubmit({email, password}) {
+  async function handleSubmit({phone, password}) {
     try {
       formRef.current.setErrors({});
 
       const schema = Yup.object().shape({
-        email: Yup.string()
-          .email('Insira um e-mail válido.')
-          .required('Um e-mail é obrigatório'),
+        phone: Yup.string().required('Um telefone é obrigatório'),
 
         password: Yup.string().required('Informe sua senha'),
       });
 
       await schema.validate(
-        {email, password},
+        {phone, password},
         {
           abortEarly: false,
         },
       );
 
-      dispatch(AuthActions.signInRequest(email, password));
+      dispatch(AuthActions.signInRequest(phone, password));
     } catch (err) {
       const validationErrors = {};
 

@@ -12,7 +12,7 @@ import {
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
 
-import {Container, ContentBottom, ContentTop} from '../../layout/Auth';
+import Container from '../../layout/Auth';
 import {Input, BoxCodeField, VerificationCodeArea, Label} from './styles';
 
 import Title from '../../components/Title';
@@ -67,36 +67,34 @@ export default function SignIn({navigation}) {
 
   return (
     <Container>
-      <ContentTop>
-        <LogoHeader />
-        <Title value="Confirmar acesso" size={24} mb={16} />
+      <LogoHeader mt={50} mb={40} />
+      <Title value="Confirmar acesso" size={14} mb={16} />
 
-        <VerificationCodeArea>
-          <Label>Código</Label>
-          <BoxCodeField
-            ref={ref}
-            {...props}
-            value={value}
-            onChangeText={setValue}
-            cellCount={CELL_COUNT}
-            keyboardType="number-pad"
-            renderCell={({index, symbol, isFocused}) => (
-              <Input key={index} onLayout={getCellOnLayoutHandler(index)}>
-                {symbol || (isFocused ? <Cursor /> : null)}
-              </Input>
-            )}
-          />
-        </VerificationCodeArea>
-        <Link content="Não recebi o código" disabled color="#D69D2B" mt={15} />
-      </ContentTop>
-
-      <ContentBottom>
-        <Button
-          content="Entrar"
-          loading={loading}
-          onPress={() => confirmCode()}
+      <VerificationCodeArea>
+        <Label>Código</Label>
+        <BoxCodeField
+          ref={ref}
+          {...props}
+          value={value}
+          onChangeText={setValue}
+          cellCount={CELL_COUNT}
+          keyboardType="number-pad"
+          renderCell={({index, symbol, isFocused}) => (
+            <Input key={index} onLayout={getCellOnLayoutHandler(index)}>
+              {symbol || (isFocused ? <Cursor /> : null)}
+            </Input>
+          )}
         />
-      </ContentBottom>
+      </VerificationCodeArea>
+      <Link content="Não recebi o código" disabled color="#D69D2B" mt={15} />
+
+      <Button
+        mt="auto"
+        mb={16}
+        content="Entrar"
+        loading={loading}
+        onPress={() => confirmCode()}
+      />
     </Container>
   );
 }

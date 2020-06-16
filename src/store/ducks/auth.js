@@ -3,7 +3,7 @@ import Immutable from 'seamless-immutable';
 
 /* Types & Actions Creators */
 const {Types, Creators} = createActions({
-  signInRequest: ['email', 'password'],
+  signInRequest: ['phone', 'password'],
   signInSuccess: ['token', 'user'],
   signInFailure: [],
   autenticationSucess: [],
