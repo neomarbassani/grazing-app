@@ -89,7 +89,6 @@ export default function SignIn({navigation}) {
         mb={16}
         content="Recuperar Senha"
         onPress={() => formRef.current.submitForm()}
-        /* onPress={() => navigation.navigate('NewPassword')} */
         loading={loading}
       />
     </Container>

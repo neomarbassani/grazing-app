@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useEffect} from 'react';
 import {Alert} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
@@ -35,6 +35,12 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const loading = useSelector(state => state.auth.loading);
+
+  const userId = user._id;
+
+  useEffect(() => {
+    dispatch(AuthActions.getMeRequest(userId));
+  }, [dispatch, user._id, userId]);
 
   async function handleSubmit(userData) {
     try {

@@ -6,6 +6,9 @@ const {Types, Creators} = createActions({
   signInRequest: ['phone', 'password'],
   signInSuccess: ['token', 'user'],
   signInFailure: [],
+  getMeRequest: ['userId'],
+  getMeSuccess: ['user'],
+  getMeFailure: [],
   autenticationSucess: [],
   autenticationRequest: [],
   signUpRequest: ['userData'],
@@ -49,6 +52,12 @@ export const success = (state, {token, user}) =>
     user,
   });
 
+export const getMeSuccess = (state, {user}) =>
+  state.merge({
+    loading: false,
+    user,
+  });
+
 export const failure = state => state.merge({loading: false});
 
 export const logout = state =>
@@ -69,6 +78,9 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.SIGN_IN_REQUEST]: request,
   [Types.SIGN_IN_SUCCESS]: success,
   [Types.SIGN_IN_FAILURE]: failure,
+  [Types.GET_ME_REQUEST]: request,
+  [Types.GET_ME_SUCCESS]: getMeSuccess,
+  [Types.GET_ME_FAILURE]: failure,
   [Types.SIGN_UP_REQUEST]: request,
   [Types.SIGN_UP_SUCCESS]: success,
   [Types.SIGN_UP_FAILURE]: failure,

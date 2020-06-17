@@ -24,6 +24,20 @@ export function* signIn({phone, password}) {
   }
 }
 
+export function* getMe({userId}) {
+  console.log(userId);
+  try {
+    const response = yield call(api.get, `user/${userId}`);
+
+    const user = response.data;
+
+    yield put(AuthActions.getMeSuccess(user));
+  } catch (err) {
+    Alert.alert('Erro', 'Houve um erro no login, verifique seus dados');
+    yield put(AuthActions.signInFailure());
+  }
+}
+
 export function* signUp(data) {
   try {
     const response = yield call(api.post, 'user', data.userData);

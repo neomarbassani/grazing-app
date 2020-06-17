@@ -25,6 +25,8 @@ import SupplementSupplyQuantity from './pages/Forms/SupplementSupplyQuantity';
 
 import Avatar from './components/Avatar';
 import NavigationHeaderLogo from './components/NavigationHeaderLogo';
+import TabBar from './components/TabBar';
+
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import {NavigationContainer} from '@react-navigation/native';
@@ -133,44 +135,7 @@ const WellcomeStack = () => {
 
 const AppStack = () => {
   return (
-    <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-
-          if (route.name === 'Início') {
-            iconName = 'home';
-          } else if (route.name === 'Historico') {
-            iconName = 'file-text';
-          } else if (route.name === 'Perfil') {
-            iconName = 'user';
-          }
-
-          return <Icon name={iconName} size={25} color={color} />;
-        },
-      })}
-      tabBarOptions={{
-        activeTintColor: '#D09776',
-        inactiveTintColor: '#fff',
-        style: {
-          backgroundColor: '#281100',
-          height: 50,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderTopWidth: 0,
-        },
-        labelStyle: {
-          fontFamily: 'Ubuntu',
-          fontSize: 12,
-          fontWeight: 'bold',
-          alignItems: 'center',
-          marginTop: 'auto',
-          marginBottom: 'auto',
-        },
-        keyboardHidesTabBar: true,
-        labelPosition: 'beside-icon',
-        showIcon: true,
-      }}>
+    <Tab.Navigator tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="Início" component={InicioStack} />
       <Tab.Screen name="Historico" component={HistoricStack} />
       <Tab.Screen name="Perfil" component={Profile} />

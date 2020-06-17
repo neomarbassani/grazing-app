@@ -11,6 +11,7 @@ import {
   userAutentication,
   editUserData,
   updateProfilePhoto,
+  getMe,
 } from './auth';
 
 import {saveCalcToHistory, saveOfflineCalcs} from './calcHistory';
@@ -23,6 +24,7 @@ export default function* rootSaga() {
     takeLatest('persist/REHYDRATE', setToken),
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signIn),
     takeLatest(AuthTypes.SIGN_UP_REQUEST, signUp),
+    takeLatest(AuthTypes.GET_ME_REQUEST, getMe),
     takeLatest(AuthTypes.SIGN_OUT, signOut),
     takeLatest(AuthTypes.AUTENTICATION_REQUEST, userAutentication),
     takeLatest(AuthTypes.EDIT_REQUEST, editUserData),
