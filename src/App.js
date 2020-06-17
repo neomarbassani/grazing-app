@@ -10,7 +10,7 @@ export default function App() {
   const {isConnected} = useSelector(state => state.offline);
 
   const linking = {
-    prefixes: ['https://grazing.com', 'grazing://'],
+    prefixes: ['http://agenciarazzo.grazing', 'grazing://'],
     config: {
       NewPassword: 'new-password/:token',
     },

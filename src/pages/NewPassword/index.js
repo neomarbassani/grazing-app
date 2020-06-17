@@ -39,7 +39,7 @@ export default function SignIn({navigation, route}) {
         abortEarly: false,
       });
 
-      await api.post('user/recovery-password', {
+      await api.post('user/recover-password', {
         token,
         password: data.password,
       });

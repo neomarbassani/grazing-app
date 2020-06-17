@@ -35,7 +35,7 @@ export default function SignIn({navigation}) {
 
       await api.post('user/forgot-password', {
         email: data.email,
-        device: Platform.OS,
+        device: 'mobile',
       });
 
       setLoading(false);
@@ -88,8 +88,8 @@ export default function SignIn({navigation}) {
       <Button
         mb={16}
         content="Recuperar Senha"
-        /* onPress={() => formRef.current.submitForm()} */
-        onPress={() => navigation.navigate('NewPassword')}
+        onPress={() => formRef.current.submitForm()}
+        /* onPress={() => navigation.navigate('NewPassword')} */
         loading={loading}
       />
     </Container>
