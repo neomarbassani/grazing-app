@@ -4,6 +4,7 @@ export const Container = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   background: ${props => (props.color ? props.color : '#d69d2b')};
+  opacity: ${props => (props.disabled ? 0.7 : 1)};
   border-radius: 5px;
   width: 100%;
   height: 56px;

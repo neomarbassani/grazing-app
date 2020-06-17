@@ -31,10 +31,23 @@ export const BottomBoxText = styled.Text`
   color: #774d37;
 `;
 
-export const Separator = styled.View`
+export const Pagination = styled.View`
+  flex-direction: row;
+  margin: 16px 0 8px 0;
+`;
+
+export const ActiveDot = styled.View`
   width: 45px;
   height: 5px;
   background: #d69d2b;
   border-radius: 166.667px;
-  margin: 16px 0 8px 0;
+  margin-right: 10px;
+`;
+
+export const InactiveDot = styled.View`
+  width: 5px;
+  height: 5px;
+  background: #f0f0f0;
+  border-radius: 166.667px;
+  margin-right: 10px;
 `;
