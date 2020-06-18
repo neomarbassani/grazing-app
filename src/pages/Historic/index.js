@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Container from '../../layout/App/Container';
+import Container from '../../layout/App';
 
 import Title from '../../components/Title';
 import HistoricFilter from '../../components/HistoricFilter';

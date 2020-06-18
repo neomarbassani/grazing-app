@@ -1,27 +1,37 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import CalcActions from '../../store/ducks/calc';
 
-import Container from '../../layout/App/Container';
+import Container from '../../layout/App';
 
 import Title from '../../components/Title';
-import SubTitle from '../../components/SubTitle';
 import ChooseItemButton from '../../components/ChooseItemButton';
-import FreePlanBox from '../../components/FreePlanBox';
+import ProgressBar from '../../components/ProgressBar';
+import Link from '../../components/Link';
 
-import { Content, ContentToSelect } from './styles';
+import {Content, FreePlanBox, FreePlanBoxText} from './styles';
 
-const Home = ({ navigation }) => {
+const Home = ({navigation}) => {
   const dispatch = useDispatch();
 
   return (
-    <Container>
-      <Title size={24} value="Realizar novo cálculo" />
-      <Content>
-        <SubTitle value="Pastoreio rotativo" size={16} />
-        <ContentToSelect>
+    <>
+      <Container>
+        <ProgressBar size={12.5} />
+        <Title size={19} mb={10} value="Soluções Grazing" />
+        <Content
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingLeft: 30,
+            paddingRight: 30,
+            paddingBottom: 35,
+          }}>
           <ChooseItemButton
-            content="Número de animais no sistema"
+            content="Ajustar lotação animal"
             onPress={() => {
               navigation.navigate('ChooseBovineType');
 
@@ -34,7 +44,20 @@ const Home = ({ navigation }) => {
             }}
           />
           <ChooseItemButton
-            content="Número de dias dos animais nas faixas"
+            content="Dimensionar área do potreiro"
+            onPress={() => {
+              navigation.navigate('ChooseBovineType');
+
+              dispatch(
+                CalcActions.setCalcConfig({
+                  name: 'Pastoreio rotativo',
+                  value: 'Número de animais no sistema',
+                }),
+              );
+            }}
+          />
+          <ChooseItemButton
+            content="Fornecer suplemento"
             onPress={() => {
               navigation.navigate('ChooseBovineType');
 
@@ -47,7 +70,7 @@ const Home = ({ navigation }) => {
             }}
           />
           <ChooseItemButton
-            content="Número total de faixas"
+            content="Calcular números de piquetes"
             onPress={() => {
               navigation.navigate('ChooseBovineType');
 
@@ -60,7 +83,7 @@ const Home = ({ navigation }) => {
             }}
           />
           <ChooseItemButton
-            content="Quantidade de ração"
+            content="Definir período de ocupação"
             onPress={() => {
               navigation.navigate('ChooseBovineType');
 
@@ -72,65 +95,13 @@ const Home = ({ navigation }) => {
               );
             }}
           />
-          <ChooseItemButton
-            content="Área do potreiro"
-            onPress={() => {
-              navigation.navigate('ChooseBovineType');
-
-              dispatch(
-                CalcActions.setCalcConfig({
-                  name: 'Pastoreio rotativo',
-                  value: 'Área do potreiro',
-                }),
-              );
-            }}
-          />
-        </ContentToSelect>
-        <SubTitle value="Pastoreio continuo" size={16} />
-        <ContentToSelect>
-          <ChooseItemButton
-            content="Dimensionar tamanho do potreiro"
-            onPress={() => {
-              navigation.navigate('ChooseBovineType');
-
-              dispatch(
-                CalcActions.setCalcConfig({
-                  name: 'Pastoreio continuo',
-                  value: 'Dimensionar tamanho do potreiro',
-                }),
-              );
-            }}
-          />
-          <ChooseItemButton
-            content="Quantidade de suplemento"
-            onPress={() => {
-              navigation.navigate('ChooseBovineType');
-
-              dispatch(
-                CalcActions.setCalcConfig({
-                  name: 'Pastoreio continuo',
-                  value: 'Quantidade de suplemento',
-                }),
-              );
-            }}
-          />
-          <ChooseItemButton
-            content="Ajustar locatação"
-            onPress={() => {
-              navigation.navigate('ChooseBovineType');
-
-              dispatch(
-                CalcActions.setCalcConfig({
-                  name: 'Pastoreio continuo',
-                  value: 'Ajustar locatação',
-                }),
-              );
-            }}
-          />
-        </ContentToSelect>
-      </Content>
-      <FreePlanBox />
-    </Container>
+          <FreePlanBox>
+            <FreePlanBoxText>Você tem 30 dias grátis</FreePlanBoxText>
+            <Link content="Assinar plano agora" color="#D69D2B" />
+          </FreePlanBox>
+        </Content>
+      </Container>
+    </>
   );
 };
 

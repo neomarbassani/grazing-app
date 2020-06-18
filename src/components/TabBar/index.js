@@ -8,8 +8,7 @@ import home from '../../assets/home.png';
 import profile from '../../assets/profile.png';
 import sendMessage from '../../assets/sendMessage.png';
 
-const TabBar = ({state, descriptors, navigation}) => {
-  console.log(state.routeNames[state.index]);
+const TabBar = ({state, navigation}) => {
   return (
     <Container resizeMode="cover">
       <Page disabled>

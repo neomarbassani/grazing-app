@@ -11,7 +11,7 @@ import AuthActions from '../../store/ducks/auth';
 
 import Icon from 'react-native-vector-icons/Feather';
 
-import Container from '../../layout/App/Container';
+import Container from '../../layout/App';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';

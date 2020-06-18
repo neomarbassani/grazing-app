@@ -1,7 +1,5 @@
 import styled from 'styled-components/native';
 
-import {colors} from '../../styles';
-
 export const Text = styled.Text`
   font-family: 'WorkSans-Bold';
   font-weight: bold;
@@ -11,5 +9,4 @@ export const Text = styled.Text`
   margin-bottom: ${props => (props.mb ? props.mb : 0)}px;
   color: #281100;
   text-align: left;
-  align-self: flex-start;
 `;

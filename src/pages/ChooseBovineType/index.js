@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import CalcActions from '../../store/ducks/calc';
-import Container from '../../layout/App/Container';
+import Container from '../../layout/App';
 
 import Title from '../../components/Title';
 import SubTitle from '../../components/SubTitle';

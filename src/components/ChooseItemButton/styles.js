@@ -1,21 +1,29 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.TouchableHighlight`
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  border-radius: 5px;
-  width: 48%;
-  height: 64px;
-  border: 2px solid rgba(136, 136, 153, 0.2);
-  margin-top: 10px;
-  padding: 0 10px;
+export const Container = styled.TouchableOpacity`
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+`;
+
+export const ImageBackground = styled.ImageBackground`
+  width: 100%;
+  height: 131px;
+  border-radius: 10px;
 `;
 
 export const Text = styled.Text`
-  font-family: 'WorkSans-Bold';
-  font-size: 13px;
-  line-height: 15px;
+  display: flex;
   text-align: center;
-  color: #888899;
+  text-align-vertical: center;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  font-family: 'WorkSans-Bold';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff;
+  background-color: #00000080;
 `;

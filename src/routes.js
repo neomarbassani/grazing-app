@@ -13,15 +13,15 @@ import RecoveryPassword from './pages/RecoveryPassword';
 import NewPassword from './pages/NewPassword';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import Historic from './pages/Historic';
+/* import Historic from './pages/Historic';
 import Profile from './pages/Profile';
 import ChooseBovineType from './pages/ChooseBovineType';
-import ChoosePastureType from './pages/ChoosePastureType';
+import ChoosePastureType from './pages/ChoosePastureType'; */
 /* import Result from './pages/Result'; */
 import Offline from './pages/Offline';
-import HistoricItemDetails from './pages/HistoricItemDetails';
+/* import HistoricItemDetails from './pages/HistoricItemDetails';
 
-import SupplementSupplyQuantity from './pages/Forms/SupplementSupplyQuantity';
+import SupplementSupplyQuantity from './pages/Forms/SupplementSupplyQuantity'; */
 
 import Avatar from './components/Avatar';
 import NavigationHeaderLogo from './components/NavigationHeaderLogo';
@@ -137,8 +137,8 @@ const AppStack = () => {
   return (
     <Tab.Navigator tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="Início" component={InicioStack} />
-      <Tab.Screen name="Historico" component={HistoricStack} />
-      <Tab.Screen name="Perfil" component={Profile} />
+      {/* <Tab.Screen name="Historico" component={HistoricStack} />
+      <Tab.Screen name="Perfil" component={Profile} /> */}
     </Tab.Navigator>
   );
 };
@@ -149,9 +149,11 @@ const InicioStack = () => {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={InittialNavigationOptions}
+        options={{
+          headerShown: false,
+        }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="ChooseBovineType"
         component={ChooseBovineType}
         options={NavOpts}
@@ -165,7 +167,7 @@ const InicioStack = () => {
         name="SupplementSupplyQuantity"
         component={SupplementSupplyQuantity}
         options={NavOpts}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };
@@ -173,7 +175,7 @@ const InicioStack = () => {
 const HistoricStack = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Historic"
         component={Historic}
         options={HistoricNavigationOptions}
@@ -182,7 +184,7 @@ const HistoricStack = () => {
         name="HistoricItemDetails"
         component={HistoricItemDetails}
         options={HistoricNavigationOptions}
-      />
+      /> */}
     </Stack.Navigator>
   );
 };

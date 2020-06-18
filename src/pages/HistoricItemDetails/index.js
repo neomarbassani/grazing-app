@@ -1,16 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, { useEffect, useState } from 'react';
-import { Container, Field, Label, Title } from './styles';
-import { useSelector } from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {Container, Field, Label, Title} from './styles';
+import {useSelector} from 'react-redux';
 
 import api from '../../services/api';
 
-const HistoricItemDetails = ({ navigation }) => {
+const HistoricItemDetails = ({navigation}) => {
   const [historicItem, setHistoricItem] = useState();
 
-  const { itemId } = navigation.state.params;
+  const {itemId} = navigation.state.params;
 
-  const { isConnected } = useSelector((state) => state.offline);
+  const {isConnected} = useSelector(state => state.offline);
 
   const getHistoricItem = async () => {
     const response = await api.get(`history/${itemId}`);
@@ -33,7 +33,7 @@ const HistoricItemDetails = ({ navigation }) => {
 
       <Title>Inputs</Title>
       {historicItem &&
-        historicItem.inputs.map((item) => (
+        historicItem.inputs.map(item => (
           <>
             <Label>{item.name}</Label>
             <Field>{item.value}</Field>
@@ -42,7 +42,7 @@ const HistoricItemDetails = ({ navigation }) => {
 
       <Title>Resultados</Title>
       {historicItem &&
-        historicItem.results.map((item) => (
+        historicItem.results.map(item => (
           <>
             <Label>{item.name}</Label>
             <Field>{item.value}</Field>
@@ -50,7 +50,7 @@ const HistoricItemDetails = ({ navigation }) => {
         ))}
     </Container>
   ) : (
-    <Title style={{ alignSelf: 'center' }}>Seu dispositivo está offline</Title>
+    <Title style={{alignSelf: 'center'}}>Seu dispositivo está offline</Title>
   );
 };
 

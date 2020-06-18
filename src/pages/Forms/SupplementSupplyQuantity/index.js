@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 
 import CalcActions from '../../../store/ducks/calc';
 
-import Container from '../../../layout/App/Container';
+import Container from '../../../layout/App';
 
 import Title from '../../../components/Title';
 import Input from '../../../components/Input';
