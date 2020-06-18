@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.TouchableOpacity`
-  width: 100%;
+  width: ${props => (props.size ? props.size : 100)}%;
   border-radius: 10px;
   margin-bottom: 10px;
 `;
@@ -15,6 +15,7 @@ export const ImageBackground = styled.ImageBackground`
 export const Text = styled.Text`
   display: flex;
   text-align: center;
+  /* text-align-vertical é referencia à textAlignVertical */
   text-align-vertical: center;
   border-radius: 10px;
   width: 100%;
@@ -26,4 +27,5 @@ export const Text = styled.Text`
   line-height: 19px;
   color: #ffffff;
   background-color: #00000080;
+  padding: 0 10px;
 `;

@@ -13,15 +13,19 @@ import RecoveryPassword from './pages/RecoveryPassword';
 import NewPassword from './pages/NewPassword';
 import Register from './pages/Register';
 import Home from './pages/Home';
-/* import Historic from './pages/Historic';
-import Profile from './pages/Profile';
+/* import Historic from './pages/Historic'; */
+/* import Profile from './pages/Profile'; */
 import ChooseBovineType from './pages/ChooseBovineType';
-import ChoosePastureType from './pages/ChoosePastureType'; */
+import ChooseBovineCategory from './pages/ChooseBovineCategory';
+import AnimalInfo from './pages/AnimalInfo';
+
+import ChoosePastureType from './pages/ChoosePastureType';
 /* import Result from './pages/Result'; */
 import Offline from './pages/Offline';
-/* import HistoricItemDetails from './pages/HistoricItemDetails';
+import ChooseGrazingMethod from './pages/ChooseGrazingMethod';
+/* import HistoricItemDetails from './pages/HistoricItemDetails'; */
 
-import SupplementSupplyQuantity from './pages/Forms/SupplementSupplyQuantity'; */
+import DimensionArea from './pages/Forms/DimensionArea';
 
 import Avatar from './components/Avatar';
 import NavigationHeaderLogo from './components/NavigationHeaderLogo';
@@ -54,31 +58,6 @@ function InittialNavigationOptions({navigation}) {
       <Avatar action={() => navigation.navigate('Perfil')} size={38} mr={10} />
     ),
     headerTitle: () => <NavigationHeaderLogo size={38} />,
-    headerStyle: {
-      backgroundColor: '#fff',
-      elevation: 0,
-      borderBottomWidth: 0,
-      shadowOpacity: 0,
-    },
-    shownHeader: false,
-    transitionSpec: {
-      open: config,
-      close: config,
-    },
-  };
-}
-
-function HistoricNavigationOptions({navigation}) {
-  return {
-    headerRight: () => (
-      <Avatar action={() => navigation.navigate('Perfil')} size={38} mr={10} />
-    ),
-    headerBackImage: () => (
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Icon size={26} name="arrow-left" />
-      </TouchableOpacity>
-    ),
-    headerTitle: () => null,
     headerStyle: {
       backgroundColor: '#fff',
       elevation: 0,
@@ -145,29 +124,24 @@ const AppStack = () => {
 
 const InicioStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Home">
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+      }}>
+      <Stack.Screen name="Home" component={Home} />
       <Stack.Screen
-        name="Home"
-        component={Home}
-        options={{
-          headerShown: false,
-        }}
-      />
-      {/* <Stack.Screen
-        name="ChooseBovineType"
-        component={ChooseBovineType}
-        options={NavOpts}
+        name="ChooseGrazingMethod"
+        component={ChooseGrazingMethod}
       />
       <Stack.Screen
-        name="ChoosePastureType"
-        component={ChoosePastureType}
-        options={NavOpts}
+        name="ChooseBovineCategory"
+        component={ChooseBovineCategory}
       />
-      <Stack.Screen
-        name="SupplementSupplyQuantity"
-        component={SupplementSupplyQuantity}
-        options={NavOpts}
-      /> */}
+      <Stack.Screen name="ChooseBovineType" component={ChooseBovineType} />
+      <Stack.Screen name="AnimalInfo" component={AnimalInfo} />
+      <Stack.Screen name="ChoosePastureType" component={ChoosePastureType} />
+      <Stack.Screen name="DimensionArea" component={DimensionArea} />
     </Stack.Navigator>
   );
 };

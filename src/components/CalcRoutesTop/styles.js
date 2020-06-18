@@ -1,13 +1,12 @@
 import styled from 'styled-components/native';
-import { colors } from '../../styles';
+import {colors} from '../../styles';
 
 export const Container = styled.View`
   flex-direction: row;
   width: 100%;
-  margin-top: 20px;
   align-items: center;
   flex-wrap: wrap;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 `;
 
 export const Text = styled.Text`

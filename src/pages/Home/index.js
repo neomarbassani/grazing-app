@@ -1,7 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {useDispatch} from 'react-redux';
-import CalcActions from '../../store/ducks/calc';
 
 import Container from '../../layout/App';
 
@@ -13,8 +11,6 @@ import Link from '../../components/Link';
 import {Content, FreePlanBox, FreePlanBoxText} from './styles';
 
 const Home = ({navigation}) => {
-  const dispatch = useDispatch();
-
   return (
     <>
       <Container>
@@ -33,66 +29,41 @@ const Home = ({navigation}) => {
           <ChooseItemButton
             content="Ajustar lotação animal"
             onPress={() => {
-              navigation.navigate('ChooseBovineType');
-
-              dispatch(
-                CalcActions.setCalcConfig({
-                  name: 'Pastoreio rotativo',
-                  value: 'Número de animais no sistema',
-                }),
-              );
+              navigation.navigate('ChooseGrazingMethod', {
+                calcName: 'Ajustar lotação animal',
+              });
             }}
           />
           <ChooseItemButton
             content="Dimensionar área do potreiro"
             onPress={() => {
-              navigation.navigate('ChooseBovineType');
-
-              dispatch(
-                CalcActions.setCalcConfig({
-                  name: 'Pastoreio rotativo',
-                  value: 'Número de animais no sistema',
-                }),
-              );
+              navigation.navigate('ChooseGrazingMethod', {
+                calcName: 'Dimensionar área do potreiro',
+              });
             }}
           />
           <ChooseItemButton
             content="Fornecer suplemento"
             onPress={() => {
-              navigation.navigate('ChooseBovineType');
-
-              dispatch(
-                CalcActions.setCalcConfig({
-                  name: 'Pastoreio rotativo',
-                  value: 'Número de dias dos animais nas faixas',
-                }),
-              );
+              navigation.navigate('ChooseGrazingMethod', {
+                calcName: 'Fornecer suplemento',
+              });
             }}
           />
           <ChooseItemButton
             content="Calcular números de piquetes"
             onPress={() => {
-              navigation.navigate('ChooseBovineType');
-
-              dispatch(
-                CalcActions.setCalcConfig({
-                  name: 'Pastoreio rotativo',
-                  value: 'Número total de faixas',
-                }),
-              );
+              navigation.navigate('ChooseGrazingMethod', {
+                calcName: 'Calcular números de piquetes',
+              });
             }}
           />
           <ChooseItemButton
             content="Definir período de ocupação"
             onPress={() => {
-              navigation.navigate('ChooseBovineType');
-
-              dispatch(
-                CalcActions.setCalcConfig({
-                  name: 'Pastoreio rotativo',
-                  value: 'Quantidade de ração',
-                }),
-              );
+              navigation.navigate('ChooseGrazingMethod', {
+                calcName: 'Definir período de ocupação',
+              });
             }}
           />
           <FreePlanBox>

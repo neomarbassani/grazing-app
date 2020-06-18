@@ -1,90 +1,50 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 
-import CalcActions from '../../store/ducks/calc';
 import Container from '../../layout/App';
 
-import Title from '../../components/Title';
 import SubTitle from '../../components/SubTitle';
 import ChooseItemButton from '../../components/ChooseItemButton';
+import ProgressBar from '../../components/ProgressBar';
+import CalcHeader from '../../components/CalcHeader';
 import CalcRoutesTop from '../../components/CalcRoutesTop';
 
-import { Content, ContentToSelect } from './styles';
+import {Content} from './styles';
 
-const ChoosePastureType = ({ navigation }) => {
-  const TitleOfPage = useSelector((state) => state.calc.calc.value);
-  const RouteCalcLabel = useSelector((state) => state.calc.calc.name);
+const ChooseBovineType = ({navigation, route}) => {
+  const {calc} = route.params;
 
-  const dispatch = useDispatch();
-
-  const items = [RouteCalcLabel];
+  const items = [calc.name];
 
   return (
     <Container>
-      <Title size={24} value={TitleOfPage} />
-      <CalcRoutesTop items={items} />
+      <ProgressBar size={37.5} />
+      <CalcHeader />
       <Content>
-        <SubTitle value="Bovino de leite" size={16} />
-        <ContentToSelect>
-          <ChooseItemButton
-            content="Novilha"
-            onPress={() => {
-              navigation.navigate('ChoosePastureType');
-
-              dispatch(
-                CalcActions.setAnimalConfig({
-                  name: 'Bovino de leite',
-                  value: 'Novilha',
-                }),
-              );
-            }}
-          />
-          <ChooseItemButton
-            content="Vaca em lactação"
-            onPress={() => {
-              navigation.navigate('ChoosePastureType');
-
-              dispatch(
-                CalcActions.setAnimalConfig({
-                  name: 'Bovino de leite',
-                  value: 'Vaca em lactação',
-                }),
-              );
-            }}
-          />
-        </ContentToSelect>
-        <SubTitle value="Bovino de corte" size={16} />
-        <ContentToSelect>
-          <ChooseItemButton
-            content="Terneiro"
-            onPress={() => {
-              navigation.navigate('ChoosePastureType');
-
-              dispatch(
-                CalcActions.setAnimalConfig({
-                  name: 'Bovino de corte',
-                  value: 'Terneiro',
-                }),
-              );
-            }}
-          />
-          <ChooseItemButton
-            content="Novilho"
-            onPress={() => {
-              navigation.navigate('ChoosePastureType');
-
-              dispatch(
-                CalcActions.setAnimalConfig({
-                  name: 'Bovino de corte',
-                  value: 'Novilho',
-                }),
-              );
-            }}
-          />
-        </ContentToSelect>
+        <CalcRoutesTop items={items} />
+        <SubTitle value="Qual é o sistema de produção?" size={14} mb={20} />
+        <ChooseItemButton
+          size={47}
+          content={'Bovinocultura\n de corte'}
+          onPress={() => {
+            navigation.navigate('ChooseBovineCategory', {
+              calc,
+              animalCategory: 'Bovinocultura de corte',
+            });
+          }}
+        />
+        <ChooseItemButton
+          content={'Bovinocultura\n de leite'}
+          size={47}
+          onPress={() => {
+            navigation.navigate('ChooseBovineCategory', {
+              calc,
+              animalCategory: 'Bovinocultura de leite',
+            });
+          }}
+        />
       </Content>
     </Container>
   );
 };
 
-export default ChoosePastureType;
+export default ChooseBovineType;

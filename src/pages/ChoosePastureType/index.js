@@ -1,102 +1,124 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-
-import CalcActions from '../../store/ducks/calc';
 
 import Container from '../../layout/App';
 
-import Title from '../../components/Title';
 import SubTitle from '../../components/SubTitle';
 import ChooseItemButton from '../../components/ChooseItemButton';
+import ProgressBar from '../../components/ProgressBar';
+import CalcHeader from '../../components/CalcHeader';
 import CalcRoutesTop from '../../components/CalcRoutesTop';
 
-import { Content, ContentToSelect } from './styles';
+import {Content, ScrollView} from './styles';
 
-const SupplementSupplyQuantity = ({ navigation }) => {
-  const TitleOfPage = useSelector((state) => state.calc.calc.value);
-  const RouteCalcLabel = useSelector((state) => state.calc.calc.name);
-  const RouteAnimalLabel = useSelector((state) => state.calc.animal.value);
+const ChoosePastureType = ({navigation, route}) => {
+  const {animal, calc, inputs} = route.params;
 
-  const dispatch = useDispatch();
-
-  const items = [RouteCalcLabel, RouteAnimalLabel];
+  const items = [calc.name];
 
   return (
     <Container>
-      <Title size={24} value={TitleOfPage} />
-      <CalcRoutesTop items={items} />
+      <ProgressBar size={75} />
+      <CalcHeader />
       <Content>
-        <SubTitle value="Tipo de pastagem" size={16} />
-        <ContentToSelect>
+        <CalcRoutesTop items={items} />
+        <SubTitle value="Qual espécie forrageira?" size={14} mb={20} />
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}>
           <ChooseItemButton
+            size={100}
+            content="Azevém"
+            onPress={() => {
+              navigation.navigate('DimensionArea', {
+                animal,
+                calc,
+                inputs,
+                pasture: {
+                  name: 'Qual espécie forrageira?',
+                  value: 'Azevém',
+                },
+              });
+            }}
+          />
+          <ChooseItemButton
+            size={100}
             content="Campo Nativo"
             onPress={() => {
-              navigation.navigate('SupplementSupplyQuantity');
-
-              dispatch(
-                CalcActions.setPastureConfig({
-                  name: 'Tipo de pastagem',
+              navigation.navigate('DimensionArea', {
+                animal,
+                calc,
+                inputs,
+                pasture: {
+                  name: 'Qual espécie forrageira?',
                   value: 'Campo Nativo',
-                }),
-              );
+                },
+              });
             }}
           />
           <ChooseItemButton
-            content="Aveia-Azevém"
+            size={100}
+            content="Azevém"
             onPress={() => {
-              navigation.navigate('SupplementSupplyQuantity');
-
-              dispatch(
-                CalcActions.setPastureConfig({
-                  name: 'Tipo de pastagem',
-                  value: 'Aveia-Azevém',
-                }),
-              );
+              navigation.navigate('DimensionArea', {
+                animal,
+                calc,
+                inputs,
+                pasture: {
+                  name: 'Qual espécie forrageira?',
+                  value: 'Azevém',
+                },
+              });
             }}
           />
           <ChooseItemButton
+            size={100}
+            content="Milheto"
+            onPress={() => {
+              navigation.navigate('DimensionArea', {
+                animal,
+                calc,
+                inputs,
+                pasture: {
+                  name: 'Qual espécie forrageira?',
+                  value: 'Milheto',
+                },
+              });
+            }}
+          />
+          <ChooseItemButton
+            size={100}
             content="Sudão"
             onPress={() => {
-              navigation.navigate('SupplementSupplyQuantity');
-
-              dispatch(
-                CalcActions.setPastureConfig({
-                  name: 'Tipo de pastagem',
+              navigation.navigate('DimensionArea', {
+                animal,
+                calc,
+                inputs,
+                pasture: {
+                  name: 'Qual espécie forrageira?',
                   value: 'Sudão',
-                }),
-              );
+                },
+              });
             }}
           />
           <ChooseItemButton
-            content="Campo nativo melhorado"
+            size={100}
+            content="Azevém"
             onPress={() => {
-              navigation.navigate('SupplementSupplyQuantity');
-
-              dispatch(
-                CalcActions.setPastureConfig({
-                  name: 'Tipo de pastagem',
-                  value: 'Campo nativo melhorado',
-                }),
-              );
+              navigation.navigate('DimensionArea', {
+                animal,
+                calc,
+                inputs,
+                pasture: {
+                  name: 'Qual espécie forrageira?',
+                  value: 'Azevém',
+                },
+              });
             }}
           />
-          <ChooseItemButton
-            content="Sorgo"
-            onPress={() => {
-              navigation.navigate('SupplementSupplyQuantity');
-
-              dispatch(
-                CalcActions.setPastureConfig({
-                  name: 'Tipo de pastagem',
-                  value: 'Sorgo',
-                }),
-              );
-            }}
-          />
-        </ContentToSelect>
+        </ScrollView>
       </Content>
     </Container>
   );
 };
 
-export default SupplementSupplyQuantity;
+export default ChoosePastureType;

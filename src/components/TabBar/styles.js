@@ -13,6 +13,7 @@ export const Container = styled.ImageBackground`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  background: #281100;
 `;
 
 export const Page = styled.TouchableOpacity`

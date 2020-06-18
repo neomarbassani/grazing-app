@@ -1,18 +1,15 @@
 /* eslint-disable radix */
-export function supplementQuantityCalc(calcData) {
-  const animalsQuantity = parseInt(calcData.animals_quantity);
-  const weigth = parseInt(calcData.weigth);
-  const grazingHeight = parseInt(calcData.grazing_height);
-  const numberOfTracks = parseInt(calcData.number_of_tracks);
-  const daysOfStay = parseInt(calcData.days_of_stay);
-
+export function areaOfFoal({weigth, score, days_of_use, pastureHeight}) {
   const result =
-    animalsQuantity + weigth + grazingHeight + numberOfTracks + daysOfStay;
+    parseInt(weigth) +
+    parseInt(score) +
+    parseInt(days_of_use) +
+    parseInt(pastureHeight);
 
-  const supplementQuantityValue = {
-    name: 'Quantidade total de animais',
+  const area = {
+    name: 'Área do potreiro',
     value: result.toString(),
   };
 
-  return supplementQuantityValue;
+  return area;
 }
