@@ -7,5 +7,4 @@ export const Content = styled.View`
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
-  height
 `;
