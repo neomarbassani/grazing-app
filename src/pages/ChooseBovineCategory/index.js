@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 
 import Container from '../../layout/App';
@@ -10,6 +11,8 @@ import CalcRoutesTop from '../../components/CalcRoutesTop';
 
 import {Content} from './styles';
 
+import backgroundLogo from '../../assets/backgroundLogo.png';
+
 const ChooseBovineCategory = ({navigation, route}) => {
   const {calc, animalCategory} = route.params;
 
@@ -18,7 +21,12 @@ const ChooseBovineCategory = ({navigation, route}) => {
   const items = [calc.name];
 
   return (
-    <Container>
+    <Container
+      source={backgroundLogo}
+      imageStyle={{
+        top: 0,
+        height: '80%',
+      }}>
       <ProgressBar size={50} />
       <CalcHeader />
       <Content>

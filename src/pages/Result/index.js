@@ -1,4 +1,8 @@
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import Snackbar from 'react-native-snackbar';
+
+import CalcHistoryActions from '../../store/ducks/calcHistory';
 
 import Container from '../../layout/App';
 
@@ -12,9 +16,37 @@ import backgroundImage from '../../assets/background-form-azevem.png';
 import {Description, ResultText, Title, Logo, Content} from './styles';
 
 const Result = ({navigation, route}) => {
-  const teste = route.params;
+  const {name, value} = route.params.results[0];
+  const calcState = route.params;
 
-  console.log(teste);
+  const dispatch = useDispatch();
+
+  const saveCalc = async () => {
+    try {
+      dispatch(CalcHistoryActions.addCalcToHistoryRequest(calcState));
+      Snackbar.show({
+        text: 'Salvo com sucesso.',
+        duration: Snackbar.LENGTH_SHORT,
+        textColor: '#fff',
+        backgroundColor: '#008000',
+      });
+      navigation.navigate('Home');
+    } catch (error) {
+      Snackbar.show({
+        text: 'Erro ao salvar, tente novamente.',
+        duration: Snackbar.LENGTH_SHORT,
+        textColor: '#fff',
+        backgroundColor: '#ff0000',
+        action: {
+          text: 'TENTAR NOVAMENTE',
+          textColor: 'white',
+          onPress: () => {
+            saveCalc();
+          },
+        },
+      });
+    }
+  };
 
   return (
     <Container results source={backgroundImage}>
@@ -23,9 +55,9 @@ const Result = ({navigation, route}) => {
       <Content>
         <Logo source={logo} />
         <Title>Resultado</Title>
-        <Description>Número de animais no potreiro</Description>
-        <ResultText>40</ResultText>
-        <Button content="Voltar ao início" mt="auto" />
+        <Description>{name}</Description>
+        <ResultText>{value}</ResultText>
+        <Button content="Voltar ao início" mt="auto" onPress={saveCalc} />
       </Content>
     </Container>
   );

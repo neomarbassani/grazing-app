@@ -1,6 +1,8 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
 import * as Yup from 'yup';
 import {Form} from '@unform/mobile';
+import backgroundLogo from '../../assets/backgroundLogo.png';
 
 import Container from '../../layout/App';
 
@@ -63,7 +65,12 @@ const ChooseBovineCategory = ({navigation, route}) => {
   }
 
   return (
-    <Container>
+    <Container
+      source={backgroundLogo}
+      imageStyle={{
+        top: 0,
+        height: '80%',
+      }}>
       <ProgressBar size={62.5} />
       <CalcHeader />
       <Content>

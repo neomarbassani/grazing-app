@@ -7,13 +7,19 @@ import Title from '../../components/Title';
 import ChooseItemButton from '../../components/ChooseItemButton';
 import ProgressBar from '../../components/ProgressBar';
 import Link from '../../components/Link';
+import backgroundLogo from '../../assets/backgroundLogo.png';
 
 import {Content, FreePlanBox, FreePlanBoxText} from './styles';
 
 const Home = ({navigation}) => {
   return (
     <>
-      <Container>
+      <Container
+        source={backgroundLogo}
+        imageStyle={{
+          top: 0,
+          height: '80%',
+        }}>
         <ProgressBar size={12.5} />
         <Title size={19} mb={10} value="Soluções Grazing" />
         <Content

@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 
 import Container from '../../layout/App';
@@ -6,6 +7,7 @@ import SubTitle from '../../components/SubTitle';
 import ChooseItemButton from '../../components/ChooseItemButton';
 import ProgressBar from '../../components/ProgressBar';
 import CalcHeader from '../../components/CalcHeader';
+import backgroundLogo from '../../assets/backgroundLogo.png';
 
 import {Content} from './styles';
 
@@ -13,7 +15,12 @@ const ChooseGrazingMethod = ({navigation, route}) => {
   const {calcName} = route.params;
 
   return (
-    <Container>
+    <Container
+      source={backgroundLogo}
+      imageStyle={{
+        top: 0,
+        height: '80%',
+      }}>
       <ProgressBar size={25} />
       <CalcHeader />
       <Content>

@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 import * as Yup from 'yup';
 import {Form} from '@unform/mobile';
+import {useDispatch} from 'react-redux';
 
 import Container from '../../../layout/App';
 
@@ -20,6 +21,8 @@ import backgroundImage from '../../../assets/background-form-azevem.png';
 const DimensionArea = ({navigation, route}) => {
   const [pastureHeight, setPastureHeight] = useState(0);
   const {calc, animal, pasture, inputs} = route.params;
+
+  const dispatch = useDispatch();
 
   const items = [calc.name];
 
@@ -52,9 +55,11 @@ const DimensionArea = ({navigation, route}) => {
       });
 
       const calcState = {
-        calc,
-        animal,
-        pasture,
+        config: {
+          calc,
+          animal,
+          pasture,
+        },
         inputs: [
           ...inputs,
           {
@@ -68,7 +73,7 @@ const DimensionArea = ({navigation, route}) => {
             key: 'evaluation_date',
           },
           {
-            name: 'Dias de avaliação',
+            name: 'Dias de utilização',
             value: days_of_use,
             key: 'days_of_use',
           },
@@ -81,8 +86,7 @@ const DimensionArea = ({navigation, route}) => {
         results,
       };
 
-      console.log(calcState);
-      navigation.navigate('Result');
+      navigation.navigate('Result', calcState);
     } catch (err) {
       const validationErrors = {};
 

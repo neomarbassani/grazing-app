@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 
 import Container from '../../layout/App';
@@ -7,6 +8,7 @@ import ChooseItemButton from '../../components/ChooseItemButton';
 import ProgressBar from '../../components/ProgressBar';
 import CalcHeader from '../../components/CalcHeader';
 import CalcRoutesTop from '../../components/CalcRoutesTop';
+import backgroundLogo from '../../assets/backgroundLogo.png';
 
 import {Content, ScrollView} from './styles';
 
@@ -16,7 +18,12 @@ const ChoosePastureType = ({navigation, route}) => {
   const items = [calc.name];
 
   return (
-    <Container>
+    <Container
+      source={backgroundLogo}
+      imageStyle={{
+        top: 0,
+        height: '80%',
+      }}>
       <ProgressBar size={75} />
       <CalcHeader />
       <Content>

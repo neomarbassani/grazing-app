@@ -11,5 +11,5 @@ export function areaOfFoal({weigth, score, days_of_use, pastureHeight}) {
     value: result.toString(),
   };
 
-  return area;
+  return [area];
 }
