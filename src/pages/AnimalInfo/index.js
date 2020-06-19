@@ -16,11 +16,11 @@ import Button from '../../components/Button';
 
 import {Content} from './styles';
 
-const ChooseBovineCategory = ({navigation, route}) => {
+const AnimalInfo = ({navigation, route}) => {
   const [score, setScore] = useState(0);
   const {calc, animal} = route.params;
 
-  const items = [calc.name];
+  const items = [calc.name, animal.value];
 
   const formRef = useRef(null);
 
@@ -104,4 +104,4 @@ const ChooseBovineCategory = ({navigation, route}) => {
   );
 };
 
-export default ChooseBovineCategory;
+export default AnimalInfo;

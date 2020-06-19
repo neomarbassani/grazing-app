@@ -1,4 +1,5 @@
 import {Alert} from 'react-native';
+import Snackbar from 'react-native-snackbar';
 
 import {call, put} from 'redux-saga/effects';
 
@@ -19,13 +20,18 @@ export function* signIn({phone, password}) {
 
     yield put(AuthActions.signInSuccess(token, user));
   } catch (err) {
-    Alert.alert('Erro', 'Houve um erro no login, verifique seus dados');
+    Snackbar.show({
+      text: 'Erro ao entrar, tente novamente.',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#ff0000',
+    });
+
     yield put(AuthActions.signInFailure());
   }
 }
 
 export function* getMe({userId}) {
-  console.log(userId);
   try {
     const response = yield call(api.get, `user/${userId}`);
 
@@ -33,7 +39,13 @@ export function* getMe({userId}) {
 
     yield put(AuthActions.getMeSuccess(user));
   } catch (err) {
-    Alert.alert('Erro', 'Houve um erro no login, verifique seus dados');
+    Snackbar.show({
+      text: 'Houve algum erro.',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#ff0000',
+    });
+
     yield put(AuthActions.signInFailure());
   }
 }
@@ -47,8 +59,20 @@ export function* signUp(data) {
     api.defaults.headers.Authorization = `Bearer ${token}`;
 
     yield put(AuthActions.signUpSuccess(token, user));
+
+    Snackbar.show({
+      text: 'Cadastro feito com sucesso, seja bem vindo ao Grazing.',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#008000',
+    });
   } catch (err) {
-    Alert.alert('Erro', 'Houve um erro no cadastro, verifique seus dados');
+    Snackbar.show({
+      text: 'Houve um erro no cadastro, verifique seus dados.',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#ff0000',
+    });
 
     yield put(AuthActions.signUpFailure());
   }
@@ -69,6 +93,12 @@ export function setToken({payload}) {
 export function* signOut() {
   try {
     yield auth().signOut();
+    Snackbar.show({
+      text: 'Voce encerrou sua sessão com sucesso. Até Logo!',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#008000',
+    });
   } catch (e) {
     console.log(e);
   }
@@ -76,11 +106,18 @@ export function* signOut() {
 
 export function* userAutentication() {
   yield put(AuthActions.autenticationSucess());
+  Snackbar.show({
+    text: 'Login feito com sucesso, seja bem vindo ao Grazing.',
+    duration: Snackbar.LENGTH_SHORT,
+    textColor: '#fff',
+    backgroundColor: '#008000',
+  });
 }
 
 export function* editUserData(data) {
+  console.log(data.userData)
   try {
-    if (data.userData.current_password !== null) {
+    if (data.userData.current_password !== '') {
       yield call(api.put, 'user/change-password', {
         _id: data.id,
         current_password: data.userData.current_password,
@@ -92,11 +129,17 @@ export function* editUserData(data) {
       _id: data.id,
       name: data.userData.name,
       phone: data.userData.phone,
+      address: data.userData.address,
     });
 
     yield put(AuthActions.editSuccess(response.data));
 
-    Alert.alert('Sucesso', 'Alteração concluida com sucesso!');
+    Snackbar.show({
+      text: 'Salvo com sucesso.',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#008000',
+    });
   } catch (error) {
     yield put(AuthActions.editFailure());
     Alert.alert('Erro', 'Houve um erro na alteração , verifique seus dados');
@@ -117,15 +160,23 @@ export function* updateProfilePhoto(data) {
 
     const response = yield call(api.put, 'user/profile-photo', body);
 
-    //Alert.alert('Sucesso', 'Foto de perfil alterada com sucesso');
+    Snackbar.show({
+      text: 'Salvo com sucesso.',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#008000',
+    });
+
     yield put(AuthActions.updatePhotoSuccess(response.data.user));
   } catch (error) {
     console.log(error);
     yield put(AuthActions.editFailure());
 
-    Alert.alert(
-      'Erro',
-      'Houve um erro na alteração da foto de perfil, tente novamente',
-    );
+    Snackbar.show({
+      text: 'Houve um erro na alteração da foto de perfil, tente novamente',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#ff0000',
+    });
   }
 }

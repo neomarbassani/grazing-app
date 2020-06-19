@@ -1,5 +1,5 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
 
 import CalcHistoryActions from '../../store/ducks/calcHistory';

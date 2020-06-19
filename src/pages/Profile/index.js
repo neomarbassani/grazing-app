@@ -1,4 +1,5 @@
-import React, {useRef, useEffect} from 'react';
+/* eslint-disable react-native/no-inline-styles */
+import React, {useRef, useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
@@ -17,19 +18,29 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 import Link from '../../components/Link';
 import Avatar from '../../components/Avatar';
-import PlanInfoBox from '../../components/PlanInfoBox';
+import InputPicker from '../../components/InputPicker';
+
+import backgroundLogo from '../../assets/backgroundLogo.png';
 
 import {
   ChangePhotoButton,
   PhotoContainer,
-  TopContent,
   UserNameField,
   Content,
   SectionTitle,
+  FormArea,
 } from './styles';
+
+import locations from '../../services/locations';
 
 const Profile = () => {
   const user = useSelector(state => state.auth.user);
+
+  const [cities, setCities] = useState([]);
+  const [states, setStates] = useState([]);
+  const [selectedState, setSelectedState] = useState(user.address.state);
+  const [selectedCity, setSelectedCity] = useState(user.address.city);
+
   const formRef = useRef(null);
 
   const dispatch = useDispatch();
@@ -39,10 +50,34 @@ const Profile = () => {
   const userId = user._id;
 
   useEffect(() => {
+    const statesArray = locations.reduce((acc, state) => {
+      return [...acc, state.sigla];
+    }, []);
+    setStates(statesArray);
+  }, []);
+
+  useEffect(() => {
     dispatch(AuthActions.getMeRequest(userId));
-  }, [dispatch, user._id, userId]);
+    handleAvailableCities(user.address.state);
+  }, [dispatch, user._id, user.address.state, userId, user.profile_photo]);
+
+  const handleAvailableCities = stateName => {
+    if (stateName) {
+      const availableCities = locations.find(state => state.sigla === stateName)
+        .cidades;
+
+      setCities(availableCities);
+    }
+  };
 
   async function handleSubmit(userData) {
+    userData.address = {
+      city: selectedCity,
+      state: selectedState,
+    };
+
+    console.log(userData);
+
     try {
       formRef.current.setErrors({});
 
@@ -58,22 +93,23 @@ const Profile = () => {
           .max(11, 'Telefone é obrigatório'),
 
         current_password: Yup.string()
-          .min(6, 'No mínimo 6 caracteres')
-          .nullable()
-          .default(() => null),
+          .default(() => null)
+          .nullable(),
 
-        new_password: Yup.string()
-          .min(6, 'No mínimo 6 caracteres')
-          .when('current_password', (current_password, field) =>
-            current_password !== null
-              ? field.required('Insira sua nova senha')
+        new_password: Yup.string().when(
+          'current_password',
+          (current_password, field) =>
+            current_password !== ''
+              ? field
+                  .required('Insira sua nova senha')
+                  .min(6, 'No mínimo 6 caracteres')
               : field,
-          ),
+        ),
 
         new_password_confirmation: Yup.string().when(
           'current_password',
           (current_password, field) =>
-            current_password !== null
+            current_password !== ''
               ? field
                   .oneOf(
                     [Yup.ref('new_password')],
@@ -158,8 +194,20 @@ const Profile = () => {
   }
 
   return (
-    <Container>
-      <TopContent>
+    <Container
+      source={backgroundLogo}
+      imageStyle={{
+        top: 0,
+        height: '80%',
+      }}>
+      <Content
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          width: '100%',
+          paddingHorizontal: 30,
+          alignItems: 'center',
+        }}>
         <PhotoContainer>
           <Avatar loading={loading} size={120} />
           <ChangePhotoButton onPress={() => changePhoto()}>
@@ -167,88 +215,111 @@ const Profile = () => {
           </ChangePhotoButton>
         </PhotoContainer>
         <UserNameField>{user.name}</UserNameField>
-      </TopContent>
-      <Content>
-        <Form
-          ref={formRef}
-          initialData={{
-            name: user.name,
-            email: user.email,
-            phone: user.phone,
-            current_password: null,
+        <FormArea>
+          <Form
+            ref={formRef}
+            initialData={{
+              name: user.name ? user.name : '',
+              email: user.email ? user.email : '',
+              phone: user.phone ? user.phone : '',
+              current_password: '',
+            }}
+            onSubmit={handleSubmit}>
+            <SectionTitle>INFORMAÇÕES PESSOAIS</SectionTitle>
+            <Input
+              name="name"
+              label="Nome"
+              underlineColorAndroid="transparent"
+              returnKeyType="next"
+              onSubmitEditing={() => focusInput('phone')}
+            />
+            <Input
+              name="email"
+              type="email"
+              label="E-mail"
+              editable={false}
+              underlineColorAndroid="transparent"
+              returnKeyType="next"
+            />
+            <Input
+              name="phone"
+              label="Telefone"
+              maskedType={'cel-phone'}
+              underlineColorAndroid="transparent"
+              returnKeyType="done"
+              inittialState={user.phone}
+            />
+            <InputPicker
+              label="Estado"
+              data={states}
+              width={40}
+              prompt="Escolha um estado"
+              selectedValue={selectedState}
+              onValueChange={value => {
+                setSelectedState(value);
+                handleAvailableCities(value);
+              }}
+            />
+            <InputPicker
+              label="Cidade"
+              data={cities}
+              width={55}
+              prompt="Escolha uma cidade"
+              selectedValue={selectedCity}
+              onValueChange={value => {
+                setSelectedCity(value);
+              }}
+            />
+            <SectionTitle>ALTERAR SENHA</SectionTitle>
+            <Input
+              name="current_password"
+              label="Senha atual"
+              type="password"
+              placeholder="*******"
+              autoCorrect={false}
+              underlineColorAndroid="transparent"
+              returnKeyType="next"
+              onSubmitEditing={() => focusInput('new_password')}
+            />
+            <Input
+              name="new_password"
+              type="password"
+              placeholder="*******"
+              label="Nova senha"
+              underlineColorAndroid="transparent"
+              autoCorrect={false}
+              returnKeyType="next"
+              onSubmitEditing={() => focusInput('new_password_confirmation')}
+            />
+            <Input
+              name="new_password_confirmation"
+              placeholder="*******"
+              autoCorrect={false}
+              type="password"
+              label="Confirmar nova senha"
+              underlineColorAndroid="transparent"
+              returnKeyType="done"
+            />
+          </Form>
+        </FormArea>
+
+        <Button
+          content="Salvar"
+          onPress={() => {
+            formRef.current.submitForm();
           }}
-          onSubmit={handleSubmit}>
-          <SectionTitle>INFORMAÇÕES PESSOAIS</SectionTitle>
-          <Input
-            name="name"
-            label="Nome"
-            underlineColorAndroid="transparent"
-            returnKeyType="next"
-            onSubmitEditing={() => focusInput('phone')}
-          />
-          <Input
-            name="email"
-            type="email"
-            label="E-mail"
-            editable={false}
-            underlineColorAndroid="transparent"
-            returnKeyType="next"
-          />
-          <Input
-            name="phone"
-            label="Telefone"
-            maskedType={'cel-phone'}
-            underlineColorAndroid="transparent"
-            returnKeyType="done"
-            inittialState={user.phone}
-          />
-          <SectionTitle>ALTERAR SENHA</SectionTitle>
-          <Input
-            name="current_password"
-            label="Senha atual"
-            type="password"
-            placeholder="*******"
-            autoCorrect={false}
-            underlineColorAndroid="transparent"
-            returnKeyType="done"
-            onSubmitEditing={() => focusInput('new_password')}
-          />
-          <Input
-            name="new_password"
-            type="password"
-            placeholder="*******"
-            label="Nova senha"
-            underlineColorAndroid="transparent"
-            autoCorrect={false}
-            returnKeyType="next"
-            onSubmitEditing={() => focusInput('new_password_confirmation')}
-          />
-          <Input
-            name="new_password_confirmation"
-            placeholder="*******"
-            autoCorrect={false}
-            type="password"
-            label="Confirmar nova senha"
-            underlineColorAndroid="transparent"
-            returnKeyType="next"
-          />
-        </Form>
+          loading={loading}
+          mt={30}
+        />
+        <Link
+          content="Sair"
+          mt={30}
+          mb={60}
+          onPress={() => {
+            dispatch(AuthActions.signOut());
+          }}
+        />
       </Content>
-      <Button
-        content="Salvar"
-        onPress={() => {
-          formRef.current.submitForm();
-        }}
-        loading={loading}
-      />
-      <PlanInfoBox />
-      <Link
-        content="Sair"
-        mt={24}
-        onPress={() => {
-          dispatch(AuthActions.signOut());
-        }}
-      />
     </Container>
   );
 };

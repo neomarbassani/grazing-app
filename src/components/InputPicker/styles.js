@@ -15,7 +15,7 @@ export const Content = styled.View`
   flex-direction: row;
   width: 100%;
   background: #ffffff;
-  border: 1px solid #e6e6e6;
+  border: 2px solid #d9d9d9;
   border-radius: 5px;
   justify-content: space-between;
   align-items: center;

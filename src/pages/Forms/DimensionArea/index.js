@@ -1,7 +1,6 @@
 import React, {useRef, useState} from 'react';
 import * as Yup from 'yup';
 import {Form} from '@unform/mobile';
-import {useDispatch} from 'react-redux';
 
 import Container from '../../../layout/App';
 
@@ -21,8 +20,6 @@ import backgroundImage from '../../../assets/background-form-azevem.png';
 const DimensionArea = ({navigation, route}) => {
   const [pastureHeight, setPastureHeight] = useState(0);
   const {calc, animal, pasture, inputs} = route.params;
-
-  const dispatch = useDispatch();
 
   const items = [calc.name];
 

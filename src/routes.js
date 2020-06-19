@@ -14,7 +14,7 @@ import NewPassword from './pages/NewPassword';
 import Register from './pages/Register';
 import Home from './pages/Home';
 /* import Historic from './pages/Historic'; */
-/* import Profile from './pages/Profile'; */
+import Profile from './pages/Profile';
 import ChooseBovineType from './pages/ChooseBovineType';
 import ChooseBovineCategory from './pages/ChooseBovineCategory';
 import AnimalInfo from './pages/AnimalInfo';
@@ -118,8 +118,8 @@ const AppStack = () => {
       <Tab.Screen name="Início" component={InicioStack} />
       <Tab.Screen name="Result" component={Result} />
 
-      {/* <Tab.Screen name="Historico" component={HistoricStack} />
-      <Tab.Screen name="Perfil" component={Profile} /> */}
+      {/* <Tab.Screen name="Historico" component={HistoricStack} /> */}
+      <Tab.Screen name="Perfil" component={Profile} />
     </Tab.Navigator>
   );
 };
@@ -168,7 +168,7 @@ const HistoricStack = () => {
 export default function Routes({isConnected, signed, autenticated, linking}) {
   const initialRoute = () => {
     if (signed) {
-      if (autenticated) {
+      if (true) {
         return <AppStack />;
       }
       return <PhoneConfirmation />;
