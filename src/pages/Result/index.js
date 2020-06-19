@@ -1,49 +1,33 @@
 import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {StatusBar} from 'react-native';
 
-import backgroundResult from '../../assets/backgroundResult.png';
-import logoResults from '../../assets/logoResults.png';
+import Container from '../../layout/App';
 
-import CalcHistoryActions from '../../store/ducks/calcHistory';
+import ProgressBar from '../../components/ProgressBar';
+import CalcHeader from '../../components/CalcHeader';
+import Button from '../../components/Button';
 
-import {
-  Container,
-  ContainerBackground,
-  Logo,
-  ResultBox,
-  ResultBoxTitle,
-  ResultText,
-  Link,
-} from './styles';
+import logo from '../../assets/logoResults.png';
+import backgroundImage from '../../assets/background-form-azevem.png';
 
-const Result = ({navigation}) => {
-  const calcState = useSelector(state => state.calc);
+import {Description, ResultText, Title, Logo, Content} from './styles';
 
-  function handleSaveHistory() {
-    dispatch(CalcHistoryActions.addCalcToHistoryRequest(calcState));
-    navigation.navigate('Home');
-  }
+const Result = ({navigation, route}) => {
+  const teste = route.params;
 
-  const dispatch = useDispatch();
+  console.log(teste);
+
   return (
-    <>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="#281100"
-        translucent={true}
-      />
-      <ContainerBackground source={backgroundResult}>
-        <Container>
-          <Logo source={logoResults} />
-          <ResultBoxTitle>Seu resultado foi:</ResultBoxTitle>
-          <ResultBox>
-            <ResultText>{calcState.results[0].value} animais</ResultText>
-          </ResultBox>
-          <Link onPress={handleSaveHistory}>Ir para a tela inicial</Link>
-        </Container>
-      </ContainerBackground>
-    </>
+    <Container results source={backgroundImage}>
+      <ProgressBar size={100} />
+      <CalcHeader color="#fff" />
+      <Content>
+        <Logo source={logo} />
+        <Title>Resultado</Title>
+        <Description>Número de animais no potreiro</Description>
+        <ResultText>40</ResultText>
+        <Button content="Voltar ao início" mt="auto" />
+      </Content>
+    </Container>
   );
 };
 

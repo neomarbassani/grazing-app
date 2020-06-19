@@ -8,10 +8,19 @@ import {
   RangeValue,
 } from './styles';
 
-const SliderInput = ({label, mt, mb, minVal, maxVal, value, ...rest}) => {
+const SliderInput = ({
+  label,
+  mt,
+  mb,
+  minVal,
+  maxVal,
+  value,
+  color,
+  ...rest
+}) => {
   return (
     <Container mt={mt} mb={mb}>
-      <Label>
+      <Label color={color}>
         {label}: {value}
       </Label>
       <SliderComponent
@@ -24,8 +33,8 @@ const SliderInput = ({label, mt, mb, minVal, maxVal, value, ...rest}) => {
         {...rest}
       />
       <RangeBox>
-        <RangeValue>{minVal}</RangeValue>
-        <RangeValue>{maxVal}</RangeValue>
+        <RangeValue color={color}>{minVal}</RangeValue>
+        <RangeValue color={color}>{maxVal}</RangeValue>
       </RangeBox>
     </Container>
   );

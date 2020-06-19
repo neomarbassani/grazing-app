@@ -6,6 +6,6 @@ export const Text = styled.Text`
   font-size: ${props => (props.size ? props.size : 0)}px;
   margin-top: ${props => (props.mt ? props.mt : 0)}px;
   margin-bottom: ${props => (props.mb ? props.mb : 0)}px;
-  color: #281100;
+  color: ${props => (props.color ? props.color : '#281100')};
   width: 100%;
 `;

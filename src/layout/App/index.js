@@ -4,7 +4,7 @@ import {StatusBar} from 'react-native';
 
 import {Container, Background} from './styles';
 
-export default function AuthContainer({children}) {
+export default function AppContainer({children, results, ...rest}) {
   return (
     <>
       <StatusBar
@@ -13,7 +13,15 @@ export default function AuthContainer({children}) {
         translucent={true}
       />
       <Background>
-        <Container>{children}</Container>
+        <Container
+          imageStyle={{
+            borderBottomLeftRadius: results ? 0 : 15,
+            borderBottomRightRadius: results ? 0 : 15,
+          }}
+          results={results}
+          {...rest}>
+          {children}
+        </Container>
       </Background>
     </>
   );

@@ -13,7 +13,7 @@ export const Label = styled.Text`
   font-style: normal;
   font-size: 14px;
   line-height: 16px;
-  color: #888899;
+  color: ${props => (props.color ? props.color : '#888899')};
   margin-bottom: 15px;
 `;
 

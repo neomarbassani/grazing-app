@@ -10,35 +10,39 @@ import sendMessage from '../../assets/sendMessage.png';
 
 const TabBar = ({state, navigation}) => {
   return (
-    <Container resizeMode="cover">
-      <Page disabled>
-        <Icon source={aboutUs} resizeMode="contain" />
-      </Page>
-      <Page onPress={() => navigation.navigate('Historico')}>
-        <Icon
-          source={history}
-          resizeMode="contain"
-          focused={state.routeNames[state.index] === 'Historico'}
-        />
-      </Page>
-      <Home onPress={() => navigation.navigate('Início')}>
-        <Icon
-          source={home}
-          resizeMode="contain"
-          focused={state.routeNames[state.index] === 'Início'}
-        />
-      </Home>
-      <Page disabled>
-        <Icon source={sendMessage} resizeMode="contain" />
-      </Page>
-      <Page onPress={() => navigation.navigate('Perfil')}>
-        <Icon
-          source={profile}
-          resizeMode="contain"
-          focused={state.routeNames[state.index] === 'Perfil'}
-        />
-      </Page>
-    </Container>
+    <>
+      {state.routes[state.index].name === 'Result' ? null : (
+        <Container resizeMode="cover">
+          <Page disabled>
+            <Icon source={aboutUs} resizeMode="contain" />
+          </Page>
+          <Page onPress={() => navigation.navigate('Historico')}>
+            <Icon
+              source={history}
+              resizeMode="contain"
+              focused={state.routeNames[state.index] === 'Historico'}
+            />
+          </Page>
+          <Home onPress={() => navigation.navigate('Início')}>
+            <Icon
+              source={home}
+              resizeMode="contain"
+              focused={state.routeNames[state.index] === 'Início'}
+            />
+          </Home>
+          <Page disabled>
+            <Icon source={sendMessage} resizeMode="contain" />
+          </Page>
+          <Page onPress={() => navigation.navigate('Perfil')}>
+            <Icon
+              source={profile}
+              resizeMode="contain"
+              focused={state.routeNames[state.index] === 'Perfil'}
+            />
+          </Page>
+        </Container>
+      )}
+    </>
   );
 };
 

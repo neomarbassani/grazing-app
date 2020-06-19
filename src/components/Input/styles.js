@@ -25,7 +25,7 @@ export const Label = styled.Text`
   font-family: 'WorkSans-Bold';
   font-size: 16px;
   line-height: 19px;
-  color: #888899;
+  color: ${props => (props.color ? props.color : '#888899')};
   margin-bottom: 7px;
 `;
 

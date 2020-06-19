@@ -20,7 +20,7 @@ import ChooseBovineCategory from './pages/ChooseBovineCategory';
 import AnimalInfo from './pages/AnimalInfo';
 
 import ChoosePastureType from './pages/ChoosePastureType';
-/* import Result from './pages/Result'; */
+import Result from './pages/Result';
 import Offline from './pages/Offline';
 import ChooseGrazingMethod from './pages/ChooseGrazingMethod';
 /* import HistoricItemDetails from './pages/HistoricItemDetails'; */
@@ -116,6 +116,8 @@ const AppStack = () => {
   return (
     <Tab.Navigator tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="Início" component={InicioStack} />
+      <Tab.Screen name="Result" component={Result} />
+
       {/* <Tab.Screen name="Historico" component={HistoricStack} />
       <Tab.Screen name="Perfil" component={Profile} /> */}
     </Tab.Navigator>

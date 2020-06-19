@@ -13,5 +13,5 @@ export const Text = styled.Text`
   font-family: 'WorkSans-Bold';
   font-size: 14px;
   line-height: 14px;
-  color: ${colors.primary};
+  color: ${props => (props.color ? props.color : colors.primary)};
 `;

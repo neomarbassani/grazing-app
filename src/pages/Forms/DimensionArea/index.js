@@ -15,6 +15,7 @@ import Button from '../../../components/Button';
 import {Content} from './styles';
 
 import {areaOfFoal} from '../../../services/calcs';
+import backgroundImage from '../../../assets/background-form-azevem.png';
 
 const DimensionArea = ({navigation, route}) => {
   const [pastureHeight, setPastureHeight] = useState(0);
@@ -81,7 +82,7 @@ const DimensionArea = ({navigation, route}) => {
       };
 
       console.log(calcState);
-      /* navigation.navigate('Results'); */
+      navigation.navigate('Result');
     } catch (err) {
       const validationErrors = {};
 
@@ -106,23 +107,29 @@ const DimensionArea = ({navigation, route}) => {
   }
 
   return (
-    <Container>
+    <Container source={backgroundImage} resizeMode="cover">
       <ProgressBar size={87.5} />
-      <CalcHeader />
+      <CalcHeader color="#fff" />
       <Content>
-        <CalcRoutesTop items={items} />
-        <SubTitle value="Informações sobre o sistema" size={14} mb={20} />
+        <CalcRoutesTop items={items} color="#fff" />
+        <SubTitle
+          value="Informações sobre o sistema"
+          size={14}
+          mb={20}
+          color="#fff"
+        />
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input
             name="foal_name"
             label="Nome do Potreiro"
-            placeholder="kg"
+            color="#fff"
             returnKeyType="next"
             blurOnSubmit={false}
             onSubmitEditing={() => focusInput('evaluation_date')}
           />
           <Input
             name="evaluation_date"
+            color="#fff"
             label="Data da avaliação"
             keyboardType="numeric"
             placeholder="DD/MM/YYYY"
@@ -137,6 +144,7 @@ const DimensionArea = ({navigation, route}) => {
           <Input
             name="days_of_use"
             label="Dias de utilização"
+            color="#fff"
             keyboardType="numeric"
             placeholder="1"
             returnKeyType="next"
@@ -145,6 +153,7 @@ const DimensionArea = ({navigation, route}) => {
           <SliderInput
             label="Altura do pasto (cm)"
             value={pastureHeight}
+            color="#fff"
             mt={10}
             onValueChange={value => {
               setPastureHeight(value);

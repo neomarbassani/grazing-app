@@ -12,7 +12,15 @@ import {
   Label,
 } from './styles';
 
-export default function Input({label, type, name, next, maskType, ...rest}) {
+export default function Input({
+  label,
+  type,
+  name,
+  next,
+  maskType,
+  color,
+  ...rest
+}) {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const inputRef = useRef(null);
@@ -54,7 +62,7 @@ export default function Input({label, type, name, next, maskType, ...rest}) {
 
   return (
     <Container>
-      {label && <Label>{label}</Label>}
+      {label && <Label color={color}>{label}</Label>}
       <Content>
         {maskType ? (
           <InputFieldMask
