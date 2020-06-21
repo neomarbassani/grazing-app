@@ -3,13 +3,14 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   width: 100%;
   height: 80px;
-  background: #f7f7f7;
+  background: #fff;
   border: 1px solid #e5e5e5;
   border-radius: 5px;
   align-items: center;
   justify-content: space-around;
-  margin-top: 15px;
+  margin-bottom: 30px;
   padding: 14px;
+  elevation: 5;
 `;
 
 export const Content = styled.View`

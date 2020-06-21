@@ -13,8 +13,12 @@ const TabBar = ({state, navigation}) => {
     <>
       {state.routes[state.index].name === 'Result' ? null : (
         <Container resizeMode="cover">
-          <Page disabled>
-            <Icon source={aboutUs} resizeMode="contain" />
+          <Page onPress={() => navigation.navigate('AboutUs')}>
+            <Icon
+              source={aboutUs}
+              resizeMode="contain"
+              focused={state.routeNames[state.index] === 'AboutUs'}
+            />
           </Page>
           <Page onPress={() => navigation.navigate('Historico')}>
             <Icon
@@ -31,7 +35,11 @@ const TabBar = ({state, navigation}) => {
             />
           </Home>
           <Page onPress={() => navigation.navigate('Contact')}>
-            <Icon source={sendMessage} resizeMode="contain" />
+            <Icon
+              source={sendMessage}
+              resizeMode="contain"
+              focused={state.routeNames[state.index] === 'Contact'}
+            />
           </Page>
           <Page onPress={() => navigation.navigate('Perfil')}>
             <Icon

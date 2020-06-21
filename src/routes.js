@@ -19,7 +19,7 @@ import ChooseBovineType from './pages/ChooseBovineType';
 import ChooseBovineCategory from './pages/ChooseBovineCategory';
 import AnimalInfo from './pages/AnimalInfo';
 import Contact from './pages/Contact';
-
+import AboutUs from './pages/AboutUs';
 import ChoosePastureType from './pages/ChoosePastureType';
 import Result from './pages/Result';
 import Offline from './pages/Offline';
@@ -118,7 +118,7 @@ const AppStack = () => {
     <Tab.Navigator tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="Início" component={InicioStack} />
       <Tab.Screen name="Result" component={Result} />
-
+      <Tab.Screen name="AboutUs" component={AboutUs} />
       {/* <Tab.Screen name="Historico" component={HistoricStack} /> */}
       <Tab.Screen name="Perfil" component={Profile} />
       <Tab.Screen name="Contact" component={Contact} />

@@ -77,7 +77,6 @@ const Contact = ({navigation, route}) => {
         top: 0,
         height: '90%',
       }}>
-      <CalcHeader />
       <Content>
         <SubTitle
           value="Precisa de ajuda? Entre em contato conosco"
