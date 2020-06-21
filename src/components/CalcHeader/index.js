@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {Container} from './styles';
 
-const CalcHeader = ({color}) => {
+const CalcHeader = ({color, backButtonOnly}) => {
   const navigation = useNavigation();
 
   return (
@@ -16,12 +16,14 @@ const CalcHeader = ({color}) => {
         color={color ? color : '#888899'}
         onPress={() => navigation.goBack()}
       />
-      <Icon
-        name="x-circle"
-        size={25}
-        color={color ? color : '#888899'}
-        onPress={() => navigation.navigate('Home')}
-      />
+      {!backButtonOnly && (
+        <Icon
+          name="x-circle"
+          size={25}
+          color={color ? color : '#888899'}
+          onPress={() => navigation.navigate('Home')}
+        />
+      )}
     </Container>
   );
 };

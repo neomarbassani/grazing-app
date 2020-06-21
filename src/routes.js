@@ -18,6 +18,7 @@ import Profile from './pages/Profile';
 import ChooseBovineType from './pages/ChooseBovineType';
 import ChooseBovineCategory from './pages/ChooseBovineCategory';
 import AnimalInfo from './pages/AnimalInfo';
+import Contact from './pages/Contact';
 
 import ChoosePastureType from './pages/ChoosePastureType';
 import Result from './pages/Result';
@@ -120,6 +121,7 @@ const AppStack = () => {
 
       {/* <Tab.Screen name="Historico" component={HistoricStack} /> */}
       <Tab.Screen name="Perfil" component={Profile} />
+      <Tab.Screen name="Contact" component={Contact} />
     </Tab.Navigator>
   );
 };

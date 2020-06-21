@@ -30,7 +30,7 @@ const TabBar = ({state, navigation}) => {
               focused={state.routeNames[state.index] === 'Início'}
             />
           </Home>
-          <Page disabled>
+          <Page onPress={() => navigation.navigate('Contact')}>
             <Icon source={sendMessage} resizeMode="contain" />
           </Page>
           <Page onPress={() => navigation.navigate('Perfil')}>

@@ -6,11 +6,12 @@ import {TextInputMask} from 'react-native-masked-text';
 export const Container = styled.View`
   margin-bottom: 45px;
   align-items: flex-start;
-  height: 42px;
+  height: ${props => (props.textarea ? '65%' : '42px')};
   width: 100%;
 `;
 
 export const Content = styled.View`
+  height: ${props => (props.textarea ? '100%' : '42px')};
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -39,8 +40,11 @@ export const ToogleVisility = styled.TouchableOpacity`
 `;
 
 export const InputField = styled.TextInput`
+  /* alinhar o texto no topo */
+  text-align-vertical: top;
+
   width: 100%;
-  height: 42px;
+  height: ${props => (props.textarea ? '100%' : '42px')};
   border: none;
   background-color: transparent;
   color: ${colors.placeholder};

@@ -18,6 +18,7 @@ export default function Input({
   name,
   next,
   maskType,
+  textarea,
   color,
   ...rest
 }) {
@@ -61,9 +62,9 @@ export default function Input({
   }, [fieldName, mask, maskType, registerField]);
 
   return (
-    <Container>
+    <Container textarea={textarea}>
       {label && <Label color={color}>{label}</Label>}
-      <Content>
+      <Content textarea={textarea}>
         {maskType ? (
           <InputFieldMask
             ref={inputRef}
@@ -85,6 +86,9 @@ export default function Input({
             <InputField
               ref={inputRef}
               defaultValue={defaultValue}
+              textarea={textarea}
+              multiline={textarea}
+              numberOfLines={50}
               type={type === 'email' ? 'email-address' : null}
               secureTextEntry={passwordVisibility}
               placeholderTextColor="#888899"
