@@ -134,6 +134,16 @@ export default function Register({navigation}) {
             label="Telefone"
             maskType={'cel-phone'}
             placeholder="(00) 00000-0000"
+            blurOnSubmit={false}
+            returnKeyType="next"
+            onSubmitEditing={() => focusInput('property_size')}
+          />
+          <Input
+            name="property_size"
+            label="Tamanho da propriedade"
+            placeholder="25 hectares"
+            returnKeyType="next"
+            blurOnSubmit={true}
           />
           <Scope path="address">
             <InputPicker

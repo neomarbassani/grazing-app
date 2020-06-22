@@ -91,6 +91,7 @@ const AnimalInfo = ({navigation, route}) => {
             }}
             minVal={0}
             maxVal={6}
+            step={0.5}
           />
         </Form>
         <Button

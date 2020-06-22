@@ -16,6 +16,7 @@ const SliderInput = ({
   maxVal,
   value,
   color,
+  step,
   ...rest
 }) => {
   return (
@@ -29,7 +30,7 @@ const SliderInput = ({
         minimumValue={minVal}
         maximumValue={maxVal}
         thumbTintColor="#D69D2B"
-        step={1}
+        step={step ? step : 1}
         {...rest}
       />
       <RangeBox>

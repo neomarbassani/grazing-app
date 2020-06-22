@@ -9,7 +9,6 @@ import backgroundLogo from '../../assets/backgroundLogo.png';
 import Container from '../../layout/App';
 
 import SubTitle from '../../components/SubTitle';
-import CalcHeader from '../../components/CalcHeader';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 

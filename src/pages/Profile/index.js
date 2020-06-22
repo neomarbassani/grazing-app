@@ -198,7 +198,7 @@ const Profile = () => {
       source={backgroundLogo}
       imageStyle={{
         top: 0,
-        height: '80%',
+        height: '90%',
       }}>
       <Content
         showsHorizontalScrollIndicator={false}
@@ -246,8 +246,16 @@ const Profile = () => {
               label="Telefone"
               maskedType={'cel-phone'}
               underlineColorAndroid="transparent"
-              returnKeyType="done"
-              inittialState={user.phone}
+              returnKeyType="next"
+              onSubmitEditing={() => focusInput('property_size')}
+              inittialState={user.phone ? user.phone : null}
+            />
+            <Input
+              name="property_size"
+              label="Tamanho da propriedade"
+              placeholder="25 hectares"
+              returnKeyType="next"
+              blurOnSubmit={true}
             />
             <InputPicker
               label="Estado"
