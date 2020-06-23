@@ -259,7 +259,7 @@ const Profile = () => {
             <Input
               name="property_size"
               keyboardType="numeric"
-              label="Tamanho da propriedade"
+              label="Tamanho da propriedade (hectares)"
               placeholder="25 hectares"
               returnKeyType="next"
               blurOnSubmit={true}

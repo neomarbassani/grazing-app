@@ -143,7 +143,7 @@ export default function Register({navigation}) {
           />
           <Input
             name="property_size"
-            label="Tamanho da propriedade"
+            label="Tamanho da propriedade (hectares)"
             placeholder="25 hectares"
             returnKeyType="next"
             blurOnSubmit={true}

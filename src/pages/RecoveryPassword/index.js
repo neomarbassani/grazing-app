@@ -1,6 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {Form} from '@unform/mobile';
-import {Alert, Platform} from 'react-native';
+import Snackbar from 'react-native-snackbar';
 
 import * as Yup from 'yup';
 
@@ -40,18 +40,14 @@ export default function SignIn({navigation}) {
 
       setLoading(false);
 
-      Alert.alert(
-        'Sucesso',
-        `Um link foi enviado para o email ${
-          data.email
-        } para você redefinir sua senha`,
-        [
-          {
-            text: 'Ok',
-            onPress: () => navigation.navigate('Login'),
-          },
-        ],
-      );
+      Snackbar.show({
+        text: 'Um link para redefinição de senha foi enviado para seu e-mail.',
+        duration: Snackbar.LENGTH_LONG,
+        textColor: '#fff',
+        backgroundColor: '#008000',
+      });
+
+      navigation.navigate('Login');
     } catch (err) {
       const validationErrors = {};
 

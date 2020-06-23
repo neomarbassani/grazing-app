@@ -54,7 +54,7 @@ const Wellcome = ({navigation}) => {
                 content="Criar conta"
                 color="#774D37"
                 onPress={() => navigation.navigate('Register')}
-                disabled={index === slides.length - 1 ? false : true}
+                disabled={index !== slides.length - 1}
               />
             </BottomBox>
           </Container>

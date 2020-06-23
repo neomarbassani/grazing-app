@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 import {Alert} from 'react-native';
 import {Form} from '@unform/mobile';
+import Snackbar from 'react-native-snackbar';
 
 import * as Yup from 'yup';
 
@@ -44,12 +45,13 @@ export default function SignIn({navigation, route}) {
         password: data.password,
       });
 
-      Alert.alert('Sucesso', 'Senha alterada com sucesso', [
-        {
-          text: 'Ok',
-          onPress: () => navigation.navigate('Login'),
-        },
-      ]);
+      Snackbar.show({
+        text: 'Senha alterada com sucesso.',
+        duration: Snackbar.LENGTH_LONG,
+        textColor: '#fff',
+        backgroundColor: '#008000',
+      });
+      navigation.navigate('Login');
 
       setLoading(false);
     } catch (err) {
@@ -62,7 +64,13 @@ export default function SignIn({navigation, route}) {
 
         formRef.current.setErrors(validationErrors);
       }
-      Alert.alert('Erro', 'Erro ao alterar senha, tente novamente');
+      Snackbar.show({
+        text: 'Erro ao alterar senha, tente novamente',
+        duration: Snackbar.LENGTH_SHORT,
+        textColor: '#fff',
+        backgroundColor: '#ff0000',
+      });
+
       setLoading(false);
     }
   }
