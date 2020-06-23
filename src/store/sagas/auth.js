@@ -1,4 +1,3 @@
-import {Alert} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 
 import {call, put} from 'redux-saga/effects';
@@ -115,7 +114,7 @@ export function* userAutentication() {
 }
 
 export function* editUserData(data) {
-  console.log(data.userData)
+  console.log(data.userData);
   try {
     if (data.userData.current_password !== '') {
       yield call(api.put, 'user/change-password', {
@@ -142,7 +141,12 @@ export function* editUserData(data) {
     });
   } catch (error) {
     yield put(AuthActions.editFailure());
-    Alert.alert('Erro', 'Houve um erro na alteração , verifique seus dados');
+    Snackbar.show({
+      text: 'Houve um erro na alteração , verifique seus dados',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#ff0000',
+    });
   }
 }
 

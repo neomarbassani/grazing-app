@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
 import {Alert} from 'react-native';
+import Snackbar from 'react-native-snackbar';
+
 import auth from '@react-native-firebase/auth';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -24,6 +26,8 @@ const CELL_COUNT = 6;
 
 export default function SignIn({navigation}) {
   const [confirm, setConfirm] = useState(null);
+  const [resend, setResend] = useState(false);
+
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
@@ -51,7 +55,7 @@ export default function SignIn({navigation}) {
       }
     });
     return () => unsubscribe();
-  }, [phone]);
+  }, [phone, resend]);
 
   async function confirmCode() {
     try {
@@ -60,7 +64,12 @@ export default function SignIn({navigation}) {
       dispatch(AuthActions.autenticationRequest());
       setLoading(false);
     } catch (error) {
-      Alert.alert('Erro', 'Código Invalido');
+      Snackbar.show({
+        text: 'Erro, código invalido.',
+        duration: Snackbar.LENGTH_SHORT,
+        textColor: '#fff',
+        backgroundColor: '#ff0000',
+      });
       setLoading(false);
     }
   }
@@ -90,7 +99,7 @@ export default function SignIn({navigation}) {
         content="Não recebi o código"
         color="#D69D2B"
         mt={15}
-        onPress={() => signInWithPhoneNumber(`+55${phone}`)}
+        onPress={() => setResend(true)}
       />
 
       <Button

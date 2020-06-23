@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {RefreshControl, Dimensions} from 'react-native';
-const {height, width} = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 import backgroundLogo from '../../assets/backgroundLogo.png';
 
