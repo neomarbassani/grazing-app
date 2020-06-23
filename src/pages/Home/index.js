@@ -85,7 +85,11 @@ const Home = ({navigation}) => {
           />
           <FreePlanBox>
             <FreePlanBoxText>Você tem 30 dias grátis</FreePlanBoxText>
-            <Link content="Assinar plano agora" color="#D69D2B" />
+            <Link
+              content="Assinar plano agora"
+              color="#D69D2B"
+              onPress={() => navigation.navigate('PlanOff')}
+            />
           </FreePlanBox>
         </Content>
       </Container>

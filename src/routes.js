@@ -18,6 +18,7 @@ import ChoosePastureType from './pages/ChoosePastureType';
 import Result from './pages/Result';
 import Offline from './pages/Offline';
 import ChooseGrazingMethod from './pages/ChooseGrazingMethod';
+import PlanOff from './pages/PlanOff';
 
 import DimensionArea from './pages/Forms/DimensionArea';
 
@@ -56,6 +57,7 @@ const AppStack = () => {
       <Tab.Screen name="Historico" component={Historic} />
       <Tab.Screen name="Perfil" component={Profile} />
       <Tab.Screen name="Contact" component={Contact} />
+      <Tab.Screen name="PlanOff" component={PlanOff} />
     </Tab.Navigator>
   );
 };

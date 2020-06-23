@@ -11,7 +11,8 @@ import sendMessage from '../../assets/sendMessage.png';
 const TabBar = ({state, navigation}) => {
   return (
     <>
-      {state.routes[state.index].name === 'Result' ? null : (
+      {state.routes[state.index].name === 'Result' ||
+      state.routes[state.index].name === 'PlanOff' ? null : (
         <Container resizeMode="cover">
           <Page onPress={() => navigation.navigate('AboutUs')}>
             <Icon
