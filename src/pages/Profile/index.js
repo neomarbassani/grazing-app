@@ -88,6 +88,11 @@ const Profile = () => {
 
         email: Yup.string().email('Insira um e-mail válido.'),
 
+        property_size: Yup.string().min(
+          0,
+          'O tamanho da propriedade é obrigatório',
+        ),
+
         phone: Yup.string()
           .min(10, 'Telefone é obrigatório')
           .max(11, 'Telefone é obrigatório'),
@@ -222,6 +227,7 @@ const Profile = () => {
               name: user.name ? user.name : '',
               email: user.email ? user.email : '',
               phone: user.phone ? user.phone : '',
+              property_size: user.property_size ? user.property_size : '',
               current_password: '',
             }}
             onSubmit={handleSubmit}>
@@ -252,6 +258,7 @@ const Profile = () => {
             />
             <Input
               name="property_size"
+              keyboardType="numeric"
               label="Tamanho da propriedade"
               placeholder="25 hectares"
               returnKeyType="next"

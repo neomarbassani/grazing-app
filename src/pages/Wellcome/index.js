@@ -4,9 +4,9 @@ import AppIntroSlider from 'react-native-app-intro-slider';
 import Link from '../../components/Link';
 import Button from '../../components/Button';
 
-import backgroundImage1 from '../../assets/wellcome-background1.png';
-import backgroundImage2 from '../../assets/wellcome-background2.png';
-import backgroundImage3 from '../../assets/wellcome-background3.png';
+import backgroundImage1 from '../../assets/loading1.jpg';
+import backgroundImage2 from '../../assets/loading2.jpg';
+import backgroundImage3 from '../../assets/loading3.jpg';
 
 import logo from '../../assets/logoWellcome.png';
 

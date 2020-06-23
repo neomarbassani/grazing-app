@@ -59,6 +59,9 @@ export default function Register({navigation}) {
         email: Yup.string()
           .email('Insira um e-mail válido.')
           .required('Um e-mail é obrigatório'),
+        property_size: Yup.string().required(
+          'Tamanho da propriedade é obrigatório',
+        ),
         phone: Yup.string()
           .required('Telefone é obrigatório')
           .min(10, 'Telefone é obrigatório')
