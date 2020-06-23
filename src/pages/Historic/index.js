@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 import backgroundLogo from '../../assets/backgroundLogo.png';
 
@@ -52,6 +53,25 @@ import {
   ResultBoxModalTitle,
   ResultBoxModalValue,
 } from './styles';
+
+const Skeleton = () => {
+  return (
+    <SkeletonPlaceholder>
+      <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+        <SkeletonPlaceholder.Item width={60} height={60} borderRadius={50} />
+        <SkeletonPlaceholder.Item marginLeft={20}>
+          <SkeletonPlaceholder.Item width={120} height={20} borderRadius={4} />
+          <SkeletonPlaceholder.Item
+            marginTop={6}
+            width={80}
+            height={20}
+            borderRadius={4}
+          />
+        </SkeletonPlaceholder.Item>
+      </SkeletonPlaceholder.Item>
+    </SkeletonPlaceholder>
+  );
+};
 
 const Historic = ({navigation}) => {
   const [historic, setHistoric] = useState([]);
@@ -116,6 +136,8 @@ const Historic = ({navigation}) => {
             ),
           );
         }
+        setLoadingFirst(false);
+        setLoading(false);
       }
     } catch (error) {
       setLoadingFirst(false);
@@ -172,7 +194,12 @@ const Historic = ({navigation}) => {
           height: '90%',
         }}>
         <Header>
-          <BackButton name="arrow-left" size={25} color="#888899" />
+          <BackButton
+            name="arrow-left"
+            size={25}
+            color="#888899"
+            onPress={() => navigation.goBack()}
+          />
           <Title size={24} value="Histórico" />
           <Avatar size={38} action={() => navigation.navigate('Perfil')} />
         </Header>
@@ -182,71 +209,77 @@ const Historic = ({navigation}) => {
           </InputPicker>
           <InputPickerIcon name="chevron-down" size={24} color="#d69d2b" />
         </InputPickerContainer>
-        <FlatListContainer
-          data={isConnected ? historic : calcState}
-          ListEmptyComponent={() => <NoContentText>Não há items</NoContentText>}
-          /* refreshControl={
+        {loadingFirst ? (
+          <Skeleton />
+        ) : (
+          <FlatListContainer
+            data={isConnected ? historic : calcState}
+            ListEmptyComponent={() => (
+              <NoContentText>Não há items</NoContentText>
+            )}
+            /* refreshControl={
           <RefreshControl
             refreshing={loading}
             onRefresh={() => getHistoric(false)}
           />
         } */
-          onEndReached={() =>
-            pagination.page < pagination.totalPages &&
-            !loading &&
-            isConnected &&
-            getHistoric(true)
-          }
-          onEndReachedThreshold={0.1}
-          ListFooterComponent={
-            <>
-              {isConnected ? (
-                loading && pagination.page < pagination.totalPages ? (
-                  <LoadMoreItemsText>
-                    Carregando mais itens ...
-                  </LoadMoreItemsText>
-                ) : (
-                  <LoadMoreItemsText>Não há mais items</LoadMoreItemsText>
-                )
-              ) : null}
-            </>
-          }
-          renderItem={({item}) => (
-            <Group>
-              <DateGroup>{formateDate(item.created_at)}</DateGroup>
-              {item.calcs.map(historicItem => (
-                <Item
-                  key={historicItem._id}
-                  onPress={() => {
-                    setModalConfig({
-                      isVisible: true,
-                      item: historicItem,
-                    });
+            onEndReached={() =>
+              pagination.page < pagination.totalPages &&
+              !loading &&
+              isConnected &&
+              getHistoric(true)
+            }
+            onEndReachedThreshold={0.1}
+            ListFooterComponent={
+              <>
+                {isConnected ? (
+                  loading && pagination.page < pagination.totalPages ? (
+                    <LoadMoreItemsText>
+                      Carregando mais itens ...
+                    </LoadMoreItemsText>
+                  ) : (
+                    <LoadMoreItemsText>Não há mais items</LoadMoreItemsText>
+                  )
+                ) : null}
+              </>
+            }
+            renderItem={({item}) => (
+              <Group>
+                <DateGroup>{formateDate(item.created_at)}</DateGroup>
+                {item.calcs.map(historicItem => (
+                  <Item
+                    key={historicItem._id}
+                    onPress={() => {
+                      setModalConfig({
+                        isVisible: true,
+                        item: historicItem,
+                      });
 
-                    console.log(historicItem);
-                  }}>
-                  <CowContainer>
-                    <CowImage source={cowImage} />
-                  </CowContainer>
-                  <MiddleSection>
-                    <TitleItem>{historicItem.config.animal.name}</TitleItem>
-                    <CategoryItem>
-                      {historicItem.config.animal.value}
-                    </CategoryItem>
-                    <ResultBox>
-                      <ResultTextTitle>Resultado:</ResultTextTitle>
-                      <ResultTextContent>
-                        {historicItem.results[0].value} Animais
-                      </ResultTextContent>
-                    </ResultBox>
-                  </MiddleSection>
-                  <DateItem>{historicItem.created_at_formatted}</DateItem>
-                </Item>
-              ))}
-            </Group>
-          )}
-          keyExtractor={item => item.created_at}
-        />
+                      console.log(historicItem);
+                    }}>
+                    <CowContainer>
+                      <CowImage source={cowImage} />
+                    </CowContainer>
+                    <MiddleSection>
+                      <TitleItem>{historicItem.config.animal.name}</TitleItem>
+                      <CategoryItem>
+                        {historicItem.config.animal.value}
+                      </CategoryItem>
+                      <ResultBox>
+                        <ResultTextTitle>Resultado:</ResultTextTitle>
+                        <ResultTextContent>
+                          {historicItem.results[0].value} Animais
+                        </ResultTextContent>
+                      </ResultBox>
+                    </MiddleSection>
+                    <DateItem>{historicItem.created_at_formatted}</DateItem>
+                  </Item>
+                ))}
+              </Group>
+            )}
+            keyExtractor={item => item.created_at}
+          />
+        )}
       </Container>
       <ModalContainer isVisible={modalConfig.isVisible}>
         <ModalContent>

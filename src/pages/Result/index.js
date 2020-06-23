@@ -49,7 +49,7 @@ const Result = ({navigation, route}) => {
   };
 
   return (
-    <Container results source={backgroundImage}>
+    <Container results>
       <ProgressBar size={100} />
       <CalcHeader color="#fff" />
       <Content>

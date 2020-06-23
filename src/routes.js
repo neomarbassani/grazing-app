@@ -1,10 +1,4 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
-
-/* import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import {createBottomTabNavigator} from 'react-navigation-tabs'; */
-import Icon from 'react-native-vector-icons/Feather';
 
 import Wellcome from './pages/Wellcome';
 import Login from './pages/SignIn';
@@ -24,12 +18,9 @@ import ChoosePastureType from './pages/ChoosePastureType';
 import Result from './pages/Result';
 import Offline from './pages/Offline';
 import ChooseGrazingMethod from './pages/ChooseGrazingMethod';
-/* import HistoricItemDetails from './pages/HistoricItemDetails'; */
 
 import DimensionArea from './pages/Forms/DimensionArea';
 
-import Avatar from './components/Avatar';
-import NavigationHeaderLogo from './components/NavigationHeaderLogo';
 import TabBar from './components/TabBar';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';

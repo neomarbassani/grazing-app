@@ -15,7 +15,16 @@ import Button from '../../../components/Button';
 import {Content} from './styles';
 
 import {areaOfFoal} from '../../../services/calcs';
-import backgroundImage from '../../../assets/background-form-azevem.png';
+
+import aveia from '../../../assets/aveiaFundo.jpg';
+import azevem from '../../../assets/azevemFundo.jpg';
+import campoNativo from '../../../assets/campoNativoFundo.jpg';
+import campoNativoMelhorado from '../../../assets/campoNativoMelhoradoFundo.jpg';
+import milheto from '../../../assets/milhetoFundo.jpg';
+import papua from '../../../assets/papuaFundo.jpeg';
+import sorgo from '../../../assets/sorgoFundo.jpg';
+import sudao from '../../../assets/sudaoFundo.jpg';
+import tifton from '../../../assets/tiftonFundo.jpg';
 
 const DimensionArea = ({navigation, route}) => {
   const [pastureHeight, setPastureHeight] = useState(0);
@@ -107,8 +116,30 @@ const DimensionArea = ({navigation, route}) => {
     }
   }
 
+  console.log(pasture.value);
+
   return (
-    <Container source={backgroundImage} resizeMode="cover">
+    <Container
+      source={
+        pasture.value === 'Azevém'
+          ? azevem
+          : pasture.value === 'Campo Nativo'
+          ? campoNativo
+          : pasture.value === 'Campo Nativo Melhorado'
+          ? campoNativoMelhorado
+          : pasture.value === 'Aveia'
+          ? aveia
+          : pasture.value === 'Milheto'
+          ? milheto
+          : pasture.value === 'Sudão'
+          ? sudao
+          : pasture.value === 'Papuã'
+          ? papua
+          : pasture.value === 'Sorgo'
+          ? sorgo
+          : tifton
+      }
+      resizeMode="cover">
       <ProgressBar size={87.5} />
       <CalcHeader color="#fff" />
       <Content>

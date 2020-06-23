@@ -7,7 +7,11 @@ import SubTitle from '../../components/SubTitle';
 import ChooseItemButton from '../../components/ChooseItemButton';
 import ProgressBar from '../../components/ProgressBar';
 import CalcHeader from '../../components/CalcHeader';
+
 import backgroundLogo from '../../assets/backgroundLogo.png';
+
+import grazingmethod1 from '../../assets/grazingmethod1.jpg';
+import grazingmethod2 from '../../assets/grazingmethod2.jpg';
 
 import {Content} from './styles';
 
@@ -31,6 +35,7 @@ const ChooseGrazingMethod = ({navigation, route}) => {
         />
         <ChooseItemButton
           size={47}
+          source={grazingmethod1}
           content="Contínuo"
           onPress={() => {
             navigation.navigate('ChooseBovineType', {
@@ -43,6 +48,7 @@ const ChooseGrazingMethod = ({navigation, route}) => {
         />
         <ChooseItemButton
           content="Rotativo"
+          source={grazingmethod2}
           size={47}
           onPress={() => {
             navigation.navigate('ChooseBovineType', {

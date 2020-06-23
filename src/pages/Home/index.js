@@ -9,6 +9,12 @@ import ProgressBar from '../../components/ProgressBar';
 import Link from '../../components/Link';
 import backgroundLogo from '../../assets/backgroundLogo.png';
 
+import solution1 from '../../assets/solution1.jpg';
+import solution2 from '../../assets/solution2.jpg';
+import solution3 from '../../assets/solution3.jpg';
+import solution4 from '../../assets/solution4.jpg';
+import solution5 from '../../assets/solution5.jpg';
+
 import {Content, FreePlanBox, FreePlanBoxText} from './styles';
 
 const Home = ({navigation}) => {
@@ -34,6 +40,7 @@ const Home = ({navigation}) => {
           }}>
           <ChooseItemButton
             content="Ajustar lotação animal"
+            source={solution1}
             onPress={() => {
               navigation.navigate('ChooseGrazingMethod', {
                 calcName: 'Ajustar lotação animal',
@@ -42,6 +49,7 @@ const Home = ({navigation}) => {
           />
           <ChooseItemButton
             content="Dimensionar área do potreiro"
+            source={solution2}
             onPress={() => {
               navigation.navigate('ChooseGrazingMethod', {
                 calcName: 'Dimensionar área do potreiro',
@@ -50,6 +58,7 @@ const Home = ({navigation}) => {
           />
           <ChooseItemButton
             content="Fornecer suplemento"
+            source={solution3}
             onPress={() => {
               navigation.navigate('ChooseGrazingMethod', {
                 calcName: 'Fornecer suplemento',
@@ -58,6 +67,7 @@ const Home = ({navigation}) => {
           />
           <ChooseItemButton
             content="Calcular números de piquetes"
+            source={solution4}
             onPress={() => {
               navigation.navigate('ChooseGrazingMethod', {
                 calcName: 'Calcular números de piquetes',
@@ -66,6 +76,7 @@ const Home = ({navigation}) => {
           />
           <ChooseItemButton
             content="Definir período de ocupação"
+            source={solution5}
             onPress={() => {
               navigation.navigate('ChooseGrazingMethod', {
                 calcName: 'Definir período de ocupação',
