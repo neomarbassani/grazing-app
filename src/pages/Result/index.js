@@ -11,7 +11,6 @@ import CalcHeader from '../../components/CalcHeader';
 import Button from '../../components/Button';
 
 import logo from '../../assets/logoResults.png';
-import backgroundImage from '../../assets/background-form-azevem.png';
 
 import {Description, ResultText, Title, Logo, Content} from './styles';
 

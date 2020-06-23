@@ -4,6 +4,8 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import {RefreshControl, Dimensions} from 'react-native';
+const {height, width} = Dimensions.get('window');
 
 import backgroundLogo from '../../assets/backgroundLogo.png';
 
@@ -57,17 +59,52 @@ import {
 const Skeleton = () => {
   return (
     <SkeletonPlaceholder>
-      <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
-        <SkeletonPlaceholder.Item width={60} height={60} borderRadius={50} />
-        <SkeletonPlaceholder.Item marginLeft={20}>
-          <SkeletonPlaceholder.Item width={120} height={20} borderRadius={4} />
-          <SkeletonPlaceholder.Item
-            marginTop={6}
-            width={80}
-            height={20}
-            borderRadius={4}
-          />
-        </SkeletonPlaceholder.Item>
+      <SkeletonPlaceholder.Item
+        flexDirection="column"
+        alignItems="flex-start"
+        marginTop={40}>
+        <SkeletonPlaceholder.Item
+          width={width / 2}
+          height={30}
+          marginBottom={20}
+        />
+
+        <SkeletonPlaceholder.Item
+          width={width - 30}
+          height={60}
+          marginBottom={20}
+        />
+        <SkeletonPlaceholder.Item
+          width={width - 30}
+          height={60}
+          marginBottom={20}
+        />
+        <SkeletonPlaceholder.Item
+          width={width - 30}
+          height={60}
+          marginBottom={20}
+        />
+        <SkeletonPlaceholder.Item
+          width={width - 30}
+          height={60}
+          marginBottom={20}
+        />
+        <SkeletonPlaceholder.Item
+          width={width / 2}
+          height={30}
+          marginBottom={20}
+        />
+
+        <SkeletonPlaceholder.Item
+          width={width - 30}
+          height={60}
+          marginBottom={20}
+        />
+        <SkeletonPlaceholder.Item
+          width={width - 30}
+          height={60}
+          marginBottom={20}
+        />
       </SkeletonPlaceholder.Item>
     </SkeletonPlaceholder>
   );
@@ -217,12 +254,12 @@ const Historic = ({navigation}) => {
             ListEmptyComponent={() => (
               <NoContentText>Não há items</NoContentText>
             )}
-            /* refreshControl={
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={() => getHistoric(false)}
-          />
-        } */
+            refreshControl={
+              <RefreshControl
+                refreshing={loading}
+                onRefresh={() => getHistoric(false)}
+              />
+            }
             onEndReached={() =>
               pagination.page < pagination.totalPages &&
               !loading &&
