@@ -373,14 +373,7 @@ const Historic = ({navigation}) => {
               kg
             </Value>
           </RowItem>
-          <RowItem>
-            <Label>Escore corporal:</Label>
-            <Value>
-              {modalConfig.item.inputs &&
-                modalConfig.item.inputs.find(input => input.key === 'score')
-                  .value}
-            </Value>
-          </RowItem>
+
           <RowItem>
             <Label>Forrageira:</Label>
             <Value>
@@ -396,35 +389,18 @@ const Historic = ({navigation}) => {
             <Label>Data da avaliação:</Label>
             <Value>
               {modalConfig.item.inputs &&
-                new Date(
-                  modalConfig.item.inputs.find(
-                    input => input.key === 'evaluation_date',
-                  ).value,
-                ).getDay()}
+                new Date(modalConfig.item.created_at).getDay()}
               /
               {modalConfig.item.inputs &&
-                new Date(
-                  modalConfig.item.inputs.find(
-                    input => input.key === 'evaluation_date',
-                  ).value,
-                ).getMonth()}
+                new Date(modalConfig.item.created_at).getMonth()}
               /
               {modalConfig.item.inputs &&
-                new Date(
-                  modalConfig.item.inputs.find(
-                    input => input.key === 'evaluation_date',
-                  ).value,
-                ).getFullYear()}
+                new Date(modalConfig.item.created_at).getFullYear()}
             </Value>
           </RowItem>
           <RowItem>
             <Label>Dias de utilização:</Label>
-            <Value>
-              {modalConfig.item.inputs &&
-                modalConfig.item.inputs.find(
-                  input => input.key === 'days_of_use',
-                ).value}
-            </Value>
+            <Value>30 dias (Padrão)</Value>
           </RowItem>
           <RowItem>
             <Label>Altura do pasto (cm)</Label>

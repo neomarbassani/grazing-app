@@ -24,32 +24,88 @@ const AnimalInfo = ({navigation, route}) => {
 
   const formRef = useRef(null);
 
-  async function handleSubmit({weigth}) {
+  async function handleSubmit(data) {
     try {
       formRef.current.setErrors({});
+
+      if (
+        calc.name === 'Pastoreio rotativo' &&
+        calc.value === 'Ajustar lotação animal' &&
+        animal.value === 'Vaca em lactação'
+      ) {
+        const schema = Yup.object().shape({
+          weigth: Yup.string().required('Insira o peso médio dos animais'),
+          weeksOfLactation: Yup.string().required(
+            'Insira o numero de semanas em lactação',
+          ),
+          milkQuantity: Yup.string().required('Insira a quantidade de leite'),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        navigation.navigate('ChoosePastureType', {
+          calc,
+          animal,
+          inputs: [
+            {name: 'Peso médio', value: data.weigth, key: 'weigth'},
+            {
+              name: 'Semanas de Lactação',
+              value: data.weeksOfLactation,
+              key: 'weeksOfLactation',
+            },
+            {
+              name: 'Produção de Leite (litros/dia)',
+              value: data.milkQuantity,
+              key: 'milkQuantity',
+            },
+          ],
+        });
+      }
+
+      if (
+        calc.name === 'Pastoreio rotativo' &&
+        calc.value === 'Ajustar lotação animal' &&
+        animal.value === 'Novilha Leiteira'
+      ) {
+        const schema = Yup.object().shape({
+          weigth: Yup.string().required('Insira o peso médio dos animais'),
+          daysOfLactation: Yup.string().required(
+            'Insira o número de dias em lactação',
+          ),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        navigation.navigate('ChoosePastureType', {
+          calc,
+          animal,
+          inputs: [
+            {name: 'Peso médio', value: data.weigth, key: 'weigth'},
+            {
+              name: 'N° de dias de gestação',
+              value: data.daysOfLactation,
+              key: 'daysOfLactation',
+            },
+          ],
+        });
+      }
 
       const schema = Yup.object().shape({
         weigth: Yup.string().required('Insira o peso médio dos animais'),
       });
 
-      await schema.validate(
-        {weigth},
-        {
-          abortEarly: false,
-        },
-      );
+      await schema.validate(data, {
+        abortEarly: false,
+      });
 
       navigation.navigate('ChoosePastureType', {
         calc,
         animal,
-        inputs: [
-          {name: 'Peso médio', value: weigth, key: 'weigth'},
-          {
-            name: 'Escore de condição corporal',
-            value: score.toString(),
-            key: 'score',
-          },
-        ],
+        inputs: [{name: 'Peso médio', value: data.weigth, key: 'weigth'}],
       });
     } catch (err) {
       const validationErrors = {};
@@ -83,7 +139,36 @@ const AnimalInfo = ({navigation, route}) => {
             keyboardType="numeric"
             placeholder="kg"
           />
-          <SliderInput
+          {calc.name === 'Pastoreio rotativo' &&
+            calc.value === 'Ajustar lotação animal' && (
+              <>
+                {animal.value === 'Vaca em lactação' && (
+                  <>
+                    <Input
+                      name="weeksOfLactation"
+                      label="Semanas de Lactação"
+                      keyboardType="numeric"
+                      placeholder="10 semanas"
+                    />
+                    <Input
+                      name="milkQuantity"
+                      label="Produção de Leite (litros/dia)"
+                      keyboardType="numeric"
+                      placeholder="10 (litros/dia)"
+                    />
+                  </>
+                )}
+                {animal.value === 'Novilha Leiteira' && (
+                  <Input
+                    name="daysOfLactation"
+                    label="N° de dias de gestação"
+                    keyboardType="numeric"
+                    placeholder="10"
+                  />
+                )}
+              </>
+            )}
+          {/* <SliderInput
             label="Escore de condição corporal"
             value={score}
             onValueChange={value => {
@@ -92,7 +177,7 @@ const AnimalInfo = ({navigation, route}) => {
             minVal={0}
             maxVal={6}
             step={0.5}
-          />
+          /> */}
         </Form>
         <Button
           content="Próximo"

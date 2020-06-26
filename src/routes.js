@@ -20,7 +20,7 @@ import Offline from './pages/Offline';
 import ChooseGrazingMethod from './pages/ChooseGrazingMethod';
 import PlanOff from './pages/PlanOff';
 
-import DimensionArea from './pages/Forms/DimensionArea';
+import Form from './pages/Form';
 
 import TabBar from './components/TabBar';
 
@@ -81,7 +81,7 @@ const InicioStack = () => {
       <Stack.Screen name="ChooseBovineType" component={ChooseBovineType} />
       <Stack.Screen name="AnimalInfo" component={AnimalInfo} />
       <Stack.Screen name="ChoosePastureType" component={ChoosePastureType} />
-      <Stack.Screen name="DimensionArea" component={DimensionArea} />
+      <Stack.Screen name="Form" component={Form} />
     </Stack.Navigator>
   );
 };

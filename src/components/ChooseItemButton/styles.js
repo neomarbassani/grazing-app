@@ -26,6 +26,6 @@ export const Text = styled.Text`
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
-  background-color: #00000080;
+  background-color: ${props => (props.disabled ? '#ffffff99' : '#00000060')};
   padding: 0 10px;
 `;

@@ -3,15 +3,21 @@ import React from 'react';
 
 import {Container, Text, ImageBackground} from './styles';
 
-export default function ChooseItemButtom({content, source, loading, ...rest}) {
+export default function ChooseItemButtom({
+  content,
+  source,
+  disabled,
+  loading,
+  ...rest
+}) {
   return (
-    <Container {...rest}>
+    <Container disabled={disabled} {...rest}>
       <ImageBackground
         imageStyle={{borderRadius: 10}}
         source={source}
         resizeMode="cover"
         resizeMethod="resize">
-        <Text>{content}</Text>
+        <Text disabled={disabled}>{content}</Text>
       </ImageBackground>
     </Container>
   );

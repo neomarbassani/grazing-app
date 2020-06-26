@@ -47,6 +47,7 @@ const ChooseGrazingMethod = ({navigation, route}) => {
           }}
         />
         <ChooseItemButton
+          disabled
           content="Rotativo"
           source={grazingmethod2}
           size={47}

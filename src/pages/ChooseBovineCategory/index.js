@@ -39,90 +39,100 @@ const ChooseBovineCategory = ({navigation, route}) => {
       <Content>
         <CalcRoutesTop items={items} />
         <SubTitle value="Qual é a categoria animal?" size={14} mb={20} />
-        <ChooseItemButton
-          size={47}
-          content={'Terneiro'}
-          source={terneiro}
-          onPress={() => {
-            navigation.navigate('AnimalInfo', {
-              calc,
-              animal: {
-                name: animalCategory,
-                value: 'Terneito',
-              },
-            });
-          }}
-        />
-        <ChooseItemButton
-          content={'Vaca em lactação'}
-          size={47}
-          source={vacaemlactacao}
-          onPress={() => {
-            navigation.navigate('AnimalInfo', {
-              calc,
-              animal: {
-                name: animalCategory,
-                value: 'Vaca em lactação',
-              },
-            });
-          }}
-        />
-        <ChooseItemButton
-          content={'Vaca seca'}
-          size={47}
-          source={vacaseca}
-          onPress={() => {
-            navigation.navigate('AnimalInfo', {
-              calc,
-              animal: {
-                name: animalCategory,
-                value: 'Vaca seca',
-              },
-            });
-          }}
-        />
-        <ChooseItemButton
-          content={'Vaca prenha'}
-          size={47}
-          source={vacaprenha}
-          onPress={() => {
-            navigation.navigate('AnimalInfo', {
-              calc,
-              animal: {
-                name: animalCategory,
-                value: 'Vaca prenha',
-              },
-            });
-          }}
-        />
-        <ChooseItemButton
-          content={'Novilha'}
-          source={novilha}
-          size={47}
-          onPress={() => {
-            navigation.navigate('AnimalInfo', {
-              calc,
-              animal: {
-                name: animalCategory,
-                value: 'Novilha',
-              },
-            });
-          }}
-        />
-        <ChooseItemButton
-          content={'Novilha Leiteira '}
-          source={novilhaleiteira}
-          size={47}
-          onPress={() => {
-            navigation.navigate('AnimalInfo', {
-              calc,
-              animal: {
-                name: animalCategory,
-                value: 'Novilha Leiteira',
-              },
-            });
-          }}
-        />
+        {animalCategory === 'Bovinocultura de corte' && (
+          <>
+            <ChooseItemButton
+              size={47}
+              content={'Terneiro'}
+              source={terneiro}
+              onPress={() => {
+                navigation.navigate('AnimalInfo', {
+                  calc,
+                  animal: {
+                    name: animalCategory,
+                    value: 'Terneito',
+                  },
+                });
+              }}
+            />
+            <ChooseItemButton
+              content={'Novilha'}
+              source={novilha}
+              size={47}
+              onPress={() => {
+                navigation.navigate('AnimalInfo', {
+                  calc,
+                  animal: {
+                    name: animalCategory,
+                    value: 'Novilha',
+                  },
+                });
+              }}
+            />
+            <ChooseItemButton
+              content={'Vaca seca'}
+              size={47}
+              source={vacaseca}
+              onPress={() => {
+                navigation.navigate('AnimalInfo', {
+                  calc,
+                  animal: {
+                    name: animalCategory,
+                    value: 'Vaca seca',
+                  },
+                });
+              }}
+            />
+            <ChooseItemButton
+              content={'Vaca prenha'}
+              size={47}
+              source={vacaprenha}
+              onPress={() => {
+                navigation.navigate('AnimalInfo', {
+                  calc,
+                  animal: {
+                    name: animalCategory,
+                    value: 'Vaca prenha',
+                  },
+                });
+              }}
+            />
+          </>
+        )}
+
+        {animalCategory === 'Bovinocultura de leite' && (
+          <>
+            <ChooseItemButton
+              content={'Vaca em lactação'}
+              size={47}
+              source={vacaemlactacao}
+              onPress={() => {
+                navigation.navigate('AnimalInfo', {
+                  calc,
+                  animal: {
+                    name: animalCategory,
+                    value: 'Vaca em lactação',
+                  },
+                });
+              }}
+            />
+
+            <ChooseItemButton
+              content={'Novilha Leiteira '}
+              source={novilhaleiteira}
+              size={47}
+              onPress={() => {
+                navigation.navigate('AnimalInfo', {
+                  calc,
+                  animal: {
+                    name: animalCategory,
+                    value: 'Novilha Leiteira',
+                  },
+                });
+              }}
+            />
+          </>
+        )}
       </Content>
     </Container>
   );

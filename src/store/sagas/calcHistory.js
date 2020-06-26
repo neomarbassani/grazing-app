@@ -7,10 +7,21 @@ import CalcHistoryActions from '../../store/ducks/calcHistory';
 export function* saveCalcToHistory({calcState}) {
   console.log(calcState);
   try {
-    const response = yield call(api.post, 'history', [calcState]);
-    console.log('ok');
+    yield call(api.post, 'history', [calcState]);
+
+    Snackbar.show({
+      text: 'Salvo com sucesso.',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#008000',
+    });
   } catch (err) {
-    console.log('error');
+    Snackbar.show({
+      text: 'Erro ao salvar, tente novamente.',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#ff0000',
+    });
     yield put(CalcHistoryActions.addCalcToHistoryFailure());
   }
 }

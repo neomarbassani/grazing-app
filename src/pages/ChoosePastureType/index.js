@@ -49,13 +49,14 @@ const ChoosePastureType = ({navigation, route}) => {
             content="Azevém"
             source={azevem}
             onPress={() => {
-              navigation.navigate('DimensionArea', {
+              navigation.navigate('Form', {
                 animal,
                 calc,
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
                   value: 'Azevém',
+                  key: 'azevem',
                 },
               });
             }}
@@ -65,13 +66,14 @@ const ChoosePastureType = ({navigation, route}) => {
             content="Campo Nativo"
             source={campoNativo}
             onPress={() => {
-              navigation.navigate('DimensionArea', {
+              navigation.navigate('Form', {
                 animal,
                 calc,
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
                   value: 'Campo Nativo',
+                  key: 'campoNativo',
                 },
               });
             }}
@@ -81,13 +83,14 @@ const ChoosePastureType = ({navigation, route}) => {
             content="Campo Nativo Melhorado"
             source={campoNativoMelhorado}
             onPress={() => {
-              navigation.navigate('DimensionArea', {
+              navigation.navigate('Form', {
                 animal,
                 calc,
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
                   value: 'Campo Nativo Melhorado',
+                  key: 'campoNativoMelhorado',
                 },
               });
             }}
@@ -97,13 +100,14 @@ const ChoosePastureType = ({navigation, route}) => {
             content="Aveia"
             source={aveia}
             onPress={() => {
-              navigation.navigate('DimensionArea', {
+              navigation.navigate('Form', {
                 animal,
                 calc,
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
                   value: 'Aveia',
+                  key: 'aveia',
                 },
               });
             }}
@@ -113,13 +117,14 @@ const ChoosePastureType = ({navigation, route}) => {
             content="Milheto"
             source={milheto}
             onPress={() => {
-              navigation.navigate('DimensionArea', {
+              navigation.navigate('Form', {
                 animal,
                 calc,
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
                   value: 'Milheto',
+                  key: 'milheto',
                 },
               });
             }}
@@ -129,13 +134,14 @@ const ChoosePastureType = ({navigation, route}) => {
             content="Sudão"
             source={sudao}
             onPress={() => {
-              navigation.navigate('DimensionArea', {
+              navigation.navigate('Form', {
                 animal,
                 calc,
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
                   value: 'Sudão',
+                  key: 'sudao',
                 },
               });
             }}
@@ -145,13 +151,14 @@ const ChoosePastureType = ({navigation, route}) => {
             content="Papuã"
             source={papua}
             onPress={() => {
-              navigation.navigate('DimensionArea', {
+              navigation.navigate('Form', {
                 animal,
                 calc,
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
                   value: 'Papuã',
+                  key: 'papua',
                 },
               });
             }}
@@ -161,13 +168,14 @@ const ChoosePastureType = ({navigation, route}) => {
             content="Sorgo"
             source={sorgo}
             onPress={() => {
-              navigation.navigate('DimensionArea', {
+              navigation.navigate('Form', {
                 animal,
                 calc,
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
                   value: 'Sorgo',
+                  key: 'sorgo',
                 },
               });
             }}
@@ -177,13 +185,14 @@ const ChoosePastureType = ({navigation, route}) => {
             content="Tifton"
             source={tifton}
             onPress={() => {
-              navigation.navigate('DimensionArea', {
+              navigation.navigate('Form', {
                 animal,
                 calc,
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
                   value: 'Tifton',
+                  key: 'tifton',
                 },
               });
             }}
