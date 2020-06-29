@@ -17,6 +17,7 @@ export default function Input({
   type,
   name,
   next,
+  mb,
   maskType,
   textarea,
   color,
@@ -62,7 +63,7 @@ export default function Input({
   }, [fieldName, mask, maskType, registerField]);
 
   return (
-    <Container textarea={textarea}>
+    <Container textarea={textarea} mb={mb}>
       {label && <Label color={color}>{label}</Label>}
       <Content textarea={textarea}>
         {maskType ? (

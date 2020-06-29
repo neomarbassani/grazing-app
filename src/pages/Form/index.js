@@ -18,6 +18,7 @@ import {Content} from './styles';
 import {
   numberOfAnimalsContinuous,
   numberOfAnimalsRotative,
+  foalSizeRotative,
 } from '../../services/calcs';
 
 import aveia from '../../assets/aveiaFundo.jpg';
@@ -97,9 +98,7 @@ const DimensionArea = ({navigation, route}) => {
           results,
         };
         navigation.navigate('Result', calcState);
-      }
-
-      if (
+      } else if (
         calc.name === 'Pastoreio rotativo' &&
         calc.value === 'Ajustar lotação animal'
       ) {
@@ -162,6 +161,50 @@ const DimensionArea = ({navigation, route}) => {
           results,
         };
         navigation.navigate('Result', calcState);
+      } else {
+        const schema = Yup.object().shape({
+          foal_name: Yup.string().required('Insira o nome do potreiro.'),
+          startDate: Yup.date('Insira uma data válida').required(
+            'Insira a data de inicio.',
+          ),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+        const results = foalSizeRotative({
+          startDate: data.startDate,
+          weigth: inputs.find(input => input.key === 'weigth'),
+          animalsAmount: inputs.find(input => input.key === 'animalsAmount'),
+          rationAmount: inputs.find(input => input.key === 'rationAmount'),
+          silageAmount: inputs.find(input => input.key === 'silageAmount'),
+          pastureHeight: inputs.find(input => input.key === 'pastureHeight'),
+          typeOfPasture: inputs.find(input => input.key === 'typeOfPasture'),
+        });
+
+        const calcState = {
+          config: {
+            calc,
+            animal,
+            pasture,
+          },
+          inputs: [
+            ...inputs,
+            {
+              name: 'Nome do Potreiro',
+              value: data.foal_name,
+              key: 'foal_name',
+            },
+            {
+              name: 'Data de início do pastejo',
+              value: data.startDate.toString(),
+              key: 'startDate',
+            },
+          ],
+          results,
+        };
+
+        /* navigation.navigate('Result', calcState); */
       }
     } catch (err) {
       const validationErrors = {};
@@ -215,7 +258,7 @@ const DimensionArea = ({navigation, route}) => {
           flexWrap: 'wrap',
           flexDirection: 'row',
           justifyContent: 'space-between',
-          padding: 30,
+          padding: 15,
         }}>
         <CalcRoutesTop items={items} color="#fff" />
         <SubTitle
@@ -225,17 +268,33 @@ const DimensionArea = ({navigation, route}) => {
           color="#fff"
         />
 
+        <Form ref={formRef} onSubmit={handleSubmit}>
+          <Input
+            name="foal_name"
+            label="Nome do Potreiro"
+            color="#fff"
+            returnKeyType="next"
+            blurOnSubmit={false}
+            onSubmitEditing={() => focusInput('startDate')}
+          />
+          <Input
+            name="startDate"
+            color="#fff"
+            label="Data de início do pastejo"
+            keyboardType="numeric"
+            placeholder="DD/MM/YYYY"
+            maskType="datetime"
+            options={{
+              format: 'DD/MM/YYYY',
+            }}
+            returnKeyType="done"
+            blurOnSubmit={true}
+          />
+        </Form>
+
         {calc.name === 'Pastoreio contínuo' &&
           calc.value === 'Ajustar lotação animal' && (
             <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="foal_name"
-                label="Nome do Potreiro"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('startMouth')}
-              />
               <Input
                 name="startMouth"
                 color="#fff"

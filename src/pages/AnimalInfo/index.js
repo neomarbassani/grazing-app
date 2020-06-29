@@ -94,6 +94,31 @@ const AnimalInfo = ({navigation, route}) => {
         });
       }
 
+      if (calc.value === 'Dimensionar área do potreiro') {
+        const schema = Yup.object().shape({
+          weigth: Yup.string().required('Insira o peso médio dos animais'),
+          animalsAmount: Yup.string().required('Insira o número de animais'),
+        });
+        console.log('ok');
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        /* navigation.navigate('ChoosePastureType', {
+          calc,
+          animal,
+          inputs: [
+            {name: 'Peso médio', value: data.weigth, key: 'weigth'},
+            {
+              name: 'Número de animais que serão colocados no potreiro',
+              value: data.animalsAmount,
+              key: 'animalsAmount',
+            },
+          ],
+        }); */
+      }
+
       const schema = Yup.object().shape({
         weigth: Yup.string().required('Insira o peso médio dos animais'),
       });
@@ -135,9 +160,9 @@ const AnimalInfo = ({navigation, route}) => {
         <Form ref={formRef} onSubmit={handleSubmit}>
           <Input
             name="weigth"
-            label="Peso médio"
+            label="Peso vivo médio dos animais"
             keyboardType="numeric"
-            placeholder="kg"
+            placeholder="(kg PV)"
           />
           {calc.name === 'Pastoreio rotativo' &&
             calc.value === 'Ajustar lotação animal' && (
@@ -168,6 +193,33 @@ const AnimalInfo = ({navigation, route}) => {
                 )}
               </>
             )}
+          {calc.value === 'Dimensionar área do potreiro' && (
+            <>
+              <Input
+                name="animalsAmount"
+                label="Número de animais que serão colocados no potreiro"
+                keyboardType="numeric"
+                placeholder="Insira o número de animais"
+              />
+              {calc.name === 'Pastoreio rotativo' && (
+                <>
+                  <Input
+                    name="rationAmount"
+                    label="Os animais irão receber ração no cocho? Se sim, quanto? "
+                    keyboardType="numeric"
+                    placeholder="kg MS/animal/dia"
+                    mb={60}
+                  />
+                  <Input
+                    name="silageAmount"
+                    label="Os animais irão receber silagem ou feno? Se sim, quanto? "
+                    keyboardType="numeric"
+                    placeholder="kg/animal/dia"
+                  />
+                </>
+              )}
+            </>
+          )}
           {/* <SliderInput
             label="Escore de condição corporal"
             value={score}

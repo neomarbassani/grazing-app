@@ -315,3 +315,23 @@ export function numberOfAnimalsRotative({
     weeksOfLactation,
   });
 }
+
+export function foalSizeRotative({
+  startDate,
+  weigth,
+  animalsAmount,
+  rationAmount,
+  silageAmount,
+  pastureHeight,
+  typeOfPasture,
+}) {
+  console.log({
+    startDate,
+    weigth,
+    animalsAmount,
+    rationAmount,
+    silageAmount,
+    pastureHeight,
+    typeOfPasture,
+  });
+}

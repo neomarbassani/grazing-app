@@ -4,7 +4,7 @@ import {colors} from '../../styles';
 import {TextInputMask} from 'react-native-masked-text';
 
 export const Container = styled.View`
-  margin-bottom: 45px;
+  margin-bottom: ${props => (props.mb ? props.mb : '45px')};
   align-items: flex-start;
   height: ${props => (props.textarea ? '65%' : '42px')};
   width: 100%;

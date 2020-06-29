@@ -1,11 +1,5 @@
 import styled from 'styled-components/native';
 
-import {Dimensions, StatusBar} from 'react-native';
-
-const screenHeight = Dimensions.get('screen').height;
-const windowHeight = Dimensions.get('window').height;
-const navbarHeight = screenHeight - (windowHeight + StatusBar.currentHeight);
-
 export const Container = styled.ImageBackground`
   width: 100%;
   height: 60px;
@@ -23,7 +17,8 @@ export const Page = styled.TouchableOpacity`
 `;
 
 export const Home = styled.TouchableOpacity`
-  bottom: ${navbarHeight - 8};
+  position: relative;
+  top: -22px;
   width: 80px;
   height: 80px;
   border: 5px solid #fff;
