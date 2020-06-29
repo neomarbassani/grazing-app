@@ -4,9 +4,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Form} from '@unform/mobile';
 import * as Yup from 'yup';
 
-import {Container, ContentBottom, ContentTop} from '../../layout/Auth';
+import Container from '../../layout/Auth';
 
-import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
 import Input from '../../components/Input';
 import Link from '../../components/Link';
@@ -21,26 +20,24 @@ export default function SignIn({navigation}) {
 
   const loading = useSelector(state => state.auth.loading);
 
-  async function handleSubmit({email, password}) {
+  async function handleSubmit({phone, password}) {
     try {
       formRef.current.setErrors({});
 
       const schema = Yup.object().shape({
-        email: Yup.string()
-          .email('Insira um e-mail válido.')
-          .required('Um e-mail é obrigatório'),
+        phone: Yup.string().required('Um telefone é obrigatório'),
 
         password: Yup.string().required('Informe sua senha'),
       });
 
       await schema.validate(
-        {email, password},
+        {phone, password},
         {
           abortEarly: false,
         },
       );
 
-      dispatch(AuthActions.signInRequest(email, password));
+      dispatch(AuthActions.signInRequest(phone, password));
     } catch (err) {
       const validationErrors = {};
 
@@ -61,48 +58,50 @@ export default function SignIn({navigation}) {
 
   return (
     <Container>
-      <ContentTop>
-        <LogoHeader />
-        <Title value="Login" size={24} mb={16} />
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input
-            name="email"
-            type="email"
-            label="E-mail"
-            placeholder="email@exemplo.com.br"
-            underlineColorAndroid="transparent"
-            returnKeyType="next"
-            blurOnSubmit={false}
-            onSubmitEditing={() => focusInput('password')}
-          />
-          <Input
-            name="password"
-            type="password"
-            underlineColorAndroid="transparent"
-            placeholder="*********"
-            label="Senha"
-          />
-        </Form>
-        <Link
-          content="Esqueci minha senha"
-          onPress={() => navigation.navigate('RecoveryPassword')}
-          color="#D69D2B"
-          mt={5}
+      <LogoHeader mt={50} mb={40} />
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <Input
+          maskType={'cel-phone'}
+          options={{
+            maskType: 'BRL',
+            withDDD: true,
+            dddMask: '(99) ',
+          }}
+          name="phone"
+          label="Telefone"
+          placeholder="(XX) XXXXX-XXXX"
+          underlineColorAndroid="transparent"
+          returnKeyType="next"
+          blurOnSubmit={false}
+          onSubmitEditing={() => focusInput('password')}
         />
-      </ContentTop>
+        <Input
+          name="password"
+          type="password"
+          underlineColorAndroid="transparent"
+          placeholder="*********"
+          label="Senha"
+        />
+      </Form>
+      <Link
+        content="Esqueci minha senha"
+        onPress={() => navigation.navigate('RecoveryPassword')}
+        color="#D69D2B"
+        alignSelf="flex-end"
+      />
 
-      <ContentBottom>
-        <Link
-          content="Criar uma conta"
-          mb={24}
-          onPress={() => navigation.navigate('Register')}
-        />
-        <Button
-          content="Login"
-          onPress={() => formRef.current.submitForm()}
-          loading={loading}
-        />
-      </ContentBottom>
+      <Link
+        mt="auto"
+        mb={25}
+        content="Criar uma conta"
+        onPress={() => navigation.navigate('Register')}
+      />
+      <Button
+        mb={16}
+        content="Login"
+        onPress={() => formRef.current.submitForm()}
+        loading={loading}
+      />
     </Container>
   );
 }

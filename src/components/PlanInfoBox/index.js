@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Content, Text } from './styles';
+import {Container, Content, Text} from './styles';
 import Link from '../Link';
 
 const PlanInfoBox = () => {

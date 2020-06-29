@@ -9,14 +9,19 @@ export default function App() {
 
   const {isConnected} = useSelector(state => state.offline);
 
-  const prefix = Platform.OS === 'ios' ? 'grazing://' : 'grazing://grazing/';
+  const linking = {
+    prefixes: ['http://agenciarazzo.grazing', 'grazing://'],
+    config: {
+      NewPassword: 'new-password/:token',
+    },
+  };
 
   return (
     <Routes
       isConnected={isConnected}
       signed={signed}
       autenticated={autenticated}
-      uriPrefix={prefix}
+      linking={linking}
     />
   );
 }

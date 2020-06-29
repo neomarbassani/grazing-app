@@ -1,7 +1,15 @@
 import styled from 'styled-components/native';
-import { CodeField } from 'react-native-confirmation-code-field';
+import {CodeField} from 'react-native-confirmation-code-field';
 
-import { colors } from '../../styles';
+import {colors} from '../../styles';
+
+export const Label = styled.Text`
+  font-family: 'WorkSans-Bold';
+  font-size: 16px;
+  line-height: 19px;
+  color: #888899;
+  margin-bottom: 7px;
+`;
 
 export const VerificationCodeArea = styled.View`
   align-items: flex-start;
