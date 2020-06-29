@@ -1,20 +1,20 @@
-import React, { useRef, useState } from 'react';
-import { Form } from '@unform/mobile';
-import { Alert, Platform } from 'react-native';
+import React, {useRef, useState} from 'react';
+import {Form} from '@unform/mobile';
+import {Alert, Platform} from 'react-native';
 
 import * as Yup from 'yup';
 
-import { Container, ContentBottom, ContentTop } from '../../layout/Auth';
+import {Container, ContentBottom, ContentTop} from '../../layout/Auth';
 
 import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
 import Input from '../../components/Input';
 import Link from '../../components/Link';
 import Button from '../../components/Button';
-
+import {toast_error} from '../../components/Toast';
 import api from '../../services/api';
 
-export default function SignIn({ navigation }) {
+export default function SignIn({navigation}) {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
 
@@ -33,28 +33,34 @@ export default function SignIn({ navigation }) {
         abortEarly: false,
       });
 
-      await api.post('user/forgot-password', {
-        email: data.email,
-        device: Platform.OS,
-      });
+      try {
+        await api.post('user/forgot-password', {
+          email: data.email,
+          device: Platform.OS,
+        });
+        setLoading(false);
 
-      setLoading(false);
-
-      Alert.alert(
-        'Sucesso',
-        `Um link foi enviado para o email ${data.email} para você redefinir sua senha`,
-        [
-          {
-            text: 'Ok',
-            onPress: () => navigation.navigate('Login'),
-          },
-        ],
-      );
+        Alert.alert(
+          'Sucesso',
+          `Um link foi enviado para o email ${
+            data.email
+          } para você redefinir sua senha`,
+          [
+            {
+              text: 'Ok',
+              onPress: () => navigation.navigate('Login'),
+            },
+          ],
+        );
+      } catch (err) {
+        toast_error('Email não encontrado, por favor registre-se!');
+        setLoading(false);
+      }
     } catch (err) {
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
+        err.inner.forEach(error => {
           validationErrors[error.path] = error.message;
         });
 

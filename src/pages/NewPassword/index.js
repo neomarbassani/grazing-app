@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react';
-import { Alert } from 'react-native';
-import { Form } from '@unform/mobile';
+import React, {useRef, useState, useEffect} from 'react';
+import {Alert} from 'react-native';
+import {Form} from '@unform/mobile';
 
 import * as Yup from 'yup';
 
-import { Container, ContentBottom, ContentTop } from '../../layout/Auth';
+import {Container, ContentBottom, ContentTop} from '../../layout/Auth';
 
 import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
@@ -13,11 +13,11 @@ import Button from '../../components/Button';
 
 import api from '../../services/api';
 
-export default function SignIn({ navigation }) {
+export default function SignIn({navigation, route}) {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
 
-  const { token } = navigation.state.params;
+  const [token, setToken] = useState('');
 
   async function handleSubmit(data) {
     setLoading(true);
@@ -54,7 +54,7 @@ export default function SignIn({ navigation }) {
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {
-        err.inner.forEach((error) => {
+        err.inner.forEach(error => {
           validationErrors[error.path] = error.message;
         });
 
@@ -69,6 +69,12 @@ export default function SignIn({ navigation }) {
     const focusInputField = formRef.current.getFieldRef(field);
     focusInputField.focus();
   }
+
+  useEffect(() => {
+    if (route.params.token) {
+      setToken(route.params.token);
+    }
+  }, [route]);
 
   return (
     <Container>

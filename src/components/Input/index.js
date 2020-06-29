@@ -40,8 +40,12 @@ export default function Input({label, type, name, next, maskType, ...rest}) {
         ref.clear();
       },
       setValue(ref, value) {
-        ref.setNativeProps({text: value});
-        inputRef.current.value = value;
+        if (!maskType) {
+          ref.setNativeProps({text: value});
+          inputRef.current.value = value;
+        } else {
+          setMask(value);
+        }
       },
       getValue(ref) {
         if (maskType) {

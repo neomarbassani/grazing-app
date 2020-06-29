@@ -5,6 +5,7 @@ import {call, put} from 'redux-saga/effects';
 import api from '../../services/api';
 import AuthActions from '../../store/ducks/auth';
 import auth from '@react-native-firebase/auth';
+import {toast_error} from '../../components/Toast';
 
 export function* signIn({email, password}) {
   try {
@@ -34,7 +35,11 @@ export function* signUp(data) {
 
     yield put(AuthActions.signUpSuccess(token, user));
   } catch (err) {
-    Alert.alert('Erro', 'Houve um erro no cadastro, verifique seus dados');
+    console.log(err.response.data);
+    if (err.response.data && err.response.data.error) {
+      toast_error(err.response.data.error[0]);
+    }
+
     yield put(AuthActions.signUpFailure());
   }
 }
