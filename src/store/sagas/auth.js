@@ -5,7 +5,6 @@ import {call, put} from 'redux-saga/effects';
 import api from '../../services/api';
 import AuthActions from '../../store/ducks/auth';
 import auth from '@react-native-firebase/auth';
-import {toast_error} from '../../components/Toast';
 
 export function* signIn({phone, password}) {
   try {

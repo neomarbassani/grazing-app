@@ -11,7 +11,6 @@ import LogoHeader from '../../components/LogoHeader';
 import Input from '../../components/Input';
 import Link from '../../components/Link';
 import Button from '../../components/Button';
-import {toast_error} from '../../components/Toast';
 import api from '../../services/api';
 
 export default function SignIn({navigation}) {

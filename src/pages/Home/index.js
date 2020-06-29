@@ -36,8 +36,8 @@ const Home = ({navigation}) => {
           contentContainerStyle={{
             justifyContent: 'center',
             alignItems: 'center',
-            paddingLeft: 30,
-            paddingRight: 30,
+            paddingLeft: 15,
+            paddingRight: 15,
             paddingBottom: 35,
           }}>
           <ChooseItemButton

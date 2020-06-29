@@ -51,6 +51,7 @@ export default function SignIn({navigation}) {
         dispatch(AuthActions.autenticationRequest());
         setLoading(false);
       } else {
+        console.log(phone);
         signInWithPhoneNumber(`+55${phone}`);
       }
     });
