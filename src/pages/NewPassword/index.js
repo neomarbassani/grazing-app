@@ -1,10 +1,11 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {Alert} from 'react-native';
 import {Form} from '@unform/mobile';
+import Snackbar from 'react-native-snackbar';
 
 import * as Yup from 'yup';
 
-import {Container, ContentBottom, ContentTop} from '../../layout/Auth';
+import Container from '../../layout/Auth';
 
 import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
@@ -42,12 +43,13 @@ export default function SignIn({navigation, route}) {
         password: data.password,
       });
 
-      Alert.alert('Sucesso', 'Senha alterada com sucesso', [
-        {
-          text: 'Ok',
-          onPress: () => navigation.navigate('Login'),
-        },
-      ]);
+      Snackbar.show({
+        text: 'Senha alterada com sucesso.',
+        duration: Snackbar.LENGTH_LONG,
+        textColor: '#fff',
+        backgroundColor: '#008000',
+      });
+      navigation.navigate('Login');
 
       setLoading(false);
     } catch (err) {
@@ -60,7 +62,13 @@ export default function SignIn({navigation, route}) {
 
         formRef.current.setErrors(validationErrors);
       }
-      Alert.alert('Erro', 'Erro ao alterar senha, tente novamente', []);
+      Snackbar.show({
+        text: 'Erro ao alterar senha, tente novamente',
+        duration: Snackbar.LENGTH_SHORT,
+        textColor: '#fff',
+        backgroundColor: '#ff0000',
+      });
+
       setLoading(false);
     }
   }
@@ -78,34 +86,32 @@ export default function SignIn({navigation, route}) {
 
   return (
     <Container>
-      <ContentTop>
-        <LogoHeader />
-        <Title value="Nova senha" size={24} mb={16} />
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input
-            name="password"
-            type="password"
-            placeholder="*********"
-            label="Nova senha"
-            returnKeyType="next"
-            onSubmitEditing={() => focusInput('passwordConfirmation')}
-          />
-          <Input
-            name="passwordConfirmation"
-            type="password"
-            placeholder="*********"
-            label="Confirmar nova senha"
-          />
-        </Form>
-      </ContentTop>
-
-      <ContentBottom>
-        <Button
-          content="Salvar nova senha"
-          onPress={() => formRef.current.submitForm()}
-          loading={loading}
+      <LogoHeader mt={50} mb={40} />
+      <Title value="Criar nova senha" size={14} mb={16} />
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <Input
+          name="password"
+          type="password"
+          placeholder="*********"
+          label="Nova senha"
+          returnKeyType="next"
+          onSubmitEditing={() => focusInput('passwordConfirmation')}
         />
-      </ContentBottom>
+        <Input
+          name="passwordConfirmation"
+          type="password"
+          placeholder="*********"
+          label="Confirmar nova senha"
+        />
+      </Form>
+
+      <Button
+        content="Salvar nova senha"
+        onPress={() => formRef.current.submitForm()}
+        loading={loading}
+        mt="auto"
+        mb={16}
+      />
     </Container>
   );
 }

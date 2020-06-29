@@ -1,8 +1,8 @@
-import { createActions, createReducer } from 'reduxsauce';
+import {createActions, createReducer} from 'reduxsauce';
 import Immutable from 'seamless-immutable';
-import { markActionsOffline } from 'redux-offline-queue';
+import {markActionsOffline} from 'redux-offline-queue';
 
-const { Types, Creators } = createActions({
+const {Types, Creators} = createActions({
   addCalcToHistoryRequest: ['calcState'],
   addCalcToHistorySuccess: ['calcResponse'],
   addOfflineCalcToHistoryRequest: ['calcState'],
@@ -22,28 +22,28 @@ export const INITIAL_STATE = Immutable({
 });
 
 /* Reducers */
-export const addCalcRequest = (state) =>
+export const addCalcRequest = state =>
   state.merge({
     loading: true,
   });
 
-export const addOfflineCalcRequest = (state) =>
+export const addOfflineCalcRequest = state =>
   state.merge({
     loading: true,
   });
 
-export const addCalcFailure = (state) =>
+export const addCalcFailure = state =>
   state.merge({
     loading: false,
   });
 
-export const addOfflineCalcSuccess = (state, { calcState }) =>
+export const addOfflineCalcSuccess = (state, {calcState}) =>
   state.merge({
     loading: false,
     calcHistory: calcState,
   });
 
-export const addCalcSuccess = (state) =>
+export const addCalcSuccess = state =>
   state.merge({
     loading: false,
   });

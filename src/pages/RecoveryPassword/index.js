@@ -1,10 +1,10 @@
 import React, {useRef, useState} from 'react';
 import {Form} from '@unform/mobile';
-import {Alert, Platform} from 'react-native';
+import Snackbar from 'react-native-snackbar';
 
 import * as Yup from 'yup';
 
-import {Container, ContentBottom, ContentTop} from '../../layout/Auth';
+import Container from '../../layout/Auth';
 
 import Title from '../../components/Title';
 import LogoHeader from '../../components/LogoHeader';
@@ -33,30 +33,29 @@ export default function SignIn({navigation}) {
         abortEarly: false,
       });
 
-      try {
-        await api.post('user/forgot-password', {
-          email: data.email,
-          device: Platform.OS,
-        });
-        setLoading(false);
+      await api.post('user/forgot-password', {
+        email: data.email,
+        device: 'mobile',
+      });
 
-        Alert.alert(
-          'Sucesso',
-          `Um link foi enviado para o email ${
-            data.email
-          } para você redefinir sua senha`,
-          [
-            {
-              text: 'Ok',
-              onPress: () => navigation.navigate('Login'),
-            },
-          ],
-        );
-      } catch (err) {
-        toast_error('Email não encontrado, por favor registre-se!');
-        setLoading(false);
-      }
+      setLoading(false);
+
+      Snackbar.show({
+        text: 'Um link para redefinição de senha foi enviado para seu e-mail.',
+        duration: Snackbar.LENGTH_LONG,
+        textColor: '#fff',
+        backgroundColor: '#008000',
+      });
+
+      navigation.navigate('Login');
     } catch (err) {
+      Snackbar.show({
+        text: 'Email não encontrado, por favor registre-se !',
+        duration: Snackbar.LENGTH_LONG,
+        textColor: '#fff',
+        backgroundColor: '#ff0000',
+      });
+
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {
@@ -72,31 +71,29 @@ export default function SignIn({navigation}) {
 
   return (
     <Container>
-      <ContentTop>
-        <LogoHeader />
-        <Title value="Recuperar Senha" size={24} mb={16} />
-        <Form ref={formRef} onSubmit={handleSubmit}>
-          <Input
-            name="email"
-            type="email"
-            label="E-mail"
-            placeholder="email@exemplo.com.br"
-          />
-        </Form>
-      </ContentTop>
+      <LogoHeader mt={50} mb={40} />
+      <Title value="Recuperar Senha" size={14} mb={16} />
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <Input
+          name="email"
+          type="email"
+          label="E-mail"
+          placeholder="email@exemplo.com.br"
+        />
+      </Form>
 
-      <ContentBottom>
-        <Link
-          content="Voltar para Login"
-          mb={24}
-          onPress={() => navigation.navigate('Login')}
-        />
-        <Button
-          content="Recuperar Senha"
-          onPress={() => formRef.current.submitForm()}
-          loading={loading}
-        />
-      </ContentBottom>
+      <Link
+        content="Voltar para Login"
+        mt="auto"
+        mb={24}
+        onPress={() => navigation.navigate('Login')}
+      />
+      <Button
+        mb={16}
+        content="Recuperar Senha"
+        onPress={() => formRef.current.submitForm()}
+        loading={loading}
+      />
     </Container>
   );
 }

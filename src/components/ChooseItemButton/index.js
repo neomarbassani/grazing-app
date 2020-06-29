@@ -1,11 +1,24 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 
-import { Container, Text } from './styles';
+import {Container, Text, ImageBackground} from './styles';
 
-export default function ChooseItemButtom({ content, loading, ...rest }) {
+export default function ChooseItemButtom({
+  content,
+  source,
+  disabled,
+  loading,
+  ...rest
+}) {
   return (
-    <Container underlayColor="#F7DAD4" {...rest}>
-      <Text>{content}</Text>
+    <Container disabled={disabled} {...rest}>
+      <ImageBackground
+        imageStyle={{borderRadius: 10}}
+        source={source}
+        resizeMode="cover"
+        resizeMethod="resize">
+        <Text disabled={disabled}>{content}</Text>
+      </ImageBackground>
     </Container>
   );
 }

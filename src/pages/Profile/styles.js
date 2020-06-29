@@ -1,19 +1,15 @@
 import styled from 'styled-components/native';
 
-import { colors } from '../../styles';
+import {colors} from '../../styles';
 
-export const TopContent = styled.View`
-  margin-top: 30px;
-  align-items: center;
+export const Content = styled.ScrollView`
+  width: 100%;
 `;
 
-export const Content = styled.View`
-  margin-top: 30px;
-  align-items: flex-start;
-  flex: 1;
+export const PhotoContainer = styled.View`
+  align-self: center;
+  margin-top: 50px;
 `;
-
-export const PhotoContainer = styled.View``;
 
 export const ChangePhotoButton = styled.TouchableOpacity`
   width: 30px;
@@ -41,4 +37,12 @@ export const SectionTitle = styled.Text`
   margin-top: 10px;
   color: ${colors.link};
   margin-bottom: 16px;
+`;
+
+export const FormArea = styled.View`
+  margin-top: 20px;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
 `;

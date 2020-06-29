@@ -9,11 +9,19 @@ import {
   Content,
   InputError,
   InputFieldMask,
+  Label,
 } from './styles';
 
-import Label from '../Label';
-
-export default function Input({label, type, name, next, maskType, ...rest}) {
+export default function Input({
+  label,
+  type,
+  name,
+  next,
+  maskType,
+  textarea,
+  color,
+  ...rest
+}) {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
   const inputRef = useRef(null);
@@ -58,9 +66,9 @@ export default function Input({label, type, name, next, maskType, ...rest}) {
   }, [fieldName, mask, maskType, registerField]);
 
   return (
-    <Container>
-      {label && <Label>{label}</Label>}
-      <Content>
+    <Container textarea={textarea}>
+      {label && <Label color={color}>{label}</Label>}
+      <Content textarea={textarea}>
         {maskType ? (
           <InputFieldMask
             ref={inputRef}
@@ -69,8 +77,11 @@ export default function Input({label, type, name, next, maskType, ...rest}) {
             includeRawValueInChangeText={true}
             type={maskType}
             value={mask}
-            onChangeText={e => {
-              setMask(e);
+            onChangeText={value => {
+              setMask(value);
+              if (inputRef.current) {
+                inputRef.current.value = value;
+              }
             }}
             {...rest}
           />
@@ -79,6 +90,9 @@ export default function Input({label, type, name, next, maskType, ...rest}) {
             <InputField
               ref={inputRef}
               defaultValue={defaultValue}
+              textarea={textarea}
+              multiline={textarea}
+              numberOfLines={50}
               type={type === 'email' ? 'email-address' : null}
               secureTextEntry={passwordVisibility}
               placeholderTextColor="#888899"

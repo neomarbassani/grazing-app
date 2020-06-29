@@ -1,9 +1,12 @@
 import styled from 'styled-components/native';
 
-export const AddressFields = styled.View`
-  flex: 1;
+export const Logo = styled.Image`
+  margin-top: ${props => (props.mt ? props.mt : 0)}px;
+  margin-bottom: ${props => (props.mb ? props.mb : 0)}px;
+`;
+
+export const FormArea = styled.View`
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  flex-wrap: wrap;
 `;
