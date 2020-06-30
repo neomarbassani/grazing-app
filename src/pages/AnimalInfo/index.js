@@ -105,7 +105,44 @@ const AnimalInfo = ({navigation, route}) => {
           abortEarly: false,
         });
 
-        /* navigation.navigate('ChoosePastureType', {
+        navigation.navigate('ChoosePastureType', {
+          calc,
+          animal,
+          inputs: [
+            {name: 'Peso médio', value: data.weigth, key: 'weigth'},
+            {
+              name: 'Número de animais que serão colocados no potreiro',
+              value: data.animalsAmount,
+              key: 'animalsAmount',
+            },
+            {
+              name: 'Número de animais que serão colocados no potreiro',
+              value: data.animalsAmount,
+              key: 'animalsAmount',
+            },
+            {
+              name: 'Número de animais que serão colocados no potreiro',
+              value: data.animalsAmount,
+              key: 'animalsAmount',
+            },
+          ],
+        });
+      }
+
+      if (
+        calc.name === 'Pastoreio contínuo' &&
+        calc.value === 'Fornecer suplemento'
+      ) {
+        const schema = Yup.object().shape({
+          weigth: Yup.string().required('Insira o peso médio dos animais'),
+          animalsAmount: Yup.string().required('Insira o número de animais'),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        navigation.navigate('ChoosePastureType', {
           calc,
           animal,
           inputs: [
@@ -116,7 +153,7 @@ const AnimalInfo = ({navigation, route}) => {
               key: 'animalsAmount',
             },
           ],
-        }); */
+        });
       }
 
       const schema = Yup.object().shape({
@@ -127,11 +164,17 @@ const AnimalInfo = ({navigation, route}) => {
         abortEarly: false,
       });
 
-      navigation.navigate('ChoosePastureType', {
+      /* navigation.navigate('ChoosePastureType', {
         calc,
         animal,
-        inputs: [{name: 'Peso médio', value: data.weigth, key: 'weigth'}],
-      });
+        inputs: [
+          {
+            name: 'Peso vivo médio dos animais',
+            value: data.weigth,
+            key: 'weigth',
+          },
+        ],
+      }); */
     } catch (err) {
       const validationErrors = {};
 
@@ -205,14 +248,14 @@ const AnimalInfo = ({navigation, route}) => {
                 <>
                   <Input
                     name="rationAmount"
-                    label="Os animais irão receber ração no cocho? Se sim, quanto? "
+                    label="Os animais irão receber ração no cocho? Se sim, quanto?"
                     keyboardType="numeric"
                     placeholder="kg MS/animal/dia"
                     mb={60}
                   />
                   <Input
                     name="silageAmount"
-                    label="Os animais irão receber silagem ou feno? Se sim, quanto? "
+                    label="Os animais irão receber silagem ou feno? Se sim, quanto?"
                     keyboardType="numeric"
                     placeholder="kg/animal/dia"
                   />
@@ -220,6 +263,15 @@ const AnimalInfo = ({navigation, route}) => {
               )}
             </>
           )}
+          {calc.name === 'Pastoreio contínuo' &&
+            calc.value === 'Fornecer suplemento' && (
+              <Input
+                name="animalsAmount"
+                label="Número de animais que serão colocados no potreiro"
+                keyboardType="numeric"
+                placeholder="Insira o número de animais"
+              />
+            )}
           {/* <SliderInput
             label="Escore de condição corporal"
             value={score}

@@ -248,21 +248,6 @@ const mouth = [
   'dezembro',
 ];
 
-export function areaOfFoal({weigth, score, days_of_use, pastureHeight}) {
-  const result =
-    parseInt(weigth) +
-    parseInt(score) +
-    parseInt(days_of_use) +
-    parseInt(pastureHeight);
-
-  const area = {
-    name: 'Área do potreiro',
-    value: result.toString(),
-  };
-
-  return [area];
-}
-
 export function numberOfAnimalsContinuous({
   startMouth,
   weigth,
@@ -283,6 +268,7 @@ export function numberOfAnimalsContinuous({
     value: Math.round((animalLoad / weigth) * foalArea).toLocaleString('pt-BR'),
   };
 
+  console.log(result1);
   return [result1];
 }
 
@@ -332,6 +318,64 @@ export function foalSizeRotative({
     rationAmount,
     silageAmount,
     pastureHeight,
+    typeOfPasture,
+  });
+}
+
+export function foalSizeContinuous({
+  startDate,
+  weigth,
+  pastureHeight,
+  typeOfPasture,
+}) {
+  console.log({
+    startDate,
+    weigth,
+    pastureHeight,
+    typeOfPasture,
+  });
+}
+
+export function supplyAmountContinuous({
+  startDate,
+  weigth,
+  animalsAmount,
+  foalArea,
+  pastureHeight,
+  typeOfAnimal,
+  typeOfPasture,
+}) {
+  console.log({
+    startDate,
+    weigth,
+    pastureHeight,
+    typeOfPasture,
+    typeOfAnimal,
+    animalsAmount,
+    foalArea,
+  });
+}
+
+export function supplyAmountRotative({
+  startDate,
+  weigth,
+  animalsAmount,
+  foalArea,
+  pastureHeight,
+  typeOfAnimal,
+  tracksAmount,
+  daysOfStay,
+  typeOfPasture,
+}) {
+  console.log({
+    startDate,
+    weigth,
+    animalsAmount,
+    foalArea,
+    pastureHeight,
+    typeOfAnimal,
+    tracksAmount,
+    daysOfStay,
     typeOfPasture,
   });
 }

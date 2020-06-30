@@ -59,7 +59,6 @@ const Home = ({navigation}) => {
             }}
           />
           <ChooseItemButton
-            disabled
             content="Fornecer suplemento"
             source={solution3}
             onPress={() => {

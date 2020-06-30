@@ -19,6 +19,7 @@ import {
   numberOfAnimalsContinuous,
   numberOfAnimalsRotative,
   foalSizeRotative,
+  foalSizeContinuous,
 } from '../../services/calcs';
 
 import aveia from '../../assets/aveiaFundo.jpg';
@@ -58,6 +59,7 @@ const DimensionArea = ({navigation, route}) => {
         await schema.validate(data, {
           abortEarly: false,
         });
+
         const results = numberOfAnimalsContinuous({
           weigth: inputs.find(input => input.key === 'weigth').value,
           startMouth: new Date(data.startMouth).getMonth(),
@@ -97,7 +99,7 @@ const DimensionArea = ({navigation, route}) => {
           ],
           results,
         };
-        navigation.navigate('Result', calcState);
+       /*  navigation.navigate('Result', calcState); */
       } else if (
         calc.name === 'Pastoreio rotativo' &&
         calc.value === 'Ajustar lotação animal'
@@ -161,7 +163,10 @@ const DimensionArea = ({navigation, route}) => {
           results,
         };
         navigation.navigate('Result', calcState);
-      } else {
+      } else if (
+        calc.name === 'Pastoreio rotativo' &&
+        calc.value === 'Dimensionar área do potreiro'
+      ) {
         const schema = Yup.object().shape({
           foal_name: Yup.string().required('Insira o nome do potreiro.'),
           startDate: Yup.date('Insira uma data válida').required(
@@ -172,17 +177,21 @@ const DimensionArea = ({navigation, route}) => {
         await schema.validate(data, {
           abortEarly: false,
         });
+
         const results = foalSizeRotative({
           startDate: data.startDate,
-          weigth: inputs.find(input => input.key === 'weigth'),
-          animalsAmount: inputs.find(input => input.key === 'animalsAmount'),
-          rationAmount: inputs.find(input => input.key === 'rationAmount'),
-          silageAmount: inputs.find(input => input.key === 'silageAmount'),
-          pastureHeight: inputs.find(input => input.key === 'pastureHeight'),
-          typeOfPasture: inputs.find(input => input.key === 'typeOfPasture'),
+          weigth: inputs.find(input => input.key === 'weigth').value,
+          animalsAmount: inputs.find(input => input.key === 'animalsAmount')
+            .value,
+          rationAmount: inputs.find(input => input.key === 'rationAmount')
+            .value,
+          silageAmount: inputs.find(input => input.key === 'silageAmount')
+            .value,
+          pastureHeight: pastureHeight,
+          typeOfPasture: pasture.key,
         });
 
-        const calcState = {
+        /* const calcState = {
           config: {
             calc,
             animal,
@@ -203,6 +212,107 @@ const DimensionArea = ({navigation, route}) => {
           ],
           results,
         };
+ */
+      } else if (
+        calc.name === 'Pastoreio contínuo' &&
+        calc.value === 'Dimensionar área do potreiro'
+      ) {
+        const schema = Yup.object().shape({
+          foal_name: Yup.string().required('Insira o nome do potreiro.'),
+          startDate: Yup.date('Insira uma data válida').required(
+            'Insira a data de inicio.',
+          ),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        const results = foalSizeContinuous({
+          startDate: data.startDate,
+          weigth: inputs.find(input => input.key === 'weigth').value,
+          pastureHeight: pastureHeight,
+          typeOfPasture: pasture.key,
+        });
+
+        /* const calcState = {
+          config: {
+            calc,
+            animal,
+            pasture,
+          },
+          inputs: [
+            ...inputs,
+            {
+              name: 'Nome do Potreiro',
+              value: data.foal_name,
+              key: 'foal_name',
+            },
+            {
+              name: 'Data de início do pastejo',
+              value: data.startDate.toString(),
+              key: 'startDate',
+            },
+          ],
+          results,
+        };
+ */
+      } else if (
+        calc.name === 'Pastoreio contínuo' &&
+        calc.value === 'Fornecer suplemento'
+      ) {
+        const schema = Yup.object().shape({
+          foal_name: Yup.string().required('Insira o nome do potreiro.'),
+          startDate: Yup.date('Insira uma data válida').required(
+            'Insira a data de inicio.',
+          ),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        const results = foalSizeContinuous({
+          startDate: data.startDate,
+          weigth: inputs.find(input => input.key === 'weigth').value,
+          pastureHeight: pastureHeight,
+          typeOfPasture: pasture.key,
+        });
+
+        /* const calcState = {
+          config: {
+            calc,
+            animal,
+            pasture,
+          },
+          inputs: [
+            ...inputs,
+            {
+              name: 'Nome do Potreiro',
+              value: data.foal_name,
+              key: 'foal_name',
+            },
+            {
+              name: 'Data de início do pastejo',
+              value: data.startDate.toString(),
+              key: 'startDate',
+            },
+          ],
+          results,
+        };
+ */
+      } else {
+        const schema = Yup.object().shape({
+          foal_name: Yup.string().required('Insira o nome do potreiro.'),
+          startDate: Yup.date('Insira uma data válida').required(
+            'Insira a data de inicio.',
+          ),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+        console.log(inputs);
 
         /* navigation.navigate('Result', calcState); */
       }
@@ -228,7 +338,7 @@ const DimensionArea = ({navigation, route}) => {
       focusInputField.getElement().focus();
     }
   }
-  console.log(calc);
+
   return (
     <Container
       source={
@@ -290,25 +400,22 @@ const DimensionArea = ({navigation, route}) => {
             returnKeyType="done"
             blurOnSubmit={true}
           />
+          <SliderInput
+            label="Altura do pasto (cm)"
+            value={pastureHeight}
+            color="#fff"
+            mt={10}
+            onValueChange={value => {
+              setPastureHeight(value);
+            }}
+            minVal={0}
+            maxVal={100}
+          />
         </Form>
 
         {calc.name === 'Pastoreio contínuo' &&
-          calc.value === 'Ajustar lotação animal' && (
+          calc.value === 'Fornecer suplemento' && (
             <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="startMouth"
-                color="#fff"
-                label="Data de início do pastejo"
-                keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
-                maskType="datetime"
-                options={{
-                  format: 'DD/MM/YYYY',
-                }}
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('foalArea')}
-              />
               <Input
                 name="foalArea"
                 label="Área total do potreiro (ha)"
@@ -318,16 +425,20 @@ const DimensionArea = ({navigation, route}) => {
                 returnKeyType="next"
                 blurOnSubmit={true}
               />
-              <SliderInput
-                label="Altura do pasto (cm)"
-                value={pastureHeight}
+            </Form>
+          )}
+
+        {calc.name === 'Pastoreio contínuo' &&
+          calc.value === 'Ajustar lotação animal' && (
+            <Form ref={formRef} onSubmit={handleSubmit}>
+              <Input
+                name="foalArea"
+                label="Área total do potreiro (ha)"
                 color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setPastureHeight(value);
-                }}
-                minVal={0}
-                maxVal={100}
+                keyboardType="numeric"
+                placeholder="1"
+                returnKeyType="next"
+                blurOnSubmit={true}
               />
             </Form>
           )}
@@ -365,7 +476,6 @@ const DimensionArea = ({navigation, route}) => {
                 blurOnSubmit={false}
                 onSubmitEditing={() => focusInput('lenghtOfStay')}
               />
-
               <Input
                 name="numberOfTracks"
                 label="Número de faixas"
@@ -390,17 +500,6 @@ const DimensionArea = ({navigation, route}) => {
                 placeholder="1"
                 returnKeyType="next"
                 blurOnSubmit={true}
-              />
-              <SliderInput
-                label="Altura do pasto (cm)"
-                value={pastureHeight}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setPastureHeight(value);
-                }}
-                minVal={0}
-                maxVal={100}
               />
             </Form>
           )}
