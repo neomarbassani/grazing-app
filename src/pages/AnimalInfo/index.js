@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import * as Yup from 'yup';
 import {Form} from '@unform/mobile';
 import backgroundLogo from '../../assets/backgroundLogo.png';
@@ -11,13 +11,11 @@ import ProgressBar from '../../components/ProgressBar';
 import CalcHeader from '../../components/CalcHeader';
 import CalcRoutesTop from '../../components/CalcRoutesTop';
 import Input from '../../components/Input';
-import SliderInput from '../../components/SliderInput';
 import Button from '../../components/Button';
 
 import {Content} from './styles';
 
 const AnimalInfo = ({navigation, route}) => {
-  const [score, setScore] = useState(0);
   const {calc, animal} = route.params;
 
   const items = [calc.name, animal.value];
@@ -60,6 +58,11 @@ const AnimalInfo = ({navigation, route}) => {
               value: data.milkQuantity,
               key: 'milkQuantity',
             },
+            {
+              name: 'N° de dias de gestação',
+              value: 0,
+              key: 'daysOfLactation',
+            },
           ],
         });
       }
@@ -90,6 +93,16 @@ const AnimalInfo = ({navigation, route}) => {
               value: data.daysOfLactation,
               key: 'daysOfLactation',
             },
+            {
+              name: 'Semanas de Lactação',
+              value: 0,
+              key: 'weeksOfLactation',
+            },
+            {
+              name: 'Produção de Leite (litros/dia)',
+              value: 0,
+              key: 'milkQuantity',
+            },
           ],
         });
       }
@@ -98,8 +111,9 @@ const AnimalInfo = ({navigation, route}) => {
         const schema = Yup.object().shape({
           weigth: Yup.string().required('Insira o peso médio dos animais'),
           animalsAmount: Yup.string().required('Insira o número de animais'),
+          rationAmount: Yup.string(),
+          silageAmount: Yup.string(),
         });
-        console.log('ok');
 
         await schema.validate(data, {
           abortEarly: false,
@@ -116,14 +130,14 @@ const AnimalInfo = ({navigation, route}) => {
               key: 'animalsAmount',
             },
             {
-              name: 'Número de animais que serão colocados no potreiro',
-              value: data.animalsAmount,
-              key: 'animalsAmount',
+              name: 'Os animais irão receber ração no cocho? Se sim, quanto?',
+              value: data.rationAmount || 0,
+              key: 'rationAmount',
             },
             {
-              name: 'Número de animais que serão colocados no potreiro',
-              value: data.animalsAmount,
-              key: 'animalsAmount',
+              name: 'Os animais irão receber silagem ou feno? Se sim, quanto?',
+              value: data.silageAmount || 0,
+              key: 'silageAmount',
             },
           ],
         });
@@ -156,25 +170,115 @@ const AnimalInfo = ({navigation, route}) => {
         });
       }
 
-      const schema = Yup.object().shape({
-        weigth: Yup.string().required('Insira o peso médio dos animais'),
-      });
+      if (
+        calc.name === 'Pastoreio rotativo' &&
+        calc.value === 'Fornecer suplemento'
+      ) {
+        const schema = Yup.object().shape({
+          weigth: Yup.string().required('Insira o peso médio dos animais'),
+          animalsAmount: Yup.string().required('Insira o número de animais'),
+          daysOfStay: Yup.string().required('Insira os dias de permanência'),
+        });
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
 
-      /* navigation.navigate('ChoosePastureType', {
-        calc,
-        animal,
-        inputs: [
-          {
-            name: 'Peso vivo médio dos animais',
-            value: data.weigth,
-            key: 'weigth',
-          },
-        ],
-      }); */
+        navigation.navigate('ChoosePastureType', {
+          calc,
+          animal,
+          inputs: [
+            {name: 'Peso médio', value: data.weigth, key: 'weigth'},
+            {
+              name: 'Número de animais que serão colocados no potreiro',
+              value: data.animalsAmount,
+              key: 'animalsAmount',
+            },
+            {
+              name: 'Nº dias de permanência dos animais em cada faixa',
+              value: data.daysOfStay,
+              key: 'daysOfStay',
+            },
+          ],
+        });
+      }
+
+      if (
+        calc.name === 'Pastoreio rotativo' &&
+        calc.value === 'Calcular números de piquetes'
+      ) {
+        const schema = Yup.object().shape({
+          weigth: Yup.string().required('Insira o peso médio dos animais'),
+          animalsAmount: Yup.string().required('Insira o número de animais'),
+          feedInTheTrough: Yup.string(),
+          receivingSilageOrHay: Yup.string(),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        navigation.navigate('ChoosePastureType', {
+          calc,
+          animal,
+          inputs: [
+            {name: 'Peso médio', value: data.weigth, key: 'weigth'},
+            {
+              name: 'Número de animais que serão colocados no potreiro',
+              value: data.animalsAmount,
+              key: 'animalsAmount',
+            },
+            {
+              name:
+                'Os animais irão receber ração no cocho? Se sim, quanto? (em kg MS/animal/dia)',
+              value: data.feedInTheTrough,
+              key: 'feedInTheTrough',
+            },
+            {
+              name:
+                'Os animais irão receber silagem ou feno? Se sim, quanto? (em kg/animal/dia)',
+              value: data.receivingSilageOrHay,
+              key: 'receivingSilageOrHay',
+            },
+          ],
+        });
+      }
+
+      if (
+        calc.name === 'Pastoreio rotativo' &&
+        calc.value === 'Definir período de ocupação'
+      ) {
+        const schema = Yup.object().shape({
+          weigth: Yup.string().required('Insira o peso médio dos animais'),
+          animalsAmount: Yup.string().required('Insira o número de animais'),
+          supplyAmount: Yup.string().required(
+            'Insira a quantidade de alimentos',
+          ),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        navigation.navigate('ChoosePastureType', {
+          calc,
+          animal,
+          inputs: [
+            {name: 'Peso médio', value: data.weigth, key: 'weigth'},
+            {
+              name: 'Número de animais que serão colocados no potreiro',
+              value: data.animalsAmount,
+              key: 'animalsAmount',
+            },
+            {
+              name:
+                'Quantidade de alimento fornecido aos animais no cocho (kg/animal)',
+              value: data.supplyAmount,
+              key: 'supplyAmount',
+            },
+          ],
+        });
+      }
     } catch (err) {
       const validationErrors = {};
 
@@ -272,16 +376,61 @@ const AnimalInfo = ({navigation, route}) => {
                 placeholder="Insira o número de animais"
               />
             )}
-          {/* <SliderInput
-            label="Escore de condição corporal"
-            value={score}
-            onValueChange={value => {
-              setScore(value);
-            }}
-            minVal={0}
-            maxVal={6}
-            step={0.5}
-          /> */}
+          {calc.name === 'Pastoreio rotativo' &&
+            calc.value === 'Fornecer suplemento' && (
+              <>
+                <Input
+                  name="animalsAmount"
+                  label="Número de animais que serão colocados no potreiro"
+                  keyboardType="numeric"
+                  placeholder="Insira o número de animais"
+                />
+                <Input
+                  name="daysOfStay"
+                  label="Nº dias de permanência dos animais em cada faixa"
+                  keyboardType="numeric"
+                  placeholder="Insira o número de animais"
+                />
+              </>
+            )}
+          {calc.value === 'Calcular números de piquetes' && (
+            <>
+              <Input
+                name="animalsAmount"
+                label="Número de animais que serão colocados no potreiro"
+                keyboardType="numeric"
+                placeholder="Insira o número de animais"
+              />
+              <Input
+                name="feedInTheTrough"
+                label="Os animais irão receber ração no cocho? Se sim, quanto? (em kg MS/animal/dia)"
+                keyboardType="numeric"
+                placeholder="Insira um valor"
+              />
+              <Input
+                name="receivingSilageOrHay"
+                label="Os animais irão receber silagem ou feno? Se sim, quanto? (em kg/animal/dia)"
+                keyboardType="numeric"
+                placeholder="Insira um valor"
+              />
+            </>
+          )}
+          {calc.value === 'Definir período de ocupação' && (
+            <>
+              <Input
+                name="animalsAmount"
+                label="Número de animais que serão colocados no potreiro"
+                keyboardType="numeric"
+                placeholder="Insira o número de animais"
+              />
+              <Input
+                name="supplyAmount"
+                label="Quantidade de alimento fornecido aos animais no cocho"
+                keyboardType="numeric"
+                placeholder=" (kg/animal)"
+              />
+            </>
+          )}
         </Form>
         <Button
           content="Próximo"

@@ -248,6 +248,7 @@ const mouth = [
   'dezembro',
 ];
 
+// Ajustar lotação Animal Continuo
 export function numberOfAnimalsContinuous({
   startMouth,
   weigth,
@@ -255,7 +256,7 @@ export function numberOfAnimalsContinuous({
   typeOfPasture,
   foalArea,
 }) {
-  const fodderMass =
+  /* const fodderMass =
     pastureHeight * parseInt(especie[typeOfPasture].relacaoMassaAltura);
 
   const forageAvailability =
@@ -269,9 +270,18 @@ export function numberOfAnimalsContinuous({
   };
 
   console.log(result1);
-  return [result1];
+  return [result1]; */
+
+  console.log({
+    startMouth,
+    weigth,
+    pastureHeight,
+    typeOfPasture,
+    foalArea,
+  });
 }
 
+// Ajustar lotação Animal Rotativo
 export function numberOfAnimalsRotative({
   startDate,
   weigth,
@@ -279,14 +289,16 @@ export function numberOfAnimalsRotative({
   numberOfTracks,
   pastureHeight,
   typeOfPasture,
-  milkQuantity,
+  milkQuantity = 0,
   lenghtOfStay,
   foalArea,
-  weeksOfLactation,
+  weeksOfLactation = 0,
 }) {
   /* const accumulationRate = parseInt(
     taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]],
   ); */
+
+  console.log('ok');
 
   console.log({
     startDate,
@@ -302,13 +314,13 @@ export function numberOfAnimalsRotative({
   });
 }
 
+// Tamanho potreiro Rotativo
 export function foalSizeRotative({
   startDate,
   weigth,
   animalsAmount,
   rationAmount,
   silageAmount,
-  pastureHeight,
   typeOfPasture,
 }) {
   console.log({
@@ -317,25 +329,20 @@ export function foalSizeRotative({
     animalsAmount,
     rationAmount,
     silageAmount,
-    pastureHeight,
     typeOfPasture,
   });
 }
 
-export function foalSizeContinuous({
-  startDate,
-  weigth,
-  pastureHeight,
-  typeOfPasture,
-}) {
+// Tamanho potreiro Continuo
+export function foalSizeContinuous({startDate, weigth, typeOfPasture}) {
   console.log({
     startDate,
     weigth,
-    pastureHeight,
     typeOfPasture,
   });
 }
 
+// Fornecer suplemento continuo
 export function supplyAmountContinuous({
   startDate,
   weigth,
@@ -356,6 +363,7 @@ export function supplyAmountContinuous({
   });
 }
 
+// Fornecer suplemento rotativo
 export function supplyAmountRotative({
   startDate,
   weigth,
@@ -377,5 +385,48 @@ export function supplyAmountRotative({
     tracksAmount,
     daysOfStay,
     typeOfPasture,
+  });
+}
+
+export function daysAmountRotative({
+  startDate,
+  weigth,
+  animalsAmount,
+  foalArea,
+  pastureHeight,
+  typeOfAnimal,
+  tracksAmount,
+  supplyAmount,
+  typeOfPasture,
+}) {
+  console.log({
+    startDate,
+    weigth,
+    supplyAmount,
+    animalsAmount,
+    foalArea,
+    pastureHeight,
+    typeOfAnimal,
+    tracksAmount,
+    typeOfPasture,
+  });
+}
+
+// Calcular número de piquetes
+export function tracksAmountRotative({
+  startDate,
+  weigth,
+  animalsAmount,
+  foalArea,
+  feedInTheTrough,
+  receivingSilageOrHay,
+}) {
+  console.log({
+    startDate,
+    weigth,
+    animalsAmount,
+    foalArea,
+    feedInTheTrough,
+    receivingSilageOrHay,
   });
 }

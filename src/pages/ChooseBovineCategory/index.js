@@ -50,7 +50,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Terneito',
+                    value: 'Terneiro',
                   },
                 });
               }}
