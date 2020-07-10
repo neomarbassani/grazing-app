@@ -250,7 +250,7 @@ const mouth = [
 
 // Ajustar lotação Animal Continuo
 export function numberOfAnimalsContinuous({
-  startMouth,
+  startDate,
   weigth,
   pastureHeight,
   typeOfPasture,
@@ -260,25 +260,26 @@ export function numberOfAnimalsContinuous({
     pastureHeight * parseInt(especie[typeOfPasture].relacaoMassaAltura);
 
   const forageAvailability =
-    fodderMass / 30 + parseInt(taxaDeAcumulo[typeOfPasture][mouth[startMouth]]);
+    fodderMass / 30 + parseInt(taxaDeAcumulo[typeOfPasture][mouth[startDate]]);
 
   const animalLoad = forageAvailability / 0.12;
 
-  const result1 = {
+  const results = {
     name: 'Número de animais no potreiro',
     value: Math.round((animalLoad / weigth) * foalArea).toLocaleString('pt-BR'),
   };
 
-  console.log(result1);
-  return [result1]; */
+  console.log(results);
+  return results; */
 
-  console.log({
-    startMouth,
-    weigth,
-    pastureHeight,
-    typeOfPasture,
-    foalArea,
-  });
+  const results = [
+    {
+      name: 'Número de animais no potreiro',
+      value: Math.round(pastureHeight + foalArea).toLocaleString('pt-BR'),
+    },
+  ];
+
+  return results;
 }
 
 // Ajustar lotação Animal Rotativo
@@ -298,9 +299,16 @@ export function numberOfAnimalsRotative({
     taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]],
   ); */
 
-  console.log('ok');
+  const results = [
+    {
+      name: 'Número de animais no potreiro',
+      value: Math.round(pastureHeight + foalArea).toLocaleString('pt-BR'),
+    },
+  ];
 
-  console.log({
+  return results;
+
+  /* console.log({
     startDate,
     weigth,
     foodQuantity,
@@ -311,7 +319,7 @@ export function numberOfAnimalsRotative({
     lenghtOfStay,
     foalArea,
     weeksOfLactation,
-  });
+  }); */
 }
 
 // Tamanho potreiro Rotativo
@@ -323,23 +331,45 @@ export function foalSizeRotative({
   silageAmount,
   typeOfPasture,
 }) {
-  console.log({
+  /* console.log({
     startDate,
     weigth,
     animalsAmount,
     rationAmount,
     silageAmount,
     typeOfPasture,
-  });
+  }); */
+
+  const results = [
+    {
+      name: 'Área total do potreiro (ha)',
+      value: Math.round(weigth + weigth).toLocaleString('pt-BR'),
+    },
+  ];
+
+  return results;
 }
 
 // Tamanho potreiro Continuo
-export function foalSizeContinuous({startDate, weigth, typeOfPasture}) {
-  console.log({
+export function foalSizeContinuous({
+  startDate,
+  weigth,
+  typeOfPasture,
+  animalsAmount,
+}) {
+  /* console.log({
     startDate,
     weigth,
     typeOfPasture,
-  });
+  }); */
+  const results = [
+    {
+      name: 'Área total do potreiro (ha)',
+      value: Math.round(weigth + animalsAmount).toLocaleString('pt-BR'),
+    },
+  ];
+
+  return results;
 }
 
 // Fornecer suplemento continuo
@@ -352,7 +382,7 @@ export function supplyAmountContinuous({
   typeOfAnimal,
   typeOfPasture,
 }) {
-  console.log({
+  /* console.log({
     startDate,
     weigth,
     pastureHeight,
@@ -360,7 +390,16 @@ export function supplyAmountContinuous({
     typeOfAnimal,
     animalsAmount,
     foalArea,
-  });
+  }); */
+  const results = [
+    {
+      name:
+        'Quantidade de ração a ser fornecida por animal/dia (kg MS/animal/dia)',
+      value: Math.round(pastureHeight + foalArea).toLocaleString('pt-BR'),
+    },
+  ];
+
+  return results;
 }
 
 // Fornecer suplemento rotativo
@@ -375,7 +414,7 @@ export function supplyAmountRotative({
   daysOfStay,
   typeOfPasture,
 }) {
-  console.log({
+  /* console.log({
     startDate,
     weigth,
     animalsAmount,
@@ -385,7 +424,16 @@ export function supplyAmountRotative({
     tracksAmount,
     daysOfStay,
     typeOfPasture,
-  });
+  }); */
+  const results = [
+    {
+      name:
+        'Quantidade total de ração a ser fornecida por dia para os animais (kg MS/dia)',
+      value: Math.round(pastureHeight + foalArea).toLocaleString('pt-BR'),
+    },
+  ];
+
+  return results;
 }
 
 export function daysAmountRotative({
@@ -399,7 +447,7 @@ export function daysAmountRotative({
   supplyAmount,
   typeOfPasture,
 }) {
-  console.log({
+  /* console.log({
     startDate,
     weigth,
     supplyAmount,
@@ -409,7 +457,17 @@ export function daysAmountRotative({
     typeOfAnimal,
     tracksAmount,
     typeOfPasture,
-  });
+  }); */
+
+  const results = [
+    {
+      name:
+        'Período de ocupação (tempo de permanência dos animais em cada faixa, em dias)',
+      value: Math.round(pastureHeight + foalArea).toLocaleString('pt-BR'),
+    },
+  ];
+
+  return results;
 }
 
 // Calcular número de piquetes
@@ -421,12 +479,21 @@ export function tracksAmountRotative({
   feedInTheTrough,
   receivingSilageOrHay,
 }) {
-  console.log({
+  const results = [
+    {
+      name: 'Número de faixas',
+      value: Math.round(weigth + foalArea).toLocaleString('pt-BR'),
+    },
+  ];
+
+  return results;
+
+  /*  console.log({
     startDate,
     weigth,
     animalsAmount,
     foalArea,
     feedInTheTrough,
     receivingSilageOrHay,
-  });
+  }); */
 }

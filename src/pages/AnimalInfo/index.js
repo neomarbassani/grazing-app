@@ -27,7 +27,6 @@ const AnimalInfo = ({navigation, route}) => {
       formRef.current.setErrors({});
 
       if (
-        calc.name === 'Pastoreio rotativo' &&
         calc.value === 'Ajustar lotação animal' &&
         animal.value === 'Vaca em lactação'
       ) {
@@ -68,7 +67,6 @@ const AnimalInfo = ({navigation, route}) => {
       }
 
       if (
-        calc.name === 'Pastoreio rotativo' &&
         calc.value === 'Ajustar lotação animal' &&
         animal.value === 'Novilha Leiteira'
       ) {
@@ -118,6 +116,8 @@ const AnimalInfo = ({navigation, route}) => {
         await schema.validate(data, {
           abortEarly: false,
         });
+
+        console.log('ok');
 
         navigation.navigate('ChoosePastureType', {
           calc,
@@ -279,6 +279,37 @@ const AnimalInfo = ({navigation, route}) => {
           ],
         });
       }
+
+      /*  const schema = Yup.object().shape({
+        weigth: Yup.string().required('Insira o peso médio dos animais'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      navigation.navigate('ChoosePastureType', {
+        calc,
+        animal,
+        inputs: [
+          {name: 'Peso médio', value: data.weigth, key: 'weigth'},
+          {
+            name: 'Semanas de Lactação',
+            value: 0,
+            key: 'weeksOfLactation',
+          },
+          {
+            name: 'Produção de Leite (litros/dia)',
+            value: 0,
+            key: 'milkQuantity',
+          },
+          {
+            name: 'N° de dias de gestação',
+            value: 0,
+            key: 'daysOfLactation',
+          },
+        ],
+      }); */
     } catch (err) {
       const validationErrors = {};
 
@@ -291,7 +322,7 @@ const AnimalInfo = ({navigation, route}) => {
       }
     }
   }
-
+  console.log(animal);
   return (
     <Container
       source={backgroundLogo}
@@ -311,35 +342,34 @@ const AnimalInfo = ({navigation, route}) => {
             keyboardType="numeric"
             placeholder="(kg PV)"
           />
-          {calc.name === 'Pastoreio rotativo' &&
-            calc.value === 'Ajustar lotação animal' && (
-              <>
-                {animal.value === 'Vaca em lactação' && (
-                  <>
-                    <Input
-                      name="weeksOfLactation"
-                      label="Semanas de Lactação"
-                      keyboardType="numeric"
-                      placeholder="10 semanas"
-                    />
-                    <Input
-                      name="milkQuantity"
-                      label="Produção de Leite (litros/dia)"
-                      keyboardType="numeric"
-                      placeholder="10 (litros/dia)"
-                    />
-                  </>
-                )}
-                {animal.value === 'Novilha Leiteira' && (
+          {calc.value === 'Ajustar lotação animal' && (
+            <>
+              {animal.value === 'Vaca em lactação' && (
+                <>
                   <Input
-                    name="daysOfLactation"
-                    label="N° de dias de gestação"
+                    name="weeksOfLactation"
+                    label="Semanas de Lactação"
                     keyboardType="numeric"
-                    placeholder="10"
+                    placeholder="10 semanas"
                   />
-                )}
-              </>
-            )}
+                  <Input
+                    name="milkQuantity"
+                    label="Produção de Leite (litros/dia)"
+                    keyboardType="numeric"
+                    placeholder="10 (litros/dia)"
+                  />
+                </>
+              )}
+              {animal.value === 'Novilha Leiteira' && (
+                <Input
+                  name="daysOfLactation"
+                  label="N° de dias de gestação"
+                  keyboardType="numeric"
+                  placeholder="10"
+                />
+              )}
+            </>
+          )}
           {calc.value === 'Dimensionar área do potreiro' && (
             <>
               <Input
