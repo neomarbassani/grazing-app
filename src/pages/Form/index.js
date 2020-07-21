@@ -1,9 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
-import {KeyboardAvoidingView} from 'react-native';
+import {View} from 'react-native';
 import * as Yup from 'yup';
 import {Form} from '@unform/mobile';
-
+import {Platform, NativeModules, Dimensions} from 'react-native';
+const {StatusBarManager} = NativeModules;
+const {height} = Dimensions.get('window');
 import Container from '../../layout/App';
 
 import SubTitle from '../../components/SubTitle';
@@ -598,26 +600,145 @@ const DimensionArea = ({navigation, route}) => {
           : tifton
       }
       resizeMode="cover">
-      <ProgressBar size={87.5} />
-      <CalcHeader color="#fff" />
-
-      <Content
-        contentContainerStyle={{
-          flexWrap: 'wrap',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          paddingHorizontal: 15,
-          paddingBottom: 30,
+      <View
+        style={{
+          backgroundColor: 'rgba(0,0,0,0.5)',
+          alignItems: 'center',
+          height,
+          width: '100%',
         }}>
-        <CalcRoutesTop items={items} color="#fff" />
-        <SubTitle
-          value="Informações sobre o sistema"
-          size={14}
-          mb={20}
-          color="#fff"
-        />
-        {calc.name === 'Pastoreio contínuo' &&
-          calc.value === 'Fornecer suplemento' && (
+        <ProgressBar size={87.5} />
+        <CalcHeader color="#fff" />
+
+        <Content
+          contentContainerStyle={{
+            flexWrap: 'wrap',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingHorizontal: 15,
+            paddingBottom: 30,
+          }}>
+          <CalcRoutesTop items={items} color="#fff" />
+          <SubTitle
+            value="Informações sobre o sistema"
+            size={14}
+            mb={20}
+            color="#fff"
+          />
+          {calc.name === 'Pastoreio contínuo' &&
+            calc.value === 'Fornecer suplemento' && (
+              <Form ref={formRef} onSubmit={handleSubmit}>
+                <Input
+                  name="foal_name"
+                  label="Nome do Potreiro"
+                  color="#fff"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('startDate')}
+                />
+                <Input
+                  name="startDate"
+                  color="#fff"
+                  label="Data de início do pastejo"
+                  keyboardType="numeric"
+                  placeholder="DD/MM/YYYY"
+                  maskType="datetime"
+                  options={{
+                    format: 'DD/MM/YYYY',
+                  }}
+                  returnKeyType="done"
+                  blurOnSubmit={true}
+                />
+                <SliderInput
+                  label="Altura do pasto (cm)"
+                  value={pastureHeight}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setPastureHeight(value);
+                  }}
+                  minVal={0}
+                  maxVal={100}
+                />
+                <Input
+                  name="foalArea"
+                  label="Área total do potreiro (ha)"
+                  color="#fff"
+                  keyboardType="numeric"
+                  placeholder="1"
+                  returnKeyType="done"
+                  blurOnSubmit={true}
+                />
+              </Form>
+            )}
+
+          {calc.name === 'Pastoreio rotativo' &&
+            calc.value === 'Fornecer suplemento' && (
+              <Form ref={formRef} onSubmit={handleSubmit}>
+                <Input
+                  name="foal_name"
+                  label="Nome do Potreiro"
+                  color="#fff"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('startDate')}
+                />
+                <Input
+                  name="startDate"
+                  color="#fff"
+                  label="Data de início do pastejo"
+                  keyboardType="numeric"
+                  placeholder="DD/MM/YYYY"
+                  maskType="datetime"
+                  options={{
+                    format: 'DD/MM/YYYY',
+                  }}
+                  returnKeyType="next"
+                  blurOnSubmit={true}
+                />
+                <SliderInput
+                  label="Altura do pasto (cm)"
+                  value={pastureHeight}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setPastureHeight(value);
+                  }}
+                  minVal={0}
+                  maxVal={100}
+                />
+                <Input
+                  name="foalArea"
+                  label="Área total do potreiro (ha)"
+                  color="#fff"
+                  keyboardType="numeric"
+                  placeholder="1"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('tracksAmount')}
+                />
+                <Input
+                  name="tracksAmount"
+                  label="Número de faixas no potreiro"
+                  color="#fff"
+                  keyboardType="numeric"
+                  placeholder="(quantas subdivisões existem na área do potreiro)"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('daysOfStay')}
+                />
+                <Input
+                  name="daysOfStay"
+                  keyboardType="numeric"
+                  label="Tempo de permanência"
+                  color="#fff"
+                  returnKeyType="done"
+                  blurOnSubmit={true}
+                />
+              </Form>
+            )}
+
+          {calc.value === 'Dimensionar área do potreiro' && (
             <Form ref={formRef} onSubmit={handleSubmit}>
               <Input
                 name="foal_name"
@@ -640,353 +761,242 @@ const DimensionArea = ({navigation, route}) => {
                 returnKeyType="done"
                 blurOnSubmit={true}
               />
-              <SliderInput
-                label="Altura do pasto (cm)"
-                value={pastureHeight}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setPastureHeight(value);
-                }}
-                minVal={0}
-                maxVal={100}
-              />
-              <Input
-                name="foalArea"
-                label="Área total do potreiro (ha)"
-                color="#fff"
-                keyboardType="numeric"
-                placeholder="1"
-                returnKeyType="done"
-                blurOnSubmit={true}
-              />
             </Form>
           )}
 
-        {calc.name === 'Pastoreio rotativo' &&
-          calc.value === 'Fornecer suplemento' && (
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="foal_name"
-                label="Nome do Potreiro"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('startDate')}
-              />
-              <Input
-                name="startDate"
-                color="#fff"
-                label="Data de início do pastejo"
-                keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
-                maskType="datetime"
-                options={{
-                  format: 'DD/MM/YYYY',
-                }}
-                returnKeyType="next"
-                blurOnSubmit={true}
-              />
-              <SliderInput
-                label="Altura do pasto (cm)"
-                value={pastureHeight}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setPastureHeight(value);
-                }}
-                minVal={0}
-                maxVal={100}
-              />
-              <Input
-                name="foalArea"
-                label="Área total do potreiro (ha)"
-                color="#fff"
-                keyboardType="numeric"
-                placeholder="1"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('tracksAmount')}
-              />
-              <Input
-                name="tracksAmount"
-                label="Número de faixas no potreiro"
-                color="#fff"
-                keyboardType="numeric"
-                placeholder="(quantas subdivisões existem na área do potreiro)"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('daysOfStay')}
-              />
-              <Input
-                name="daysOfStay"
-                keyboardType="numeric"
-                label="Tempo de permanência"
-                color="#fff"
-                returnKeyType="done"
-                blurOnSubmit={true}
-              />
-            </Form>
-          )}
+          {calc.name === 'Pastoreio contínuo' &&
+            calc.value === 'Ajustar lotação animal' && (
+              <Form ref={formRef} onSubmit={handleSubmit}>
+                <Input
+                  name="foal_name"
+                  label="Nome do Potreiro"
+                  color="#fff"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('startDate')}
+                />
+                <Input
+                  name="startDate"
+                  color="#fff"
+                  label="Data de início do pastejo"
+                  keyboardType="numeric"
+                  placeholder="DD/MM/YYYY"
+                  maskType="datetime"
+                  options={{
+                    format: 'DD/MM/YYYY',
+                  }}
+                  returnKeyType="done"
+                  blurOnSubmit={true}
+                />
+                <SliderInput
+                  label="Altura do pasto (cm)"
+                  value={pastureHeight}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setPastureHeight(value);
+                  }}
+                  minVal={0}
+                  maxVal={100}
+                />
+                <Input
+                  name="foalArea"
+                  label="Área total do potreiro (ha)"
+                  color="#fff"
+                  keyboardType="numeric"
+                  placeholder="1"
+                  returnKeyType="next"
+                  blurOnSubmit={true}
+                />
+              </Form>
+            )}
 
-        {calc.value === 'Dimensionar área do potreiro' && (
-          <Form ref={formRef} onSubmit={handleSubmit}>
-            <Input
-              name="foal_name"
-              label="Nome do Potreiro"
-              color="#fff"
-              returnKeyType="next"
-              blurOnSubmit={false}
-              onSubmitEditing={() => focusInput('startDate')}
-            />
-            <Input
-              name="startDate"
-              color="#fff"
-              label="Data de início do pastejo"
-              keyboardType="numeric"
-              placeholder="DD/MM/YYYY"
-              maskType="datetime"
-              options={{
-                format: 'DD/MM/YYYY',
-              }}
-              returnKeyType="done"
-              blurOnSubmit={true}
-            />
-          </Form>
-        )}
+          {calc.name === 'Pastoreio rotativo' &&
+            calc.value === 'Ajustar lotação animal' && (
+              <Form ref={formRef} onSubmit={handleSubmit}>
+                <Input
+                  name="foal_name"
+                  label="Nome do Potreiro"
+                  color="#fff"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('startDate')}
+                />
+                <Input
+                  name="startDate"
+                  color="#fff"
+                  label="Data de início do pastejo"
+                  keyboardType="numeric"
+                  placeholder="DD/MM/YYYY"
+                  maskType="datetime"
+                  options={{
+                    format: 'DD/MM/YYYY',
+                  }}
+                  returnKeyType="done"
+                  blurOnSubmit={true}
+                />
+                <SliderInput
+                  label="Altura do pasto (cm)"
+                  value={pastureHeight}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setPastureHeight(value);
+                  }}
+                  minVal={0}
+                  maxVal={100}
+                />
+                <Input
+                  name="foodQuantity"
+                  label="Quantidade de alimento fornecido"
+                  color="#fff"
+                  keyboardType="numeric"
+                  placeholder="(kg/animal/dia)"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('numberOfTracks')}
+                />
+                <Input
+                  name="numberOfTracks"
+                  label="Número de faixas"
+                  keyboardType="numeric"
+                  color="#fff"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('lenghtOfStay')}
+                />
+                <Input
+                  name="lenghtOfStay"
+                  label="Tempo de permanência em cada faixa"
+                  keyboardType="numeric"
+                  color="#fff"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('foalArea')}
+                />
+                <Input
+                  name="foalArea"
+                  label="Área total do potreiro (ha)"
+                  color="#fff"
+                  keyboardType="numeric"
+                  placeholder="1"
+                  returnKeyType="next"
+                  blurOnSubmit={true}
+                />
+              </Form>
+            )}
 
-        {calc.name === 'Pastoreio contínuo' &&
-          calc.value === 'Ajustar lotação animal' && (
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="foal_name"
-                label="Nome do Potreiro"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('startDate')}
-              />
-              <Input
-                name="startDate"
-                color="#fff"
-                label="Data de início do pastejo"
-                keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
-                maskType="datetime"
-                options={{
-                  format: 'DD/MM/YYYY',
-                }}
-                returnKeyType="done"
-                blurOnSubmit={true}
-              />
-              <SliderInput
-                label="Altura do pasto (cm)"
-                value={pastureHeight}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setPastureHeight(value);
-                }}
-                minVal={0}
-                maxVal={100}
-              />
-              <Input
-                name="foalArea"
-                label="Área total do potreiro (ha)"
-                color="#fff"
-                keyboardType="numeric"
-                placeholder="1"
-                returnKeyType="next"
-                blurOnSubmit={true}
-              />
-            </Form>
-          )}
+          {calc.name === 'Pastoreio rotativo' &&
+            calc.value === 'Calcular números de piquetes' && (
+              <Form ref={formRef} onSubmit={handleSubmit}>
+                <Input
+                  name="foal_name"
+                  label="Nome do Potreiro"
+                  color="#fff"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('startDate')}
+                />
+                <Input
+                  name="startDate"
+                  color="#fff"
+                  label="Data de início do pastejo"
+                  keyboardType="numeric"
+                  placeholder="DD/MM/YYYY"
+                  maskType="datetime"
+                  options={{
+                    format: 'DD/MM/YYYY',
+                  }}
+                  returnKeyType="done"
+                  blurOnSubmit={true}
+                />
+                <SliderInput
+                  label="Altura do pasto (cm)"
+                  value={pastureHeight}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setPastureHeight(value);
+                  }}
+                  minVal={0}
+                  maxVal={100}
+                />
+                <Input
+                  name="foalArea"
+                  label="Área total do potreiro (ha)"
+                  color="#fff"
+                  keyboardType="numeric"
+                  placeholder="1"
+                  returnKeyType="next"
+                  blurOnSubmit={true}
+                />
+              </Form>
+            )}
 
-        {calc.name === 'Pastoreio rotativo' &&
-          calc.value === 'Ajustar lotação animal' && (
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="foal_name"
-                label="Nome do Potreiro"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('startDate')}
-              />
-              <Input
-                name="startDate"
-                color="#fff"
-                label="Data de início do pastejo"
-                keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
-                maskType="datetime"
-                options={{
-                  format: 'DD/MM/YYYY',
-                }}
-                returnKeyType="done"
-                blurOnSubmit={true}
-              />
-              <SliderInput
-                label="Altura do pasto (cm)"
-                value={pastureHeight}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setPastureHeight(value);
-                }}
-                minVal={0}
-                maxVal={100}
-              />
-              <Input
-                name="foodQuantity"
-                label="Quantidade de alimento fornecido"
-                color="#fff"
-                keyboardType="numeric"
-                placeholder="(kg/animal/dia)"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('numberOfTracks')}
-              />
-              <Input
-                name="numberOfTracks"
-                label="Número de faixas"
-                keyboardType="numeric"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('lenghtOfStay')}
-              />
-              <Input
-                name="lenghtOfStay"
-                label="Tempo de permanência em cada faixa"
-                keyboardType="numeric"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('foalArea')}
-              />
-              <Input
-                name="foalArea"
-                label="Área total do potreiro (ha)"
-                color="#fff"
-                keyboardType="numeric"
-                placeholder="1"
-                returnKeyType="next"
-                blurOnSubmit={true}
-              />
-            </Form>
-          )}
+          {calc.name === 'Pastoreio rotativo' &&
+            calc.value === 'Definir período de ocupação' && (
+              <Form ref={formRef} onSubmit={handleSubmit}>
+                <Input
+                  name="foal_name"
+                  label="Nome do Potreiro"
+                  color="#fff"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('startDate')}
+                />
+                <Input
+                  name="startDate"
+                  color="#fff"
+                  label="Data de início do pastejo"
+                  keyboardType="numeric"
+                  placeholder="DD/MM/YYYY"
+                  maskType="datetime"
+                  options={{
+                    format: 'DD/MM/YYYY',
+                  }}
+                  returnKeyType="done"
+                  blurOnSubmit={true}
+                />
 
-        {calc.name === 'Pastoreio rotativo' &&
-          calc.value === 'Calcular números de piquetes' && (
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="foal_name"
-                label="Nome do Potreiro"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('startDate')}
-              />
-              <Input
-                name="startDate"
-                color="#fff"
-                label="Data de início do pastejo"
-                keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
-                maskType="datetime"
-                options={{
-                  format: 'DD/MM/YYYY',
-                }}
-                returnKeyType="done"
-                blurOnSubmit={true}
-              />
-              <SliderInput
-                label="Altura do pasto (cm)"
-                value={pastureHeight}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setPastureHeight(value);
-                }}
-                minVal={0}
-                maxVal={100}
-              />
-              <Input
-                name="foalArea"
-                label="Área total do potreiro (ha)"
-                color="#fff"
-                keyboardType="numeric"
-                placeholder="1"
-                returnKeyType="next"
-                blurOnSubmit={true}
-              />
-            </Form>
-          )}
-
-        {calc.name === 'Pastoreio rotativo' &&
-          calc.value === 'Definir período de ocupação' && (
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="foal_name"
-                label="Nome do Potreiro"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('startDate')}
-              />
-              <Input
-                name="startDate"
-                color="#fff"
-                label="Data de início do pastejo"
-                keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
-                maskType="datetime"
-                options={{
-                  format: 'DD/MM/YYYY',
-                }}
-                returnKeyType="done"
-                blurOnSubmit={true}
-              />
-
-              <Input
-                name="foalArea"
-                label="Área total do potreiro (ha)"
-                color="#fff"
-                keyboardType="numeric"
-                placeholder="1"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('tracksAmount')}
-              />
-              <Input
-                name="tracksAmount"
-                keyboardType="numeric"
-                label="Número de faixas"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={true}
-              />
-              <SliderInput
-                label="Altura do pasto (cm)"
-                value={pastureHeight}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setPastureHeight(value);
-                }}
-                minVal={0}
-                maxVal={100}
-              />
-            </Form>
-          )}
-        <Button
-          content="Finalizar"
-          mt={20}
-          color="#D69D2B"
-          onPress={() => formRef.current.submitForm()}
-        />
-      </Content>
+                <Input
+                  name="foalArea"
+                  label="Área total do potreiro (ha)"
+                  color="#fff"
+                  keyboardType="numeric"
+                  placeholder="1"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('tracksAmount')}
+                />
+                <Input
+                  name="tracksAmount"
+                  keyboardType="numeric"
+                  label="Número de faixas"
+                  color="#fff"
+                  returnKeyType="next"
+                  blurOnSubmit={true}
+                />
+                <SliderInput
+                  label="Altura do pasto (cm)"
+                  value={pastureHeight}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setPastureHeight(value);
+                  }}
+                  minVal={0}
+                  maxVal={100}
+                />
+              </Form>
+            )}
+          <Button
+            content="Finalizar"
+            mt={20}
+            color="#D69D2B"
+            onPress={() => formRef.current.submitForm()}
+          />
+        </Content>
+      </View>
     </Container>
   );
 };
