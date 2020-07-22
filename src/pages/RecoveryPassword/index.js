@@ -11,7 +11,6 @@ import LogoHeader from '../../components/LogoHeader';
 import Input from '../../components/Input';
 import Link from '../../components/Link';
 import Button from '../../components/Button';
-
 import api from '../../services/api';
 
 export default function SignIn({navigation}) {
@@ -49,6 +48,13 @@ export default function SignIn({navigation}) {
 
       navigation.navigate('Login');
     } catch (err) {
+      Snackbar.show({
+        text: 'Email não encontrado, por favor registre-se !',
+        duration: Snackbar.LENGTH_LONG,
+        textColor: '#fff',
+        backgroundColor: '#ff0000',
+      });
+
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {

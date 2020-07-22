@@ -66,12 +66,15 @@ export function* signUp(data) {
       backgroundColor: '#008000',
     });
   } catch (err) {
-    Snackbar.show({
-      text: 'Houve um erro no cadastro, verifique seus dados.',
-      duration: Snackbar.LENGTH_SHORT,
-      textColor: '#fff',
-      backgroundColor: '#ff0000',
-    });
+    console.log(err.response.data);
+    if (err.response.data && err.response.data.error) {
+      Snackbar.show({
+        text: err.response.data.error[0],
+        duration: Snackbar.LENGTH_SHORT,
+        textColor: '#fff',
+        backgroundColor: '#ff0000',
+      });
+    }
 
     yield put(AuthActions.signUpFailure());
   }

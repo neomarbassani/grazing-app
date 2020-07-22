@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {Alert} from 'react-native';
 import {Form} from '@unform/mobile';
 import Snackbar from 'react-native-snackbar';
@@ -18,9 +18,7 @@ export default function SignIn({navigation, route}) {
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
 
-  const {token} = route.params;
-
-  console.log(token);
+  const [token, setToken] = useState('');
 
   async function handleSubmit(data) {
     setLoading(true);
@@ -79,6 +77,12 @@ export default function SignIn({navigation, route}) {
     const focusInputField = formRef.current.getFieldRef(field);
     focusInputField.focus();
   }
+
+  useEffect(() => {
+    if (route.params.token) {
+      setToken(route.params.token);
+    }
+  }, [route]);
 
   return (
     <Container>
