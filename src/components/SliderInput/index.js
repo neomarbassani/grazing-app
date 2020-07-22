@@ -19,6 +19,8 @@ const SliderInput = ({
   step,
   ...rest
 }) => {
+  console.log(maxVal);
+
   return (
     <Container mt={mt} mb={mb}>
       <Label color={color}>

@@ -18,7 +18,7 @@ import {Content} from './styles';
 const AnimalInfo = ({navigation, route}) => {
   const {calc, animal} = route.params;
 
-  const items = [calc.name, animal.value];
+  const items = [calc.value, calc.name, animal.value];
 
   const formRef = useRef(null);
 
@@ -49,17 +49,17 @@ const AnimalInfo = ({navigation, route}) => {
             {name: 'Peso médio', value: data.weigth, key: 'weigth'},
             {
               name: 'Semanas de Lactação',
-              value: data.weeksOfLactation,
+              value: data.weeksOfLactation || 0,
               key: 'weeksOfLactation',
             },
             {
               name: 'Produção de Leite (litros/dia)',
-              value: data.milkQuantity,
+              value: data.milkQuantity || 0,
               key: 'milkQuantity',
             },
             {
               name: 'N° de dias de gestação',
-              value: 0,
+              value: data.daysOfLactation || 0,
               key: 'daysOfLactation',
             },
           ],
@@ -87,19 +87,55 @@ const AnimalInfo = ({navigation, route}) => {
           inputs: [
             {name: 'Peso médio', value: data.weigth, key: 'weigth'},
             {
-              name: 'N° de dias de gestação',
-              value: data.daysOfLactation,
-              key: 'daysOfLactation',
-            },
-            {
               name: 'Semanas de Lactação',
-              value: 0,
+              value: data.weeksOfLactation || 0,
               key: 'weeksOfLactation',
             },
             {
               name: 'Produção de Leite (litros/dia)',
-              value: 0,
+              value: data.milkQuantity || 0,
               key: 'milkQuantity',
+            },
+            {
+              name: 'N° de dias de gestação',
+              value: data.daysOfLactation || 0,
+              key: 'daysOfLactation',
+            },
+          ],
+        });
+      }
+
+      if (
+        calc.value === 'Ajustar lotação animal' &&
+        animal.name === 'Bovinocultura de corte'
+      ) {
+        const schema = Yup.object().shape({
+          weigth: Yup.string().required('Insira o peso médio dos animais'),
+        });
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        navigation.navigate('ChoosePastureType', {
+          calc,
+          animal,
+          inputs: [
+            {name: 'Peso médio', value: data.weigth, key: 'weigth'},
+            {
+              name: 'Semanas de Lactação',
+              value: data.weeksOfLactation || 0,
+              key: 'weeksOfLactation',
+            },
+            {
+              name: 'Produção de Leite (litros/dia)',
+              value: data.milkQuantity || 0,
+              key: 'milkQuantity',
+            },
+            {
+              name: 'N° de dias de gestação',
+              value: data.daysOfLactation || 0,
+              key: 'daysOfLactation',
             },
           ],
         });
@@ -111,13 +147,12 @@ const AnimalInfo = ({navigation, route}) => {
           animalsAmount: Yup.string().required('Insira o número de animais'),
           rationAmount: Yup.string(),
           silageAmount: Yup.string(),
+          hayAmount: Yup.string(),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
-
-        console.log('ok');
 
         navigation.navigate('ChoosePastureType', {
           calc,
@@ -135,9 +170,14 @@ const AnimalInfo = ({navigation, route}) => {
               key: 'rationAmount',
             },
             {
-              name: 'Os animais irão receber silagem ou feno? Se sim, quanto?',
+              name: 'Os animais irão receber silagem? Se sim, quanto?',
               value: data.silageAmount || 0,
               key: 'silageAmount',
+            },
+            {
+              name: 'Os animais irão receber feno? Se sim, quanto?',
+              value: data.hayAmount || 0,
+              key: 'hayAmount',
             },
           ],
         });
@@ -165,6 +205,21 @@ const AnimalInfo = ({navigation, route}) => {
               name: 'Número de animais que serão colocados no potreiro',
               value: data.animalsAmount,
               key: 'animalsAmount',
+            },
+            {
+              name: 'Semanas de Lactação',
+              value: data.weeksOfLactation || 0,
+              key: 'weeksOfLactation',
+            },
+            {
+              name: 'Produção de Leite (litros/dia)',
+              value: data.milkQuantity || 0,
+              key: 'milkQuantity',
+            },
+            {
+              name: 'N° de dias de gestação',
+              value: data.daysOfLactation || 0,
+              key: 'daysOfLactation',
             },
           ],
         });
@@ -198,6 +253,21 @@ const AnimalInfo = ({navigation, route}) => {
               name: 'Nº dias de permanência dos animais em cada faixa',
               value: data.daysOfStay,
               key: 'daysOfStay',
+            },
+            {
+              name: 'Semanas de Lactação',
+              value: data.weeksOfLactation || 0,
+              key: 'weeksOfLactation',
+            },
+            {
+              name: 'Produção de Leite (litros/dia)',
+              value: data.milkQuantity || 0,
+              key: 'milkQuantity',
+            },
+            {
+              name: 'N° de dias de gestação',
+              value: data.daysOfLactation || 0,
+              key: 'daysOfLactation',
             },
           ],
         });
@@ -240,6 +310,21 @@ const AnimalInfo = ({navigation, route}) => {
               value: data.receivingSilageOrHay,
               key: 'receivingSilageOrHay',
             },
+            {
+              name: 'Semanas de Lactação',
+              value: data.weeksOfLactation || 0,
+              key: 'weeksOfLactation',
+            },
+            {
+              name: 'Produção de Leite (litros/dia)',
+              value: data.milkQuantity || 0,
+              key: 'milkQuantity',
+            },
+            {
+              name: 'N° de dias de gestação',
+              value: data.daysOfLactation || 0,
+              key: 'daysOfLactation',
+            },
           ],
         });
       }
@@ -251,9 +336,9 @@ const AnimalInfo = ({navigation, route}) => {
         const schema = Yup.object().shape({
           weigth: Yup.string().required('Insira o peso médio dos animais'),
           animalsAmount: Yup.string().required('Insira o número de animais'),
-          supplyAmount: Yup.string().required(
-            'Insira a quantidade de alimentos',
-          ),
+          rationAmount: Yup.string(),
+          silageAmount: Yup.string(),
+          hayAmount: Yup.string(),
         });
 
         await schema.validate(data, {
@@ -271,45 +356,38 @@ const AnimalInfo = ({navigation, route}) => {
               key: 'animalsAmount',
             },
             {
-              name:
-                'Quantidade de alimento fornecido aos animais no cocho (kg/animal)',
-              value: data.supplyAmount,
-              key: 'supplyAmount',
+              name: 'Semanas de Lactação',
+              value: data.weeksOfLactation || 0,
+              key: 'weeksOfLactation',
+            },
+            {
+              name: 'Produção de Leite (litros/dia)',
+              value: data.milkQuantity || 0,
+              key: 'milkQuantity',
+            },
+            {
+              name: 'N° de dias de gestação',
+              value: data.daysOfLactation || 0,
+              key: 'daysOfLactation',
+            },
+            {
+              name: 'Os animais irão receber ração no cocho? Se sim, quanto?',
+              value: data.rationAmount || 0,
+              key: 'rationAmount',
+            },
+            {
+              name: 'Os animais irão receber silagem? Se sim, quanto?',
+              value: data.silageAmount || 0,
+              key: 'silageAmount',
+            },
+            {
+              name: 'Os animais irão receber feno? Se sim, quanto?',
+              value: data.hayAmount || 0,
+              key: 'hayAmount',
             },
           ],
         });
       }
-
-      /*  const schema = Yup.object().shape({
-        weigth: Yup.string().required('Insira o peso médio dos animais'),
-      });
-
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-
-      navigation.navigate('ChoosePastureType', {
-        calc,
-        animal,
-        inputs: [
-          {name: 'Peso médio', value: data.weigth, key: 'weigth'},
-          {
-            name: 'Semanas de Lactação',
-            value: 0,
-            key: 'weeksOfLactation',
-          },
-          {
-            name: 'Produção de Leite (litros/dia)',
-            value: 0,
-            key: 'milkQuantity',
-          },
-          {
-            name: 'N° de dias de gestação',
-            value: 0,
-            key: 'daysOfLactation',
-          },
-        ],
-      }); */
     } catch (err) {
       const validationErrors = {};
 
@@ -322,7 +400,6 @@ const AnimalInfo = ({navigation, route}) => {
       }
     }
   }
-  console.log(animal);
   return (
     <Container
       source={backgroundLogo}
@@ -389,7 +466,13 @@ const AnimalInfo = ({navigation, route}) => {
                   />
                   <Input
                     name="silageAmount"
-                    label="Os animais irão receber silagem ou feno? Se sim, quanto?"
+                    label="Os animais irão receber silagem? Se sim, quanto?"
+                    keyboardType="numeric"
+                    placeholder="kg/animal/dia"
+                  />
+                  <Input
+                    name="hayAmount"
+                    label="Os animais irão receber  feno? Se sim, quanto?"
                     keyboardType="numeric"
                     placeholder="kg/animal/dia"
                   />
@@ -399,12 +482,40 @@ const AnimalInfo = ({navigation, route}) => {
           )}
           {calc.name === 'Pastoreio contínuo' &&
             calc.value === 'Fornecer suplemento' && (
-              <Input
-                name="animalsAmount"
-                label="Número de animais que serão colocados no potreiro"
-                keyboardType="numeric"
-                placeholder="Insira o número de animais"
-              />
+              <>
+                <Input
+                  name="animalsAmount"
+                  label="Número de animais que serão colocados no potreiro"
+                  keyboardType="numeric"
+                  placeholder="Insira o número de animais"
+                />
+
+                {animal.value === 'Vaca em lactação' && (
+                  <>
+                    <Input
+                      name="weeksOfLactation"
+                      label="Semanas de Lactação"
+                      keyboardType="numeric"
+                      placeholder="10 semanas"
+                    />
+                    <Input
+                      name="milkQuantity"
+                      label="Produção de Leite (litros/dia)"
+                      keyboardType="numeric"
+                      placeholder="10 (litros/dia)"
+                    />
+                  </>
+                )}
+
+                {animal.value === 'Novilha Leiteira' && (
+                  <Input
+                    name="daysOfLactation"
+                    label="N° de dias de gestação"
+                    keyboardType="numeric"
+                    placeholder="10"
+                  />
+                )}
+              </>
             )}
           {calc.name === 'Pastoreio rotativo' &&
             calc.value === 'Fornecer suplemento' && (
@@ -421,6 +532,31 @@ const AnimalInfo = ({navigation, route}) => {
                   keyboardType="numeric"
                   placeholder="Insira o número de animais"
                 />
+                {animal.value === 'Vaca em lactação' && (
+                  <>
+                    <Input
+                      name="weeksOfLactation"
+                      label="Semanas de Lactação"
+                      keyboardType="numeric"
+                      placeholder="10 semanas"
+                    />
+                    <Input
+                      name="milkQuantity"
+                      label="Produção de Leite (litros/dia)"
+                      keyboardType="numeric"
+                      placeholder="10 (litros/dia)"
+                    />
+                  </>
+                )}
+
+                {animal.value === 'Novilha Leiteira' && (
+                  <Input
+                    name="daysOfLactation"
+                    label="N° de dias de gestação"
+                    keyboardType="numeric"
+                    placeholder="10"
+                  />
+                )}
               </>
             )}
           {calc.value === 'Calcular números de piquetes' && (
@@ -443,6 +579,30 @@ const AnimalInfo = ({navigation, route}) => {
                 keyboardType="numeric"
                 placeholder="Insira um valor"
               />
+              {animal.value === 'Vaca em lactação' && (
+                <>
+                  <Input
+                    name="weeksOfLactation"
+                    label="Semanas de Lactação"
+                    keyboardType="numeric"
+                    placeholder="10 semanas"
+                  />
+                  <Input
+                    name="milkQuantity"
+                    label="Produção de Leite (litros/dia)"
+                    keyboardType="numeric"
+                    placeholder="10 (litros/dia)"
+                  />
+                </>
+              )}
+              {animal.value === 'Novilha Leiteira' && (
+                <Input
+                  name="daysOfLactation"
+                  label="N° de dias de gestação"
+                  keyboardType="numeric"
+                  placeholder="10"
+                />
+              )}
             </>
           )}
           {calc.value === 'Definir período de ocupação' && (
@@ -453,12 +613,51 @@ const AnimalInfo = ({navigation, route}) => {
                 keyboardType="numeric"
                 placeholder="Insira o número de animais"
               />
+
               <Input
-                name="supplyAmount"
-                label="Quantidade de alimento fornecido aos animais no cocho"
+                name="rationAmount"
+                label="Os animais irão receber ração no cocho? Se sim, quanto?"
                 keyboardType="numeric"
-                placeholder=" (kg/animal)"
+                placeholder="kg MS/animal/dia"
+                mb={60}
               />
+              <Input
+                name="silageAmount"
+                label="Os animais irão receber silagem? Se sim, quanto?"
+                keyboardType="numeric"
+                placeholder="kg/animal/dia"
+              />
+              <Input
+                name="hayAmount"
+                label="Os animais irão receber  feno? Se sim, quanto?"
+                keyboardType="numeric"
+                placeholder="kg/animal/dia"
+              />
+
+              {animal.value === 'Vaca em lactação' && (
+                <>
+                  <Input
+                    name="weeksOfLactation"
+                    label="Semanas de Lactação"
+                    keyboardType="numeric"
+                    placeholder="10 semanas"
+                  />
+                  <Input
+                    name="milkQuantity"
+                    label="Produção de Leite (litros/dia)"
+                    keyboardType="numeric"
+                    placeholder="10 (litros/dia)"
+                  />
+                </>
+              )}
+              {animal.value === 'Novilha Leiteira' && (
+                <Input
+                  name="daysOfLactation"
+                  label="N° de dias de gestação"
+                  keyboardType="numeric"
+                  placeholder="10"
+                />
+              )}
             </>
           )}
         </Form>

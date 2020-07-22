@@ -25,7 +25,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
 
   console.log(route.params);
 
-  const items = [calc.name];
+  const items = [calc.value, calc.name];
 
   return (
     <Container

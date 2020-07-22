@@ -14,4 +14,5 @@ export const Text = styled.Text`
   font-size: 14px;
   line-height: 14px;
   color: ${props => (props.color ? props.color : colors.primary)};
+  margin-bottom: 15px;
 `;

@@ -1,152 +1,155 @@
 /* eslint-disable radix */
-const taxaDeAcumulo = {
+
+import Snackbar from 'react-native-snackbar';
+
+export const taxaDeAcumulo = {
   campoNativo: {
-    janeiro: '17.6',
-    fevereiro: '16.5',
-    março: '12.7',
-    abril: '9.3',
-    maio: '3.5',
-    junho: '6.7',
-    julho: '6.8',
-    agosto: '0.1',
-    setembro: '5.7',
-    outubro: '17.2',
-    novembro: '14.6',
-    dezembro: '11',
-    media: '10.1',
-    minimo: '0.1',
+    janeiro: 17.6,
+    fevereiro: 16.5,
+    março: 12.7,
+    abril: 9.3,
+    maio: 3.5,
+    junho: 6.7,
+    julho: 6.8,
+    agosto: 0.1,
+    setembro: 5.7,
+    outubro: 17.2,
+    novembro: 14.6,
+    dezembro: 11,
+    media: 10.1,
+    minimo: 0.1,
   },
   azevem: {
     janeiro: undefined,
     fevereiro: undefined,
     março: undefined,
     abril: undefined,
-    maio: '16.66',
-    junho: '44.1',
-    julho: '71.9',
-    agosto: '56.3',
-    setembro: '76.6',
-    outubro: '50.8',
-    novembro: '9.4',
+    maio: 16.66,
+    junho: 44.1,
+    julho: 71.9,
+    agosto: 56.3,
+    setembro: 76.6,
+    outubro: 50.8,
+    novembro: 9.4,
     dezembro: undefined,
-    media: '46.5',
-    minimo: '9.4',
+    media: 46.5,
+    minimo: 9.4,
   },
   aveiaAzevem: {
     janeiro: undefined,
     fevereiro: undefined,
     março: undefined,
     abril: undefined,
-    maio: '23.1',
-    junho: '34',
-    julho: '43.6',
-    agosto: '67.6',
-    setembro: '48.8',
-    outubro: '29.2',
-    novembro: '16.8',
+    maio: 23.1,
+    junho: 34,
+    julho: 43.6,
+    agosto: 67.6,
+    setembro: 48.8,
+    outubro: 29.2,
+    novembro: 16.8,
     dezembro: undefined,
-    media: '37.6',
-    minimo: '16.8',
+    media: 37.6,
+    minimo: 16.8,
   },
   sudao: {
-    janeiro: '123',
-    fevereiro: '130',
-    março: '64.06',
-    abril: '18.8',
+    janeiro: 123,
+    fevereiro: 130,
+    março: 64.06,
+    abril: 18.8,
     maio: undefined,
     junho: undefined,
     julho: undefined,
     agosto: undefined,
     setembro: undefined,
     outubro: undefined,
-    novembro: '67',
-    dezembro: '88',
-    media: '81.8',
-    minimo: '18.8',
+    novembro: 67,
+    dezembro: 88,
+    media: 81.8,
+    minimo: 18.8,
   },
   milheto: {
-    janeiro: '178',
-    fevereiro: '140.9',
-    março: '122.9',
-    abril: '63.1',
-    maio: '16.4',
+    janeiro: 178,
+    fevereiro: 140.9,
+    março: 122.9,
+    abril: 63.1,
+    maio: 16.4,
     junho: undefined,
     julho: undefined,
     agosto: undefined,
     setembro: undefined,
     outubro: undefined,
-    novembro: '101.2',
-    dezembro: '226.9',
-    media: '121.3',
-    minimo: '16.4',
+    novembro: 101.2,
+    dezembro: 226.9,
+    media: 121.3,
+    minimo: 16.4,
   },
   sorgo: {
-    janeiro: '79.1',
-    fevereiro: '52.2',
-    março: '60.9',
-    abril: '49.5',
-    maio: '24.3',
+    janeiro: 79.1,
+    fevereiro: 52.2,
+    março: 60.9,
+    abril: 49.5,
+    maio: 24.3,
     junho: undefined,
     julho: undefined,
     agosto: undefined,
     setembro: undefined,
     outubro: undefined,
-    novembro: '67',
-    dezembro: '86.4',
-    media: '59.9',
-    minimo: '24.3',
+    novembro: 67,
+    dezembro: 86.4,
+    media: 59.9,
+    minimo: 24.3,
   },
   tifton: {
-    janeiro: '115.2',
-    fevereiro: '113.4',
-    março: '83.5',
-    abril: '71.3',
-    maio: '38.1',
+    janeiro: 115.2,
+    fevereiro: 113.4,
+    março: 83.5,
+    abril: 71.3,
+    maio: 38.1,
     junho: undefined,
     julho: undefined,
     agosto: undefined,
     setembro: undefined,
     outubro: undefined,
-    novembro: '57.1',
-    dezembro: '111.7',
-    media: '84.3',
-    minimo: '38.1',
+    novembro: 57.1,
+    dezembro: 111.7,
+    media: 84.3,
+    minimo: 38.1,
   },
   papua: {
-    janeiro: '152',
-    fevereiro: '165.9',
-    março: '145.3',
-    abril: '71',
+    janeiro: 152,
+    fevereiro: 165.9,
+    março: 145.3,
+    abril: 71,
     maio: undefined,
     junho: undefined,
     julho: undefined,
     agosto: undefined,
     setembro: undefined,
     outubro: undefined,
-    novembro: '83',
-    dezembro: '124.1',
-    media: '123.5',
-    minimo: '71',
+    novembro: 83,
+    dezembro: 124.1,
+    media: 123.5,
+    minimo: 71,
   },
   campoNativoMelhorado: {
-    janeiro: '59.1',
-    fevereiro: '33.5',
-    março: '16.8',
-    abril: '7.6',
-    maio: '4.5',
-    junho: '6',
-    julho: '10.6',
-    agosto: '16.9',
-    setembro: '23.5',
-    outubro: '29',
-    novembro: '31.9',
-    dezembro: '30.7',
-    media: '22.5',
-    minimo: '4.5',
+    janeiro: 59.1,
+    fevereiro: 33.5,
+    março: 16.8,
+    abril: 7.6,
+    maio: 4.5,
+    junho: 6,
+    julho: 10.6,
+    agosto: 16.9,
+    setembro: 23.5,
+    outubro: 29,
+    novembro: 31.9,
+    dezembro: 30.7,
+    media: 22.5,
+    minimo: 4.5,
   },
 };
 
-const especie = {
+export const especie = {
   campoNativo: {
     relacaoMassaAltura: 197.8,
     alturaOtima: 12,
@@ -185,7 +188,7 @@ const especie = {
   },
 };
 
-const consumo = {
+export const consumo = {
   bovinoCorte: {
     terneiro: weigth =>
       ((Math.pow(weigth, 0.75) *
@@ -233,7 +236,7 @@ const consumo = {
   },
 };
 
-const mouth = [
+export const mouth = [
   'janeiro',
   'fevereiro',
   'março',
@@ -248,41 +251,36 @@ const mouth = [
   'dezembro',
 ];
 
-// Ajustar lotação Animal Continuo
+// Ajustar lotação Animal Continuo - OK
 export function numberOfAnimalsContinuous({
   startDate,
   weigth,
   pastureHeight,
   typeOfPasture,
+  lenghtOfStay,
   foalArea,
 }) {
-  /* const fodderMass =
+  const fodderMass =
     pastureHeight * parseInt(especie[typeOfPasture].relacaoMassaAltura);
 
-  const forageAvailability =
-    fodderMass / 30 + parseInt(taxaDeAcumulo[typeOfPasture][mouth[startDate]]);
-
-  const animalLoad = forageAvailability / 0.12;
-
-  const results = {
-    name: 'Número de animais no potreiro',
-    value: Math.round((animalLoad / weigth) * foalArea).toLocaleString('pt-BR'),
-  };
-
-  console.log(results);
-  return results; */
+  const value =
+    (((pastureHeight * fodderMass) / lenghtOfStay +
+      parseInt(taxaDeAcumulo[typeOfPasture][mouth[startDate]])) /
+      0.12 /
+      weigth) *
+    foalArea;
 
   const results = [
     {
       name: 'Número de animais no potreiro',
-      value: Math.round(pastureHeight + foalArea).toLocaleString('pt-BR'),
+      value: Math.round(value).toLocaleString('pt-BR'),
     },
   ];
 
   return results;
 }
 
-// Ajustar lotação Animal Rotativo
+// Ajustar lotação Animal Rotativo - OK
 export function numberOfAnimalsRotative({
   startDate,
   weigth,
@@ -290,89 +288,168 @@ export function numberOfAnimalsRotative({
   numberOfTracks,
   pastureHeight,
   typeOfPasture,
-  milkQuantity = 0,
+  milkQuantity,
   lenghtOfStay,
   foalArea,
-  weeksOfLactation = 0,
+  weeksOfLactation,
+  daysOfLactation,
+  typeOfAnimal,
 }) {
-  /* const accumulationRate = parseInt(
-    taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]],
-  ); */
+  const animalCategory =
+    typeOfAnimal.name === 'Bovinocultura de corte'
+      ? 'bovinoCorte'
+      : 'bovinoLeite';
+
+  const animalType = () => {
+    if (typeOfAnimal.value === 'Terneiro') {
+      return 'terneiro';
+    }
+    if (
+      typeOfAnimal.value === 'Novilha' ||
+      typeOfAnimal.value === 'Novilha Leiteira'
+    ) {
+      return 'novilha';
+    }
+    if (typeOfAnimal.value === 'Vaca seca') {
+      return 'vacaSeca';
+    }
+    if (typeOfAnimal.value === 'Vaca prenha') {
+      return 'vacaPrenha';
+    }
+    if (typeOfAnimal.value === 'Vaca em lactação') {
+      return 'vacaLactacao';
+    }
+  };
+
+  const consume = consumo[animalCategory][animalType()](
+    weigth,
+    daysOfLactation || weeksOfLactation,
+    milkQuantity,
+  );
+
+  const value =
+    (pastureHeight * pastureHeight * especie[typeOfPasture].relacaoMassaAltura -
+      (especie[typeOfPasture].alturaOtima * 0,
+      6 * pastureHeight * especie[typeOfPasture].relacaoMassaAltura)) *
+      (foalArea / numberOfTracks) *
+      lenghtOfStay +
+    (taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]] *
+      (foalArea / numberOfTracks)) /
+      (consume - foodQuantity * lenghtOfStay);
 
   const results = [
     {
       name: 'Número de animais no potreiro',
-      value: Math.round(pastureHeight + foalArea).toLocaleString('pt-BR'),
+      value: Math.round(value).toLocaleString('pt-BR'),
     },
   ];
 
   return results;
-
-  /* console.log({
-    startDate,
-    weigth,
-    foodQuantity,
-    numberOfTracks,
-    pastureHeight,
-    typeOfPasture,
-    milkQuantity,
-    lenghtOfStay,
-    foalArea,
-    weeksOfLactation,
-  }); */
 }
 
-// Tamanho potreiro Rotativo
+// Tamanho potreiro Rotativo - OK
 export function foalSizeRotative({
   startDate,
   weigth,
   animalsAmount,
   rationAmount,
   silageAmount,
+  hayAmount,
   typeOfPasture,
+  typeOfAnimal,
+  daysOfLactation,
+  weeksOfLactation,
+  milkQuantity,
 }) {
-  /* console.log({
-    startDate,
+  const animalCategory =
+    typeOfAnimal.name === 'Bovinocultura de corte'
+      ? 'bovinoCorte'
+      : 'bovinoLeite';
+
+  const animalType = () => {
+    if (typeOfAnimal.value === 'Terneiro') {
+      return 'terneiro';
+    }
+    if (
+      typeOfAnimal.value === 'Novilha' ||
+      typeOfAnimal.value === 'Novilha Leiteira'
+    ) {
+      return 'novilha';
+    }
+    if (typeOfAnimal.value === 'Vaca seca') {
+      return 'vacaSeca';
+    }
+    if (typeOfAnimal.value === 'Vaca prenha') {
+      return 'vacaPrenha';
+    }
+    if (typeOfAnimal.value === 'Vaca em lactação') {
+      return 'vacaLactacao';
+    }
+  };
+
+  const consume = consumo[animalCategory][animalType()](
     weigth,
-    animalsAmount,
-    rationAmount,
-    silageAmount,
-    typeOfPasture,
-  }); */
+    daysOfLactation || weeksOfLactation,
+    milkQuantity,
+  );
+
+  const soma =
+    rationAmount + hayAmount * 0.85 + silageAmount * 0.3 === 0
+      ? weigth * 0.01
+      : rationAmount + hayAmount * 0.85 + silageAmount * 0.3 === 0;
+
+  const value =
+    ((consume - soma * animalsAmount) /
+      (especie[typeOfPasture].alturaOtima *
+        0.6 *
+        especie[typeOfPasture].relacaoMassaAltura +
+        taxaDeAcumulo[typeOfPasture].media)) *
+    ((especie[typeOfPasture].alturaOtima * 0.4) /
+      (taxaDeAcumulo[typeOfPasture].media /
+        especie[typeOfPasture].relacaoMassaAltura) +
+      1);
 
   const results = [
     {
       name: 'Área total do potreiro (ha)',
-      value: Math.round(weigth + weigth).toLocaleString('pt-BR'),
+      value: Math.round(value).toLocaleString('pt-BR'),
     },
   ];
 
   return results;
 }
 
-// Tamanho potreiro Continuo
+// Tamanho potreiro Continuo - OK
 export function foalSizeContinuous({
   startDate,
   weigth,
   typeOfPasture,
   animalsAmount,
 }) {
-  /* console.log({
-    startDate,
-    weigth,
-    typeOfPasture,
-  }); */
+  const constantBasedOnPasture =
+    typeOfPasture === ('campoNativo' || 'campoNativoMelhorado') ? 60 : 30;
+
+  const value =
+    (animalsAmount * weigth * 0.12) /
+    (
+      (especie[typeOfPasture].alturaOtima *
+        0.8 *
+        especie[typeOfPasture].relacaoMassaAltura) /
+        constantBasedOnPasture +
+      taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]]
+    ).media;
+
   const results = [
     {
       name: 'Área total do potreiro (ha)',
-      value: Math.round(weigth + animalsAmount).toLocaleString('pt-BR'),
+      value: Math.round(value).toLocaleString('pt-BR'),
     },
   ];
 
   return results;
 }
 
-// Fornecer suplemento continuo
+// Fornecer suplemento continuo - OK
 export function supplyAmountContinuous({
   startDate,
   weigth,
@@ -380,29 +457,85 @@ export function supplyAmountContinuous({
   foalArea,
   pastureHeight,
   typeOfAnimal,
+  lenghtOfStay,
   typeOfPasture,
+  daysOfLactation,
+  weeksOfLactation,
+  milkQuantity,
 }) {
-  /* console.log({
-    startDate,
+  const animalCategory =
+    typeOfAnimal.name === 'Bovinocultura de corte'
+      ? 'bovinoCorte'
+      : 'bovinoLeite';
+
+  const animalType = () => {
+    if (typeOfAnimal.value === 'Terneiro') {
+      return 'terneiro';
+    }
+    if (
+      typeOfAnimal.value === 'Novilha' ||
+      typeOfAnimal.value === 'Novilha Leiteira'
+    ) {
+      return 'novilha';
+    }
+    if (typeOfAnimal.value === 'Vaca seca') {
+      return 'vacaSeca';
+    }
+    if (typeOfAnimal.value === 'Vaca prenha') {
+      return 'vacaPrenha';
+    }
+    if (typeOfAnimal.value === 'Vaca em lactação') {
+      return 'vacaLactacao';
+    }
+  };
+
+  const consume = consumo[animalCategory][animalType()](
     weigth,
-    pastureHeight,
-    typeOfPasture,
-    typeOfAnimal,
-    animalsAmount,
-    foalArea,
-  }); */
+    daysOfLactation || weeksOfLactation,
+    milkQuantity,
+  );
+
+  const D =
+    (pastureHeight * especie[typeOfPasture].relacaoMassaAltura) / lenghtOfStay +
+    (taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]] -
+      (especie[typeOfPasture].alturaOtima *
+        0.8 *
+        especie[typeOfPasture].relacaoMassaAltura -
+        pastureHeight * especie[typeOfPasture].relacaoMassaAltura) /
+        lenghtOfStay);
+
+  const value =
+    (((D / ((animalsAmount * weigth) / foalArea)) * 100 - (D / 12) * 100) /
+      weigth) *
+    foalArea *
+    consume;
+
+  const supplyQuantityIsPositiveNumber = Math.sign(value);
+
+  if (supplyQuantityIsPositiveNumber === -1) {
+    Snackbar.show({
+      text: 'Não há necessidade de suplementar os animais',
+      duration: Snackbar.LENGTH_SHORT,
+      textColor: '#fff',
+      backgroundColor: '#ff0000',
+    });
+  }
+
   const results = [
     {
       name:
         'Quantidade de ração a ser fornecida por animal/dia (kg MS/animal/dia)',
-      value: Math.round(pastureHeight + foalArea).toLocaleString('pt-BR'),
+      value:
+        supplyQuantityIsPositiveNumber === -1
+          ? 0
+          : Math.round(value).toLocaleString('pt-BR'),
     },
   ];
 
   return results;
 }
 
-// Fornecer suplemento rotativo
+// Fornecer suplemento rotativo - ok
 export function supplyAmountRotative({
   startDate,
   weigth,
@@ -413,29 +546,65 @@ export function supplyAmountRotative({
   tracksAmount,
   daysOfStay,
   typeOfPasture,
+  daysOfLactation,
+  weeksOfLactation,
+  milkQuantity,
 }) {
-  /* console.log({
-    startDate,
+  const animalCategory =
+    typeOfAnimal.name === 'Bovinocultura de corte'
+      ? 'bovinoCorte'
+      : 'bovinoLeite';
+
+  const animalType = () => {
+    if (typeOfAnimal.value === 'Terneiro') {
+      return 'terneiro';
+    }
+    if (
+      typeOfAnimal.value === 'Novilha' ||
+      typeOfAnimal.value === 'Novilha Leiteira'
+    ) {
+      return 'novilha';
+    }
+    if (typeOfAnimal.value === 'Vaca seca') {
+      return 'vacaSeca';
+    }
+    if (typeOfAnimal.value === 'Vaca prenha') {
+      return 'vacaPrenha';
+    }
+    if (typeOfAnimal.value === 'Vaca em lactação') {
+      return 'vacaLactacao';
+    }
+  };
+
+  const consume = consumo[animalCategory][animalType()](
     weigth,
-    animalsAmount,
-    foalArea,
-    pastureHeight,
-    typeOfAnimal,
-    tracksAmount,
-    daysOfStay,
-    typeOfPasture,
-  }); */
+    daysOfLactation || weeksOfLactation,
+    milkQuantity,
+  );
+
+  const value =
+    (consume * daysOfStay * animalsAmount -
+      ((pastureHeight * especie[typeOfPasture].relacaoMassaAltura -
+        (especie[typeOfPasture].alturaOtima * 0,
+        6 * especie[typeOfPasture].relacaoMassaAltura)) *
+        (foalArea / tracksAmount) +
+        ((taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]] *
+          foalArea) /
+          tracksAmount) *
+          daysOfStay)) /
+    daysOfStay;
   const results = [
     {
       name:
         'Quantidade total de ração a ser fornecida por dia para os animais (kg MS/dia)',
-      value: Math.round(pastureHeight + foalArea).toLocaleString('pt-BR'),
+      value: Math.round(value).toLocaleString('pt-BR'),
     },
   ];
 
   return results;
 }
 
+// Definir período de ocupação rotativo - ok
 export function daysAmountRotative({
   startDate,
   weigth,
@@ -444,56 +613,87 @@ export function daysAmountRotative({
   pastureHeight,
   typeOfAnimal,
   tracksAmount,
-  supplyAmount,
   typeOfPasture,
+  daysOfLactation,
+  weeksOfLactation,
+  milkQuantity,
+  rationAmount,
+  hayAmount,
+  silageAmount,
 }) {
-  /* console.log({
-    startDate,
+  const animalCategory =
+    typeOfAnimal.name === 'Bovinocultura de corte'
+      ? 'bovinoCorte'
+      : 'bovinoLeite';
+
+  const animalType = () => {
+    if (typeOfAnimal.value === 'Terneiro') {
+      return 'terneiro';
+    }
+    if (
+      typeOfAnimal.value === 'Novilha' ||
+      typeOfAnimal.value === 'Novilha Leiteira'
+    ) {
+      return 'novilha';
+    }
+    if (typeOfAnimal.value === 'Vaca seca') {
+      return 'vacaSeca';
+    }
+    if (typeOfAnimal.value === 'Vaca prenha') {
+      return 'vacaPrenha';
+    }
+    if (typeOfAnimal.value === 'Vaca em lactação') {
+      return 'vacaLactacao';
+    }
+  };
+
+  const consume = consumo[animalCategory][animalType()](
     weigth,
-    supplyAmount,
-    animalsAmount,
-    foalArea,
-    pastureHeight,
-    typeOfAnimal,
-    tracksAmount,
-    typeOfPasture,
-  }); */
+    daysOfLactation || weeksOfLactation,
+    milkQuantity,
+  );
+
+  const soma =
+    rationAmount + hayAmount * 0.85 + silageAmount * 0.3 === 0
+      ? weigth * 0.01
+      : rationAmount + hayAmount * 0.85 + silageAmount * 0.3 === 0;
+
+  const value =
+    ((pastureHeight * especie[typeOfPasture].relacaoMassaAltura -
+      especie[typeOfPasture].alturaOtima *
+        0.6 *
+        especie[typeOfPasture].relacaoMassaAltura) *
+      (foalArea / tracksAmount) +
+      (taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]] *
+        foalArea) /
+        tracksAmount) /
+    (consume - soma * animalsAmount);
 
   const results = [
     {
       name:
         'Período de ocupação (tempo de permanência dos animais em cada faixa, em dias)',
-      value: Math.round(pastureHeight + foalArea).toLocaleString('pt-BR'),
+      value: Math.round(value).toLocaleString('pt-BR'),
     },
   ];
 
   return results;
 }
 
-// Calcular número de piquetes
-export function tracksAmountRotative({
-  startDate,
-  weigth,
-  animalsAmount,
-  foalArea,
-  feedInTheTrough,
-  receivingSilageOrHay,
-}) {
+// Calcular número de piquetes - OK
+export function tracksAmountRotative({startDate, typeOfPasture}) {
+  const value =
+    (especie[typeOfPasture].alturaOtima * 0.4) /
+      (taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]] /
+        especie[typeOfPasture].relacaoMassaAltura) +
+    1;
+
   const results = [
     {
-      name: 'Número de faixas',
-      value: Math.round(weigth + foalArea).toLocaleString('pt-BR'),
+      name: 'Número de piquetes',
+      value: Math.round(value).toLocaleString('pt-BR'),
     },
   ];
 
   return results;
-
-  /*  console.log({
-    startDate,
-    weigth,
-    animalsAmount,
-    foalArea,
-    feedInTheTrough,
-    receivingSilageOrHay,
-  }); */
 }

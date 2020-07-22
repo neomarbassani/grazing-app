@@ -69,8 +69,11 @@ const Home = ({navigation}) => {
             content="Calcular números de piquetes"
             source={solution4}
             onPress={() => {
-              navigation.navigate('ChooseGrazingMethod', {
-                calcName: 'Calcular números de piquetes',
+              navigation.navigate('ChoosePastureType', {
+                calc: {
+                  name: 'Pastoreio contínuo',
+                  value: 'Calcular números de piquetes',
+                },
               });
             }}
           />

@@ -1,10 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
-import {View} from 'react-native';
+import {View, Dimensions} from 'react-native';
 import * as Yup from 'yup';
 import {Form} from '@unform/mobile';
-import {Platform, NativeModules, Dimensions} from 'react-native';
-const {StatusBarManager} = NativeModules;
+
 const {height} = Dimensions.get('window');
 import Container from '../../layout/App';
 
@@ -17,6 +16,7 @@ import SliderInput from '../../components/SliderInput';
 import Button from '../../components/Button';
 
 import {Content} from './styles';
+import Snackbar from 'react-native-snackbar';
 
 import {
   numberOfAnimalsContinuous,
@@ -26,6 +26,8 @@ import {
   supplyAmountRotative,
   supplyAmountContinuous,
   tracksAmountRotative,
+  mouth,
+  taxaDeAcumulo,
 } from '../../services/calcs';
 
 import aveia from '../../assets/aveiaFundo.jpg';
@@ -42,13 +44,39 @@ const DimensionArea = ({navigation, route}) => {
   const [pastureHeight, setPastureHeight] = useState(0);
   const {calc, animal, pasture, inputs} = route.params;
 
-  const items = [calc.name];
+  const items = [calc.value, calc.name, animal && animal.value, pasture.value];
+
+  const maxValuesToSlider = {
+    aveia: 50,
+    azevem: 50,
+    aveiaAzevem: 50,
+    campoNativo: 30,
+    campoNativoMelhorado: 30,
+    sudao: 100,
+    milheto: 80,
+    papua: 60,
+    sorgo: 150,
+    tifton: 40,
+  };
 
   const formRef = useRef(null);
 
   async function handleSubmit(data) {
     try {
       formRef.current.setErrors({});
+
+      const checkIfAnyValueExistsForPastureInfo =
+        taxaDeAcumulo[pasture.key][mouth[new Date(data.startDate).getMonth()]];
+
+      if (typeof checkIfAnyValueExistsForPastureInfo === 'undefined') {
+        return Snackbar.show({
+          text:
+            'A espécie selecionada não apresenta crescimento ativo no período.',
+          duration: Snackbar.LENGTH_SHORT,
+          textColor: '#fff',
+          backgroundColor: '#ff0000',
+        });
+      }
 
       if (
         calc.name === 'Pastoreio contínuo' &&
@@ -60,6 +88,9 @@ const DimensionArea = ({navigation, route}) => {
             'Insira a data de inicio.',
           ),
           foalArea: Yup.string().required('Insira a area do potreiro.'),
+          lenghtOfStay: Yup.string()
+            .required('Insira a quantidade de dias de ocupação.')
+            .max(90, 'O máximo de dias é 90.'),
         });
 
         await schema.validate(data, {
@@ -72,9 +103,8 @@ const DimensionArea = ({navigation, route}) => {
           pastureHeight: pastureHeight,
           typeOfPasture: pasture.key,
           foalArea: data.foalArea,
+          lenghtOfStay: data.lenghtOfStay,
         });
-
-        console.log(results);
 
         const calcState = {
           config: {
@@ -104,6 +134,11 @@ const DimensionArea = ({navigation, route}) => {
               value: pastureHeight,
               key: 'pastureHeight',
             },
+            {
+              name: 'Tempo de permanência',
+              value: data.lenghtOfStay,
+              key: 'lenghtOfStay',
+            },
           ],
           results,
         };
@@ -120,7 +155,9 @@ const DimensionArea = ({navigation, route}) => {
             'Insira a data de inicio.',
           ),
           numberOfTracks: Yup.string().required('Insira um valor.'),
-          lenghtOfStay: Yup.string().required('Insira um valor.'),
+          lenghtOfStay: Yup.string()
+            .required('Insira um valor.')
+            .max(90, 'O máximo de dias é 90.'),
           foalArea: Yup.string().required('Insira um valor.'),
           foodQuantity: Yup.string().required('Insira um valor.'),
         });
@@ -134,6 +171,7 @@ const DimensionArea = ({navigation, route}) => {
           foodQuantity: data.foodQuantity,
           numberOfTracks: data.numberOfTracks,
           pastureHeight,
+          typeOfAnimal: animal,
           typeOfPasture: pasture.key,
           lenghtOfStay: data.lenghtOfStay,
           foalArea: data.foalArea,
@@ -143,6 +181,8 @@ const DimensionArea = ({navigation, route}) => {
           weeksOfLactation: inputs.find(
             input => input.key === 'weeksOfLactation',
           ).value,
+          daysOfLactation: inputs.find(input => input.key === 'daysOfLactation')
+            .value,
         });
 
         const calcState = {
@@ -218,7 +258,9 @@ const DimensionArea = ({navigation, route}) => {
             .value,
           silageAmount: inputs.find(input => input.key === 'silageAmount')
             .value,
+          hayAmount: inputs.find(input => input.key === 'hayAmount').value,
           typeOfPasture: pasture.key,
+          typeOfAnimal: animal,
         });
 
         const calcState = {
@@ -259,8 +301,6 @@ const DimensionArea = ({navigation, route}) => {
         await schema.validate(data, {
           abortEarly: false,
         });
-
-        console.log(inputs);
 
         const results = foalSizeContinuous({
           startDate: data.startDate,
@@ -303,6 +343,9 @@ const DimensionArea = ({navigation, route}) => {
           startDate: Yup.date('Insira uma data válida').required(
             'Insira a data de inicio.',
           ),
+          lenghtOfStay: Yup.string()
+            .required('Insira a quantidade de dias de ocupação.')
+            .max(90, 'O máximo de dias é 90.'),
         });
 
         await schema.validate(data, {
@@ -317,7 +360,15 @@ const DimensionArea = ({navigation, route}) => {
           animalsAmount: inputs.find(input => input.key === 'animalsAmount')
             .value,
           foalArea: data.foalArea,
-          typeOfAnimal: animal.value,
+          lenghtOfStay: data.lenghtOfStay,
+          typeOfAnimal: animal,
+          daysOfLactation:
+            inputs.find(input => input.key === 'daysOfLactation').value || 0,
+          weeksOfLactation: inputs.find(
+            input => input.key === 'weeksOfLactation',
+          ).value,
+          milkQuantity: inputs.find(input => input.key === 'milkQuantity')
+            .value,
         });
 
         const calcState = {
@@ -332,6 +383,11 @@ const DimensionArea = ({navigation, route}) => {
               name: 'Nome do Potreiro',
               value: data.foal_name,
               key: 'foal_name',
+            },
+            {
+              name: 'Tempo de permanência',
+              value: data.lenghtOfStay,
+              key: 'lenghtOfStay',
             },
             {
               name: 'Data de início do pastejo',
@@ -364,7 +420,9 @@ const DimensionArea = ({navigation, route}) => {
             'Insira a data de inicio.',
           ),
           tracksAmount: Yup.string().required('Insira o nome do potreiro.'),
-          daysOfStay: Yup.string().required('Insira os dias de permanencia'),
+          daysOfStay: Yup.string()
+            .required('Insira os dias de permanência')
+            .max(90, 'O máximo de dias é 90.'),
           foalArea: Yup.string().required('Insira a area do potreiro.'),
         });
 
@@ -380,9 +438,21 @@ const DimensionArea = ({navigation, route}) => {
           animalsAmount: inputs.find(input => input.key === 'animalsAmount')
             .value,
           foalArea: data.foalArea,
-          typeOfAnimal: animal.value,
+          typeOfAnimal: animal,
           tracksAmount: data.tracksAmount,
           daysOfStay: data.daysOfStay,
+          daysOfLactation: inputs.find(input => input.key === 'daysOfLactation')
+            .value,
+          weeksOfLactation: inputs.find(
+            input => input.key === 'weeksOfLactation',
+          ).value,
+          milkQuantity: inputs.find(input => input.key === 'milkQuantity')
+            .value,
+          rationAmount: inputs.find(input => input.key === 'rationAmount')
+            .value,
+          silageAmount: inputs.find(input => input.key === 'silageAmount')
+            .value,
+          hayAmount: inputs.find(input => input.key === 'hayAmount').value,
         });
 
         const calcState = {
@@ -429,10 +499,7 @@ const DimensionArea = ({navigation, route}) => {
 
         navigation.navigate('Result', calcState);
       }
-      if (
-        calc.name === 'Pastoreio rotativo' &&
-        calc.value === 'Calcular números de piquetes'
-      ) {
+      if (calc.value === 'Calcular números de piquetes') {
         const schema = Yup.object().shape({
           foal_name: Yup.string().required('Insira o nome do potreiro.'),
           startDate: Yup.date('Insira uma data válida').required(
@@ -446,22 +513,34 @@ const DimensionArea = ({navigation, route}) => {
 
         const results = tracksAmountRotative({
           startDate: data.startDate,
-          weigth: inputs.find(input => input.key === 'weigth').value,
+          /* weigth: inputs.find(input => input.key === 'weigth').value, */
           typeOfPasture: pasture.key,
-          animalsAmount: inputs.find(input => input.key === 'animalsAmount')
+          /* animalsAmount: inputs.find(input => input.key === 'animalsAmount')
             .value,
           foalArea: data.foalArea,
-          typeOfAnimal: animal.value,
+          typeOfAnimal: animal.value, */
         });
+
+        console.log(
+          {
+            name: 'Nome do Potreiro',
+            value: data.foal_name,
+            key: 'foal_name',
+          },
+          {
+            name: 'Data de início do pastejo',
+            value: data.startDate.toString(),
+            key: 'startDate',
+          },
+        );
 
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: animal ? animal : null,
             pasture,
           },
           inputs: [
-            ...inputs,
             {
               name: 'Nome do Potreiro',
               value: data.foal_name,
@@ -472,7 +551,11 @@ const DimensionArea = ({navigation, route}) => {
               value: data.startDate.toString(),
               key: 'startDate',
             },
-            {
+          ],
+          results,
+        };
+
+        /* {
               name: 'Área total do potreiro (ha)',
               value: data.foalArea,
               key: 'foalArea',
@@ -481,11 +564,9 @@ const DimensionArea = ({navigation, route}) => {
               name: 'Altura do pasto (cm)',
               value: pastureHeight,
               key: 'pastureHeight',
-            },
-          ],
-          results,
-        };
+            }, */
 
+        console.log(calcState);
         navigation.navigate('Result', calcState);
       }
       if (
@@ -512,8 +593,15 @@ const DimensionArea = ({navigation, route}) => {
           animalsAmount: inputs.find(input => input.key === 'animalsAmount')
             .value,
           foalArea: data.foalArea,
-          typeOfAnimal: animal.value,
+          typeOfAnimal: animal,
           tracksAmount: data.tracksAmount,
+          daysOfLactation: inputs.find(input => input.key === 'daysOfLactation')
+            .value,
+          weeksOfLactation: inputs.find(
+            input => input.key === 'weeksOfLactation',
+          ).value,
+          milkQuantity: inputs.find(input => input.key === 'milkQuantity')
+            .value,
         });
 
         const calcState = {
@@ -604,7 +692,7 @@ const DimensionArea = ({navigation, route}) => {
         style={{
           backgroundColor: 'rgba(0,0,0,0.5)',
           alignItems: 'center',
-          height,
+          height: height - 60,
           width: '100%',
         }}>
         <ProgressBar size={87.5} />
@@ -634,6 +722,16 @@ const DimensionArea = ({navigation, route}) => {
                   color="#fff"
                   returnKeyType="next"
                   blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('lenghtOfStay')}
+                />
+                <Input
+                  name="lenghtOfStay"
+                  color="#fff"
+                  label="Tempo de permanência"
+                  keyboardType="numeric"
+                  placeholder="Nº de dias"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
                   onSubmitEditing={() => focusInput('startDate')}
                 />
                 <Input
@@ -658,7 +756,7 @@ const DimensionArea = ({navigation, route}) => {
                     setPastureHeight(value);
                   }}
                   minVal={0}
-                  maxVal={100}
+                  maxVal={maxValuesToSlider[pasture.key]}
                 />
                 <Input
                   name="foalArea"
@@ -705,7 +803,7 @@ const DimensionArea = ({navigation, route}) => {
                     setPastureHeight(value);
                   }}
                   minVal={0}
-                  maxVal={100}
+                  maxVal={maxValuesToSlider[pasture.key]}
                 />
                 <Input
                   name="foalArea"
@@ -785,7 +883,17 @@ const DimensionArea = ({navigation, route}) => {
                   options={{
                     format: 'DD/MM/YYYY',
                   }}
-                  returnKeyType="done"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('lenghtOfStay')}
+                />
+                <Input
+                  name="lenghtOfStay"
+                  color="#fff"
+                  label="Tempo de permanência"
+                  keyboardType="numeric"
+                  placeholder="Nº de dias"
+                  returnKeyType="next"
                   blurOnSubmit={true}
                 />
                 <SliderInput
@@ -797,7 +905,7 @@ const DimensionArea = ({navigation, route}) => {
                     setPastureHeight(value);
                   }}
                   minVal={0}
-                  maxVal={100}
+                  maxVal={maxValuesToSlider[pasture.key]}
                 />
                 <Input
                   name="foalArea"
@@ -844,7 +952,7 @@ const DimensionArea = ({navigation, route}) => {
                     setPastureHeight(value);
                   }}
                   minVal={0}
-                  maxVal={100}
+                  maxVal={maxValuesToSlider[pasture.key]}
                 />
                 <Input
                   name="foodQuantity"
@@ -886,52 +994,51 @@ const DimensionArea = ({navigation, route}) => {
               </Form>
             )}
 
-          {calc.name === 'Pastoreio rotativo' &&
-            calc.value === 'Calcular números de piquetes' && (
-              <Form ref={formRef} onSubmit={handleSubmit}>
-                <Input
-                  name="foal_name"
-                  label="Nome do Potreiro"
-                  color="#fff"
-                  returnKeyType="next"
-                  blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('startDate')}
-                />
-                <Input
-                  name="startDate"
-                  color="#fff"
-                  label="Data de início do pastejo"
-                  keyboardType="numeric"
-                  placeholder="DD/MM/YYYY"
-                  maskType="datetime"
-                  options={{
-                    format: 'DD/MM/YYYY',
-                  }}
-                  returnKeyType="done"
-                  blurOnSubmit={true}
-                />
-                <SliderInput
-                  label="Altura do pasto (cm)"
-                  value={pastureHeight}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setPastureHeight(value);
-                  }}
-                  minVal={0}
-                  maxVal={100}
-                />
-                <Input
-                  name="foalArea"
-                  label="Área total do potreiro (ha)"
-                  color="#fff"
-                  keyboardType="numeric"
-                  placeholder="1"
-                  returnKeyType="next"
-                  blurOnSubmit={true}
-                />
-              </Form>
-            )}
+          {calc.value === 'Calcular números de piquetes' && (
+            <Form ref={formRef} onSubmit={handleSubmit}>
+              <Input
+                name="foal_name"
+                label="Nome do Potreiro"
+                color="#fff"
+                returnKeyType="next"
+                blurOnSubmit={false}
+                onSubmitEditing={() => focusInput('startDate')}
+              />
+              <Input
+                name="startDate"
+                color="#fff"
+                label="Data de início do pastejo"
+                keyboardType="numeric"
+                placeholder="DD/MM/YYYY"
+                maskType="datetime"
+                options={{
+                  format: 'DD/MM/YYYY',
+                }}
+                returnKeyType="done"
+                blurOnSubmit={true}
+              />
+              {/* <SliderInput
+                label="Altura do pasto (cm)"
+                value={pastureHeight}
+                color="#fff"
+                mt={10}
+                onValueChange={value => {
+                  setPastureHeight(value);
+                }}
+                minVal={0}
+                maxVal={maxValuesToSlider[pasture.key]}
+              /> */}
+              {/* <Input
+                name="foalArea"
+                label="Área total do potreiro (ha)"
+                color="#fff"
+                keyboardType="numeric"
+                placeholder="1"
+                returnKeyType="next"
+                blurOnSubmit={true}
+              /> */}
+            </Form>
+          )}
 
           {calc.name === 'Pastoreio rotativo' &&
             calc.value === 'Definir período de ocupação' && (
@@ -954,8 +1061,9 @@ const DimensionArea = ({navigation, route}) => {
                   options={{
                     format: 'DD/MM/YYYY',
                   }}
-                  returnKeyType="done"
-                  blurOnSubmit={true}
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('foalArea')}
                 />
 
                 <Input
@@ -985,7 +1093,7 @@ const DimensionArea = ({navigation, route}) => {
                     setPastureHeight(value);
                   }}
                   minVal={0}
-                  maxVal={100}
+                  maxVal={maxValuesToSlider[pasture.key]}
                 />
               </Form>
             )}
