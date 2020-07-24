@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect} from 'react';
-import {Alert} from 'react-native';
 import Snackbar from 'react-native-snackbar';
 
 import auth from '@react-native-firebase/auth';
 import {useDispatch, useSelector} from 'react-redux';
 
 import AuthActions from '../../store/ducks/auth';
+
 
 import {
   Cursor,
@@ -24,9 +24,8 @@ import Button from '../../components/Button';
 
 const CELL_COUNT = 6;
 
-export default function SignIn({navigation}) {
+export default function SignIn() {
   const [confirm, setConfirm] = useState(null);
-  const [resend, setResend] = useState(false);
 
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
@@ -51,12 +50,11 @@ export default function SignIn({navigation}) {
         dispatch(AuthActions.autenticationRequest());
         setLoading(false);
       } else {
-        console.log(phone);
         signInWithPhoneNumber(`+55${phone}`);
       }
     });
     return () => unsubscribe();
-  }, [phone, resend]);
+  }, [phone]);
 
   async function confirmCode() {
     try {
@@ -100,7 +98,9 @@ export default function SignIn({navigation}) {
         content="Não recebi o código"
         color="#D69D2B"
         mt={15}
-        onPress={() => setResend(true)}
+        onPress={() => {
+          dispatch(AuthActions.signOut());
+        }}
       />
 
       <Button
