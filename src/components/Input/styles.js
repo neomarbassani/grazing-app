@@ -33,7 +33,7 @@ export const Label = styled.Text`
 export const ToogleVisility = styled.TouchableOpacity`
   width: 80px;
   height: 40px;
-  margin-left: -16px;
+
   flex: 1;
   align-items: center;
   justify-content: center;
@@ -43,7 +43,7 @@ export const InputField = styled.TextInput`
   /* alinhar o texto no topo */
   text-align-vertical: top;
 
-  width: 100%;
+  width: 95%;
   height: ${props => (props.textarea ? '100%' : '42px')};
   border: none;
   background-color: transparent;

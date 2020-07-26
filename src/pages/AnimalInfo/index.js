@@ -15,6 +15,9 @@ import Button from '../../components/Button';
 
 import {Content} from './styles';
 
+import help from './data';
+import HelpButton from '../../components/HelpButton';
+
 const AnimalInfo = ({navigation, route}) => {
   const {calc, animal} = route.params;
 
@@ -417,8 +420,9 @@ const AnimalInfo = ({navigation, route}) => {
             name="weigth"
             label="Peso vivo médio dos animais"
             keyboardType="numeric"
-            placeholder="(kg PV)"
-          />
+            placeholder="(kg PV)">
+            <HelpButton data={help[0]} />
+          </Input>
           {calc.value === 'Ajustar lotação animal' && (
             <>
               {animal.value === 'Vaca em lactação' && (
@@ -427,14 +431,16 @@ const AnimalInfo = ({navigation, route}) => {
                     name="weeksOfLactation"
                     label="Semanas de Lactação"
                     keyboardType="numeric"
-                    placeholder="10 semanas"
-                  />
+                    placeholder="10 semanas">
+                    <HelpButton data={help[4]} />
+                  </Input>
                   <Input
                     name="milkQuantity"
                     label="Produção de Leite (litros/dia)"
                     keyboardType="numeric"
-                    placeholder="10 (litros/dia)"
-                  />
+                    placeholder="10 (litros/dia)">
+                    <HelpButton data={help[3]} />
+                  </Input>
                 </>
               )}
               {animal.value === 'Novilha Leiteira' && (
@@ -442,8 +448,9 @@ const AnimalInfo = ({navigation, route}) => {
                   name="daysOfLactation"
                   label="N° de dias de gestação"
                   keyboardType="numeric"
-                  placeholder="10"
-                />
+                  placeholder="10">
+                  <HelpButton data={help[2]} />
+                </Input>
               )}
             </>
           )}
@@ -496,14 +503,16 @@ const AnimalInfo = ({navigation, route}) => {
                       name="weeksOfLactation"
                       label="Semanas de Lactação"
                       keyboardType="numeric"
-                      placeholder="10 semanas"
-                    />
+                      placeholder="10 semanas">
+                      <HelpButton data={help[4]} />
+                    </Input>
                     <Input
                       name="milkQuantity"
                       label="Produção de Leite (litros/dia)"
                       keyboardType="numeric"
-                      placeholder="10 (litros/dia)"
-                    />
+                      placeholder="10 (litros/dia)">
+                      <HelpButton data={help[3]} />
+                    </Input>
                   </>
                 )}
 
@@ -512,8 +521,9 @@ const AnimalInfo = ({navigation, route}) => {
                     name="daysOfLactation"
                     label="N° de dias de gestação"
                     keyboardType="numeric"
-                    placeholder="10"
-                  />
+                    placeholder="10">
+                    <HelpButton data={help[2]} />
+                  </Input>
                 )}
               </>
             )}
@@ -538,14 +548,16 @@ const AnimalInfo = ({navigation, route}) => {
                       name="weeksOfLactation"
                       label="Semanas de Lactação"
                       keyboardType="numeric"
-                      placeholder="10 semanas"
-                    />
+                      placeholder="10 semanas">
+                      <HelpButton data={help[4]} />
+                    </Input>
                     <Input
                       name="milkQuantity"
                       label="Produção de Leite (litros/dia)"
                       keyboardType="numeric"
-                      placeholder="10 (litros/dia)"
-                    />
+                      placeholder="10 (litros/dia)">
+                      <HelpButton data={help[3]} />
+                    </Input>
                   </>
                 )}
 
@@ -554,8 +566,9 @@ const AnimalInfo = ({navigation, route}) => {
                     name="daysOfLactation"
                     label="N° de dias de gestação"
                     keyboardType="numeric"
-                    placeholder="10"
-                  />
+                    placeholder="10">
+                    <HelpButton data={help[2]} />
+                  </Input>
                 )}
               </>
             )}
@@ -585,14 +598,16 @@ const AnimalInfo = ({navigation, route}) => {
                     name="weeksOfLactation"
                     label="Semanas de Lactação"
                     keyboardType="numeric"
-                    placeholder="10 semanas"
-                  />
+                    placeholder="10 semanas">
+                    <HelpButton data={help[4]} />
+                  </Input>
                   <Input
                     name="milkQuantity"
                     label="Produção de Leite (litros/dia)"
                     keyboardType="numeric"
-                    placeholder="10 (litros/dia)"
-                  />
+                    placeholder="10 (litros/dia)">
+                    <HelpButton data={help[3]} />
+                  </Input>
                 </>
               )}
               {animal.value === 'Novilha Leiteira' && (
@@ -600,8 +615,9 @@ const AnimalInfo = ({navigation, route}) => {
                   name="daysOfLactation"
                   label="N° de dias de gestação"
                   keyboardType="numeric"
-                  placeholder="10"
-                />
+                  placeholder="10">
+                  <HelpButton data={help[2]} />
+                </Input>
               )}
             </>
           )}
@@ -640,14 +656,16 @@ const AnimalInfo = ({navigation, route}) => {
                     name="weeksOfLactation"
                     label="Semanas de Lactação"
                     keyboardType="numeric"
-                    placeholder="10 semanas"
-                  />
+                    placeholder="10 semanas">
+                    <HelpButton data={help[4]} />
+                  </Input>
                   <Input
                     name="milkQuantity"
                     label="Produção de Leite (litros/dia)"
                     keyboardType="numeric"
-                    placeholder="10 (litros/dia)"
-                  />
+                    placeholder="10 (litros/dia)">
+                    <HelpButton data={help[3]} />
+                  </Input>
                 </>
               )}
               {animal.value === 'Novilha Leiteira' && (
@@ -655,8 +673,9 @@ const AnimalInfo = ({navigation, route}) => {
                   name="daysOfLactation"
                   label="N° de dias de gestação"
                   keyboardType="numeric"
-                  placeholder="10"
-                />
+                  placeholder="10">
+                  <HelpButton data={help[2]} />
+                </Input>
               )}
             </>
           )}

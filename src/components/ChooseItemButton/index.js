@@ -7,6 +7,7 @@ export default function ChooseItemButtom({
   content,
   source,
   disabled,
+  children,
   loading,
   ...rest
 }) {
@@ -18,6 +19,7 @@ export default function ChooseItemButtom({
         resizeMode="cover"
         resizeMethod="resize">
         <Text disabled={disabled}>{content}</Text>
+        {children}
       </ImageBackground>
     </Container>
   );
