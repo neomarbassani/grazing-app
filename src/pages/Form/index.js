@@ -14,6 +14,7 @@ import CalcRoutesTop from '../../components/CalcRoutesTop';
 import Input from '../../components/Input';
 import SliderInput from '../../components/SliderInput';
 import Button from '../../components/Button';
+import HelpButton from '../../components/HelpButton';
 
 import {Content} from './styles';
 import Snackbar from 'react-native-snackbar';
@@ -39,6 +40,8 @@ import papua from '../../assets/papuaFundo.jpeg';
 import sorgo from '../../assets/sorgoFundo.jpg';
 import sudao from '../../assets/sudaoFundo.jpg';
 import tifton from '../../assets/tiftonFundo.jpg';
+
+import help from './data';
 
 const DimensionArea = ({navigation, route}) => {
   const [pastureHeight, setPastureHeight] = useState(0);
@@ -722,8 +725,9 @@ const DimensionArea = ({navigation, route}) => {
                   color="#fff"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('lenghtOfStay')}
-                />
+                  onSubmitEditing={() => focusInput('lenghtOfStay')}>
+                  <HelpButton data={help[0]} />
+                </Input>
                 <Input
                   name="lenghtOfStay"
                   color="#fff"
@@ -732,8 +736,9 @@ const DimensionArea = ({navigation, route}) => {
                   placeholder="Nº de dias"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('startDate')}
-                />
+                  onSubmitEditing={() => focusInput('startDate')}>
+                  <HelpButton data={help[2]} />
+                </Input>
                 <Input
                   name="startDate"
                   color="#fff"
@@ -765,8 +770,9 @@ const DimensionArea = ({navigation, route}) => {
                   keyboardType="numeric"
                   placeholder="1"
                   returnKeyType="done"
-                  blurOnSubmit={true}
-                />
+                  blurOnSubmit={true}>
+                  <HelpButton data={help[2]} />
+                </Input>
               </Form>
             )}
 
@@ -779,8 +785,9 @@ const DimensionArea = ({navigation, route}) => {
                   color="#fff"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('startDate')}
-                />
+                  onSubmitEditing={() => focusInput('startDate')}>
+                  <HelpButton data={help[0]} />
+                </Input>
                 <Input
                   name="startDate"
                   color="#fff"
@@ -813,8 +820,9 @@ const DimensionArea = ({navigation, route}) => {
                   placeholder="1"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('tracksAmount')}
-                />
+                  onSubmitEditing={() => focusInput('tracksAmount')}>
+                  <HelpButton data={help[1]} />
+                </Input>
                 <Input
                   name="tracksAmount"
                   label="Número de faixas no potreiro"
@@ -823,16 +831,18 @@ const DimensionArea = ({navigation, route}) => {
                   placeholder="(quantas subdivisões existem na área do potreiro)"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('daysOfStay')}
-                />
+                  onSubmitEditing={() => focusInput('daysOfStay')}>
+                  <HelpButton data={help[4]} />
+                </Input>
                 <Input
                   name="daysOfStay"
                   keyboardType="numeric"
                   label="Tempo de permanência"
                   color="#fff"
                   returnKeyType="done"
-                  blurOnSubmit={true}
-                />
+                  blurOnSubmit={true}>
+                  <HelpButton data={help[5]} />
+                </Input>
               </Form>
             )}
 
@@ -844,8 +854,9 @@ const DimensionArea = ({navigation, route}) => {
                 color="#fff"
                 returnKeyType="next"
                 blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('startDate')}
-              />
+                onSubmitEditing={() => focusInput('startDate')}>
+                <HelpButton data={help[0]} />
+              </Input>
               <Input
                 name="startDate"
                 color="#fff"
@@ -871,8 +882,9 @@ const DimensionArea = ({navigation, route}) => {
                   color="#fff"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('startDate')}
-                />
+                  onSubmitEditing={() => focusInput('startDate')}>
+                  <HelpButton data={help[0]} />
+                </Input>
                 <Input
                   name="startDate"
                   color="#fff"
@@ -894,8 +906,9 @@ const DimensionArea = ({navigation, route}) => {
                   keyboardType="numeric"
                   placeholder="Nº de dias"
                   returnKeyType="next"
-                  blurOnSubmit={true}
-                />
+                  blurOnSubmit={true}>
+                  <HelpButton data={help[2]} />
+                </Input>
                 <SliderInput
                   label="Altura do pasto (cm)"
                   value={pastureHeight}
@@ -914,8 +927,9 @@ const DimensionArea = ({navigation, route}) => {
                   keyboardType="numeric"
                   placeholder="1"
                   returnKeyType="next"
-                  blurOnSubmit={true}
-                />
+                  blurOnSubmit={true}>
+                  <HelpButton data={help[1]} />
+                </Input>
               </Form>
             )}
 
@@ -928,8 +942,9 @@ const DimensionArea = ({navigation, route}) => {
                   color="#fff"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('startDate')}
-                />
+                  onSubmitEditing={() => focusInput('startDate')}>
+                  <HelpButton data={help[0]} />
+                </Input>
                 <Input
                   name="startDate"
                   color="#fff"
@@ -962,8 +977,9 @@ const DimensionArea = ({navigation, route}) => {
                   placeholder="(kg/animal/dia)"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('numberOfTracks')}
-                />
+                  onSubmitEditing={() => focusInput('numberOfTracks')}>
+                  <HelpButton data={help[6]} />
+                </Input>
                 <Input
                   name="numberOfTracks"
                   label="Número de faixas"
@@ -971,8 +987,9 @@ const DimensionArea = ({navigation, route}) => {
                   color="#fff"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('lenghtOfStay')}
-                />
+                  onSubmitEditing={() => focusInput('lenghtOfStay')}>
+                  <HelpButton data={help[4]} />
+                </Input>
                 <Input
                   name="lenghtOfStay"
                   label="Tempo de permanência em cada faixa"
@@ -980,8 +997,9 @@ const DimensionArea = ({navigation, route}) => {
                   color="#fff"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('foalArea')}
-                />
+                  onSubmitEditing={() => focusInput('foalArea')}>
+                  <HelpButton data={help[5]} />
+                </Input>
                 <Input
                   name="foalArea"
                   label="Área total do potreiro (ha)"
@@ -989,8 +1007,9 @@ const DimensionArea = ({navigation, route}) => {
                   keyboardType="numeric"
                   placeholder="1"
                   returnKeyType="next"
-                  blurOnSubmit={true}
-                />
+                  blurOnSubmit={true}>
+                  <HelpButton data={help[1]} />
+                </Input>
               </Form>
             )}
 
@@ -1002,8 +1021,10 @@ const DimensionArea = ({navigation, route}) => {
                 color="#fff"
                 returnKeyType="next"
                 blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('startDate')}
-              />
+                onSubmitEditing={() => focusInput('startDate')}>
+                <HelpButton data={help[0]} />
+              </Input>
+
               <Input
                 name="startDate"
                 color="#fff"
@@ -1017,26 +1038,6 @@ const DimensionArea = ({navigation, route}) => {
                 returnKeyType="done"
                 blurOnSubmit={true}
               />
-              {/* <SliderInput
-                label="Altura do pasto (cm)"
-                value={pastureHeight}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setPastureHeight(value);
-                }}
-                minVal={0}
-                maxVal={maxValuesToSlider[pasture.key]}
-              /> */}
-              {/* <Input
-                name="foalArea"
-                label="Área total do potreiro (ha)"
-                color="#fff"
-                keyboardType="numeric"
-                placeholder="1"
-                returnKeyType="next"
-                blurOnSubmit={true}
-              /> */}
             </Form>
           )}
 
@@ -1049,8 +1050,9 @@ const DimensionArea = ({navigation, route}) => {
                   color="#fff"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('startDate')}
-                />
+                  onSubmitEditing={() => focusInput('startDate')}>
+                  <HelpButton data={help[0]} />
+                </Input>
                 <Input
                   name="startDate"
                   color="#fff"
@@ -1074,16 +1076,18 @@ const DimensionArea = ({navigation, route}) => {
                   placeholder="1"
                   returnKeyType="next"
                   blurOnSubmit={false}
-                  onSubmitEditing={() => focusInput('tracksAmount')}
-                />
+                  onSubmitEditing={() => focusInput('tracksAmount')}>
+                  <HelpButton data={help[1]} />
+                </Input>
                 <Input
                   name="tracksAmount"
                   keyboardType="numeric"
                   label="Número de faixas"
                   color="#fff"
                   returnKeyType="next"
-                  blurOnSubmit={true}
-                />
+                  blurOnSubmit={true}>
+                  <HelpButton data={help[4]} />
+                </Input>
                 <SliderInput
                   label="Altura do pasto (cm)"
                   value={pastureHeight}
