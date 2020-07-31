@@ -21,6 +21,7 @@ export default function Input({
   maskType,
   textarea,
   color,
+  children,
   ...rest
 }) {
   const [passwordVisibility, setPasswordVisibility] = useState(false);
@@ -107,6 +108,7 @@ export default function Input({
               }}
               {...rest}
             />
+            {children && children}
             {type === 'password' && (
               <ToogleVisility
                 onPress={() => setPasswordVisibility(!passwordVisibility)}>

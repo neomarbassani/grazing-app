@@ -9,4 +9,17 @@ export const Content = styled.View`
 
 export const Logo = styled.Image``;
 
-export const Text = styled.Text``;
+export const Text = styled.Text`
+  font-family: 'WorkSans';
+  font-style: normal;
+
+  font-size: 14px;
+  line-height: 16px;
+
+  color: #888899;
+`;
+
+export const TextBold = styled(Text)`
+  font-family: 'WorkSans-Bold';
+  font-weight: bold;
+`;

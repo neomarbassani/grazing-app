@@ -5,6 +5,8 @@ import Container from '../../layout/App';
 
 import Title from '../../components/Title';
 import ChooseItemButton from '../../components/ChooseItemButton';
+import HelpButton from '../../components/HelpButton';
+
 import ProgressBar from '../../components/ProgressBar';
 import Link from '../../components/Link';
 import backgroundLogo from '../../assets/backgroundLogo.png';
@@ -16,6 +18,8 @@ import solution4 from '../../assets/solution4.jpg';
 import solution5 from '../../assets/solution5.jpg';
 
 import {Content, FreePlanBox, FreePlanBoxText} from './styles';
+
+import help from './data';
 
 const Home = ({navigation}) => {
   return (
@@ -45,8 +49,9 @@ const Home = ({navigation}) => {
               navigation.navigate('ChooseGrazingMethod', {
                 calcName: 'Ajustar lotação animal',
               });
-            }}
-          />
+            }}>
+            <HelpButton card data={help[0]} />
+          </ChooseItemButton>
           <ChooseItemButton
             content="Dimensionar área do potreiro"
             source={solution2}
@@ -54,8 +59,9 @@ const Home = ({navigation}) => {
               navigation.navigate('ChooseGrazingMethod', {
                 calcName: 'Dimensionar área do potreiro',
               });
-            }}
-          />
+            }}>
+            <HelpButton card data={help[1]} />
+          </ChooseItemButton>
           <ChooseItemButton
             content="Fornecer suplemento"
             source={solution3}
@@ -63,8 +69,9 @@ const Home = ({navigation}) => {
               navigation.navigate('ChooseGrazingMethod', {
                 calcName: 'Fornecer suplemento',
               });
-            }}
-          />
+            }}>
+            <HelpButton card data={help[2]} />
+          </ChooseItemButton>
           <ChooseItemButton
             content="Calcular números de piquetes"
             source={solution4}
@@ -75,8 +82,9 @@ const Home = ({navigation}) => {
                   value: 'Calcular números de piquetes',
                 },
               });
-            }}
-          />
+            }}>
+            <HelpButton card data={help[3]} />
+          </ChooseItemButton>
           <ChooseItemButton
             content="Definir período de ocupação"
             source={solution5}
@@ -84,8 +92,9 @@ const Home = ({navigation}) => {
               navigation.navigate('ChooseGrazingMethod', {
                 calcName: 'Definir período de ocupação',
               });
-            }}
-          />
+            }}>
+            <HelpButton card data={help[4]} />
+          </ChooseItemButton>
           <FreePlanBox>
             <FreePlanBoxText>Você tem 30 dias grátis</FreePlanBoxText>
             <Link

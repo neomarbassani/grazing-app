@@ -13,12 +13,18 @@ import Input from '../../components/Input';
 import InputPicker from '../../components/InputPicker';
 import Link from '../../components/Link';
 import Button from '../../components/Button';
+import HelpButton from '../../components/HelpButton';
 
 import logo from '../../assets/logoHorizontal.png';
 
 import locations from '../../services/locations';
 
 import AuthActions from '../../store/ducks/auth';
+
+const help = {
+  title: 'Área de pastagem (ha)',
+  content: 'Área total, em hectares, que é destinada ao pastejo dos animais',
+};
 
 export default function Register({navigation}) {
   const dispatch = useDispatch();
@@ -143,11 +149,13 @@ export default function Register({navigation}) {
           />
           <Input
             name="property_size"
-            label="Tamanho da propriedade (hectares)"
+            label="Área destinada a pastagem (ha)"
             placeholder="25 hectares"
+            keyboardType="numeric"
             returnKeyType="next"
-            blurOnSubmit={true}
-          />
+            blurOnSubmit={true}>
+            <HelpButton data={help}/>
+          </Input>
           <Scope path="address">
             <InputPicker
               label="Estado"
