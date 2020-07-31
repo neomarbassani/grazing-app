@@ -19,7 +19,7 @@ import {Content} from './styles';
 const ChooseBovineType = ({navigation, route}) => {
   const {calc} = route.params;
 
-  const items = [calc.name];
+  const items = [calc.value, calc.name];
 
   return (
     <Container

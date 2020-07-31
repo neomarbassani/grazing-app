@@ -11,12 +11,12 @@ export const Header = styled.View`
   height: 60px;
   justify-content: space-between;
   align-items: center;
-  padding: 0 30px;
+  padding: 0 15px;
 `;
 
 export const FlatListContainer = styled.FlatList`
   width: 100%;
-  padding: 0 30px 10px 30px;
+  padding: 0 15px 10px 15px;
   margin-bottom: 30px;
 `;
 

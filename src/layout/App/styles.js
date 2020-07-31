@@ -13,7 +13,7 @@ export const Container = styled.ImageBackground`
   border-bottom-right-radius: ${props => (props.results ? 0 : 30)}px;
 `;
 
-export const Background = styled.ImageBackground`
+export const Background = styled.SafeAreaView`
   margin-top: ${Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT}px;
   background-color: #281100;
 `;

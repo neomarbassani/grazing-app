@@ -33,21 +33,23 @@ const ChooseGrazingMethod = ({navigation, route}) => {
           size={14}
           mb={20}
         />
+        {calcName !== 'Calcular números de piquetes' &&
+          calcName !== 'Definir período de ocupação' && (
+            <ChooseItemButton
+              size={47}
+              source={grazingmethod1}
+              content="Contínuo"
+              onPress={() => {
+                navigation.navigate('ChooseBovineType', {
+                  calc: {
+                    name: 'Pastoreio contínuo',
+                    value: calcName,
+                  },
+                });
+              }}
+            />
+          )}
         <ChooseItemButton
-          size={47}
-          source={grazingmethod1}
-          content="Contínuo"
-          onPress={() => {
-            navigation.navigate('ChooseBovineType', {
-              calc: {
-                name: 'Pastoreio contínuo',
-                value: calcName,
-              },
-            });
-          }}
-        />
-        <ChooseItemButton
-          disabled
           content="Rotativo"
           source={grazingmethod2}
           size={47}

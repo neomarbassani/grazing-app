@@ -25,7 +25,7 @@ import {Content, ScrollView} from './styles';
 const ChoosePastureType = ({navigation, route}) => {
   const {animal, calc, inputs} = route.params;
 
-  const items = [calc.name];
+  const items = [calc.value, calc.name, animal && animal.value];
 
   return (
     <Container

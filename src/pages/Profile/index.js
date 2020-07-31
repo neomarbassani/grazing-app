@@ -4,11 +4,10 @@ import {Alert} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 
 import {useDispatch, useSelector} from 'react-redux';
+import AuthActions from '../../store/ducks/auth';
 
 import {Form} from '@unform/mobile';
 import * as Yup from 'yup';
-
-import AuthActions from '../../store/ducks/auth';
 
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -210,7 +209,7 @@ const Profile = () => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           width: '100%',
-          paddingHorizontal: 30,
+          paddingHorizontal: 15,
           alignItems: 'center',
         }}>
         <PhotoContainer>

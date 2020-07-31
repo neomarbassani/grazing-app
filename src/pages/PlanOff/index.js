@@ -1,4 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import {useDispatch} from 'react-redux';
+
+import AuthActions from '../../store/ducks/auth';
 
 import {
   Logo,
@@ -16,6 +23,7 @@ import Container from '../../layout/App';
 import Button from '../../components/Button';
 
 const PlanOff = () => {
+  const dispatch = useDispatch();
   return (
     <Container
       results
@@ -23,6 +31,15 @@ const PlanOff = () => {
       resizeMethod="resize"
       resizeMode="cover">
       <Logo source={logo} />
+      <TouchableOpacity
+        onPress={() => dispatch(AuthActions.signOut())}
+        style={{
+          position: 'absolute',
+          top: 20,
+          right: 20,
+        }}>
+        <Icon name="exit-to-app" size={30} color="#fff" />
+      </TouchableOpacity>
       <TextBox>
         <TextBoxItem>
           <TextBoxItemText>

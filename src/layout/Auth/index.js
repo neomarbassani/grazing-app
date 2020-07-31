@@ -1,13 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {StatusBar} from 'react-native';
-import {Dimensions} from 'react-native';
 
 import {ScrollView, Background} from './styles';
 import {colors} from '../../styles';
 
 import backgroundLogo from '../../assets/backgroundLogo.png';
 
+import {Dimensions} from 'react-native';
 const {height} = Dimensions.get('window');
 
 export default function AuthContainer({children}) {

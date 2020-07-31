@@ -17,8 +17,6 @@ import solution5 from '../../assets/solution5.jpg';
 
 import {Content, FreePlanBox, FreePlanBoxText} from './styles';
 
-import {numberOfAnimalsContinuous} from '../../services/calcs';
-
 const Home = ({navigation}) => {
   return (
     <>
@@ -50,7 +48,6 @@ const Home = ({navigation}) => {
             }}
           />
           <ChooseItemButton
-            disabled
             content="Dimensionar área do potreiro"
             source={solution2}
             onPress={() => {
@@ -60,7 +57,6 @@ const Home = ({navigation}) => {
             }}
           />
           <ChooseItemButton
-            disabled
             content="Fornecer suplemento"
             source={solution3}
             onPress={() => {
@@ -70,17 +66,18 @@ const Home = ({navigation}) => {
             }}
           />
           <ChooseItemButton
-            disabled
             content="Calcular números de piquetes"
             source={solution4}
             onPress={() => {
-              navigation.navigate('ChooseGrazingMethod', {
-                calcName: 'Calcular números de piquetes',
+              navigation.navigate('ChoosePastureType', {
+                calc: {
+                  name: 'Pastoreio contínuo',
+                  value: 'Calcular números de piquetes',
+                },
               });
             }}
           />
           <ChooseItemButton
-            disabled
             content="Definir período de ocupação"
             source={solution5}
             onPress={() => {
