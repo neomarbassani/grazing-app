@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "grazing-tvOS.app"
-               BlueprintName = "grazing-tvOS"
-               ReferencedContainer = "container:grazing.xcodeproj">
+               BuildableName = "Grazing-tvOS.app"
+               BlueprintName = "Grazing-tvOS"
+               ReferencedContainer = "container:Grazing.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "grazing-tvOSTests.xctest"
-               BlueprintName = "grazing-tvOSTests"
-               ReferencedContainer = "container:grazing.xcodeproj">
+               BuildableName = "Grazing-tvOSTests.xctest"
+               BlueprintName = "Grazing-tvOSTests"
+               ReferencedContainer = "container:Grazing.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "grazing-tvOS.app"
-            BlueprintName = "grazing-tvOS"
-            ReferencedContainer = "container:grazing.xcodeproj">
+            BuildableName = "Grazing-tvOS.app"
+            BlueprintName = "Grazing-tvOS"
+            ReferencedContainer = "container:Grazing.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "grazing-tvOS.app"
-            BlueprintName = "grazing-tvOS"
-            ReferencedContainer = "container:grazing.xcodeproj">
+            BuildableName = "Grazing-tvOS.app"
+            BlueprintName = "Grazing-tvOS"
+            ReferencedContainer = "container:Grazing.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
