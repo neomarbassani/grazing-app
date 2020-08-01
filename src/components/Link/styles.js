@@ -9,6 +9,6 @@ export const Container = styled.Text`
   font-size: 16px;
   line-height: 19px;
   color: ${props => (props.color ? props.color : '#C94324')};
-  margin-top: ${props => (props.mt ? props.mt : 0)};
-  margin-bottom: ${props => (props.mb ? props.mb : 0)};
+  margin-top: ${props => props.mt || 0}px;
+  margin-bottom: ${props => props.mb || 0}px;
 `;

@@ -83,7 +83,7 @@ export default function SignIn({navigation}) {
 
       <Link
         content="Voltar para Login"
-        mt="auto"
+        mt={15}
         mb={24}
         onPress={() => navigation.navigate('Login')}
       />

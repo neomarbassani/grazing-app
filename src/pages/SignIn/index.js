@@ -91,7 +91,7 @@ export default function SignIn({navigation}) {
       />
 
       <Link
-        mt="auto"
+        mt={25}
         mb={25}
         content="Criar uma conta"
         onPress={() => navigation.navigate('Register')}

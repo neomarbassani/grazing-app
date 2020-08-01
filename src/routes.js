@@ -50,7 +50,11 @@ const WellcomeStack = () => {
 
 const AppStack = () => {
   return (
-    <Tab.Navigator tabBar={props => <TabBar {...props} />}>
+    <Tab.Navigator
+      tabBarOptions={{
+        height: 60,
+      }}
+      tabBar={props => <TabBar {...props} />}>
       <Tab.Screen name="Início" component={InicioStack} />
       <Tab.Screen name="Result" component={Result} />
       <Tab.Screen name="AboutUs" component={AboutUs} />

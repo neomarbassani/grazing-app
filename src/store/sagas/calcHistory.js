@@ -35,6 +35,5 @@ export function* saveOfflineCalcs({calcState}) {
     );
   } catch (err) {
     yield put(CalcHistoryActions.addCalcToHistoryFailure());
-  
   }
-
+}

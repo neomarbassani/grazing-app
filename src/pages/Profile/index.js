@@ -205,8 +205,6 @@ const Profile = () => {
         height: '90%',
       }}>
       <Content
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           width: '100%',
           paddingHorizontal: 15,

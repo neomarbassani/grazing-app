@@ -5,8 +5,9 @@ const {StatusBarManager} = NativeModules;
 const {height} = Dimensions.get('window');
 
 export const Container = styled.ImageBackground`
-  width: 100%;
-  height: ${props => (props.results ? height : height - 60)};
+  flex: 1;
+
+  margin-bottom: ${props => (props.marginValue ? 86 : 0)}px;
   background-color: ${props => (props.results ? '#281100' : '#fff')};
   align-items: center;
   border-bottom-left-radius: ${props => (props.results ? 0 : 30)}px;
@@ -14,6 +15,7 @@ export const Container = styled.ImageBackground`
 `;
 
 export const Background = styled.SafeAreaView`
+  flex: 1;
   margin-top: ${Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT}px;
   background-color: #281100;
 `;

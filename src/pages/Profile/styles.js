@@ -1,9 +1,11 @@
 import styled from 'styled-components/native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 import {colors} from '../../styles';
 
-export const Content = styled.ScrollView`
+export const Content = styled(KeyboardAwareScrollView)`
   width: 100%;
+  flex: 1;
 `;
 
 export const PhotoContainer = styled.View`
@@ -40,8 +42,8 @@ export const SectionTitle = styled.Text`
 `;
 
 export const FormArea = styled.View`
+  flex: 1;
   margin-top: 20px;
-  width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;

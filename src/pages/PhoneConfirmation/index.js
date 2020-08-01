@@ -7,7 +7,6 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import AuthActions from '../../store/ducks/auth';
 
-
 import {
   Cursor,
   useBlurOnFulfill,
@@ -104,7 +103,7 @@ export default function SignIn() {
       />
 
       <Button
-        mt="auto"
+        mt={15}
         mb={16}
         content="Entrar"
         loading={loading}
