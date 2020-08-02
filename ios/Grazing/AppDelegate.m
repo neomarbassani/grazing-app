@@ -3,6 +3,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <Firebase.h>
 
 #if DEBUG
 #import <FlipperKit/FlipperClient.h>
@@ -36,6 +37,9 @@ static void InitializeFlipper(UIApplication *application) {
                                                    moduleName:@"Grazing"
                                             initialProperties:nil];
 
+    if ([FIRApp defaultApp] == nil) {
+    [FIRApp configure];
+  }
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];

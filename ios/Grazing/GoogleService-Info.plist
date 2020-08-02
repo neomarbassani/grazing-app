@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>24583892743-sv9205ufp3em8kvo7qrtlt8jr1uocv4b.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.24583892743-sv9205ufp3em8kvo7qrtlt8jr1uocv4b</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>24583892743-lh7e69ti1qqnntdvlldq77c3jnhg5t0k.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCkPfUP54purIJHeBCISWaLTjKyNx2lQFI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>24583892743</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.agenciarazzo.grazing</string>
+	<key>PROJECT_ID</key>
+	<string>grazing-168bd</string>
+	<key>STORAGE_BUCKET</key>
+	<string>grazing-168bd.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:24583892743:ios:5f9aa3984f062108109fa2</string>
+	<key>DATABASE_URL</key>
+	<string>https://grazing-168bd.firebaseio.com</string>
+</dict>
+</plist>
