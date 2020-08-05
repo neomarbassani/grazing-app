@@ -24,7 +24,7 @@ export const taxaDeAcumulo = {
     fevereiro: undefined,
     março: undefined,
     abril: undefined,
-    maio: 16.66,
+    maio: 16.7,
     junho: 44.1,
     julho: 71.9,
     agosto: 56.3,
@@ -54,7 +54,7 @@ export const taxaDeAcumulo = {
   sudao: {
     janeiro: 123,
     fevereiro: 130,
-    março: 64.06,
+    março: 64.1,
     abril: 18.8,
     maio: undefined,
     junho: undefined,
@@ -147,6 +147,22 @@ export const taxaDeAcumulo = {
     media: 22.5,
     minimo: 4.5,
   },
+  aveia: {
+    janeiro: undefined,
+    fevereiro: undefined,
+    março: undefined,
+    abril: undefined,
+    maio: 21,
+    junho: 21,
+    julho: 48.9,
+    agosto: 44.8,
+    setembro: 56.2,
+    outubro: 34.7,
+    novembro: undefined,
+    dezembro: undefined,
+    media: 37.8,
+    minimo: 4.5,
+  }
 };
 
 export const especie = {
@@ -159,8 +175,8 @@ export const especie = {
     alturaOtima: 20,
   },
   aveiaAzevem: {
-    relacaoMassaAltura: 93,
-    alturaOtima: 25,
+    relacaoMassaAltura: 88.7,
+    alturaOtima: 20,
   },
   sudao: {
     relacaoMassaAltura: 62.7,
@@ -186,6 +202,10 @@ export const especie = {
     relacaoMassaAltura: 229.5,
     alturaOtima: 12,
   },
+  aveia: {
+    relacaoMassaAltura: 85.3,
+    alturaOtima: 30,
+  }
 };
 
 export const consumo = {
@@ -214,22 +234,23 @@ export const consumo = {
           1.16
         );
       }
+      // Revisar
       if (daysOfLactation >= 210 && daysOfLactation < 259) {
-        ((Math.pow(weigth, 0.75) *
+        return ((Math.pow(weigth, 0.75) *
           (0.2435 * 1.35 - 0.0466 * Math.pow(1.35, 2) - 0.1128)) /
           1.35) *
           (1 + (210 - daysOfLactation) * 0.0025) *
           1.16;
       }
       if (daysOfLactation > 259) {
-        ((1.71 - 0.69 * Math.pow(2.72, 0.35 * daysOfLactation - 280)) / 100) *
+        return ((1.71 - 0.69 * Math.pow(2.72, 0.35 * daysOfLactation - 280)) / 100) *
           weigth *
           1.16;
       }
     },
     vacaLactacao: (weigth, weeksOfLactation, milkQuantity) => {
       const FC1 = 0.4 * milkQuantity + 15 * 0.03 * milkQuantity;
-      const FC2 = 1 - Math.pow(2.72, -1 * 0.192 * weeksOfLactation + 3.67);
+      const FC2 = 1 - Math.pow(2.72, -1 * 0.192 * (weeksOfLactation + 3.67));
 
       return (Math.pow(weigth, 0.75) * 0.0968 + 0.372 * FC1 - 0.293) * FC2;
     },
@@ -251,7 +272,7 @@ export const mouth = [
   'dezembro',
 ];
 
-// Ajustar lotação Animal Continuo - OK
+// Ajustar lotação Animal Continuo - Validada
 export function numberOfAnimalsContinuous({
   startDate,
   weigth,
@@ -260,17 +281,12 @@ export function numberOfAnimalsContinuous({
   lenghtOfStay,
   foalArea,
 }) {
-  const fodderMass =
+  let fodderMass =
     pastureHeight * parseInt(especie[typeOfPasture].relacaoMassaAltura);
 
-  const value =
-    (((pastureHeight * fodderMass) / lenghtOfStay +
-      parseInt(taxaDeAcumulo[typeOfPasture][mouth[startDate]])) /
-      0.12 /
-      weigth) *
-    foalArea;
+  let value = (((fodderMass / lenghtOfStay) + parseInt(taxaDeAcumulo[typeOfPasture][mouth[startDate]]) / 0.12) / weigth) * foalArea;
 
-  const results = [
+  let results = [
     {
       name: 'Número de animais no potreiro',
       value: Math.round(value).toLocaleString('pt-BR'),
@@ -280,67 +296,41 @@ export function numberOfAnimalsContinuous({
   return results;
 }
 
-// Ajustar lotação Animal Rotativo - OK
+// Ajustar lotação Animal Rotativo - Validada
 export function numberOfAnimalsRotative({
-  startDate,
-  weigth,
-  foodQuantity,
-  numberOfTracks,
+  startDate, // Data de inicio
+  weigth, // Peso vivo
+  foodQuantity, // Quantidade de alimento fornecido FORMULA => (ração + (feno * 0.85) + (silagem * 0.3), se "não sei" weight * 0.01, se "Não" 0)
+  numberOfTracks, 
   pastureHeight,
   typeOfPasture,
   milkQuantity,
   lenghtOfStay,
   foalArea,
-  weeksOfLactation,
-  daysOfLactation,
-  typeOfAnimal,
+  weeksOfLactation, //  
+  daysOfLactation, // Dias de gestação
+  animalCategory,
+  animalType
 }) {
-  const animalCategory =
-    typeOfAnimal.name === 'Bovinocultura de corte'
-      ? 'bovinoCorte'
-      : 'bovinoLeite';
-
-  const animalType = () => {
-    if (typeOfAnimal.value === 'Terneiro') {
-      return 'terneiro';
-    }
-    if (
-      typeOfAnimal.value === 'Novilha' ||
-      typeOfAnimal.value === 'Novilha Leiteira'
-    ) {
-      return 'novilha';
-    }
-    if (typeOfAnimal.value === 'Vaca seca') {
-      return 'vacaSeca';
-    }
-    if (typeOfAnimal.value === 'Vaca prenha') {
-      return 'vacaPrenha';
-    }
-    if (typeOfAnimal.value === 'Vaca em lactação') {
-      return 'vacaLactacao';
-    }
-  };
-
-  const consume = consumo[animalCategory][animalType()](
+  const consume = consumo[animalCategory][animalType](
     weigth,
     daysOfLactation || weeksOfLactation,
     milkQuantity,
   );
 
   const value =
-    (pastureHeight * pastureHeight * especie[typeOfPasture].relacaoMassaAltura -
-      (especie[typeOfPasture].alturaOtima * 0,
-      6 * pastureHeight * especie[typeOfPasture].relacaoMassaAltura)) *
-      (foalArea / numberOfTracks) *
-      lenghtOfStay +
-    (taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]] *
-      (foalArea / numberOfTracks)) /
-      (consume - foodQuantity * lenghtOfStay);
+      (pastureHeight * especie[typeOfPasture].relacaoMassaAltura -
+      (especie[typeOfPasture].alturaOtima * 0.6 * especie[typeOfPasture].relacaoMassaAltura)) *
+      (foalArea / numberOfTracks) +
+      (taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]] *
+      (foalArea / numberOfTracks) * lenghtOfStay) 
+
+  const value_2 = value / (consume - foodQuantity * lenghtOfStay);
 
   const results = [
     {
       name: 'Número de animais no potreiro',
-      value: Math.round(value).toLocaleString('pt-BR'),
+      value: Math.round(value_2).toLocaleString('pt-BR'),
     },
   ];
 
@@ -349,59 +339,30 @@ export function numberOfAnimalsRotative({
 
 // Tamanho potreiro Rotativo - OK
 export function foalSizeRotative({
-  startDate,
   weigth,
   animalsAmount,
   rationAmount,
   silageAmount,
   hayAmount,
   typeOfPasture,
-  typeOfAnimal,
+  animalCategory,
+  animalType,
   daysOfLactation,
   weeksOfLactation,
   milkQuantity,
 }) {
-  const animalCategory =
-    typeOfAnimal.name === 'Bovinocultura de corte'
-      ? 'bovinoCorte'
-      : 'bovinoLeite';
-
-  const animalType = () => {
-    if (typeOfAnimal.value === 'Terneiro') {
-      return 'terneiro';
-    }
-    if (
-      typeOfAnimal.value === 'Novilha' ||
-      typeOfAnimal.value === 'Novilha Leiteira'
-    ) {
-      return 'novilha';
-    }
-    if (typeOfAnimal.value === 'Vaca seca') {
-      return 'vacaSeca';
-    }
-    if (typeOfAnimal.value === 'Vaca prenha') {
-      return 'vacaPrenha';
-    }
-    if (typeOfAnimal.value === 'Vaca em lactação') {
-      return 'vacaLactacao';
-    }
-  };
-
-  const consume = consumo[animalCategory][animalType()](
+  const consume = consumo[animalCategory][animalType](
     weigth,
     daysOfLactation || weeksOfLactation,
     milkQuantity,
   );
 
-  const soma =
-    rationAmount + hayAmount * 0.85 + silageAmount * 0.3 === 0
-      ? weigth * 0.01
-      : rationAmount + hayAmount * 0.85 + silageAmount * 0.3 === 0;
+  const soma = 0; // Revisar, isso deve virar uma função
 
   const value =
     ((consume - soma * animalsAmount) /
       (especie[typeOfPasture].alturaOtima *
-        0.6 *
+        0.4 *
         especie[typeOfPasture].relacaoMassaAltura +
         taxaDeAcumulo[typeOfPasture].media)) *
     ((especie[typeOfPasture].alturaOtima * 0.4) /
@@ -436,8 +397,8 @@ export function foalSizeContinuous({
         0.8 *
         especie[typeOfPasture].relacaoMassaAltura) /
         constantBasedOnPasture +
-      taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]]
-    ).media;
+      taxaDeAcumulo[typeOfPasture].media
+    );
 
   const results = [
     {
@@ -449,7 +410,7 @@ export function foalSizeContinuous({
   return results;
 }
 
-// Fornecer suplemento continuo - OK
+// Fornecer suplemento continuo - Refazer
 export function supplyAmountContinuous({
   startDate,
   weigth,
@@ -585,8 +546,7 @@ export function supplyAmountRotative({
   const value =
     (consume * daysOfStay * animalsAmount -
       ((pastureHeight * especie[typeOfPasture].relacaoMassaAltura -
-        (especie[typeOfPasture].alturaOtima * 0,
-        6 * especie[typeOfPasture].relacaoMassaAltura)) *
+        (especie[typeOfPasture].alturaOtima * 0.6 * especie[typeOfPasture].relacaoMassaAltura)) *
         (foalArea / tracksAmount) +
         ((taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]] *
           foalArea) /
@@ -665,9 +625,9 @@ export function daysAmountRotative({
         especie[typeOfPasture].relacaoMassaAltura) *
       (foalArea / tracksAmount) +
       (taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]] *
-        foalArea) /
-        tracksAmount) /
-    (consume - soma * animalsAmount);
+        (foalArea /
+        tracksAmount))) /
+    ((consume - soma) * animalsAmount);
 
   const results = [
     {
@@ -680,13 +640,18 @@ export function daysAmountRotative({
   return results;
 }
 
-// Calcular número de piquetes - OK
+// Calcular número de piquetes - Reescrever
 export function tracksAmountRotative({startDate, typeOfPasture}) {
   const value =
     (especie[typeOfPasture].alturaOtima * 0.4) /
-      (taxaDeAcumulo[typeOfPasture][mouth[new Date(startDate).getMonth()]] /
-        especie[typeOfPasture].relacaoMassaAltura) +
-    1;
+      (taxaDeAcumulo[typeOfPasture].media /
+        especie[typeOfPasture].relacaoMassaAltura) + 1;
+
+  const value_2 = 
+      value * ((consume - soma) * animalsAmount) /
+   (((especie[typeOfPasture].alturaOtima * 0.4) *
+      especie[typeOfPasture].relacaoMassaAltura)
+    + taxaDeAcumulo[typeOfPasture].media)
 
   const results = [
     {
