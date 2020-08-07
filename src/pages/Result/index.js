@@ -15,10 +15,10 @@ import logo from '../../assets/logoResults.png';
 import {Description, ResultText, Title, Logo, Content} from './styles';
 
 const Result = ({navigation, route}) => {
-  const {name, value} = route.params.results[0];
-  const calcState = route.params;
+  /* const {name, value} = route.params.results[0]; */
+  /* const calcState = route.params; */
 
-  const dispatch = useDispatch();
+  /* const dispatch = useDispatch();
 
   const saveCalc = async () => {
     try {
@@ -45,7 +45,7 @@ const Result = ({navigation, route}) => {
         },
       });
     }
-  };
+  }; */
 
   return (
     <Container results>
@@ -54,9 +54,9 @@ const Result = ({navigation, route}) => {
       <Content>
         <Logo source={logo} />
         <Title>Resultado</Title>
-        <Description>{name}</Description>
-        <ResultText>{value}</ResultText>
-        <Button content="Voltar ao início" mt="auto" onPress={saveCalc} />
+        <Description>name</Description>
+        <ResultText>value</ResultText>
+        <Button content="Voltar ao início" mt="auto" /* onPress={saveCalc} */ />
       </Content>
     </Container>
   );

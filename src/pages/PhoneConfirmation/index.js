@@ -47,6 +47,7 @@ export default function SignIn() {
     const unsubscribe = auth().onAuthStateChanged(user => {
       if (user) {
         dispatch(AuthActions.autenticationRequest());
+
         setLoading(false);
       } else {
         signInWithPhoneNumber(`+55${phone}`);

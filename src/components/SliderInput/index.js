@@ -17,14 +17,13 @@ const SliderInput = ({
   value,
   color,
   step,
+  unit,
   ...rest
 }) => {
-  console.log(maxVal);
-
   return (
     <Container mt={mt} mb={mb}>
       <Label color={color}>
-        {label}: {value}
+        {label}: {value} {unit}
       </Label>
       <SliderComponent
         minimumTrackTintColor="#774D37"

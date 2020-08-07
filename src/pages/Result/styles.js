@@ -1,12 +1,8 @@
 import styled from 'styled-components/native';
 
-import {Dimensions} from 'react-native';
-
-const screenHeight = Dimensions.get('window').height;
-
 export const Content = styled.View`
   width: 100%;
-  height: ${screenHeight - 60};
+  flex: 1;
   padding: 17px 30px;
   align-items: center;
 `;
