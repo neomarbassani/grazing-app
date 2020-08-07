@@ -51,7 +51,7 @@ const PlanOff = () => {
           <TextBoxItemPrice>R$32,90</TextBoxItemPrice>
         </TextBoxItem>
       </TextBox>
-      <Button content="Assine agora >" mt={20} mb={16} size="90%" />
+      <Button content="Assine agora >" mt="20px" mb="16px" size="90%" />
     </Container>
   );
 };

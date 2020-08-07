@@ -270,7 +270,26 @@ export const quantidadeDeSuplemento = ({
   return racao + feno * 0.85 + silagem * 0.3;
 };
 
-console.log()
+const animalType = animal => {
+  if (animal === 'Terneiro') {
+    return 'terneiro';
+  }
+  if (animal === 'Novilha') {
+    return 'novilha';
+  }
+  if (animal === 'Vaca seca') {
+    return 'vacaSeca';
+  }
+  if (animal === 'Vaca prenha') {
+    return 'vacaPrenha';
+  }
+  if (animal === 'Terneiro') {
+    return 'terneiro';
+  }
+  if (animal === 'Vaca em lactação') {
+    return 'vacaLactacao';
+  }
+};
 
 export const getMouth = data => new Date(data).getUTCMonth() + 1;
 
@@ -333,13 +352,14 @@ export function ajustarLotacaoAnimalRotativo({
   categoriaAnimal,
   tipoDeAnimal,
 }) {
+  console.log(animalType(tipoDeAnimal));
   const relacaoMassaAltura = especie[tipoDePasto].relacaoMassaAltura;
   const alturaOtima = especie[tipoDePasto].alturaOtima;
 
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][tipoDeAnimal]({
+  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -413,7 +433,7 @@ export function tamanhoPotreiroRotativo({
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][tipoDeAnimal]({
+  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -522,7 +542,7 @@ export function fornecerSuplementoContinuo({
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][tipoDeAnimal]({
+  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -608,7 +628,7 @@ export function fornecerSuplementoRotativo({
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][tipoDeAnimal]({
+  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -691,12 +711,11 @@ export function definirPeriodoDeOcupacaoRotativo({
 }) {
   const relacaoMassaAltura = especie[tipoDePasto].relacaoMassaAltura;
   const alturaOtima = especie[tipoDePasto].alturaOtima;
-  const media = taxaDeAcumuloPorEspecie[tipoDePasto].media;
 
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][tipoDeAnimal]({
+  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -763,6 +782,22 @@ export function calcularNumeroDePiquetes({
   feno = 0,
   silagem = 0,
 }) {
+  console.log({
+    dataDeInicio,
+    tipoDePasto,
+    peso,
+    quantidadeDeAnimais,
+    numeroDePiquetes,
+    tipoDeAnimal,
+    categoriaAnimal,
+    diasDeGestacao,
+    semanasDeLactacao,
+    quantidadeDeLeite,
+    racao,
+    feno,
+    silagem,
+  });
+
   const relacaoMassaAltura = especie[tipoDePasto].relacaoMassaAltura;
   const alturaOtima = especie[tipoDePasto].alturaOtima;
   const media = taxaDeAcumuloPorEspecie[tipoDePasto].media;
@@ -770,7 +805,7 @@ export function calcularNumeroDePiquetes({
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][tipoDeAnimal]({
+  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -787,7 +822,7 @@ export function calcularNumeroDePiquetes({
   const resultado1 = (alturaOtima * 0.4) / (media / relacaoMassaAltura) + 1;
 
   const resultado2 =
-    numeroDePiquetes *
+    resultado1 *
     (((consumoNRC - quantSuplemento) * quantidadeDeAnimais) /
       (alturaOtima * 0.4 * relacaoMassaAltura + media));
 

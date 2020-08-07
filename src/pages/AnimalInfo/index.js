@@ -166,7 +166,7 @@ const AnimalInfo = ({navigation, route}) => {
         </Form>
         <Button
           content="Próximo"
-          mt={20}
+          mt='20px'
           color="#D69D2B"
           onPress={() => formRef.current.submitForm()}
         />

@@ -154,7 +154,7 @@ export default function Register({navigation}) {
             keyboardType="numeric"
             returnKeyType="next"
             blurOnSubmit={true}>
-            <HelpButton data={help}/>
+            <HelpButton data={help} />
           </Input>
           <Scope path="address">
             <InputPicker
@@ -207,7 +207,7 @@ export default function Register({navigation}) {
         content="Criar conta"
         loading={loading}
         onPress={() => formRef.current.submitForm()}
-        mb={16}
+        mb="16px"
       />
     </Container>
   );

@@ -88,7 +88,7 @@ export default function SignIn({navigation}) {
         onPress={() => navigation.navigate('Login')}
       />
       <Button
-        mb={16}
+        mb="16px"
         content="Recuperar Senha"
         onPress={() => formRef.current.submitForm()}
         loading={loading}

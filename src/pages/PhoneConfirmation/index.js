@@ -104,8 +104,8 @@ export default function SignIn() {
       />
 
       <Button
-        mt={15}
-        mb={16}
+        mt="15px"
+        mb="16px"
         content="Entrar"
         loading={loading}
         onPress={() => confirmCode()}

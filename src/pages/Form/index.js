@@ -176,28 +176,28 @@ const DimensionArea = ({navigation, route}) => {
         const results = ajustarLotacaoAnimalRotativo({
           dataDeInicio: data.dataDeInicio,
           peso: inputs.find(input => input.key === 'peso').value,
-          racao: suplementacaoAdicional === -1 ? -1 : data.racao,
-          feno: data.feno,
-          silagem: data.silagem,
+          racao: suplementacaoAdicional === -1 ? -1 : data.racao || 0,
+          feno: data.feno || 0,
+          silagem: data.silagem || 0,
           numeroDePiquetes: data.numeroDePiquetes,
           alturaDoPasto: alturaDoPasto,
           tipoDePasto: pasture.key,
           tempoDePermanencia: tempoDePermanencia,
           areaDoPotreiro: areaDoPotreiro,
-          diasDeGestacao: inputs.find(input => input.key === 'diasDeGestacao')
-            .value,
-          semanasDeLactacao: inputs.find(
-            input => input.key === 'semanasDeLactacao',
-          ).value,
-          quantidadeDeLeite: inputs.find(
-            input => input.key === 'quantidadeDeLeite',
-          ).value,
+          diasDeGestacao:
+            inputs.find(input => input.key === 'diasDeGestacao').value || 0,
+          semanasDeLactacao:
+            inputs.find(input => input.key === 'semanasDeLactacao').value || 0,
+          quantidadeDeLeite:
+            inputs.find(input => input.key === 'quantidadeDeLeite').value || 0,
           categoriaAnimal:
             animal.name === 'Bovinocultura de leite'
               ? 'bovinoLeite'
               : 'bovinoCorte',
-          tipoDeAnimal: animal.key,
+          tipoDeAnimal: animal.value,
         });
+
+        console.log(results);
 
         const calcState = {
           config: {
@@ -298,7 +298,7 @@ const DimensionArea = ({navigation, route}) => {
             animal.name === 'Bovinocultura de leite'
               ? 'bovinoLeite'
               : 'bovinoCorte',
-          tipoDeAnimal: animal.key,
+          tipoDeAnimal: animal.value,
         });
 
         const calcState = {
@@ -444,7 +444,7 @@ const DimensionArea = ({navigation, route}) => {
             animal.name === 'Bovinocultura de leite'
               ? 'bovinoLeite'
               : 'bovinoCorte',
-          tipoDeAnimal: animal.key,
+          tipoDeAnimal: animal.value,
         });
 
         const calcState = {
@@ -554,7 +554,7 @@ const DimensionArea = ({navigation, route}) => {
             animal.name === 'Bovinocultura de leite'
               ? 'bovinoLeite'
               : 'bovinoCorte',
-          tipoDeAnimal: animal.key,
+          tipoDeAnimal: animal.value,
         });
 
         const calcState = {
@@ -623,28 +623,47 @@ const DimensionArea = ({navigation, route}) => {
           abortEarly: false,
         });
 
-        const results = calcularNumeroDePiquetes({
+        console.log({
           areaDoPotreiro,
           dataDeInicio: data.dataDeInicio,
-          peso: inputs.find(input => input.key === 'peso').value,
-          racao: suplementacaoAdicional === -1 ? -1 : data.racao,
-          feno: data.feno,
-          silagem: data.silagem,
+          racao: suplementacaoAdicional === -1 ? -1 : data.racao || 0,
+          feno: data.feno || 0,
+          silagem: data.silagem || 0,
           quantidadeDeAnimais: data.quantidadeDeAnimais,
           tipoDePasto: pasture.key,
-          diasDeGestacao: inputs.find(input => input.key === 'diasDeGestacao')
-            .value,
-          semanasDeLactacao: inputs.find(
-            input => input.key === 'semanasDeLactacao',
-          ).value,
-          quantidadeDeLeite: inputs.find(
-            input => input.key === 'quantidadeDeLeite',
-          ).value,
+          diasDeGestacao:
+            inputs.find(input => input.key === 'diasDeGestacao').value || 0,
+          semanasDeLactacao:
+            inputs.find(input => input.key === 'semanasDeLactacao').value || 0,
+          quantidadeDeLeite:
+            inputs.find(input => input.key === 'quantidadeDeLeite').value || 0,
           categoriaAnimal:
             animal.name === 'Bovinocultura de leite'
               ? 'bovinoLeite'
               : 'bovinoCorte',
-          tipoDeAnimal: animal.key,
+          tipoDeAnimal: animal.value,
+        });
+
+        const results = calcularNumeroDePiquetes({
+          areaDoPotreiro,
+          dataDeInicio: data.dataDeInicio,
+          peso: inputs.find(input => input.key === 'peso').value,
+          racao: suplementacaoAdicional === -1 ? -1 : data.racao || 0,
+          feno: data.feno || 0,
+          silagem: data.silagem || 0,
+          quantidadeDeAnimais: data.quantidadeDeAnimais,
+          tipoDePasto: pasture.key,
+          diasDeGestacao:
+            inputs.find(input => input.key === 'diasDeGestacao').value || 0,
+          semanasDeLactacao:
+            inputs.find(input => input.key === 'semanasDeLactacao').value || 0,
+          quantidadeDeLeite:
+            inputs.find(input => input.key === 'quantidadeDeLeite').value || 0,
+          categoriaAnimal:
+            animal.name === 'Bovinocultura de leite'
+              ? 'bovinoLeite'
+              : 'bovinoCorte',
+          tipoDeAnimal: animal.value,
         });
 
         const calcState = {
@@ -696,21 +715,42 @@ const DimensionArea = ({navigation, route}) => {
         navigation.navigate('Result', calcState);
       }
 
-      if (
-        calc.name === 'Pastoreio rotativo' &&
-        calc.value === 'Definir período de ocupação'
-      ) {
+      if (calc.value === 'Definir período de ocupação') {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
           dataDeInicio: Yup.date('Insira uma data válida').required(
             'Insira a data de inicio.',
           ),
-          areaDoPotreiro: Yup.string().required('Insira a area do potreiro.'),
-          tracksAmount: Yup.string().required('Insira um valor.'),
+          numeroDePiquetes: Yup.string().required('Insira um valor.'),
         });
 
         await schema.validate(data, {
           abortEarly: false,
+        });
+        console.log('ok');
+
+        console.log({
+          alturaDoPasto,
+          numeroDePiquetes: data.numeroDePiquetes,
+          areaDoPotreiro,
+          dataDeInicio: data.dataDeInicio,
+          peso: inputs.find(input => input.key === 'peso').value,
+          racao: suplementacaoAdicional === -1 ? -1 : data.racao || 0,
+          feno: data.feno || 0,
+          silagem: data.silagem || 0,
+          quantidadeDeAnimais: data.quantidadeDeAnimais,
+          tipoDePasto: pasture.key,
+          diasDeGestacao:
+            inputs.find(input => input.key === 'diasDeGestacao').value || 0,
+          semanasDeLactacao:
+            inputs.find(input => input.key === 'semanasDeLactacao').value || 0,
+          quantidadeDeLeite:
+            inputs.find(input => input.key === 'quantidadeDeLeite').value || 0,
+          categoriaAnimal:
+            animal.name === 'Bovinocultura de leite'
+              ? 'bovinoLeite'
+              : 'bovinoCorte',
+          tipoDeAnimal: animal.value,
         });
 
         const results = definirPeriodoDeOcupacaoRotativo({
@@ -719,24 +759,22 @@ const DimensionArea = ({navigation, route}) => {
           areaDoPotreiro,
           dataDeInicio: data.dataDeInicio,
           peso: inputs.find(input => input.key === 'peso').value,
-          racao: suplementacaoAdicional === -1 ? -1 : data.racao,
-          feno: data.feno,
-          silagem: data.silagem,
+          racao: suplementacaoAdicional === -1 ? -1 : data.racao || 0,
+          feno: data.feno || 0,
+          silagem: data.silagem || 0,
           quantidadeDeAnimais: data.quantidadeDeAnimais,
           tipoDePasto: pasture.key,
-          diasDeGestacao: inputs.find(input => input.key === 'diasDeGestacao')
-            .value,
-          semanasDeLactacao: inputs.find(
-            input => input.key === 'semanasDeLactacao',
-          ).value,
-          quantidadeDeLeite: inputs.find(
-            input => input.key === 'quantidadeDeLeite',
-          ).value,
+          diasDeGestacao:
+            inputs.find(input => input.key === 'diasDeGestacao').value || 0,
+          semanasDeLactacao:
+            inputs.find(input => input.key === 'semanasDeLactacao').value || 0,
+          quantidadeDeLeite:
+            inputs.find(input => input.key === 'quantidadeDeLeite').value || 0,
           categoriaAnimal:
             animal.name === 'Bovinocultura de leite'
               ? 'bovinoLeite'
               : 'bovinoCorte',
-          tipoDeAnimal: animal.key,
+          tipoDeAnimal: animal.value,
         });
 
         const calcState = {
@@ -1429,7 +1467,7 @@ const DimensionArea = ({navigation, route}) => {
           )}
           <Button
             content="Finalizar"
-            mt={20}
+            mt="20px"
             color="#D69D2B"
             onPress={() => formRef.current.submitForm()}
           />

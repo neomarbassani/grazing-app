@@ -97,7 +97,7 @@ export default function SignIn({navigation}) {
         onPress={() => navigation.navigate('Register')}
       />
       <Button
-        mb={16}
+        mb="16px"
         content="Login"
         onPress={() => formRef.current.submitForm()}
         loading={loading}

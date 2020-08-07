@@ -109,8 +109,8 @@ export default function SignIn({navigation, route}) {
         content="Salvar nova senha"
         onPress={() => formRef.current.submitForm()}
         loading={loading}
-        mt={16}
-        mb={16}
+        mt="16px"
+        mb="16px"
       />
     </Container>
   );

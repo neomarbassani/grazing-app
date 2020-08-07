@@ -33,7 +33,7 @@ export const ResultText = styled.Text`
   font-family: 'WorkSans-Bold';
   font-style: normal;
   font-weight: bold;
-  font-size: 100px;
+  font-size: ${({size}) => (size ? size : '80px')};
   text-align: center;
   color: #d69d2b;
 `;

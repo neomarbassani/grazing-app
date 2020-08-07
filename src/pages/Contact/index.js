@@ -87,14 +87,14 @@ const Contact = ({navigation, route}) => {
             textarea
             name="message"
             label="Mensagem"
-            keyboardType="çihlugkyh"
+            keyboardType="text"
             placeholder="Escreva a mensagem aqui"
           />
         </Form>
         <Button
           content="Enviar"
-          mt={20}
-          mb={20}
+          mt="20px"
+          mb="20px"
           color="#D69D2B"
           onPress={() => formRef.current.submitForm()}
         />
