@@ -16,6 +16,5 @@ export const Container = styled.ImageBackground`
 
 export const Background = styled.SafeAreaView`
   flex: 1;
-  margin-top: ${Platform.OS === 'ios' ? 20 : StatusBarManager.HEIGHT}px;
   background-color: #281100;
 `;

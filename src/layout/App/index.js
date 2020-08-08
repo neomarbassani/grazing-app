@@ -8,9 +8,8 @@ export default function AppContainer({children, results, ...rest}) {
   return (
     <View style={{flex: 1}}>
       <StatusBar
-        barStyle="dark-content"
+        barStyle="light-content"
         backgroundColor="#fff"
-        translucent={true}
       />
       <Background>
         <Container

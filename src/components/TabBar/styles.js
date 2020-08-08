@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 export const Container = styled.View`
   position: relative;
-  height: 60px;
+  height: 80px;
   padding: 18px 15px 10px 15px;
   flex-direction: row;
   justify-content: space-between;

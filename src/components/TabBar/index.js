@@ -14,7 +14,6 @@ const TabBar = ({state, navigation}) => {
     <>
       {state.routes[state.index].name === 'Result' ||
       state.routes[state.index].name === 'PlanOff' ? null : (
-        <SafeAreaView>
           <Container resizeMode="cover">
             <Page onPress={() => navigation.navigate('AboutUs')}>
               <Icon
@@ -52,7 +51,6 @@ const TabBar = ({state, navigation}) => {
               />
             </Page>
           </Container>
-        </SafeAreaView>
       )}
     </>
   );
