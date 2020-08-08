@@ -74,7 +74,7 @@ const Home = ({navigation}) => {
           content="Calcular números de piquetes"
           source={solution4}
           onPress={() => {
-            navigation.navigate('ChoosePastureType', {
+            navigation.navigate('ChooseBovineType', {
               calc: {
                 name: 'Pastoreio contínuo',
                 value: 'Calcular números de piquetes',

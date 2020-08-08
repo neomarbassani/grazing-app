@@ -1,12 +1,8 @@
 import styled from 'styled-components/native';
 
-import {Dimensions} from 'react-native';
-
-const screenHeight = Dimensions.get('window').height;
-
 export const Content = styled.View`
   width: 100%;
-  height: ${screenHeight - 60};
+  flex: 1;
   padding: 17px 30px;
   align-items: center;
 `;
@@ -37,7 +33,7 @@ export const ResultText = styled.Text`
   font-family: 'WorkSans-Bold';
   font-style: normal;
   font-weight: bold;
-  font-size: 100px;
+  font-size: ${({size}) => (size ? size : '80px')};
   text-align: center;
   color: #d69d2b;
 `;

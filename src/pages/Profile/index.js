@@ -321,7 +321,7 @@ const Profile = () => {
             formRef.current.submitForm();
           }}
           loading={loading}
-          mt={30}
+          mt="30px"
         />
         <Link
           content="Sair"

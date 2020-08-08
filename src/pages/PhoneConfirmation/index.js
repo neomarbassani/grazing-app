@@ -47,6 +47,7 @@ export default function SignIn() {
     const unsubscribe = auth().onAuthStateChanged(user => {
       if (user) {
         dispatch(AuthActions.autenticationRequest());
+
         setLoading(false);
       } else {
         signInWithPhoneNumber(`+55${phone}`);
@@ -103,8 +104,8 @@ export default function SignIn() {
       />
 
       <Button
-        mt={15}
-        mb={16}
+        mt="15px"
+        mb="16px"
         content="Entrar"
         loading={loading}
         onPress={() => confirmCode()}

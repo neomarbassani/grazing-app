@@ -23,8 +23,6 @@ import novilhaleiteira from '../../assets/novilhaleiteira.jpg';
 const ChooseBovineCategory = ({navigation, route}) => {
   const {calc, animalCategory} = route.params;
 
-  console.log(route.params);
-
   const items = [calc.value, calc.name];
 
   return (
@@ -118,7 +116,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
             />
 
             <ChooseItemButton
-              content={'Novilha Leiteira '}
+              content={'Novilha Leiteira'}
               source={novilhaleiteira}
               size={47}
               onPress={() => {
