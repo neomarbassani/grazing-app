@@ -14,43 +14,43 @@ const TabBar = ({state, navigation}) => {
     <>
       {state.routes[state.index].name === 'Result' ||
       state.routes[state.index].name === 'PlanOff' ? null : (
-          <Container resizeMode="cover">
-            <Page onPress={() => navigation.navigate('AboutUs')}>
-              <Icon
-                source={aboutUs}
-                resizeMode="contain"
-                focused={state.routeNames[state.index] === 'AboutUs'}
-              />
-            </Page>
-            <Page onPress={() => navigation.navigate('Historico')}>
-              <Icon
-                source={history}
-                resizeMode="contain"
-                focused={state.routeNames[state.index] === 'Historico'}
-              />
-            </Page>
-            <Home onPress={() => navigation.navigate('Início')}>
-              <Icon
-                source={home}
-                resizeMode="contain"
-                focused={state.routeNames[state.index] === 'Início'}
-              />
-            </Home>
-            <Page onPress={() => navigation.navigate('Contact')}>
-              <Icon
-                source={sendMessage}
-                resizeMode="contain"
-                focused={state.routeNames[state.index] === 'Contact'}
-              />
-            </Page>
-            <Page onPress={() => navigation.navigate('Perfil')}>
-              <Icon
-                source={profile}
-                resizeMode="contain"
-                focused={state.routeNames[state.index] === 'Perfil'}
-              />
-            </Page>
-          </Container>
+        <Container resizeMode="cover">
+          <Page onPress={() => navigation.navigate('AboutUs')}>
+            <Icon
+              source={aboutUs}
+              resizeMode="contain"
+              focused={state.routeNames[state.index] === 'AboutUs'}
+            />
+          </Page>
+          <Page onPress={() => navigation.navigate('Historico')}>
+            <Icon
+              source={history}
+              resizeMode="contain"
+              focused={state.routeNames[state.index] === 'Historico'}
+            />
+          </Page>
+          <Home onPress={() => navigation.navigate('Início')}>
+            <Icon
+              source={home}
+              resizeMode="contain"
+              focused={state.routeNames[state.index] === 'Início'}
+            />
+          </Home>
+          <Page onPress={() => navigation.navigate('Contact')}>
+            <Icon
+              source={sendMessage}
+              resizeMode="contain"
+              focused={state.routeNames[state.index] === 'Contact'}
+            />
+          </Page>
+          <Page onPress={() => navigation.navigate('Perfil')}>
+            <Icon
+              source={profile}
+              resizeMode="contain"
+              focused={state.routeNames[state.index] === 'Perfil'}
+            />
+          </Page>
+        </Container>
       )}
     </>
   );

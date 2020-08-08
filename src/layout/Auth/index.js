@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, Platform} from 'react-native';
 
 import {ScrollView, Background} from './styles';
 import {colors} from '../../styles';
@@ -15,7 +15,7 @@ export default function AuthContainer({children}) {
   return (
     <>
       <StatusBar
-        barStyle="dark-content"
+        barStyle={Platform.OS === 'android' ? 'dark-content' : 'light-content'}
         backgroundColor={colors.background}
         translucent={true}
       />

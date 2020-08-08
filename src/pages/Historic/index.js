@@ -4,7 +4,7 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
-import {RefreshControl, Dimensions} from 'react-native';
+import {RefreshControl, Dimensions, View, ScrollView} from 'react-native';
 const {width} = Dimensions.get('window');
 
 import backgroundLogo from '../../assets/backgroundLogo.png';
@@ -319,110 +319,126 @@ const Historic = ({navigation}) => {
         )}
       </Container>
       <ModalContainer isVisible={modalConfig.isVisible}>
-        <ModalContent>
-          <ModalContainerCloseButton
-            name="x"
-            color="#888899"
-            size={24}
-            onPress={() =>
-              setModalConfig({
-                isVisible: false,
-                item: {},
-              })
-            }
-          />
-          <ModalContainerTitle size={19}>
-            {modalConfig.item.config && modalConfig.item.config.calc.value}
-          </ModalContainerTitle>
-          <ModalContainerDateTime>
-            {formateDate(modalConfig.item.created_at)} às{' '}
-            {new Date(modalConfig.item.created_at).getHours()}h
-          </ModalContainerDateTime>
-          <ModalContainerTitle size={14} alignSelf="flex-start" mt={23} mb={15}>
-            Histórico da análise
-          </ModalContainerTitle>
-          <RowItem>
-            <Label>Método de pastoreio:</Label>
-            <Value>
-              {modalConfig.item.config && modalConfig.item.config.calc.name}
-            </Value>
-          </RowItem>
-          <RowItem>
-            <Label>Sistema de produção:</Label>
-            <Value>
-              {modalConfig.item.config && modalConfig.item.config.animal.name}
-            </Value>
-          </RowItem>
-          <RowItem>
-            <Label>Categoria animal:</Label>
-            <Value>
-              {modalConfig.item.config && modalConfig.item.config.animal.value}
-            </Value>
-          </RowItem>
-          <Separator />
+        <ScrollView style={{flex: 1}}>
+          <ModalContent>
+            <ModalContainerCloseButton
+              name="x"
+              color="#888899"
+              size={24}
+              onPress={() =>
+                setModalConfig({
+                  isVisible: false,
+                  item: {},
+                })
+              }
+            />
+            <ModalContainerTitle size={19}>
+              {modalConfig.item.config && modalConfig.item.config.calc.value}
+            </ModalContainerTitle>
+            <ModalContainerDateTime>
+              {formateDate(modalConfig.item.created_at)} às{' '}
+              {new Date(modalConfig.item.created_at).getHours()}h
+            </ModalContainerDateTime>
+            <ModalContainerTitle
+              size={14}
+              alignSelf="flex-start"
+              mt={23}
+              mb={15}>
+              Histórico da análise
+            </ModalContainerTitle>
+            <RowItem>
+              <Label>Método de pastoreio:</Label>
+              <Value>
+                {modalConfig.item.config && modalConfig.item.config.calc.name}
+              </Value>
+            </RowItem>
+            <RowItem>
+              <Label>Sistema de produção:</Label>
+              <Value>
+                {modalConfig.item.config && modalConfig.item.config.animal.name}
+              </Value>
+            </RowItem>
+            <RowItem>
+              <Label>Categoria animal:</Label>
+              <Value>
+                {modalConfig.item.config &&
+                  modalConfig.item.config.animal.value}
+              </Value>
+            </RowItem>
+            <Separator />
 
-          <ModalContainerTitle size={14} alignSelf="flex-start" mt={23} mb={15}>
-            Informações dos animais
-          </ModalContainerTitle>
-          <RowItem>
-            <Label>Peso:</Label>
-            <Value>
-              {modalConfig.item.inputs &&
-                modalConfig.item.inputs.find(input => input.key === 'weigth')
-                  .value}
-              kg
-            </Value>
-          </RowItem>
+            <ModalContainerTitle
+              size={14}
+              alignSelf="flex-start"
+              mt={23}
+              mb={15}>
+              Informações dos animais
+            </ModalContainerTitle>
+            <RowItem>
+              <Label>Peso:</Label>
+              <Value>
+                {modalConfig.item.inputs &&
+                  modalConfig.item.inputs.find(input => input.key === 'weigth')
+                    .value}
+                kg
+              </Value>
+            </RowItem>
 
-          <RowItem>
-            <Label>Forrageira:</Label>
-            <Value>
-              {modalConfig.item.config && modalConfig.item.config.pasture.value}
-            </Value>
-          </RowItem>
-          <Separator />
+            <RowItem>
+              <Label>Forrageira:</Label>
+              <Value>
+                {modalConfig.item.config &&
+                  modalConfig.item.config.pasture.value}
+              </Value>
+            </RowItem>
+            <Separator />
 
-          <ModalContainerTitle size={14} alignSelf="flex-start" mt={23} mb={15}>
-            Informações sobre o sistema
-          </ModalContainerTitle>
-          <RowItem>
-            <Label>Data da avaliação:</Label>
-            <Value>
-              {modalConfig.item.inputs &&
-                new Date(modalConfig.item.created_at).getDay()}
-              /
-              {modalConfig.item.inputs &&
-                new Date(modalConfig.item.created_at).getMonth()}
-              /
-              {modalConfig.item.inputs &&
-                new Date(modalConfig.item.created_at).getFullYear()}
-            </Value>
-          </RowItem>
-          <RowItem>
-            <Label>Dias de utilização:</Label>
-            <Value>30 dias (Padrão)</Value>
-          </RowItem>
-          <RowItem>
-            <Label>Altura do pasto (cm)</Label>
-            <Value>
-              {modalConfig.item.inputs &&
-                modalConfig.item.inputs.find(
-                  input => input.key === 'pastureHeight',
-                ).value}
-            </Value>
-          </RowItem>
-          <ModalContainerTitle size={19} mt={15}>
-            Resultado
-          </ModalContainerTitle>
-        </ModalContent>
-        <ResultBoxModal>
-          <ResultBoxModalTitle>
-            {modalConfig.item.results && modalConfig.item.results[0].name}
-          </ResultBoxModalTitle>
-          <ResultBoxModalValue>
-            {modalConfig.item.results && modalConfig.item.results[0].value}
-          </ResultBoxModalValue>
-        </ResultBoxModal>
+            <ModalContainerTitle
+              size={14}
+              alignSelf="flex-start"
+              mt={23}
+              mb={15}>
+              Informações sobre o sistema
+            </ModalContainerTitle>
+            <RowItem>
+              <Label>Data da avaliação:</Label>
+              <Value>
+                {modalConfig.item.inputs &&
+                  new Date(modalConfig.item.created_at).getDay()}
+                /
+                {modalConfig.item.inputs &&
+                  new Date(modalConfig.item.created_at).getMonth()}
+                /
+                {modalConfig.item.inputs &&
+                  new Date(modalConfig.item.created_at).getFullYear()}
+              </Value>
+            </RowItem>
+            <RowItem>
+              <Label>Dias de utilização:</Label>
+              <Value>30 dias (Padrão)</Value>
+            </RowItem>
+            <RowItem>
+              <Label>Altura do pasto (cm)</Label>
+              <Value>
+                {modalConfig.item.inputs &&
+                  modalConfig.item.inputs.find(
+                    input => input.key === 'pastureHeight',
+                  ).value}
+              </Value>
+            </RowItem>
+            <ModalContainerTitle size={19} mt={15}>
+              Resultado
+            </ModalContainerTitle>
+          </ModalContent>
+          <ResultBoxModal>
+            <ResultBoxModalTitle>
+              {modalConfig.item.results && modalConfig.item.results[0].name}
+            </ResultBoxModalTitle>
+            <ResultBoxModalValue>
+              {modalConfig.item.results && modalConfig.item.results[0].value}
+            </ResultBoxModalValue>
+          </ResultBoxModal>
+        </ScrollView>
       </ModalContainer>
     </>
   );

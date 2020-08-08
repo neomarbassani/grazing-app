@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
+import {Platform} from 'react-native';
 
 export const Container = styled.View`
   position: relative;
-  height: 80px;
+  height: ${Platform.OS === 'ios' ? '80px' : '60px'};
   padding: 18px 15px 10px 15px;
   flex-direction: row;
   justify-content: space-between;

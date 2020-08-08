@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {StatusBar, View} from 'react-native';
+import {StatusBar, View, Platform} from 'react-native';
 
 import {Container, Background} from './styles';
 
@@ -8,7 +8,7 @@ export default function AppContainer({children, results, ...rest}) {
   return (
     <View style={{flex: 1}}>
       <StatusBar
-        barStyle="light-content"
+        barStyle={Platform.OS === 'android' ? 'dark-content' : 'light-content'}
         backgroundColor="#fff"
       />
       <Background>

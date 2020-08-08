@@ -1,7 +1,7 @@
 import React from 'react';
-import { StatusBar } from 'react-native';
+import {StatusBar, Platform} from 'react-native';
 
-import { Container, Animation, Logo } from './styles';
+import {Container, Animation, Logo} from './styles';
 
 import offlineAnimation from '../../assets/animation/offlineAnimation.json';
 
@@ -9,7 +9,7 @@ const Offline = () => {
   return (
     <Container>
       <StatusBar
-        barStyle="dark-content"
+        barStyle={Platform.OS === 'android' ? 'dark-content' : 'light-content'}
         backgroundColor="#fff"
         translucent={true}
       />

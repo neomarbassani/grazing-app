@@ -50,8 +50,9 @@ const Profile = () => {
 
   useEffect(() => {
     const statesArray = locations.reduce((acc, state) => {
-      return [...acc, state.sigla];
+      return [...acc, {label: state.sigla, value: state.sigla}];
     }, []);
+
     setStates(statesArray);
   }, []);
 
@@ -65,7 +66,10 @@ const Profile = () => {
       const availableCities = locations.find(state => state.sigla === stateName)
         .cidades;
 
-      setCities(availableCities);
+      let cityArray = availableCities.reduce((acc, state) => {
+        return [...acc, {label: state, value: state}];
+      }, []);
+      setCities(cityArray);
     }
   };
 
@@ -74,8 +78,6 @@ const Profile = () => {
       city: selectedCity,
       state: selectedState,
     };
-
-    console.log(userData);
 
     try {
       formRef.current.setErrors({});
@@ -208,7 +210,6 @@ const Profile = () => {
         contentContainerStyle={{
           width: '100%',
           paddingHorizontal: 15,
-          alignItems: 'center',
         }}>
         <PhotoContainer>
           <Avatar loading={loading} size={120} />
@@ -219,6 +220,7 @@ const Profile = () => {
         <UserNameField>{user.name}</UserNameField>
         <FormArea>
           <Form
+            style={{flex: 1}}
             ref={formRef}
             initialData={{
               name: user.name ? user.name : '',

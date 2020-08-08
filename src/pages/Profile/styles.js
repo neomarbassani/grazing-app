@@ -29,6 +29,7 @@ export const UserNameField = styled.Text`
   font-size: 16px;
   line-height: 19px;
   margin-top: 10px;
+  text-align: center;
   color: #888899;
 `;
 

@@ -40,7 +40,7 @@ export default function Register({navigation}) {
 
   useEffect(() => {
     const statesArray = locations.reduce((acc, state) => {
-      return [...acc, state.sigla];
+      return [...acc, {label: state.sigla, value: state.sigla}];
     }, []);
     setStates(statesArray);
   }, []);
@@ -50,7 +50,10 @@ export default function Register({navigation}) {
       const availableCities = locations.find(state => state.sigla === stateName)
         .cidades;
 
-      setCities(availableCities);
+      let cityArray = availableCities.reduce((acc, state) => {
+        return [...acc, {label: state, value: state}];
+      }, []);
+      setCities(cityArray);
     }
   };
 

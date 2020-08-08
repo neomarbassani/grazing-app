@@ -152,7 +152,6 @@ export const LoadMoreItemsText = styled.Text`
 `;
 
 export const ModalContainer = styled(Modal)`
-  position: absolute;
   bottom: -21px;
   left: -21px;
   width: 100%;
