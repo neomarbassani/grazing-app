@@ -264,7 +264,7 @@ export const quantidadeDeSuplemento = ({
   feno = 0,
   silagem = 0,
 }) => {
-  if (racao === -1 || feno === -1 || silagem === -1) {
+  if (racao < 0 || feno < 0 || silagem < 0) {
     return peso * 0.01;
   }
   return racao + feno * 0.85 + silagem * 0.3;
@@ -334,7 +334,7 @@ export function ajustarLotacaoAnimalContinuo({
   areaDoPotreiro: 5,
 }) */
 
-// Ajustar lotação Animal Rotativo - revisada.
+// Ajustar lotação Animal Rotativo - Ok - 19/08/2020
 export function ajustarLotacaoAnimalRotativo({
   dataDeInicio,
   peso,
@@ -377,16 +377,16 @@ export function ajustarLotacaoAnimalRotativo({
     (
       (
         ( alturaDoPasto * relacaoMassaAltura ) -
-        ( alturaOtima * 0,6 * relacaoMassaAltura )
+        ( alturaOtima * 0.6 * relacaoMassaAltura )
       ) * areaDoPotreiro / numeroDePiquetes
     ) + (
       taxaDeAcumulo * ( areaDoPotreiro / numeroDePiquetes ) *
-      ((( alturaOtima * 0,4 ) / ( taxaDeAcumulo / relacaoMassaAltura )) / ( numeroDePiquetes-1 ))
+      ((( alturaOtima * 0.4 ) / ( taxaDeAcumulo / relacaoMassaAltura )) / ( numeroDePiquetes-1 ))
     )
   ) / (
     ( consumoNRC - quantSuplemento ) *
     ((
-      ( alturaOtima * 0,4 ) /
+      ( alturaOtima * 0.4 ) /
       ( taxaDeAcumulo / relacaoMassaAltura ) /
       ( numeroDePiquetes - 1 )
     ))
@@ -422,7 +422,7 @@ export function ajustarLotacaoAnimalRotativo({
 }) */
 
 
-// Tamanho potreiro Rotativo - revisado
+// Tamanho potreiro Rotativo - Ok - 19/08/2020
 export function tamanhoPotreiroRotativo({
   dataDeInicio,
   peso,
@@ -613,7 +613,7 @@ export function fornecerSuplementoContinuo({
   silagem: 0,
 }); */
 
-// Fornecer suplemento rotativo - revisado
+// Fornecer suplemento rotativo - Ok - 19/08/2020
 export function fornecerSuplementoRotativo({
   dataDeInicio,
   peso,
@@ -646,15 +646,8 @@ export function fornecerSuplementoRotativo({
     quantidadeDeLeite,
   });
 
-  const quantSuplemento = quantidadeDeSuplemento({
-    peso,
-    racao,
-    feno,
-    silagem,
-  });
-
   const resultado1 =
-    (quantSuplemento * diasDePermanencia * quantidadeDeAnimais -
+    (consumoNRC * diasDePermanencia * quantidadeDeAnimais -
       ((alturaDoPasto * relacaoMassaAltura -
         alturaOtima * 0.6 * relacaoMassaAltura) *
         (areaDoPotreiro / numeroDePiquetes) +
@@ -664,21 +657,19 @@ export function fornecerSuplementoRotativo({
 
   const resultado2 = resultado1 / quantidadeDeAnimais;
 
-  const resultados = [
+  let resultados
+  if(resultado1 <= 0) {
+    resultados = [{ value: 'Não há necessidade de suplementar os animais' }]
+  }else 
+  resultados = [
     {
       name:
-        'Quantidade total de ração a ser fornecida por dia para os animais (kg MS/dia)',
-      value:
-        Math.sign(resultado1) === -1
-          ? 'Não há necessidade de suplementar os animais'
-          : Math.round(resultado1).toLocaleString('pt-BR'),
+        'Quantidade de suplemento para o lote de animais (kg/dia)',
+      value: Math.round(resultado1).toLocaleString('pt-BR'),
     },
     {
       name: 'Quantidade de suplemento por animal (kg/dia)',
-      value:
-        Math.sign(resultado2) === -1
-          ? 'Não há necessidade de suplementar os animais'
-          : Math.round(resultado1).toLocaleString('pt-BR'),
+      value: Math.round(resultado2).toLocaleString('pt-BR'),
     },
   ];
 
@@ -777,7 +768,7 @@ export function definirPeriodoDeOcupacaoRotativo({
   silagem: 0,
 }); */
 
-// Calcular número de piquetes - revisado
+// Calcular número de piquetes - OK - 19 / 08 / 2020
 export function calcularNumeroDePiquetes({
   dataDeInicio,
   tipoDePasto,
@@ -815,14 +806,15 @@ export function calcularNumeroDePiquetes({
   });
 
   const resultado1 = ( 
-    ((alturaOtima* 0,4 / (media / relacaoMassaAltura)) + 1) + 
-    ((((consumoNRC-quantSuplemento) * quantidadeDeAnimais)/(((alturaOtima*0,4)*relacaoMassaAltura)+media)))
+    (( alturaOtima* 0.4 / (media / relacaoMassaAltura)) + 1) + 
+    (areaDoPotreiro / (((consumoNRC-quantSuplemento) * quantidadeDeAnimais)/(((alturaOtima*0.4)*relacaoMassaAltura)+media)))
   )/2
 
-  const resultado2 =
+  const resultado2 = Math.round(
     resultado1 *
     (((consumoNRC - quantSuplemento) * quantidadeDeAnimais) /
-      (alturaOtima * 0.4 * relacaoMassaAltura + media));
+      (alturaOtima * 0.4 * relacaoMassaAltura + media)));
+  
 
   const resultados = [
     {
@@ -834,6 +826,15 @@ export function calcularNumeroDePiquetes({
       value: Math.round(resultado2).toLocaleString('pt-BR'),
     },
   ];
+
+
+  if(resultado2 == areaDoPotreiro) {
+    resultados.push({name: '',})
+  }else if(resultado2 > areaDoPotreiro) {
+    resultados.push({name: '',})
+  }else if(resultado2 < areaDoPotreiro) {
+    resultados.push({name: '',})
+  }
 
   console.log(resultados);
 
