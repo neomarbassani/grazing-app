@@ -344,7 +344,6 @@ export function ajustarLotacaoAnimalRotativo({
   numeroDePiquetes,
   alturaDoPasto,
   tipoDePasto,
-  tempoDePermanencia,
   areaDoPotreiro,
   diasDeGestacao = 0,
   semanasDeLactacao = 0,
@@ -374,13 +373,24 @@ export function ajustarLotacaoAnimalRotativo({
   });
 
   const resultado =
-    ((alturaDoPasto * relacaoMassaAltura -
-      alturaOtima * 0.6 * relacaoMassaAltura) *
-      (areaDoPotreiro / numeroDePiquetes) +
-      taxaDeAcumulo *
-        (areaDoPotreiro / numeroDePiquetes) *
-        tempoDePermanencia) /
-    ((consumoNRC - quantSuplemento) * tempoDePermanencia);
+  (
+    (
+      (
+        ( alturaDoPasto * relacaoMassaAltura ) -
+        ( alturaOtima * 0,6 * relacaoMassaAltura )
+      ) * areaDoPotreiro / numeroDePiquetes
+    ) + (
+      taxaDeAcumulo * ( areaDoPotreiro / numeroDePiquetes ) *
+      ((( alturaOtima * 0,4 ) / ( taxaDeAcumulo / relacaoMassaAltura )) / ( numeroDePiquetes-1 ))
+    )
+  ) / (
+    ( consumoNRC - quantSuplemento ) *
+    ((
+      ( alturaOtima * 0,4 ) /
+      ( taxaDeAcumulo / relacaoMassaAltura ) /
+      ( numeroDePiquetes - 1 )
+    ))
+  )
 
   const resultados = [
     {
@@ -410,6 +420,7 @@ export function ajustarLotacaoAnimalRotativo({
   categoriaAnimal: 'bovinoCorte',
   tipoDeAnimal: 'novilha',
 }) */
+
 
 // Tamanho potreiro Rotativo - revisado
 export function tamanhoPotreiroRotativo({
@@ -782,22 +793,6 @@ export function calcularNumeroDePiquetes({
   feno = 0,
   silagem = 0,
 }) {
-  console.log({
-    dataDeInicio,
-    tipoDePasto,
-    peso,
-    quantidadeDeAnimais,
-    numeroDePiquetes,
-    tipoDeAnimal,
-    categoriaAnimal,
-    diasDeGestacao,
-    semanasDeLactacao,
-    quantidadeDeLeite,
-    racao,
-    feno,
-    silagem,
-  });
-
   const relacaoMassaAltura = especie[tipoDePasto].relacaoMassaAltura;
   const alturaOtima = especie[tipoDePasto].alturaOtima;
   const media = taxaDeAcumuloPorEspecie[tipoDePasto].media;
@@ -819,7 +814,10 @@ export function calcularNumeroDePiquetes({
     silagem,
   });
 
-  const resultado1 = (alturaOtima * 0.4) / (media / relacaoMassaAltura) + 1;
+  const resultado1 = ( 
+    ((alturaOtima* 0,4 / (media / relacaoMassaAltura)) + 1) + 
+    ((((consumoNRC-quantSuplemento) * quantidadeDeAnimais)/(((alturaOtima*0,4)*relacaoMassaAltura)+media)))
+  )/2
 
   const resultado2 =
     resultado1 *
