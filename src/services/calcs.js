@@ -774,7 +774,7 @@ export function calcularNumeroDePiquetes({
   tipoDePasto,
   peso,
   quantidadeDeAnimais,
-  numeroDePiquetes,
+  areaDoPotreiro,
   tipoDeAnimal,
   categoriaAnimal,
   diasDeGestacao = 0,
@@ -829,11 +829,11 @@ export function calcularNumeroDePiquetes({
 
 
   if(resultado2 == areaDoPotreiro) {
-    resultados.push({name: '',})
+    resultados.push({name: 'A área do potreiro está adequada para manter o lote de animais.'})
   }else if(resultado2 > areaDoPotreiro) {
-    resultados.push({name: '',})
+    resultados.push({name: 'A área do potreiro é superior à área necessária para manter o lote de animais.'})
   }else if(resultado2 < areaDoPotreiro) {
-    resultados.push({name: '',})
+    resultados.push({name: 'A área do potreiro é inferior à área necessária para manter o lote de animais. Recomenda-se aumentar a área do potreiro, reduzir a lotação animal ou fornecer suplemento ao lote de animais'})
   }
 
   console.log(resultados);
