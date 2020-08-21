@@ -731,14 +731,16 @@ export function definirPeriodoDeOcupacaoRotativo({
       (areaDoPotreiro / numeroDePiquetes) +
       taxaDeAcumulo * (areaDoPotreiro / numeroDePiquetes)) /
     ((consumoNRC - quantSuplemento) * quantidadeDeAnimais);
+    
+  const resultados = []
 
-  const resultados = [
-    {
-      name:
-        'Período de ocupação (tempo de permanência dos animais em cada faixa, em dias)',
-      value: Math.round(resultado).toLocaleString('pt-BR'),
-    },
-  ];
+  if(resultado < 1) {
+    resultados.push({ name: 'Não é possível colocar os animais na área. Aguarde até que a pastagem atinja altura pré-pastejo adequada.' })
+  } else resultados.push({
+    name:
+      'Período de ocupação (tempo de permanência dos animais em cada faixa, em dias)',
+    value: Math.round(resultado).toLocaleString('pt-BR'),
+  });
 
   console.log(resultados);
 
