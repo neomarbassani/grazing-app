@@ -25,7 +25,12 @@ import {Content, ScrollView} from './styles';
 const ChoosePastureType = ({navigation, route}) => {
   const {animal, calc, inputs} = route.params;
 
-  const items = [calc.value, calc.name, animal && animal.value];
+  const items = [
+    calc.value,
+    calc.name,
+    animal && animal.name,
+    animal && animal.value,
+  ];
 
   return (
     <Container
@@ -41,9 +46,41 @@ const ChoosePastureType = ({navigation, route}) => {
         <SubTitle value="Qual espécie forrageira?" size={14} mb={20} />
         <ScrollView
           showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          /* removeClippedSubviews={true} */
-        >
+          showsVerticalScrollIndicator={false}>
+          <ChooseItemButton
+            size={100}
+            content="Aveia"
+            source={aveia}
+            onPress={() => {
+              navigation.navigate('Form', {
+                animal,
+                calc,
+                inputs,
+                pasture: {
+                  name: 'Qual espécie forrageira?',
+                  value: 'Aveia',
+                  key: 'aveia',
+                },
+              });
+            }}
+          />
+          <ChooseItemButton
+            size={100}
+            content="Aveia + Azevém"
+            source={azevem}
+            onPress={() => {
+              navigation.navigate('Form', {
+                animal,
+                calc,
+                inputs,
+                pasture: {
+                  name: 'Qual espécie forrageira?',
+                  value: 'Aveia + Azevém',
+                  key: 'aveiaAzevem',
+                },
+              });
+            }}
+          />
           <ChooseItemButton
             size={100}
             content="Azevém"
@@ -97,8 +134,8 @@ const ChoosePastureType = ({navigation, route}) => {
           />
           <ChooseItemButton
             size={100}
-            content="Aveia"
-            source={aveia}
+            content="Capim-Sudão"
+            source={sudao}
             onPress={() => {
               navigation.navigate('Form', {
                 animal,
@@ -106,8 +143,8 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Aveia',
-                  key: 'aveia',
+                  value: 'Capim-Sudão',
+                  key: 'sudao',
                 },
               });
             }}
@@ -125,23 +162,6 @@ const ChoosePastureType = ({navigation, route}) => {
                   name: 'Qual espécie forrageira?',
                   value: 'Milheto',
                   key: 'milheto',
-                },
-              });
-            }}
-          />
-          <ChooseItemButton
-            size={100}
-            content="Sudão"
-            source={sudao}
-            onPress={() => {
-              navigation.navigate('Form', {
-                animal,
-                calc,
-                inputs,
-                pasture: {
-                  name: 'Qual espécie forrageira?',
-                  value: 'Sudão',
-                  key: 'sudao',
                 },
               });
             }}

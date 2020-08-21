@@ -1,9 +1,15 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {Container, Icon, ModalContainer, ModalText, ModalTitle} from './styles';
+import {
+  Container,
+  ModalContainer,
+  ModalText,
+  ModalTitle,
+  Letter,
+} from './styles';
 import Modal from 'react-native-modal';
 
-import IconClose from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Feather';
 
 import {TouchableOpacity} from 'react-native';
 
@@ -12,7 +18,7 @@ const HelpButton = ({data, ...rest}) => {
   return (
     <>
       <Container {...rest} onPress={() => setIsVisible(true)}>
-        <Icon>?</Icon>
+        <Letter>i</Letter>
       </Container>
       <Modal isVisible={isVisible}>
         <ModalContainer>
@@ -25,7 +31,7 @@ const HelpButton = ({data, ...rest}) => {
               zIndex: 1000,
             }}
             onPress={() => setIsVisible(false)}>
-            <IconClose name="x" size={20} />
+            <Icon name="x" size={20} />
           </TouchableOpacity>
           <ModalTitle>{data.title}</ModalTitle>
           <ModalText>{data.content}</ModalText>

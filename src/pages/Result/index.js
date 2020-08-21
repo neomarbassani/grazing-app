@@ -65,7 +65,7 @@ const Result = ({navigation, route}) => {
             </ResultText>
           </>
         ))}
-        <Button content="Voltar ao início" mt="auto" /* onPress={saveCalc} */ />
+        <Button content="Voltar ao início" mt="auto" onPress={saveCalc} />
       </Content>
     </Container>
   );

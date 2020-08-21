@@ -24,7 +24,12 @@ const AnimalInfo = ({navigation, route}) => {
 
   const {calc, animal} = route.params;
 
-  const items = [calc.value, calc.name, animal.value];
+  const items = [
+    calc.value,
+    calc.name,
+    animal && animal.name,
+    animal && animal.value,
+  ];
 
   const formRef = useRef(null);
 
@@ -129,6 +134,7 @@ const AnimalInfo = ({navigation, route}) => {
             label="Escore de condição corporal"
             value={score}
             color="#888899"
+            step={0.5}
             mt={10}
             onValueChange={value => {
               setScore(value);
@@ -166,7 +172,7 @@ const AnimalInfo = ({navigation, route}) => {
         </Form>
         <Button
           content="Próximo"
-          mt='20px'
+          mt="20px"
           color="#D69D2B"
           onPress={() => formRef.current.submitForm()}
         />

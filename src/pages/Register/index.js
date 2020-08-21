@@ -26,6 +26,16 @@ const help = {
   content: 'Área total, em hectares, que é destinada ao pastejo dos animais',
 };
 
+const activities = [
+  {value: 'Consultor(a)', label: 'Consultor(a)'},
+  {value: 'Técnico(a)', label: 'Técnico(a)'},
+  {value: 'produtor(a)', label: 'produtor(a)'},
+  {value: 'Rural', label: 'Rural'},
+  {value: 'Pesquisador(a)', label: 'Pesquisador(a)'},
+  {value: 'Estudante', label: 'Estudante'},
+  {value: 'Outro', label: 'Outro'},
+];
+
 export default function Register({navigation}) {
   const dispatch = useDispatch();
 
@@ -37,6 +47,8 @@ export default function Register({navigation}) {
   const [states, setStates] = useState([]);
   const [selectedState, setSelectedState] = useState('');
   const [selectedCity, setSelectedCity] = useState('');
+
+  const [activity, setActivity] = useState('');
 
   useEffect(() => {
     const statesArray = locations.reduce((acc, state) => {
@@ -94,6 +106,8 @@ export default function Register({navigation}) {
         city: selectedCity,
       };
 
+      userData.activity = activity;
+
       dispatch(AuthActions.signUpRequest(userData));
     } catch (err) {
       const validationErrors = {};
@@ -124,6 +138,16 @@ export default function Register({navigation}) {
       <Title value="Criar uma nova conta" size={16} mb={16} />
       <Form ref={formRef} onSubmit={handleSubmit}>
         <FormArea>
+          <InputPicker
+            label="Atividade"
+            data={activities}
+            width={100}
+            prompt="Escolha uma opção"
+            selectedValue={activity}
+            onValueChange={value => {
+              setActivity(value);
+            }}
+          />
           <Input
             name="name"
             label="Nome completo"

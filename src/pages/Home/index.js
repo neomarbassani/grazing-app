@@ -93,14 +93,14 @@ const Home = ({navigation}) => {
           }}>
           <HelpButton card data={help[4]} />
         </ChooseItemButton>
-        <FreePlanBox>
+        {/* <FreePlanBox>
           <FreePlanBoxText>Você tem 30 dias grátis</FreePlanBoxText>
           <Link
             content="Assinar plano agora"
             color="#D69D2B"
             onPress={() => navigation.navigate('PlanOff')}
           />
-        </FreePlanBox>
+        </FreePlanBox> */}
       </Content>
     </Container>
   );

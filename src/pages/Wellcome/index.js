@@ -9,7 +9,12 @@ import backgroundImage3 from '../../assets/loading3.jpg';
 
 import logo from '../../assets/logoWellcome.png';
 
-const slides = [backgroundImage1, backgroundImage2, backgroundImage3];
+const slides = [backgroundImage3, backgroundImage2, backgroundImage1];
+const phrases = [
+  'Otimize a produtividade pelo manejo adequado da pastagem.',
+  'A solidez da Ciência na tomada de decisão.',
+  'Seja eficiente, rápido e preciso. Seja GRAZING!',
+];
 
 import {
   Container,
@@ -41,6 +46,17 @@ const Wellcome = ({navigation}) => {
     }
   };
 
+  setTimeout(() => {
+    if (index < slides.length - 1) {
+      setIndex(index + 1);
+    }
+
+    if (index === slides.length - 1) {
+      setIndex(0);
+    }
+  }, 5000);
+
+  console.log(index);
   return (
     <Background source={slides[index]}>
       <PanGestureHandler
@@ -48,9 +64,10 @@ const Wellcome = ({navigation}) => {
         <Container>
           <Logo source={logo} />
           <BottomBox>
-            <BottomBoxText>
-              Maneje o seu pasto da forma adequada para otimizar a produtividade
-            </BottomBoxText>
+            {phrases.map(
+              (text, indexElement) =>
+                index === indexElement && <BottomBoxText>{text}</BottomBoxText>,
+            )}
             <Pagination>
               {slides.map((dot, indexElement) =>
                 index === indexElement ? <ActiveDot /> : <InactiveDot />,
@@ -66,7 +83,6 @@ const Wellcome = ({navigation}) => {
               content="Criar conta"
               color="#774D37"
               onPress={() => navigation.navigate('Register')}
-              disabled={index !== slides.length - 1}
             />
           </BottomBox>
         </Container>

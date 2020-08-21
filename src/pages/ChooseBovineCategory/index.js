@@ -23,7 +23,7 @@ import novilhaleiteira from '../../assets/novilhaleiteira.jpg';
 const ChooseBovineCategory = ({navigation, route}) => {
   const {calc, animalCategory} = route.params;
 
-  const items = [calc.value, calc.name];
+  const items = [calc.value, calc.name, animalCategory];
 
   return (
     <Container
@@ -41,7 +41,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
           <>
             <ChooseItemButton
               size={47}
-              content={'Terneiro'}
+              content={'Terneiro(a)'}
               source={terneiro}
               onPress={() => {
                 navigation.navigate('AnimalInfo', {
@@ -54,7 +54,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
               }}
             />
             <ChooseItemButton
-              content={'Novilha'}
+              content={'Novilho(a)'}
               source={novilha}
               size={47}
               onPress={() => {
@@ -116,7 +116,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
             />
 
             <ChooseItemButton
-              content={'Novilha Leiteira'}
+              content={'Novilha'}
               source={novilhaleiteira}
               size={47}
               onPress={() => {

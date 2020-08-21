@@ -378,7 +378,7 @@ const Historic = ({navigation}) => {
               <Label>Peso:</Label>
               <Value>
                 {modalConfig.item.inputs &&
-                  modalConfig.item.inputs.find(input => input.key === 'weigth')
+                  modalConfig.item.inputs.find(input => input.key === 'peso')
                     .value}
                 kg
               </Value>
@@ -400,6 +400,18 @@ const Historic = ({navigation}) => {
               mb={15}>
               Informações sobre o sistema
             </ModalContainerTitle>
+
+            <RowItem>
+              <Label>Identificação do Potreiro:</Label>
+              <Value>
+                {modalConfig.item.inputs &&
+                  modalConfig.item.inputs.find(
+                    input => input.key === 'nomeDoPotreiro',
+                  ).value}
+                kg
+              </Value>
+            </RowItem>
+
             <RowItem>
               <Label>Data da avaliação:</Label>
               <Value>
@@ -413,30 +425,31 @@ const Historic = ({navigation}) => {
                   new Date(modalConfig.item.created_at).getFullYear()}
               </Value>
             </RowItem>
-            <RowItem>
-              <Label>Dias de utilização:</Label>
-              <Value>30 dias (Padrão)</Value>
-            </RowItem>
-            <RowItem>
-              <Label>Altura do pasto (cm)</Label>
-              <Value>
-                {modalConfig.item.inputs &&
-                  modalConfig.item.inputs.find(
-                    input => input.key === 'pastureHeight',
-                  ).value}
-              </Value>
-            </RowItem>
+
+            {modalConfig.item.inputs &&
+              modalConfig.item.inputs.map(
+                item =>
+                  (item.name !== 'Data de início do pastejo' ||
+                    item.key === 'nomeDoPotreiro') && (
+                    <RowItem>
+                      <Label>{item.name}:</Label>
+                      <Value>{item.value}</Value>
+                    </RowItem>
+                  ),
+              )}
+            <RowItem />
             <ModalContainerTitle size={19} mt={15}>
               Resultado
             </ModalContainerTitle>
           </ModalContent>
           <ResultBoxModal>
-            <ResultBoxModalTitle>
-              {modalConfig.item.results && modalConfig.item.results[0].name}
-            </ResultBoxModalTitle>
-            <ResultBoxModalValue>
-              {modalConfig.item.results && modalConfig.item.results[0].value}
-            </ResultBoxModalValue>
+            {modalConfig.item.results &&
+              modalConfig.item.results.map(item => (
+                <>
+                  <ResultBoxModalTitle>{item.name}</ResultBoxModalTitle>
+                  <ResultBoxModalValue>{item.value}</ResultBoxModalValue>
+                </>
+              ))}
           </ResultBoxModal>
         </ScrollView>
       </ModalContainer>

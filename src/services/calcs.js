@@ -373,24 +373,19 @@ export function ajustarLotacaoAnimalRotativo({
   });
 
   const resultado =
-  (
-    (
-      (
-        ( alturaDoPasto * relacaoMassaAltura ) -
-        ( alturaOtima * 0.6 * relacaoMassaAltura )
-      ) * areaDoPotreiro / numeroDePiquetes
-    ) + (
-      taxaDeAcumulo * ( areaDoPotreiro / numeroDePiquetes ) *
-      ((( alturaOtima * 0.4 ) / ( taxaDeAcumulo / relacaoMassaAltura )) / ( numeroDePiquetes-1 ))
-    )
-  ) / (
-    ( consumoNRC - quantSuplemento ) *
-    ((
-      ( alturaOtima * 0.4 ) /
-      ( taxaDeAcumulo / relacaoMassaAltura ) /
-      ( numeroDePiquetes - 1 )
-    ))
-  )
+    (((alturaDoPasto * relacaoMassaAltura -
+      alturaOtima * 0.6 * relacaoMassaAltura) *
+      areaDoPotreiro) /
+      numeroDePiquetes +
+      taxaDeAcumulo *
+        (areaDoPotreiro / numeroDePiquetes) *
+        ((alturaOtima * 0.4) /
+          (taxaDeAcumulo / relacaoMassaAltura) /
+          (numeroDePiquetes - 1))) /
+    ((consumoNRC - quantSuplemento) *
+      ((alturaOtima * 0.4) /
+        (taxaDeAcumulo / relacaoMassaAltura) /
+        (numeroDePiquetes - 1)));
 
   const resultados = [
     {
@@ -420,7 +415,6 @@ export function ajustarLotacaoAnimalRotativo({
   categoriaAnimal: 'bovinoCorte',
   tipoDeAnimal: 'novilha',
 }) */
-
 
 // Tamanho potreiro Rotativo - Ok - 19/08/2020
 export function tamanhoPotreiroRotativo({
@@ -657,21 +651,21 @@ export function fornecerSuplementoRotativo({
 
   const resultado2 = resultado1 / quantidadeDeAnimais;
 
-  let resultados
-  if(resultado1 <= 0) {
-    resultados = [{ value: 'Não há necessidade de suplementar os animais' }]
-  }else 
-  resultados = [
-    {
-      name:
-        'Quantidade de suplemento para o lote de animais (kg/dia)',
-      value: Math.round(resultado1).toLocaleString('pt-BR'),
-    },
-    {
-      name: 'Quantidade de suplemento por animal (kg/dia)',
-      value: Math.round(resultado2).toLocaleString('pt-BR'),
-    },
-  ];
+  let resultados;
+  if (resultado1 <= 0) {
+    resultados = [{value: 'Não há necessidade de suplementar os animais'}];
+  } else {
+    resultados = [
+      {
+        name: 'Quantidade de suplemento para o lote de animais (kg/dia)',
+        value: Math.round(resultado1).toLocaleString('pt-BR'),
+      },
+      {
+        name: 'Quantidade de suplemento por animal (kg/dia)',
+        value: Math.round(resultado2).toLocaleString('pt-BR'),
+      },
+    ];
+  }
 
   console.log(resultados);
 
@@ -805,16 +799,19 @@ export function calcularNumeroDePiquetes({
     silagem,
   });
 
-  const resultado1 = ( 
-    (( alturaOtima* 0.4 / (media / relacaoMassaAltura)) + 1) + 
-    (areaDoPotreiro / (((consumoNRC-quantSuplemento) * quantidadeDeAnimais)/(((alturaOtima*0.4)*relacaoMassaAltura)+media)))
-  )/2
+  const resultado1 =
+    ((alturaOtima * 0.4) / (media / relacaoMassaAltura) +
+      1 +
+      areaDoPotreiro /
+        (((consumoNRC - quantSuplemento) * quantidadeDeAnimais) /
+          (alturaOtima * 0.4 * relacaoMassaAltura + media))) /
+    2;
 
   const resultado2 = Math.round(
     resultado1 *
-    (((consumoNRC - quantSuplemento) * quantidadeDeAnimais) /
-      (alturaOtima * 0.4 * relacaoMassaAltura + media)));
-  
+      (((consumoNRC - quantSuplemento) * quantidadeDeAnimais) /
+        (alturaOtima * 0.4 * relacaoMassaAltura + media)),
+  );
 
   const resultados = [
     {
@@ -827,13 +824,20 @@ export function calcularNumeroDePiquetes({
     },
   ];
 
-
-  if(resultado2 == areaDoPotreiro) {
-    resultados.push({name: 'A área do potreiro está adequada para manter o lote de animais.'})
-  }else if(resultado2 > areaDoPotreiro) {
-    resultados.push({name: 'A área do potreiro é superior à área necessária para manter o lote de animais.'})
-  }else if(resultado2 < areaDoPotreiro) {
-    resultados.push({name: 'A área do potreiro é inferior à área necessária para manter o lote de animais. Recomenda-se aumentar a área do potreiro, reduzir a lotação animal ou fornecer suplemento ao lote de animais'})
+  if (resultado2 == areaDoPotreiro) {
+    resultados.push({
+      name: 'A área do potreiro está adequada para manter o lote de animais.',
+    });
+  } else if (resultado2 > areaDoPotreiro) {
+    resultados.push({
+      name:
+        'A área do potreiro é superior à área necessária para manter o lote de animais.',
+    });
+  } else if (resultado2 < areaDoPotreiro) {
+    resultados.push({
+      name:
+        'A área do potreiro é inferior à área necessária para manter o lote de animais. Recomenda-se aumentar a área do potreiro, reduzir a lotação animal ou fornecer suplemento ao lote de animais',
+    });
   }
 
   console.log(resultados);
