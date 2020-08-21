@@ -106,6 +106,8 @@ export default function Register({navigation}) {
         city: selectedCity,
       };
 
+      userData.email = userData.email.trim();
+
       userData.activity = activity;
 
       dispatch(AuthActions.signUpRequest(userData));

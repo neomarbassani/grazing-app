@@ -3,10 +3,18 @@ import {Container, Text} from './styles';
 import Icon from 'react-native-vector-icons/Feather';
 import {colors} from '../../styles';
 
+import {useNavigation} from '@react-navigation/core';
+
 const CalcRoutesTop = ({items, color}) => {
+  const navigation = useNavigation();
   return (
     <Container>
-      <Icon name="home" size={20} color="#D09776" />
+      <Icon
+        name="home"
+        size={20}
+        color="#D09776"
+        onPress={() => navigation.navigate('Home')}
+      />
 
       {items.map(
         item =>

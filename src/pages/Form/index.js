@@ -1123,7 +1123,7 @@ const DimensionArea = ({navigation, route}) => {
                   maxVal={maxValuesToSlider[pasture.key]}
                   unit="cm"
                 />
-                <SliderInput
+                {/* <SliderInput
                   label="Período de ocupação"
                   value={tempoDePermanencia}
                   color="#fff"
@@ -1134,7 +1134,7 @@ const DimensionArea = ({navigation, route}) => {
                   minVal={0}
                   maxVal={90}
                   unit="dias"
-                />
+                /> */}
 
                 <SliderInput
                   label="Área do potreiro"

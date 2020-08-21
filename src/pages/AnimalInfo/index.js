@@ -175,6 +175,7 @@ const AnimalInfo = ({navigation, route}) => {
           mt="20px"
           color="#D69D2B"
           onPress={() => formRef.current.submitForm()}
+          disabled={score === 0}
         />
       </Content>
     </Container>

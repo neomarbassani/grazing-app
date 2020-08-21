@@ -87,8 +87,11 @@ const Home = ({navigation}) => {
           content="Definir período de ocupação"
           source={solution5}
           onPress={() => {
-            navigation.navigate('ChooseGrazingMethod', {
-              calcName: 'Definir período de ocupação',
+            navigation.navigate('ChooseBovineType', {
+              calc: {
+                name: 'Pastoreio contínuo',
+                value: 'Definir período de ocupação',
+              },
             });
           }}>
           <HelpButton card data={help[4]} />
