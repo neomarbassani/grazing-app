@@ -29,7 +29,7 @@ const help = {
 const activities = [
   {value: 'Consultor(a)', label: 'Consultor(a)'},
   {value: 'Técnico(a)', label: 'Técnico(a)'},
-  {value: 'produtor(a)', label: 'produtor(a)'},
+  {value: 'Produtor(a)', label: 'produtor(a)'},
   {value: 'Rural', label: 'Rural'},
   {value: 'Pesquisador(a)', label: 'Pesquisador(a)'},
   {value: 'Estudante', label: 'Estudante'},

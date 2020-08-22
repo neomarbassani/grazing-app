@@ -34,6 +34,7 @@ import {
 
 import aveia from '../../assets/aveiaFundo.jpg';
 import azevem from '../../assets/azevemFundo.jpg';
+import aveiaAzevem from '../../assets/aveiaAzevemFundo.jpg';
 import campoNativo from '../../assets/campoNativoFundo.jpg';
 import campoNativoMelhorado from '../../assets/campoNativoMelhoradoFundo.jpg';
 import milheto from '../../assets/milhetoFundo.jpg';
@@ -896,23 +897,25 @@ const DimensionArea = ({navigation, route}) => {
   return (
     <Container
       source={
-        pasture.value === 'Azevém'
+            pasture.key === 'azevem'
           ? azevem
-          : pasture.value === 'Campo Nativo'
+          : pasture.key === 'campoNativo'
           ? campoNativo
-          : pasture.value === 'Campo Nativo Melhorado'
+          : pasture.key === 'campoNativoMelhorado'
           ? campoNativoMelhorado
-          : pasture.value === 'Aveia'
+          : pasture.key === 'aveia'
           ? aveia
-          : pasture.value === 'Milheto'
+          : pasture.key === 'milheto'
           ? milheto
-          : pasture.value === 'Sudão'
+          : pasture.key === 'sudao'
           ? sudao
-          : pasture.value === 'Papuã'
+          : pasture.key === 'papua'
           ? papua
-          : pasture.value === 'Sorgo'
+          : pasture.key === 'sorgo'
           ? sorgo
-          : tifton
+          : pasture.key === 'tifton'
+          ? tifton
+          : aveiaAzevem
       }
       resizeMode="cover">
       <View
@@ -1066,7 +1069,7 @@ const DimensionArea = ({navigation, route}) => {
 
               {calc.name === 'Pastoreio rotativo' && (
                 <RadioButton
-                  label="Ira fornecer suplementação adicional?"
+                  label="Irá fornecer suplementação adicional?"
                   onPress={value => setSuplementacaoAdicional(value)}
                   animation={true}
                   formHorizontal={true}
@@ -1096,7 +1099,7 @@ const DimensionArea = ({navigation, route}) => {
                   />
                   <Input
                     name="silagem"
-                    placeholder="Ração/Concentrado (kg/animal/dia)"
+                    placeholder="Silagem (kg/animal/dia)"
                     color="#fff"
                     keyboardType="numeric"
                     returnKeyType="done"
@@ -1173,7 +1176,7 @@ const DimensionArea = ({navigation, route}) => {
               </Form>
             )}
 
-          {calc.name === 'Pastoreio rotativo' &&
+          { calc.name === 'Pastoreio rotativo' &&
             calc.value === 'Ajustar lotação animal' && (
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <Input
@@ -1212,7 +1215,7 @@ const DimensionArea = ({navigation, route}) => {
                 />
 
                 <RadioButton
-                  label="Ira fornecer suplementação adicional?"
+                  label="Irá fornecer suplementação adicional?"
                   onPress={value => setSuplementacaoAdicional(value)}
                   animation={true}
                   formHorizontal={true}
@@ -1338,7 +1341,7 @@ const DimensionArea = ({navigation, route}) => {
               />
 
               <RadioButton
-                label="Ira fornecer suplementação adicional?"
+                label="Irá fornecer suplementação adicional?"
                 onPress={value => setSuplementacaoAdicional(value)}
                 animation={true}
                 formHorizontal={true}
@@ -1369,7 +1372,7 @@ const DimensionArea = ({navigation, route}) => {
                   </Input>
                   <Input
                     name="silagem"
-                    placeholder="Ração/Concentrado (kg/animal/dia)"
+                    placeholder="Silagem (kg/animal/dia)"
                     color="#fff"
                     keyboardType="numeric"
                     returnKeyType="done"
@@ -1454,7 +1457,7 @@ const DimensionArea = ({navigation, route}) => {
               />
 
               <RadioButton
-                label="Ira fornecer suplementação adicional?"
+                label="Irá fornecer suplementação adicional?"
                 onPress={value => setSuplementacaoAdicional(value)}
                 animation={true}
                 formHorizontal={true}

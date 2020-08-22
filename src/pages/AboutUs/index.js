@@ -36,7 +36,7 @@ const AboutUs = ({navigation, route}) => {
           orientam quanto ao dimensionamento da área de pastagem, definição do
           número de piquetes, ajuste da lotação animal, determinação do período
           de ocupação nos piquetes e necessidade de fornecimento de suplemento
-          aos animais. O<TextBold>GRAZING</TextBold> visa o manejo adequado das
+          aos animais. O <TextBold>GRAZING</TextBold> visa o manejo adequado das
           pastagens, com a finalidade de aumentar a produtividade das
           propriedades rurais.
         </Text>

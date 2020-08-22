@@ -18,7 +18,7 @@ export const Text = styled.Text`
 
   color: #888899;
 
-  text-align: center;
+  text-align: justify;
 `;
 
 export const TextBold = styled(Text)`
