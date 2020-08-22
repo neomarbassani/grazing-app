@@ -905,6 +905,7 @@ const DimensionArea = ({navigation, route}) => {
 
         <Content
           contentContainerStyle={{
+            flex: 1,
             flexWrap: 'wrap',
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -927,7 +928,7 @@ const DimensionArea = ({navigation, route}) => {
                 color="#fff"
                 returnKeyType="next"
                 blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
+                onSubmitEditing={() => focusInput('dataDeInicio')}>
                 <HelpButton data={help[0]} />
               </Input>
               <Input
@@ -935,8 +936,8 @@ const DimensionArea = ({navigation, route}) => {
                 color="#fff"
                 label="Data de início do pastejo"
                 keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
                 maskType="datetime"
+                typeIcon="datetimepicker"
                 options={{
                   format: 'DD/MM/YYYY',
                 }}
@@ -1025,6 +1026,7 @@ const DimensionArea = ({navigation, route}) => {
                 keyboardType="numeric"
                 placeholder="DD/MM/YYYY"
                 maskType="datetime"
+                typeIcon="datetimepicker"
                 options={{
                   format: 'DD/MM/YYYY',
                 }}
@@ -1105,6 +1107,7 @@ const DimensionArea = ({navigation, route}) => {
                   keyboardType="numeric"
                   placeholder="DD/MM/YYYY"
                   maskType="datetime"
+                  typeIcon="datetimepicker"
                   options={{
                     format: 'DD/MM/YYYY',
                   }}
@@ -1171,6 +1174,7 @@ const DimensionArea = ({navigation, route}) => {
                   keyboardType="numeric"
                   placeholder="DD/MM/YYYY"
                   maskType="datetime"
+                  typeIcon="datetimepicker"
                   options={{
                     format: 'DD/MM/YYYY',
                   }}
@@ -1285,6 +1289,7 @@ const DimensionArea = ({navigation, route}) => {
                 keyboardType="numeric"
                 placeholder="DD/MM/YYYY"
                 maskType="datetime"
+                typeIcon="datetimepicker"
                 options={{
                   format: 'DD/MM/YYYY',
                 }}
@@ -1378,6 +1383,7 @@ const DimensionArea = ({navigation, route}) => {
                 keyboardType="numeric"
                 placeholder="DD/MM/YYYY"
                 maskType="datetime"
+                typeIcon="datetimepicker"
                 options={{
                   format: 'DD/MM/YYYY',
                 }}

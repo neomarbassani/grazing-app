@@ -1,6 +1,8 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {useField} from '@unform/core';
 import Icon from 'react-native-vector-icons/Feather';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 
 import {
   Container,
@@ -19,6 +21,7 @@ export default function Input({
   next,
   mb,
   maskType,
+  typeIcon,
   textarea,
   color,
   children,
@@ -30,7 +33,9 @@ export default function Input({
 
   const {fieldName, registerField, defaultValue, error} = useField(name);
 
-  const [mask, setMask] = useState('');
+  const [date, setDate] = useState(new Date(1598051730000));
+
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     type === 'password' ? setPasswordVisibility(true) : null;
@@ -50,79 +55,94 @@ export default function Input({
         ref.clear();
       },
       setValue(ref, value) {
-        if (!maskType) {
-          ref.setNativeProps({text: value});
-          inputRef.current.value = value;
-        } else {
-          setMask(value);
-        }
+        ref.setNativeProps({text: value});
+        inputRef.current.value = value;
       },
       getValue(ref) {
-        if (maskType) {
-          return ref.getRawValue();
-        } else {
-          return ref.value || '';
-        }
+        return ref.value || '';
       },
     });
-  }, [fieldName, mask, maskType, registerField]);
+  }, [fieldName, registerField]);
+
+  console.log(date);
 
   return (
-    <Container textarea={textarea} mb={mb}>
-      {label && <Label color={color}>{label}</Label>}
-      <Content textarea={textarea}>
-        {maskType ? (
-          <InputFieldMask
-            ref={inputRef}
-            defaultValue={defaultValue}
-            placeholderTextColor="#888899"
-            includeRawValueInChangeText={true}
-            type={maskType}
-            value={mask}
-            onChangeText={value => {
-              setMask(value);
-              if (inputRef.current) {
-                inputRef.current.value = value;
-              }
-            }}
-            {...rest}
-          />
-        ) : (
-          <>
-            <InputField
-              ref={inputRef}
-              defaultValue={defaultValue}
-              textarea={textarea}
-              multiline={textarea}
-              numberOfLines={50}
-              type={type === 'email' ? 'email-address' : null}
-              secureTextEntry={passwordVisibility}
-              placeholderTextColor="#888899"
-              autoCapitalize={
-                type === 'email' || type === 'password' ? 'none' : 'words'
-              }
-              onChangeText={value => {
-                if (inputRef.current) {
-                  inputRef.current.value = value;
+    <>
+      <Container textarea={textarea} mb={mb}>
+        {label && <Label color={color}>{label}</Label>}
+        <Content textarea={textarea}>
+          {maskType ? (
+            <>
+              <InputFieldMask
+                ref={inputRef}
+                defaultValue={defaultValue}
+                placeholderTextColor="#888899"
+                editable={false}
+                pointerEvents="none"
+                onTouchStart={() => {
+                  setShow(true);
+                }}
+                value={moment(date).format('DD-MM-YYYY')}
+                {...rest}
+              />
+              {typeIcon === 'datetimepicker' && (
+                <ToogleVisility onPress={() => setShow(true)}>
+                  <Icon name="calendar" size={16} color="#888899" />
+                </ToogleVisility>
+              )}
+            </>
+          ) : (
+            <>
+              <InputField
+                ref={inputRef}
+                defaultValue={defaultValue}
+                textarea={textarea}
+                multiline={textarea}
+                numberOfLines={50}
+                type={type === 'email' ? 'email-address' : null}
+                secureTextEntry={passwordVisibility}
+                placeholderTextColor="#888899"
+                autoCapitalize={
+                  type === 'email' || type === 'password' ? 'none' : 'words'
                 }
+                onChangeText={value => {
+                  if (inputRef.current) {
+                    inputRef.current.value = value;
+                  }
+                }}
+                {...rest}
+              />
+              {children && children}
+              {type === 'password' && (
+                <ToogleVisility
+                  onPress={() => setPasswordVisibility(!passwordVisibility)}>
+                  {passwordVisibility ? (
+                    <Icon name="eye-off" size={16} color="#888899" />
+                  ) : (
+                    <Icon name="eye" size={16} color="#888899" />
+                  )}
+                </ToogleVisility>
+              )}
+            </>
+          )}
+
+          {show && (
+            <DateTimePicker
+              value={date}
+              display="calendar"
+              onChange={(event, selectedDate) => {
+                const currentDate = selectedDate || date;
+                setDate(currentDate);
+                if (inputRef.current) {
+                  inputRef.current.value = currentDate;
+                }
+                setShow(false);
               }}
-              {...rest}
             />
-            {children && children}
-            {type === 'password' && (
-              <ToogleVisility
-                onPress={() => setPasswordVisibility(!passwordVisibility)}>
-                {passwordVisibility ? (
-                  <Icon name="eye-off" size={16} color="#888899" />
-                ) : (
-                  <Icon name="eye" size={16} color="#888899" />
-                )}
-              </ToogleVisility>
-            )}
-          </>
-        )}
-      </Content>
-      {error && <InputError>{error}</InputError>}
-    </Container>
+          )}
+        </Content>
+        {error && <InputError>{error}</InputError>}
+      </Container>
+    </>
   );
 }

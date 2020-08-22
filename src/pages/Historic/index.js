@@ -216,7 +216,9 @@ const Historic = ({navigation}) => {
     ];
 
     const date = new Date(str);
+
     const day = date.getUTCDay();
+
     const mouthParse = date.getUTCMonth();
 
     return `${day} de ${mouthArray[mouthParse]}`;
