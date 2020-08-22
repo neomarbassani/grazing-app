@@ -1,3 +1,4 @@
+// REV 19 / 08 / 2020
 /* eslint-disable radix */
 
 export const taxaDeAcumuloPorEspecie = {
@@ -207,54 +208,50 @@ export const especie = {
 };
 
 export const consumo = {
-  bovinoCorte: {
-    terneiro: ({peso}) =>
-      ((Math.pow(peso, 0.75) *
-        (0.2435 * 1.2 - 0.046 * Math.pow(1.2, 2) - 0.1128)) /
-        1.2) *
-      1.16,
-    novilha: ({peso}) =>
-      (Math.pow(peso, 0.75) *
-        (0.2435 * 1.2 - 0.0466 * Math.pow(1.2, 2) - 0.0869)) /
-      1.2,
-    vacaSeca: ({peso}) =>
-      (Math.pow(peso, 0.75) * (0.04997 * Math.pow(1.2, 2) + 0.0384)) / 1.2,
-    vacaPrenha: ({peso}) =>
-      (Math.pow(peso, 0.75) * (0.04997 * 1.2 + 0.04631)) / 1.2 + 0.2 * 10,
+  terneiro: ({peso}) =>
+    ((Math.pow(peso, 0.75) *
+      (0.2435 * 1.2 - 0.046 * Math.pow(1.2, 2) - 0.1128)) /
+      1.2) *
+    1.16,
+  novilha: ({peso}) =>
+    (Math.pow(peso, 0.75) *
+      (0.2435 * 1.2 - 0.0466 * Math.pow(1.2, 2) - 0.0869)) /
+    1.2,
+  vacaSeca: ({peso}) =>
+    (Math.pow(peso, 0.75) * (0.04997 * Math.pow(1.2, 2) + 0.0384)) / 1.2,
+  vacaPrenha: ({peso}) =>
+    (Math.pow(peso, 0.75) * (0.04997 * 1.2 + 0.04631)) / 1.2 + 0.2 * 10,
+  novilhaLeite: ({peso, diasDeGestacao}) => {
+    if (diasDeGestacao < 210) {
+      return (
+        ((Math.pow(peso, 0.75) *
+          (0.2435 * 1.35 - 0.0466 * Math.pow(1.35, 2) - 0.1128)) /
+          1.35) *
+        1.16
+      );
+    }
+    if (diasDeGestacao >= 210 && diasDeGestacao < 259) {
+      return (
+        ((Math.pow(peso, 0.75) *
+          (0.2435 * 1.35 - 0.0466 * Math.pow(1.35, 2) - 0.1128)) /
+          1.35) *
+        (1 + (210 - diasDeGestacao) * 0.0025) *
+        1.16
+      );
+    }
+    if (diasDeGestacao > 259) {
+      return (
+        ((1.71 - 0.69 * Math.pow(2.72, 0.35 * diasDeGestacao - 280)) / 100) *
+        peso *
+        1.16
+      );
+    }
   },
-  bovinoLeite: {
-    novilha: ({peso, diasDeGestacao}) => {
-      if (diasDeGestacao < 210) {
-        return (
-          ((Math.pow(peso, 0.75) *
-            (0.2435 * 1.35 - 0.0466 * Math.pow(1.35, 2) - 0.1128)) /
-            1.35) *
-          1.16
-        );
-      }
-      if (diasDeGestacao >= 210 && diasDeGestacao < 259) {
-        return (
-          ((Math.pow(peso, 0.75) *
-            (0.2435 * 1.35 - 0.0466 * Math.pow(1.35, 2) - 0.1128)) /
-            1.35) *
-          (1 + (210 - diasDeGestacao) * 0.0025) *
-          1.16
-        );
-      }
-      if (diasDeGestacao > 259) {
-        return (
-          ((1.71 - 0.69 * Math.pow(2.72, 0.35 * diasDeGestacao - 280)) / 100) *
-          peso *
-          1.16
-        );
-      }
-    },
-    vacaLactacao: ({peso, semanasDeLactacao, quantidadeDeLeite}) => {
-      const FC1 = 0.4 * quantidadeDeLeite + 15 * 0.03 * quantidadeDeLeite;
-      const FC2 = 1 - Math.pow(2.72, -1 * 0.192 * (semanasDeLactacao + 3.67));
+  vacaLactacao: ({peso, semanasDeLactacao, quantidadeDeLeite}) => {
+    const FC1 = 0.4 * quantidadeDeLeite + 15 * 0.03 * quantidadeDeLeite;
+    const FC2 = 1 - Math.pow(2.72, -1 * 0.192 * (semanasDeLactacao + 3.67));
 
-      return (Math.pow(peso, 0.75) * 0.0968 + 0.372 * FC1 - 0.293) * FC2;
-    },
+    return (Math.pow(peso, 0.75) * 0.0968 + 0.372 * FC1 - 0.293) * FC2;
   },
 };
 
@@ -270,30 +267,8 @@ export const quantidadeDeSuplemento = ({
   return racao + feno * 0.85 + silagem * 0.3;
 };
 
-const animalType = animal => {
-  if (animal === 'Terneiro') {
-    return 'terneiro';
-  }
-  if (animal === 'Novilha') {
-    return 'novilha';
-  }
-  if (animal === 'Vaca seca') {
-    return 'vacaSeca';
-  }
-  if (animal === 'Vaca prenha') {
-    return 'vacaPrenha';
-  }
-  if (animal === 'Terneiro') {
-    return 'terneiro';
-  }
-  if (animal === 'Vaca em lactação') {
-    return 'vacaLactacao';
-  }
-};
-
 export const getMouth = data => new Date(data).getUTCMonth() + 1;
 
-// Ajustar lotação Animal Continuo - revisada
 export function ajustarLotacaoAnimalContinuo({
   dataDeInicio,
   peso,
@@ -334,7 +309,6 @@ export function ajustarLotacaoAnimalContinuo({
   areaDoPotreiro: 5,
 }) */
 
-// Ajustar lotação Animal Rotativo - Ok - 19/08/2020
 export function ajustarLotacaoAnimalRotativo({
   dataDeInicio,
   peso,
@@ -344,21 +318,20 @@ export function ajustarLotacaoAnimalRotativo({
   numeroDePiquetes,
   alturaDoPasto,
   tipoDePasto,
+  tempoDePermanencia,
   areaDoPotreiro,
   diasDeGestacao = 0,
   semanasDeLactacao = 0,
   quantidadeDeLeite = 0,
-  categoriaAnimal,
   tipoDeAnimal,
 }) {
-  console.log(animalType(tipoDeAnimal));
   const relacaoMassaAltura = especie[tipoDePasto].relacaoMassaAltura;
   const alturaOtima = especie[tipoDePasto].alturaOtima;
 
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
+  const consumoNRC = consumo[tipoDeAnimal]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -373,19 +346,25 @@ export function ajustarLotacaoAnimalRotativo({
   });
 
   const resultado =
-    (((alturaDoPasto * relacaoMassaAltura -
-      alturaOtima * 0.6 * relacaoMassaAltura) *
-      areaDoPotreiro) /
-      numeroDePiquetes +
-      taxaDeAcumulo *
-        (areaDoPotreiro / numeroDePiquetes) *
-        ((alturaOtima * 0.4) /
-          (taxaDeAcumulo / relacaoMassaAltura) /
-          (numeroDePiquetes - 1))) /
-    ((consumoNRC - quantSuplemento) *
-      ((alturaOtima * 0.4) /
-        (taxaDeAcumulo / relacaoMassaAltura) /
-        (numeroDePiquetes - 1)));
+(
+    (
+      (
+        ( alturaDoPasto * relacaoMassaAltura ) -
+        ( alturaOtima * 0.6 * relacaoMassaAltura )
+      ) * areaDoPotreiro / numeroDePiquetes
+    ) + (
+      taxaDeAcumulo * ( areaDoPotreiro / numeroDePiquetes ) *
+      ((( alturaOtima * 0.4 ) / ( taxaDeAcumulo / relacaoMassaAltura )) / ( numeroDePiquetes-1 ))
+    )
+  ) / (
+    ( consumoNRC - quantSuplemento ) *
+    ((
+      ( alturaOtima * 0.4 ) /
+      ( taxaDeAcumulo / relacaoMassaAltura ) /
+      ( numeroDePiquetes - 1 )
+    ))
+  )
+
 
   const resultados = [
     {
@@ -416,7 +395,6 @@ export function ajustarLotacaoAnimalRotativo({
   tipoDeAnimal: 'novilha',
 }) */
 
-// Tamanho potreiro Rotativo - Ok - 19/08/2020
 export function tamanhoPotreiroRotativo({
   dataDeInicio,
   peso,
@@ -425,7 +403,6 @@ export function tamanhoPotreiroRotativo({
   feno = 0,
   silagem = 0,
   tipoDePasto,
-  categoriaAnimal,
   tipoDeAnimal,
   diasDeGestacao = 0,
   semanasDeLactacao = 0,
@@ -438,7 +415,7 @@ export function tamanhoPotreiroRotativo({
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
+  const consumoNRC = consumo[tipoDeAnimal]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -483,7 +460,6 @@ export function tamanhoPotreiroRotativo({
   milkQuantity: 0,
 }); */
 
-// Tamanho potreiro Continuo - revisada
 export function tamanhoPotreiroContinuo({
   dataDeInicio,
   peso,
@@ -522,7 +498,6 @@ export function tamanhoPotreiroContinuo({
   quantidadeDeAnimais: 50,
 }); */
 
-// Fornecer suplemento continuo - revisado
 export function fornecerSuplementoContinuo({
   dataDeInicio, //ok
   peso, //
@@ -547,7 +522,7 @@ export function fornecerSuplementoContinuo({
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
+  const consumoNRC = consumo[tipoDeAnimal]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -607,7 +582,6 @@ export function fornecerSuplementoContinuo({
   silagem: 0,
 }); */
 
-// Fornecer suplemento rotativo - Ok - 19/08/2020
 export function fornecerSuplementoRotativo({
   dataDeInicio,
   peso,
@@ -633,13 +607,13 @@ export function fornecerSuplementoRotativo({
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
+  const consumoNRC = consumo[tipoDeAnimal]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
     quantidadeDeLeite,
   });
-
+  
   const resultado1 =
     (consumoNRC * diasDePermanencia * quantidadeDeAnimais -
       ((alturaDoPasto * relacaoMassaAltura -
@@ -648,24 +622,22 @@ export function fornecerSuplementoRotativo({
         ((taxaDeAcumulo * areaDoPotreiro) / numeroDePiquetes) *
           diasDePermanencia)) /
     diasDePermanencia;
-
   const resultado2 = resultado1 / quantidadeDeAnimais;
-
-  let resultados;
-  if (resultado1 <= 0) {
-    resultados = [{value: 'Não há necessidade de suplementar os animais'}];
-  } else {
-    resultados = [
-      {
-        name: 'Quantidade de suplemento para o lote de animais (kg/dia)',
-        value: Math.round(resultado1).toLocaleString('pt-BR'),
-      },
-      {
-        name: 'Quantidade de suplemento por animal (kg/dia)',
-        value: Math.round(resultado2).toLocaleString('pt-BR'),
-      },
-    ];
-  }
+  let resultados
+  if(resultado1 <= 0) {
+    resultados = [{ value: 'Não há necessidade de suplementar os animais' }]
+  }else 
+  resultados = [
+    {
+      name:
+        'Quantidade de suplemento para o lote de animais (kg/dia)',
+      value: Math.round(resultado1).toLocaleString('pt-BR'),
+    },
+    {
+      name: 'Quantidade de suplemento por animal (kg/dia)',
+      value: Math.round(resultado2).toLocaleString('pt-BR'),
+    },
+  ];
 
   console.log(resultados);
 
@@ -687,7 +659,6 @@ export function fornecerSuplementoRotativo({
   quantidadeDeLeite: 0,
 }); */
 
-// Definir período de ocupação rotativo - revisado
 export function definirPeriodoDeOcupacaoRotativo({
   dataDeInicio,
   peso,
@@ -711,7 +682,7 @@ export function definirPeriodoDeOcupacaoRotativo({
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
+  const consumoNRC = consumo[tipoDeAnimal]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -731,9 +702,8 @@ export function definirPeriodoDeOcupacaoRotativo({
       (areaDoPotreiro / numeroDePiquetes) +
       taxaDeAcumulo * (areaDoPotreiro / numeroDePiquetes)) /
     ((consumoNRC - quantSuplemento) * quantidadeDeAnimais);
-    
-  const resultados = []
 
+  let resultados = []
   if(resultado < 1) {
     resultados.push({ name: 'Não é possível colocar os animais na área. Aguarde até que a pastagem atinja altura pré-pastejo adequada.' })
   } else resultados.push({
@@ -764,7 +734,6 @@ export function definirPeriodoDeOcupacaoRotativo({
   silagem: 0,
 }); */
 
-// Calcular número de piquetes - OK - 19 / 08 / 2020
 export function calcularNumeroDePiquetes({
   dataDeInicio,
   tipoDePasto,
@@ -780,6 +749,7 @@ export function calcularNumeroDePiquetes({
   feno = 0,
   silagem = 0,
 }) {
+
   const relacaoMassaAltura = especie[tipoDePasto].relacaoMassaAltura;
   const alturaOtima = especie[tipoDePasto].alturaOtima;
   const media = taxaDeAcumuloPorEspecie[tipoDePasto].media;
@@ -787,7 +757,7 @@ export function calcularNumeroDePiquetes({
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
 
-  const consumoNRC = consumo[categoriaAnimal][animalType(tipoDeAnimal)]({
+  const consumoNRC = consumo[tipoDeAnimal]({
     peso,
     diasDeGestacao,
     semanasDeLactacao,
@@ -801,21 +771,16 @@ export function calcularNumeroDePiquetes({
     silagem,
   });
 
-  const resultado1 =
-    ((alturaOtima * 0.4) / (media / relacaoMassaAltura) +
-      1 +
-      areaDoPotreiro /
-        (((consumoNRC - quantSuplemento) * quantidadeDeAnimais) /
-          (alturaOtima * 0.4 * relacaoMassaAltura + media))) /
-    2;
-
+  const resultado1 = ( 
+    (( alturaOtima* 0.4 / (media / relacaoMassaAltura)) + 1) + 
+    (areaDoPotreiro / (((consumoNRC-quantSuplemento) * quantidadeDeAnimais)/(((alturaOtima*0.4)*relacaoMassaAltura)+media)))
+  )/2
   const resultado2 = Math.round(
     resultado1 *
-      (((consumoNRC - quantSuplemento) * quantidadeDeAnimais) /
-        (alturaOtima * 0.4 * relacaoMassaAltura + media)),
-  );
-
-  const resultados = [
+    (((consumoNRC - quantSuplemento) * quantidadeDeAnimais) /
+      (alturaOtima * 0.4 * relacaoMassaAltura + media)));
+  
+  let resultados = [
     {
       name: 'Número de piquetes',
       value: Math.round(resultado1).toLocaleString('pt-BR'),
@@ -825,21 +790,13 @@ export function calcularNumeroDePiquetes({
       value: Math.round(resultado2).toLocaleString('pt-BR'),
     },
   ];
-
-  if (resultado2 == areaDoPotreiro) {
-    resultados.push({
-      name: 'A área do potreiro está adequada para manter o lote de animais.',
-    });
-  } else if (resultado2 > areaDoPotreiro) {
-    resultados.push({
-      name:
-        'A área do potreiro é superior à área necessária para manter o lote de animais.',
-    });
-  } else if (resultado2 < areaDoPotreiro) {
-    resultados.push({
-      name:
-        'A área do potreiro é inferior à área necessária para manter o lote de animais. Recomenda-se aumentar a área do potreiro, reduzir a lotação animal ou fornecer suplemento ao lote de animais',
-    });
+  
+  if(resultado2 == areaDoPotreiro) {
+    resultados.push({name: 'A área do potreiro está adequada para manter o lote de animais.'})
+  }else if(resultado2 > areaDoPotreiro) {
+    resultados.push({name: 'A área do potreiro é superior à área necessária para manter o lote de animais.'})
+  }else if(resultado2 < areaDoPotreiro) {
+    resultados.push({name: 'A área do potreiro é inferior à área necessária para manter o lote de animais. Recomenda-se aumentar a área do potreiro, reduzir a lotação animal ou fornecer suplemento ao lote de animais.'})
   }
 
   console.log(resultados);

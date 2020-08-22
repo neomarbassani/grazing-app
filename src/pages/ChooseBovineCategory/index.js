@@ -37,7 +37,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
       <Content>
         <CalcRoutesTop items={items} />
         <SubTitle value="Qual é a categoria animal?" size={14} mb={20} />
-        {animalCategory === 'Bovinocultura de corte' && (
+        {animalCategory === 'bovinoCorte' && (
           <>
             <ChooseItemButton
               size={47}
@@ -48,7 +48,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Terneiro',
+                    value: 'terneiro',
                   },
                 });
               }}
@@ -62,7 +62,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Novilha',
+                    value: 'novilha',
                   },
                 });
               }}
@@ -76,7 +76,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Vaca seca',
+                    value: 'vacaSeca',
                   },
                 });
               }}
@@ -90,7 +90,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Vaca prenha',
+                    value: 'vacaPrenha',
                   },
                 });
               }}
@@ -98,7 +98,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
           </>
         )}
 
-        {animalCategory === 'Bovinocultura de leite' && (
+        {animalCategory === 'bovinoLeite' && (
           <>
             <ChooseItemButton
               content={'Vaca em lactação'}
@@ -109,7 +109,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Vaca em lactação',
+                    value: 'vacaLactacao',
                   },
                 });
               }}
@@ -124,7 +124,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Novilha Leiteira',
+                    value: 'novilhaLeite',
                   },
                 });
               }}

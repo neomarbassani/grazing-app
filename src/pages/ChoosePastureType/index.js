@@ -66,7 +66,7 @@ const ChoosePastureType = ({navigation, route}) => {
           />
           <ChooseItemButton
             size={100}
-            content="Aveia + Azevém"
+            content="Aveia e Azevém"
             source={azevem}
             onPress={() => {
               navigation.navigate('Form', {
@@ -75,7 +75,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Aveia + Azevém',
+                  value: 'Aveia e Azevém',
                   key: 'aveiaAzevem',
                 },
               });

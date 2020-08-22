@@ -40,7 +40,7 @@ const ChooseBovineType = ({navigation, route}) => {
           onPress={() => {
             navigation.navigate('ChooseBovineCategory', {
               calc,
-              animalCategory: 'Bovinocultura de corte',
+              animalCategory: 'bovinoCorte',
             });
           }}
         />
@@ -51,7 +51,7 @@ const ChooseBovineType = ({navigation, route}) => {
           onPress={() => {
             navigation.navigate('ChooseBovineCategory', {
               calc,
-              animalCategory: 'Bovinocultura de leite',
+              animalCategory: 'bovinoLeite',
             });
           }}
         />

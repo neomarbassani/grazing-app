@@ -1,3 +1,5 @@
+// REVISAR
+
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
 import * as Yup from 'yup';
@@ -39,15 +41,15 @@ const AnimalInfo = ({navigation, route}) => {
 
       let schema;
 
-      if (animal.name === 'Bovinocultura de corte') {
+      if (animal.name === 'bovinoCorte') {
         schema = Yup.object().shape({
           peso: Yup.string().required('Insira o peso médio dos animais'),
         });
       }
 
       if (
-        animal.name === 'Bovinocultura de leite' &&
-        animal.value === 'Vaca em lactação'
+        animal.name === 'bovinoLeite' &&
+        animal.value === 'vacaLactacao'
       ) {
         schema = Yup.object().shape({
           peso: Yup.string().required('Insira o peso médio dos animais'),
@@ -139,10 +141,10 @@ const AnimalInfo = ({navigation, route}) => {
             onValueChange={value => {
               setScore(value);
             }}
-            minVal={0}
+            minVal={1}
             maxVal={5}
           />
-          {animal.value === 'Vaca em lactação' && (
+          {animal.value === 'vacaLactacao' && (
             <>
               <Input
                 name="semanasDeLactacao"
@@ -160,7 +162,7 @@ const AnimalInfo = ({navigation, route}) => {
               </Input>
             </>
           )}
-          {animal.value === 'Novilha Leiteira' && (
+          {animal.value === 'novilhaLeite' && (
             <Input
               name="diasDeGestacao"
               label="N° de dias de gestação"

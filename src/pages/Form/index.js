@@ -78,6 +78,28 @@ const DimensionArea = ({navigation, route}) => {
 
   const formRef = useRef(null);
 
+  const animal = {
+    type: {
+      terneiro: 'Terneiro(a)',
+      novilha: 'Novilho(a)',
+      novilhaLeite: 'Novilha',
+      vacaSeca: 'Vaca Seca',
+      vacaPrenha: 'Vaca Prenha',
+      vacaLactacao: 'Vaca em lactação'
+    },
+    category: {
+      bovinoCorte: 'Bovinocultura de Corte',
+      bovinoLeite: 'Bovinocultura de leite'
+    }
+  }
+
+  function getAnimal(an) {
+    return {
+      name: animal.category[an.name],
+      value: animal[an.value]
+    }
+  }
+
   async function handleSubmit(data) {
     try {
       formRef.current.setErrors({});
@@ -125,7 +147,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -208,7 +230,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -310,7 +332,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -381,7 +403,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -456,7 +478,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -566,7 +588,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -786,7 +808,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -1219,7 +1241,7 @@ const DimensionArea = ({navigation, route}) => {
                     />
                     <Input
                       name="silagem"
-                      placeholder="Ração/Concentrado (kg/animal/dia)"
+                      placeholder="Silagem (kg/animal/dia)"
                       color="#fff"
                       keyboardType="numeric"
                       returnKeyType="done"
@@ -1461,7 +1483,7 @@ const DimensionArea = ({navigation, route}) => {
                   />
                   <Input
                     name="silagem"
-                    placeholder="Ração/Concentrado (kg/animal/dia)"
+                    placeholder="Silagem (kg/animal/dia)"
                     color="#fff"
                     keyboardType="numeric"
                     returnKeyType="done"
