@@ -63,8 +63,8 @@ const AnimalInfo = ({navigation, route}) => {
       }
 
       if (
-        animal.name === 'Bovinocultura de leite' &&
-        animal.value === 'Novilha Leiteira'
+        animal.name === 'bovinoLeite' &&
+        animal.value === 'novilhaLeite'
       ) {
         schema = Yup.object().shape({
           peso: Yup.string().required('Insira o peso médio dos animais'),
