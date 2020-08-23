@@ -4,12 +4,14 @@ export const Container = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
 
-  background-color: #c94324;
-  border-radius: 100px;
-  width: 25px;
-  height: 25px;
-
   margin-left: -5px;
+
+  width: 27px;
+  height: 27px;
+
+  border-radius: 100px;
+
+  background: #c4c4c4;
 
   ${({card}) => {
     if (card) {
@@ -19,12 +21,12 @@ export const Container = styled.TouchableOpacity`
         right: 10px;
       `;
     }
-  }}
+  }};
 `;
 
-export const Icon = styled.Text`
+export const Letter = styled.Text`
   font-family: 'WorkSans-Bold';
-  font-style: normal;
+  font-style: italic;
   font-weight: bold;
   font-size: 16px;
   line-height: 19px;

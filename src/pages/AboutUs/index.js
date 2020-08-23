@@ -21,22 +21,24 @@ const AboutUs = ({navigation, route}) => {
         height: '90%',
       }}>
       <Content>
-        <PlanInfoBox />
+        {/* <PlanInfoBox /> */}
         <Logo source={logo} />
         <SubTitle value="Sobre nós" size={14} mb={20} />
         <Text>
           O <TextBold>GRAZING</TextBold> é um aplicativo offline desenvolvido
-          com dados de pesquisa, com equações modeladas, combinando informações
+          com dados de pesquisa e modelos matemáticos que combinam informações
           sobre métodos de pastoreio, sistemas de produção, categorias animais,
-          espécies forrageiras e informações básicas dos animais e da
-          propriedade rural. {'\n'}O GRAZING orienta produtores(as) e
-          consultores(as) técnicos a gerar
-          <TextBold>recomendações inteligentes</TextBold> para a melhor
-          <TextBold>tomada de decisões</TextBold> nas propriedades rurais quando
-          o assunto for manejo de pastagens. O GRAZING visa o
-          <TextBold> manejo adequado das pastagens</TextBold>, com a finalidade
-          de <TextBold>aumentar a produtividade</TextBold> das propriedades
-          rurais.
+          espécies forrageiras e informações básicas dos animais, da pastagem e
+          da propriedade rural. O <TextBold>GRAZING</TextBold> orienta
+          produtores(as) e consultores(as) técnicos(as) na tomada de decisão
+          inteligente, pela recomendação do manejo mais adequado das pastagens
+          da propriedade rural. As soluções disponibilizadas no aplicativo
+          orientam quanto ao dimensionamento da área de pastagem, definição do
+          número de piquetes, ajuste da lotação animal, determinação do período
+          de ocupação nos piquetes e necessidade de fornecimento de suplemento
+          aos animais. O <TextBold>GRAZING</TextBold> visa o manejo adequado das
+          pastagens, com a finalidade de aumentar a produtividade das
+          propriedades rurais.
         </Text>
       </Content>
     </Container>

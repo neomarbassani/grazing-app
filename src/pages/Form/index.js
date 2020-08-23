@@ -34,6 +34,7 @@ import {
 
 import aveia from '../../assets/aveiaFundo.jpg';
 import azevem from '../../assets/azevemFundo.jpg';
+import aveiaAzevem from '../../assets/aveiaAzevemFundo.jpg';
 import campoNativo from '../../assets/campoNativoFundo.jpg';
 import campoNativoMelhorado from '../../assets/campoNativoMelhoradoFundo.jpg';
 import milheto from '../../assets/milhetoFundo.jpg';
@@ -55,7 +56,13 @@ const DimensionArea = ({navigation, route}) => {
 
   const {calc, animal, pasture, inputs} = route.params;
 
-  const items = [calc.value, calc.name, animal && animal.value, pasture.value];
+  const items = [
+    calc.value,
+    calc.name,
+    animal && animal.name,
+    animal && animal.value,
+    pasture.value,
+  ];
 
   const maxValuesToSlider = {
     aveia: 50,
@@ -71,6 +78,28 @@ const DimensionArea = ({navigation, route}) => {
   };
 
   const formRef = useRef(null);
+
+  const animal = {
+    type: {
+      terneiro: 'Terneiro(a)',
+      novilha: 'Novilho(a)',
+      novilhaLeite: 'Novilha',
+      vacaSeca: 'Vaca Seca',
+      vacaPrenha: 'Vaca Prenha',
+      vacaLactacao: 'Vaca em lactação'
+    },
+    category: {
+      bovinoCorte: 'Bovinocultura de Corte',
+      bovinoLeite: 'Bovinocultura de leite'
+    }
+  }
+
+  function getAnimal(an) {
+    return {
+      name: animal.category[an.name],
+      value: animal[an.value]
+    }
+  }
 
   async function handleSubmit(data) {
     try {
@@ -119,7 +148,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -135,7 +164,7 @@ const DimensionArea = ({navigation, route}) => {
               key: 'dataDeInicio',
             },
             {
-              name: 'Área total do potreiro (ha)',
+              name: 'Área do potreiro (ha)',
               value: areaDoPotreiro,
               key: 'areaDoPotreiro',
             },
@@ -202,7 +231,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -248,7 +277,7 @@ const DimensionArea = ({navigation, route}) => {
               key: 'tempoDePermanencia',
             },
             {
-              name: 'Área total do potreiro (ha)',
+              name: 'Área do potreiro (ha)',
               value: areaDoPotreiro,
               key: 'areaDoPotreiro',
             },
@@ -304,7 +333,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -375,7 +404,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -450,7 +479,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -481,7 +510,7 @@ const DimensionArea = ({navigation, route}) => {
               key: 'tempoDePermanencia',
             },
             {
-              name: 'Área total do potreiro (ha)',
+              name: 'Área do potreiro (ha)',
               value: areaDoPotreiro,
               key: 'areaDoPotreiro',
             },
@@ -560,7 +589,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -581,7 +610,7 @@ const DimensionArea = ({navigation, route}) => {
               key: 'quantidadeDeAnimais',
             },
             {
-              name: 'Área total do potreiro (ha)',
+              name: 'Área do potreiro (ha)',
               value: areaDoPotreiro,
               key: 'areaDoPotreiro',
             },
@@ -704,7 +733,7 @@ const DimensionArea = ({navigation, route}) => {
               key: 'quantidadeDeAnimais',
             },
             {
-              name: 'Área total do potreiro (ha)',
+              name: 'Área do potreiro (ha)',
               value: areaDoPotreiro,
               key: 'areaDoPotreiro',
             },
@@ -780,7 +809,7 @@ const DimensionArea = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal,
+            animal: getAnimal(animal),
             pasture,
           },
           inputs: [
@@ -796,7 +825,7 @@ const DimensionArea = ({navigation, route}) => {
               key: 'dataDeInicio',
             },
             {
-              name: 'Área total do potreiro (ha)',
+              name: 'Área do potreiro (ha)',
               value: areaDoPotreiro,
               key: 'areaDoPotreiro',
             },
@@ -868,23 +897,25 @@ const DimensionArea = ({navigation, route}) => {
   return (
     <Container
       source={
-        pasture.value === 'Azevém'
+            pasture.key === 'azevem'
           ? azevem
-          : pasture.value === 'Campo Nativo'
+          : pasture.key === 'campoNativo'
           ? campoNativo
-          : pasture.value === 'Campo Nativo Melhorado'
+          : pasture.key === 'campoNativoMelhorado'
           ? campoNativoMelhorado
-          : pasture.value === 'Aveia'
+          : pasture.key === 'aveia'
           ? aveia
-          : pasture.value === 'Milheto'
+          : pasture.key === 'milheto'
           ? milheto
-          : pasture.value === 'Sudão'
+          : pasture.key === 'sudao'
           ? sudao
-          : pasture.value === 'Papuã'
+          : pasture.key === 'papua'
           ? papua
-          : pasture.value === 'Sorgo'
+          : pasture.key === 'sorgo'
           ? sorgo
-          : tifton
+          : pasture.key === 'tifton'
+          ? tifton
+          : aveiaAzevem
       }
       resizeMode="cover">
       <View
@@ -899,6 +930,7 @@ const DimensionArea = ({navigation, route}) => {
 
         <Content
           contentContainerStyle={{
+            flex: 1,
             flexWrap: 'wrap',
             flexDirection: 'row',
             justifyContent: 'space-between',
@@ -921,7 +953,7 @@ const DimensionArea = ({navigation, route}) => {
                 color="#fff"
                 returnKeyType="next"
                 blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
+                onSubmitEditing={() => focusInput('dataDeInicio')}>
                 <HelpButton data={help[0]} />
               </Input>
               <Input
@@ -929,8 +961,8 @@ const DimensionArea = ({navigation, route}) => {
                 color="#fff"
                 label="Data de início do pastejo"
                 keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
                 maskType="datetime"
+                typeIcon="datetimepicker"
                 options={{
                   format: 'DD/MM/YYYY',
                 }}
@@ -941,7 +973,7 @@ const DimensionArea = ({navigation, route}) => {
               <Input
                 name="quantidadeDeAnimais"
                 color="#fff"
-                label="Numero de animais no potreiro"
+                label="Número de animais no potreiro"
                 keyboardType="numeric"
                 returnKeyType="next"
                 blurOnSubmit={false}
@@ -953,7 +985,7 @@ const DimensionArea = ({navigation, route}) => {
                 <Input
                   name="numeroDePiquetes"
                   color="#fff"
-                  label="Numero de piquetes"
+                  label="Número de piquetes"
                   keyboardType="numeric"
                   returnKeyType="next"
                   blurOnSubmit={false}>
@@ -974,7 +1006,7 @@ const DimensionArea = ({navigation, route}) => {
                 unit="cm"
               />
               <SliderInput
-                label="Área total do potreiro:"
+                label="Área do potreiro"
                 value={areaDoPotreiro}
                 color="#fff"
                 mt={10}
@@ -986,7 +1018,7 @@ const DimensionArea = ({navigation, route}) => {
                 unit="ha"
               />
               <SliderInput
-                label="Periodo de permanencia"
+                label="Período de ocupação"
                 value={tempoDePermanencia}
                 color="#fff"
                 mt={10}
@@ -994,7 +1026,7 @@ const DimensionArea = ({navigation, route}) => {
                   setTempoDePermanencia(value);
                 }}
                 minVal={0}
-                maxVal={90}
+                maxVal={10}
                 unit="dias"
               />
             </Form>
@@ -1019,6 +1051,7 @@ const DimensionArea = ({navigation, route}) => {
                 keyboardType="numeric"
                 placeholder="DD/MM/YYYY"
                 maskType="datetime"
+                typeIcon="datetimepicker"
                 options={{
                   format: 'DD/MM/YYYY',
                 }}
@@ -1028,17 +1061,17 @@ const DimensionArea = ({navigation, route}) => {
               <Input
                 name="quantidadeDeAnimais"
                 color="#fff"
-                label="Numero de animais no potreiro"
+                label="Número de animais no potreiro"
                 keyboardType="numeric"
                 returnKeyType="next"
                 blurOnSubmit={false}
                 onSubmitEditing={() => focusInput('dataDeInicio')}>
-                <HelpButton data={help[2]} />
+                <HelpButton data={help[3]} />
               </Input>
 
               {calc.name === 'Pastoreio rotativo' && (
                 <RadioButton
-                  label="Ira fornecer suplementação adicional?"
+                  label="Irá fornecer suplementação adicional?"
                   onPress={value => setSuplementacaoAdicional(value)}
                   animation={true}
                   formHorizontal={true}
@@ -1050,7 +1083,7 @@ const DimensionArea = ({navigation, route}) => {
                 <>
                   <Input
                     name="racao"
-                    placeholder="Ração (kg/animal/dia)"
+                    placeholder="Ração/Concentrado (kg/animal/dia)"
                     color="#fff"
                     keyboardType="numeric"
                     returnKeyType="next"
@@ -1068,7 +1101,7 @@ const DimensionArea = ({navigation, route}) => {
                   />
                   <Input
                     name="silagem"
-                    placeholder="Ração (kg/animal/dia)"
+                    placeholder="Silagem (kg/animal/dia)"
                     color="#fff"
                     keyboardType="numeric"
                     returnKeyType="done"
@@ -1099,6 +1132,7 @@ const DimensionArea = ({navigation, route}) => {
                   keyboardType="numeric"
                   placeholder="DD/MM/YYYY"
                   maskType="datetime"
+                  typeIcon="datetimepicker"
                   options={{
                     format: 'DD/MM/YYYY',
                   }}
@@ -1117,8 +1151,8 @@ const DimensionArea = ({navigation, route}) => {
                   maxVal={maxValuesToSlider[pasture.key]}
                   unit="cm"
                 />
-                <SliderInput
-                  label="Tempo de permanência"
+                {/* <SliderInput
+                  label="Período de ocupação"
                   value={tempoDePermanencia}
                   color="#fff"
                   mt={10}
@@ -1128,10 +1162,10 @@ const DimensionArea = ({navigation, route}) => {
                   minVal={0}
                   maxVal={90}
                   unit="dias"
-                />
+                /> */}
 
                 <SliderInput
-                  label="Área total do potreiro"
+                  label="Área do potreiro"
                   value={areaDoPotreiro}
                   color="#fff"
                   mt={10}
@@ -1145,7 +1179,7 @@ const DimensionArea = ({navigation, route}) => {
               </Form>
             )}
 
-          {calc.name === 'Pastoreio rotativo' &&
+          { calc.name === 'Pastoreio rotativo' &&
             calc.value === 'Ajustar lotação animal' && (
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <Input
@@ -1165,6 +1199,7 @@ const DimensionArea = ({navigation, route}) => {
                   keyboardType="numeric"
                   placeholder="DD/MM/YYYY"
                   maskType="datetime"
+                  typeIcon="datetimepicker"
                   options={{
                     format: 'DD/MM/YYYY',
                   }}
@@ -1184,7 +1219,7 @@ const DimensionArea = ({navigation, route}) => {
                 />
 
                 <RadioButton
-                  label="Ira fornecer suplementação adicional?"
+                  label="Irá fornecer suplementação adicional?"
                   onPress={value => setSuplementacaoAdicional(value)}
                   animation={true}
                   formHorizontal={true}
@@ -1195,7 +1230,7 @@ const DimensionArea = ({navigation, route}) => {
                   <>
                     <Input
                       name="racao"
-                      placeholder="Ração (kg/animal/dia)"
+                      placeholder="Ração/Concentrado (kg/animal/dia)"
                       color="#fff"
                       keyboardType="numeric"
                       returnKeyType="next"
@@ -1213,7 +1248,7 @@ const DimensionArea = ({navigation, route}) => {
                     />
                     <Input
                       name="silagem"
-                      placeholder="Ração (kg/animal/dia)"
+                      placeholder="Silagem (kg/animal/dia)"
                       color="#fff"
                       keyboardType="numeric"
                       returnKeyType="done"
@@ -1225,7 +1260,7 @@ const DimensionArea = ({navigation, route}) => {
                 <Input
                   name="numeroDePiquetes"
                   color="#fff"
-                  label="Numero de piquetes"
+                  label="Número de piquetes"
                   keyboardType="numeric"
                   returnKeyType="next"
                   blurOnSubmit={false}>
@@ -1233,7 +1268,7 @@ const DimensionArea = ({navigation, route}) => {
                 </Input>
 
                 <SliderInput
-                  label="Tempo de permanência"
+                  label="Período de ocupação"
                   unit="dias"
                   value={tempoDePermanencia}
                   color="#fff"
@@ -1246,7 +1281,7 @@ const DimensionArea = ({navigation, route}) => {
                 />
 
                 <SliderInput
-                  label="Área total do potreiro"
+                  label="Área do potreiro"
                   value={areaDoPotreiro}
                   color="#fff"
                   mt={10}
@@ -1279,6 +1314,7 @@ const DimensionArea = ({navigation, route}) => {
                 keyboardType="numeric"
                 placeholder="DD/MM/YYYY"
                 maskType="datetime"
+                typeIcon="datetimepicker"
                 options={{
                   format: 'DD/MM/YYYY',
                 }}
@@ -1288,7 +1324,7 @@ const DimensionArea = ({navigation, route}) => {
               <Input
                 name="quantidadeDeAnimais"
                 color="#fff"
-                label="Numero de animais no potreiro"
+                label="Número de animais no potreiro"
                 keyboardType="numeric"
                 returnKeyType="next"
                 blurOnSubmit={false}
@@ -1297,7 +1333,7 @@ const DimensionArea = ({navigation, route}) => {
               </Input>
 
               <SliderInput
-                label="Área total do potreiro"
+                label="Área do potreiro"
                 value={areaDoPotreiro}
                 color="#fff"
                 mt={10}
@@ -1310,7 +1346,7 @@ const DimensionArea = ({navigation, route}) => {
               />
 
               <RadioButton
-                label="Ira fornecer suplementação adicional?"
+                label="Irá fornecer suplementação adicional?"
                 onPress={value => setSuplementacaoAdicional(value)}
                 animation={true}
                 formHorizontal={true}
@@ -1321,7 +1357,7 @@ const DimensionArea = ({navigation, route}) => {
                 <>
                   <Input
                     name="racao"
-                    placeholder="Ração (kg/animal/dia)"
+                    placeholder="Ração/Concentrado (kg/animal/dia)"
                     color="#fff"
                     keyboardType="numeric"
                     returnKeyType="next"
@@ -1341,7 +1377,7 @@ const DimensionArea = ({navigation, route}) => {
                   </Input>
                   <Input
                     name="silagem"
-                    placeholder="Ração (kg/animal/dia)"
+                    placeholder="Silagem (kg/animal/dia)"
                     color="#fff"
                     keyboardType="numeric"
                     returnKeyType="done"
@@ -1372,6 +1408,7 @@ const DimensionArea = ({navigation, route}) => {
                 keyboardType="numeric"
                 placeholder="DD/MM/YYYY"
                 maskType="datetime"
+                typeIcon="datetimepicker"
                 options={{
                   format: 'DD/MM/YYYY',
                 }}
@@ -1381,7 +1418,7 @@ const DimensionArea = ({navigation, route}) => {
               <Input
                 name="quantidadeDeAnimais"
                 color="#fff"
-                label="Numero de animais no potreiro"
+                label="Número de animais no potreiro"
                 keyboardType="numeric"
                 returnKeyType="next"
                 blurOnSubmit={false}
@@ -1405,7 +1442,7 @@ const DimensionArea = ({navigation, route}) => {
               <Input
                 name="numeroDePiquetes"
                 color="#fff"
-                label="Numero de piquetes"
+                label="Número de piquetes"
                 keyboardType="numeric"
                 returnKeyType="next"
                 blurOnSubmit={false}>
@@ -1413,7 +1450,7 @@ const DimensionArea = ({navigation, route}) => {
               </Input>
 
               <SliderInput
-                label="Área total do potreiro"
+                label="Área do potreiro"
                 value={areaDoPotreiro}
                 color="#fff"
                 mt={10}
@@ -1426,7 +1463,7 @@ const DimensionArea = ({navigation, route}) => {
               />
 
               <RadioButton
-                label="Ira fornecer suplementação adicional?"
+                label="Irá fornecer suplementação adicional?"
                 onPress={value => setSuplementacaoAdicional(value)}
                 animation={true}
                 formHorizontal={true}
@@ -1437,7 +1474,7 @@ const DimensionArea = ({navigation, route}) => {
                 <>
                   <Input
                     name="racao"
-                    placeholder="Ração (kg/animal/dia)"
+                    placeholder="Ração/Concentrado (kg/animal/dia)"
                     color="#fff"
                     keyboardType="numeric"
                     returnKeyType="next"
@@ -1455,7 +1492,7 @@ const DimensionArea = ({navigation, route}) => {
                   />
                   <Input
                     name="silagem"
-                    placeholder="Ração (kg/animal/dia)"
+                    placeholder="Silagem (kg/animal/dia)"
                     color="#fff"
                     keyboardType="numeric"
                     returnKeyType="done"

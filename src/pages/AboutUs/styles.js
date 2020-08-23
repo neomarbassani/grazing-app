@@ -17,6 +17,8 @@ export const Text = styled.Text`
   line-height: 16px;
 
   color: #888899;
+
+  text-align: justify;
 `;
 
 export const TextBold = styled(Text)`

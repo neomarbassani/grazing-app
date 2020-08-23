@@ -23,7 +23,7 @@ import novilhaleiteira from '../../assets/novilhaleiteira.jpg';
 const ChooseBovineCategory = ({navigation, route}) => {
   const {calc, animalCategory} = route.params;
 
-  const items = [calc.value, calc.name];
+  const items = [calc.value, calc.name, animalCategory];
 
   return (
     <Container
@@ -37,24 +37,24 @@ const ChooseBovineCategory = ({navigation, route}) => {
       <Content>
         <CalcRoutesTop items={items} />
         <SubTitle value="Qual é a categoria animal?" size={14} mb={20} />
-        {animalCategory === 'Bovinocultura de corte' && (
+        {animalCategory === 'bovinoCorte' && (
           <>
             <ChooseItemButton
               size={47}
-              content={'Terneiro'}
+              content={'Terneiro(a)'}
               source={terneiro}
               onPress={() => {
                 navigation.navigate('AnimalInfo', {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Terneiro',
+                    value: 'terneiro',
                   },
                 });
               }}
             />
             <ChooseItemButton
-              content={'Novilha'}
+              content={'Novilho(a)'}
               source={novilha}
               size={47}
               onPress={() => {
@@ -62,7 +62,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Novilha',
+                    value: 'novilha',
                   },
                 });
               }}
@@ -76,7 +76,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Vaca seca',
+                    value: 'vacaSeca',
                   },
                 });
               }}
@@ -90,7 +90,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Vaca prenha',
+                    value: 'vacaPrenha',
                   },
                 });
               }}
@@ -98,7 +98,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
           </>
         )}
 
-        {animalCategory === 'Bovinocultura de leite' && (
+        {animalCategory === 'bovinoLeite' && (
           <>
             <ChooseItemButton
               content={'Vaca em lactação'}
@@ -109,14 +109,14 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Vaca em lactação',
+                    value: 'vacaLactacao',
                   },
                 });
               }}
             />
 
             <ChooseItemButton
-              content={'Novilha Leiteira'}
+              content={'Novilha'}
               source={novilhaleiteira}
               size={47}
               onPress={() => {
@@ -124,7 +124,7 @@ const ChooseBovineCategory = ({navigation, route}) => {
                   calc,
                   animal: {
                     name: animalCategory,
-                    value: 'Novilha Leiteira',
+                    value: 'novilhaLeite',
                   },
                 });
               }}
