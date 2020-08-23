@@ -18,6 +18,13 @@ import api from '../../services/api';
 
 import cowImage from '../../assets/cow.png';
 
+import terneiro from '../../assets/terneiro.jpeg';
+import vacaemlactacao from '../../assets/vacaemlactacao.jpg';
+import vacaprenha from '../../assets/vacaprenha.jpeg';
+import vacaseca from '../../assets/vacaseca.jpg';
+import novilha from '../../assets/novilha.jpg';
+import novilhaleiteira from '../../assets/novilhaleiteira.jpg';
+
 import CalcHistoryActions from '../../store/ducks/calcHistory';
 
 import {
@@ -285,6 +292,7 @@ const Historic = ({navigation}) => {
             renderItem={({item}) => (
               <Group>
                 <DateGroup>{formateDate(item.created_at)}</DateGroup>
+
                 {item.calcs.map(historicItem => (
                   <Item
                     key={historicItem._id}
@@ -293,11 +301,29 @@ const Historic = ({navigation}) => {
                         isVisible: true,
                         item: historicItem,
                       });
-
-                      console.log(historicItem);
                     }}>
+                    {console.log(historicItem.config.animal.value)}
                     <CowContainer>
-                      <CowImage source={cowImage} />
+                      <CowImage
+                        source={
+                          historicItem.config.animal.value === 'terneiro'
+                            ? terneiro
+                            : historicItem.config.animal.value ===
+                              'vacaLactacao'
+                            ? vacaemlactacao
+                            : historicItem.config.animal.value === 'novilha'
+                            ? novilha
+                            : historicItem.config.animal.value ===
+                              'novilhaLeiteira'
+                            ? novilhaleiteira
+                            : historicItem.config.animal.value === 'vacaSeca'
+                            ? vacaseca
+                            : historicItem.config.animal.value === 'vacaPrenha'
+                            ? vacaprenha
+                            : cowImage
+                        }
+                        resizeMode="cover"
+                      />
                     </CowContainer>
                     <MiddleSection>
                       <TitleItem>{historicItem.config.animal.name}</TitleItem>
