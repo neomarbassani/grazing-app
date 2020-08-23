@@ -68,7 +68,9 @@ export const CowContainer = styled.View`
 `;
 
 export const CowImage = styled.Image`
-  width: 32px;
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
 `;
 
 export const TitleItem = styled.Text`

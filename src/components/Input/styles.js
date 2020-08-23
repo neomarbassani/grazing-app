@@ -37,6 +37,8 @@ export const ToogleVisility = styled.TouchableOpacity`
   flex: 1;
   align-items: center;
   justify-content: center;
+
+  elevation: 1000;
 `;
 
 export const InputField = styled.TextInput`
@@ -57,9 +59,9 @@ export const InputError = styled.Text`
   font-size: 12px;
   color: ${colors.error};
 `;
-export const InputFieldMask = styled(TextInputMask)`
-  width: 100%;
-  height: 42px;
+export const InputFieldMask = styled.TextInput`
+  width: 95%;
+  height: 100%;
   border: none;
   background-color: transparent;
   color: ${colors.placeholder};
