@@ -19,6 +19,8 @@ const Result = ({navigation, route}) => {
 
   const dispatch = useDispatch();
 
+
+
   const saveCalc = async () => {
     try {
       dispatch(CalcHistoryActions.addCalcToHistoryRequest(calcState));

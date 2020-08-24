@@ -64,8 +64,6 @@ export default function Input({
     });
   }, [fieldName, registerField]);
 
-  console.log(date);
-
   return (
     <>
       <Container textarea={textarea} mb={mb}>

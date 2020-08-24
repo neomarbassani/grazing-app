@@ -1,5 +1,7 @@
 // REV 19 / 08 / 2020
 /* eslint-disable radix */
+/* eslint-disable */
+
 
 export const taxaDeAcumuloPorEspecie = {
   campoNativo: {

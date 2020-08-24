@@ -302,23 +302,21 @@ const Historic = ({navigation}) => {
                         item: historicItem,
                       });
                     }}>
-                    {console.log(historicItem.config.animal.value)}
                     <CowContainer>
                       <CowImage
                         source={
-                          historicItem.config.animal.value === 'terneiro'
+                          historicItem.config.animal.value === 'Terneiro(a)'
                             ? terneiro
                             : historicItem.config.animal.value ===
-                              'vacaLactacao'
+                              'Vaca em lactação'
                             ? vacaemlactacao
-                            : historicItem.config.animal.value === 'novilha'
+                            : historicItem.config.animal.value === 'Novilho(a)'
                             ? novilha
-                            : historicItem.config.animal.value ===
-                              'novilhaLeiteira'
+                            : historicItem.config.animal.value === 'Novilha'
                             ? novilhaleiteira
-                            : historicItem.config.animal.value === 'vacaSeca'
+                            : historicItem.config.animal.value === 'Vaca Seca'
                             ? vacaseca
-                            : historicItem.config.animal.value === 'vacaPrenha'
+                            : historicItem.config.animal.value === 'Vaca Prenha'
                             ? vacaprenha
                             : cowImage
                         }
@@ -436,7 +434,6 @@ const Historic = ({navigation}) => {
                   modalConfig.item.inputs.find(
                     input => input.key === 'nomeDoPotreiro',
                   ).value}
-                kg
               </Value>
             </RowItem>
 

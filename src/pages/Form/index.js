@@ -4,6 +4,10 @@ import {View, Dimensions} from 'react-native';
 import * as Yup from 'yup';
 import {Form} from '@unform/mobile';
 
+import {useSelector} from 'react-redux';
+
+import moment from 'moment';
+
 const {height} = Dimensions.get('window');
 import Container from '../../layout/App';
 
@@ -45,7 +49,7 @@ import tifton from '../../assets/tiftonFundo.jpg';
 
 import help from './data';
 
-const DimensionArea = ({navigation, route}) => {
+const FormContainer = ({navigation, route}) => {
   const [alturaDoPasto, setAlturaDoPasto] = useState(0);
   const [tempoDePermanencia, setTempoDePermanencia] = useState(0);
   const [areaDoPotreiro, setAreaDoPotreiro] = useState(0);
@@ -53,6 +57,8 @@ const DimensionArea = ({navigation, route}) => {
     label: 'Não',
     value: 0,
   });
+
+  const user = useSelector(state => state.auth.user);
 
   const {calc, animal, pasture, inputs} = route.params;
 
@@ -79,36 +85,37 @@ const DimensionArea = ({navigation, route}) => {
 
   const formRef = useRef(null);
 
-  const animal = {
+  const animalType = {
     type: {
       terneiro: 'Terneiro(a)',
       novilha: 'Novilho(a)',
       novilhaLeite: 'Novilha',
       vacaSeca: 'Vaca Seca',
       vacaPrenha: 'Vaca Prenha',
-      vacaLactacao: 'Vaca em lactação'
+      vacaLactacao: 'Vaca em lactação',
     },
     category: {
       bovinoCorte: 'Bovinocultura de Corte',
-      bovinoLeite: 'Bovinocultura de leite'
-    }
-  }
+      bovinoLeite: 'Bovinocultura de leite',
+    },
+  };
 
   function getAnimal(an) {
     return {
-      name: animal.category[an.name],
-      value: animal[an.value]
-    }
+      name: animalType.category[an.name],
+      value: animalType.type[an.value],
+    };
   }
+  
 
   async function handleSubmit(data) {
     try {
       formRef.current.setErrors({});
 
+      const mouth = moment(data.dataDeInicio).format('M');
+
       const checkIfAnyValueExistsForPastureInfo =
-        taxaDeAcumuloPorEspecie[pasture.key][
-          new Date(data.dataDeInicio).getMonth() + 1
-        ];
+        taxaDeAcumuloPorEspecie[pasture.value][mouth];
 
       if (typeof checkIfAnyValueExistsForPastureInfo === 'undefined') {
         return Snackbar.show({
@@ -140,7 +147,7 @@ const DimensionArea = ({navigation, route}) => {
           dataDeInicio: data.dataDeInicio,
           peso: inputs.find(input => input.key === 'peso').value,
           alturaDoPasto,
-          tipoDePasto: pasture.key,
+          tipoDePasto: pasture.value,
           areaDoPotreiro,
           tempoDePermanencia,
         });
@@ -210,7 +217,7 @@ const DimensionArea = ({navigation, route}) => {
           silagem: data.silagem || 0,
           numeroDePiquetes: data.numeroDePiquetes,
           alturaDoPasto: alturaDoPasto,
-          tipoDePasto: pasture.key,
+          tipoDePasto: pasture.value,
           tempoDePermanencia: tempoDePermanencia,
           areaDoPotreiro: areaDoPotreiro,
           diasDeGestacao:
@@ -219,14 +226,9 @@ const DimensionArea = ({navigation, route}) => {
             inputs.find(input => input.key === 'semanasDeLactacao').value || 0,
           quantidadeDeLeite:
             inputs.find(input => input.key === 'quantidadeDeLeite').value || 0,
-          categoriaAnimal:
-            animal.name === 'Bovinocultura de leite'
-              ? 'bovinoLeite'
-              : 'bovinoCorte',
+          categoriaAnimal: animal.name,
           tipoDeAnimal: animal.value,
         });
-
-        console.log(results);
 
         const calcState = {
           config: {
@@ -253,17 +255,17 @@ const DimensionArea = ({navigation, route}) => {
             },
             {
               name: 'Ração',
-              value: data.racao,
+              value: data.racao || 0,
               key: 'racao',
             },
             {
               name: 'Silagem',
-              value: data.silagem,
+              value: data.silagem || 0,
               key: 'silagem',
             },
             {
               name: 'Feno',
-              value: data.feno,
+              value: data.feno || 0,
               key: 'feno',
             },
             {
@@ -314,7 +316,7 @@ const DimensionArea = ({navigation, route}) => {
           feno: data.feno,
           silagem: data.silagem,
           quantidadeDeAnimais: data.quantidadeDeAnimais,
-          tipoDePasto: pasture.key,
+          tipoDePasto: pasture.value,
           diasDeGestacao: inputs.find(input => input.key === 'diasDeGestacao')
             .value,
           semanasDeLactacao: inputs.find(
@@ -323,10 +325,7 @@ const DimensionArea = ({navigation, route}) => {
           quantidadeDeLeite: inputs.find(
             input => input.key === 'quantidadeDeLeite',
           ).value,
-          categoriaAnimal:
-            animal.name === 'Bovinocultura de leite'
-              ? 'bovinoLeite'
-              : 'bovinoCorte',
+          categoriaAnimal: animal.name,
           tipoDeAnimal: animal.value,
         });
 
@@ -350,17 +349,17 @@ const DimensionArea = ({navigation, route}) => {
             },
             {
               name: 'Ração',
-              value: data.racao,
+              value: data.racao || 0,
               key: 'racao',
             },
             {
               name: 'Silagem',
-              value: data.silagem,
+              value: data.silagem || 0,
               key: 'silagem',
             },
             {
               name: 'Feno',
-              value: data.feno,
+              value: data.feno || 0,
               key: 'feno',
             },
             {
@@ -394,12 +393,16 @@ const DimensionArea = ({navigation, route}) => {
           abortEarly: false,
         });
 
+        console.log('results');
+
         const results = tamanhoPotreiroContinuo({
           dataDeInicio: data.dataDeInicio,
           peso: inputs.find(input => input.key === 'peso').value,
           quantidadeDeAnimais: data.quantidadeDeAnimais,
-          tipoDePasto: pasture.key,
+          tipoDePasto: pasture.value,
         });
+
+        console.log(results);
 
         const calcState = {
           config: {
@@ -460,7 +463,7 @@ const DimensionArea = ({navigation, route}) => {
           feno: data.feno,
           silagem: data.silagem,
           quantidadeDeAnimais: data.quantidadeDeAnimais,
-          tipoDePasto: pasture.key,
+          tipoDePasto: pasture.value,
           diasDeGestacao: inputs.find(input => input.key === 'diasDeGestacao')
             .value,
           semanasDeLactacao: inputs.find(
@@ -469,10 +472,7 @@ const DimensionArea = ({navigation, route}) => {
           quantidadeDeLeite: inputs.find(
             input => input.key === 'quantidadeDeLeite',
           ).value,
-          categoriaAnimal:
-            animal.name === 'Bovinocultura de leite'
-              ? 'bovinoLeite'
-              : 'bovinoCorte',
+          categoriaAnimal: animal.name,
           tipoDeAnimal: animal.value,
         });
 
@@ -516,17 +516,17 @@ const DimensionArea = ({navigation, route}) => {
             },
             {
               name: 'Ração',
-              value: data.racao,
+              value: data.racao || 0,
               key: 'racao',
             },
             {
               name: 'Silagem',
-              value: data.silagem,
+              value: data.silagem || 0,
               key: 'silagem',
             },
             {
               name: 'Feno',
-              value: data.feno,
+              value: data.feno || 0,
               key: 'feno',
             },
           ],
@@ -570,7 +570,7 @@ const DimensionArea = ({navigation, route}) => {
           feno: data.feno,
           silagem: data.silagem,
           quantidadeDeAnimais: data.quantidadeDeAnimais,
-          tipoDePasto: pasture.key,
+          tipoDePasto: pasture.value,
           diasDeGestacao: inputs.find(input => input.key === 'diasDeGestacao')
             .value,
           semanasDeLactacao: inputs.find(
@@ -579,10 +579,7 @@ const DimensionArea = ({navigation, route}) => {
           quantidadeDeLeite: inputs.find(
             input => input.key === 'quantidadeDeLeite',
           ).value,
-          categoriaAnimal:
-            animal.name === 'Bovinocultura de leite'
-              ? 'bovinoLeite'
-              : 'bovinoCorte',
+          categoriaAnimal: animal.name,
           tipoDeAnimal: animal.value,
         });
 
@@ -652,27 +649,6 @@ const DimensionArea = ({navigation, route}) => {
           abortEarly: false,
         });
 
-        console.log({
-          areaDoPotreiro,
-          dataDeInicio: data.dataDeInicio,
-          racao: suplementacaoAdicional === -1 ? -1 : data.racao || 0,
-          feno: data.feno || 0,
-          silagem: data.silagem || 0,
-          quantidadeDeAnimais: data.quantidadeDeAnimais,
-          tipoDePasto: pasture.key,
-          diasDeGestacao:
-            inputs.find(input => input.key === 'diasDeGestacao').value || 0,
-          semanasDeLactacao:
-            inputs.find(input => input.key === 'semanasDeLactacao').value || 0,
-          quantidadeDeLeite:
-            inputs.find(input => input.key === 'quantidadeDeLeite').value || 0,
-          categoriaAnimal:
-            animal.name === 'Bovinocultura de leite'
-              ? 'bovinoLeite'
-              : 'bovinoCorte',
-          tipoDeAnimal: animal.value,
-        });
-
         const results = calcularNumeroDePiquetes({
           areaDoPotreiro,
           dataDeInicio: data.dataDeInicio,
@@ -681,17 +657,14 @@ const DimensionArea = ({navigation, route}) => {
           feno: data.feno || 0,
           silagem: data.silagem || 0,
           quantidadeDeAnimais: data.quantidadeDeAnimais,
-          tipoDePasto: pasture.key,
+          tipoDePasto: pasture.value,
           diasDeGestacao:
             inputs.find(input => input.key === 'diasDeGestacao').value || 0,
           semanasDeLactacao:
             inputs.find(input => input.key === 'semanasDeLactacao').value || 0,
           quantidadeDeLeite:
             inputs.find(input => input.key === 'quantidadeDeLeite').value || 0,
-          categoriaAnimal:
-            animal.name === 'Bovinocultura de leite'
-              ? 'bovinoLeite'
-              : 'bovinoCorte',
+          categoriaAnimal: animal.name,
           tipoDeAnimal: animal.value,
         });
 
@@ -714,17 +687,17 @@ const DimensionArea = ({navigation, route}) => {
             },
             {
               name: 'Ração',
-              value: data.racao,
+              value: data.racao || 0,
               key: 'racao',
             },
             {
               name: 'Silagem',
-              value: data.silagem,
+              value: data.silagem || 0,
               key: 'silagem',
             },
             {
               name: 'Feno',
-              value: data.feno,
+              value: data.feno || 0,
               key: 'feno',
             },
             {
@@ -756,31 +729,6 @@ const DimensionArea = ({navigation, route}) => {
         await schema.validate(data, {
           abortEarly: false,
         });
-        console.log('ok');
-
-        console.log({
-          alturaDoPasto,
-          numeroDePiquetes: data.numeroDePiquetes,
-          areaDoPotreiro,
-          dataDeInicio: data.dataDeInicio,
-          peso: inputs.find(input => input.key === 'peso').value,
-          racao: suplementacaoAdicional === -1 ? -1 : data.racao || 0,
-          feno: data.feno || 0,
-          silagem: data.silagem || 0,
-          quantidadeDeAnimais: data.quantidadeDeAnimais,
-          tipoDePasto: pasture.key,
-          diasDeGestacao:
-            inputs.find(input => input.key === 'diasDeGestacao').value || 0,
-          semanasDeLactacao:
-            inputs.find(input => input.key === 'semanasDeLactacao').value || 0,
-          quantidadeDeLeite:
-            inputs.find(input => input.key === 'quantidadeDeLeite').value || 0,
-          categoriaAnimal:
-            animal.name === 'Bovinocultura de leite'
-              ? 'bovinoLeite'
-              : 'bovinoCorte',
-          tipoDeAnimal: animal.value,
-        });
 
         const results = definirPeriodoDeOcupacaoRotativo({
           alturaDoPasto,
@@ -792,17 +740,14 @@ const DimensionArea = ({navigation, route}) => {
           feno: data.feno || 0,
           silagem: data.silagem || 0,
           quantidadeDeAnimais: data.quantidadeDeAnimais,
-          tipoDePasto: pasture.key,
+          tipoDePasto: pasture.value,
           diasDeGestacao:
             inputs.find(input => input.key === 'diasDeGestacao').value || 0,
           semanasDeLactacao:
             inputs.find(input => input.key === 'semanasDeLactacao').value || 0,
           quantidadeDeLeite:
             inputs.find(input => input.key === 'quantidadeDeLeite').value || 0,
-          categoriaAnimal:
-            animal.name === 'Bovinocultura de leite'
-              ? 'bovinoLeite'
-              : 'bovinoCorte',
+          categoriaAnimal: animal.name,
           tipoDeAnimal: animal.value,
         });
 
@@ -846,17 +791,17 @@ const DimensionArea = ({navigation, route}) => {
             },
             {
               name: 'Ração',
-              value: data.racao,
+              value: data.racao || 0,
               key: 'racao',
             },
             {
               name: 'Silagem',
-              value: data.silagem,
+              value: data.silagem || 0,
               key: 'silagem',
             },
             {
               name: 'Feno',
-              value: data.feno,
+              value: data.feno || 0,
               key: 'feno',
             },
           ],
@@ -888,6 +833,8 @@ const DimensionArea = ({navigation, route}) => {
     }
   }
 
+  console.log(calc);
+
   const options = [
     {label: 'Sim', value: 1},
     {label: 'Não', value: 0},
@@ -897,23 +844,23 @@ const DimensionArea = ({navigation, route}) => {
   return (
     <Container
       source={
-            pasture.key === 'azevem'
+        pasture.value === 'azevem'
           ? azevem
-          : pasture.key === 'campoNativo'
+          : pasture.value === 'campoNativo'
           ? campoNativo
-          : pasture.key === 'campoNativoMelhorado'
+          : pasture.value === 'campoNativoMelhorado'
           ? campoNativoMelhorado
-          : pasture.key === 'aveia'
+          : pasture.value === 'aveia'
           ? aveia
-          : pasture.key === 'milheto'
+          : pasture.value === 'milheto'
           ? milheto
-          : pasture.key === 'sudao'
+          : pasture.value === 'sudao'
           ? sudao
-          : pasture.key === 'papua'
+          : pasture.value === 'papua'
           ? papua
-          : pasture.key === 'sorgo'
+          : pasture.value === 'sorgo'
           ? sorgo
-          : pasture.key === 'tifton'
+          : pasture.value === 'tifton'
           ? tifton
           : aveiaAzevem
       }
@@ -928,192 +875,112 @@ const DimensionArea = ({navigation, route}) => {
         <ProgressBar size={87.5} />
         <CalcHeader color="#fff" />
 
-        <Content
-          contentContainerStyle={{
+        <View
+          style={{
             flex: 1,
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            paddingHorizontal: 15,
-            paddingBottom: 30,
+            width: '100%',
           }}>
-          <CalcRoutesTop items={items} color="#fff" />
-          <SubTitle
-            value="Informações sobre o sistema"
-            size={14}
-            mb={20}
-            color="#fff"
-          />
-          {calc.value === 'Fornecer suplemento' && (
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="nomeDoPotreiro"
-                label="Identificação do Potreiro"
-                placeholder="Nome ou número do potreiro"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('dataDeInicio')}>
-                <HelpButton data={help[0]} />
-              </Input>
-              <Input
-                name="dataDeInicio"
-                color="#fff"
-                label="Data de início do pastejo"
-                keyboardType="numeric"
-                maskType="datetime"
-                typeIcon="datetimepicker"
-                options={{
-                  format: 'DD/MM/YYYY',
-                }}
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('quantidadeDeAnimais')}
-              />
-              <Input
-                name="quantidadeDeAnimais"
-                color="#fff"
-                label="Número de animais no potreiro"
-                keyboardType="numeric"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('numeroDePiquetes')}>
-                <HelpButton data={help[2]} />
-              </Input>
-
-              {calc.name === 'Pastoreio rotativo' && (
+          <Content
+            style={{
+              width: '100%',
+              paddingHorizontal: 15,
+            }}>
+            <CalcRoutesTop items={items} color="#fff" />
+            <SubTitle
+              value="Informações sobre o sistema"
+              size={14}
+              mb={20}
+              color="#fff"
+            />
+            {calc.value === 'Fornecer suplemento' && (
+              <Form ref={formRef} onSubmit={handleSubmit}>
                 <Input
-                  name="numeroDePiquetes"
+                  name="nomeDoPotreiro"
+                  label="Identificação do Potreiro"
+                  placeholder="Nome ou número do potreiro"
                   color="#fff"
-                  label="Número de piquetes"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('dataDeInicio')}>
+                  <HelpButton data={help[0]} />
+                </Input>
+                <Input
+                  name="dataDeInicio"
+                  color="#fff"
+                  label="Data de início do pastejo"
+                  keyboardType="numeric"
+                  maskType="datetime"
+                  typeIcon="datetimepicker"
+                  options={{
+                    format: 'DD/MM/YYYY',
+                  }}
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('quantidadeDeAnimais')}
+                />
+                <Input
+                  name="quantidadeDeAnimais"
+                  color="#fff"
+                  label="Número de animais no potreiro"
                   keyboardType="numeric"
                   returnKeyType="next"
-                  blurOnSubmit={false}>
-                  <HelpButton data={help[4]} />
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('numeroDePiquetes')}>
+                  <HelpButton data={help[2]} />
                 </Input>
-              )}
 
-              <SliderInput
-                label="Altura do pasto"
-                value={alturaDoPasto}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setAlturaDoPasto(value);
-                }}
-                minVal={0}
-                maxVal={maxValuesToSlider[pasture.key]}
-                unit="cm"
-              />
-              <SliderInput
-                label="Área do potreiro"
-                value={areaDoPotreiro}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setAreaDoPotreiro(value);
-                }}
-                minVal={0}
-                maxVal={100}
-                unit="ha"
-              />
-              <SliderInput
-                label="Período de ocupação"
-                value={tempoDePermanencia}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setTempoDePermanencia(value);
-                }}
-                minVal={0}
-                maxVal={10}
-                unit="dias"
-              />
-            </Form>
-          )}
+                {calc.name === 'Pastoreio rotativo' && (
+                  <Input
+                    name="numeroDePiquetes"
+                    color="#fff"
+                    label="Número de piquetes"
+                    keyboardType="numeric"
+                    returnKeyType="next"
+                    blurOnSubmit={false}>
+                    <HelpButton data={help[4]} />
+                  </Input>
+                )}
 
-          {calc.value === 'Dimensionar área do potreiro' && (
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="nomeDoPotreiro"
-                label="Identificação do Potreiro"
-                placeholder="Nome ou número do potreiro"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
-                <HelpButton data={help[0]} />
-              </Input>
-              <Input
-                name="dataDeInicio"
-                color="#fff"
-                label="Data de início do pastejo"
-                keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
-                maskType="datetime"
-                typeIcon="datetimepicker"
-                options={{
-                  format: 'DD/MM/YYYY',
-                }}
-                returnKeyType="done"
-                blurOnSubmit={true}
-              />
-              <Input
-                name="quantidadeDeAnimais"
-                color="#fff"
-                label="Número de animais no potreiro"
-                keyboardType="numeric"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('dataDeInicio')}>
-                <HelpButton data={help[3]} />
-              </Input>
-
-              {calc.name === 'Pastoreio rotativo' && (
-                <RadioButton
-                  label="Irá fornecer suplementação adicional?"
-                  onPress={value => setSuplementacaoAdicional(value)}
-                  animation={true}
-                  formHorizontal={true}
-                  options={options}
+                <SliderInput
+                  label="Altura do pasto"
+                  value={alturaDoPasto}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setAlturaDoPasto(value);
+                  }}
+                  minVal={0}
+                  maxVal={maxValuesToSlider[pasture.value]}
+                  unit="cm"
                 />
-              )}
+                <SliderInput
+                  label="Área do potreiro"
+                  value={areaDoPotreiro}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setAreaDoPotreiro(value);
+                  }}
+                  minVal={0}
+                  maxVal={parseInt(user.property_size) || 5}
+                  unit="ha"
+                />
+                <SliderInput
+                  label="Período de ocupação"
+                  value={tempoDePermanencia}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setTempoDePermanencia(value);
+                  }}
+                  minVal={0}
+                  maxVal={10}
+                  unit="dias"
+                />
+              </Form>
+            )}
 
-              {suplementacaoAdicional === 1 && (
-                <>
-                  <Input
-                    name="racao"
-                    placeholder="Ração/Concentrado (kg/animal/dia)"
-                    color="#fff"
-                    keyboardType="numeric"
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    onSubmitEditing={() => focusInput('feno')}
-                  />
-                  <Input
-                    name="feno"
-                    placeholder="Feno (kg/animal/dia)"
-                    color="#fff"
-                    keyboardType="numeric"
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    onSubmitEditing={() => focusInput('silagem')}
-                  />
-                  <Input
-                    name="silagem"
-                    placeholder="Silagem (kg/animal/dia)"
-                    color="#fff"
-                    keyboardType="numeric"
-                    returnKeyType="done"
-                    blurOnSubmit={true}
-                  />
-                </>
-              )}
-            </Form>
-          )}
-
-          {calc.value === 'Ajustar lotação animal' &&
-            calc.name === 'Pastoreio contínuo' && (
+            {calc.value === 'Dimensionar área do potreiro' && (
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <Input
                   name="nomeDoPotreiro"
@@ -1139,19 +1006,100 @@ const DimensionArea = ({navigation, route}) => {
                   returnKeyType="done"
                   blurOnSubmit={true}
                 />
-                <SliderInput
-                  label="Altura do pasto"
-                  value={alturaDoPasto}
+                <Input
+                  name="quantidadeDeAnimais"
                   color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setAlturaDoPasto(value);
-                  }}
-                  minVal={0}
-                  maxVal={maxValuesToSlider[pasture.key]}
-                  unit="cm"
-                />
-                {/* <SliderInput
+                  label="Número de animais no potreiro"
+                  keyboardType="numeric"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('dataDeInicio')}>
+                  <HelpButton data={help[3]} />
+                </Input>
+
+                {calc.name === 'Pastoreio rotativo' && (
+                  <RadioButton
+                    label="Irá fornecer suplementação adicional?"
+                    onPress={value => setSuplementacaoAdicional(value)}
+                    animation={true}
+                    formHorizontal={true}
+                    options={options}
+                  />
+                )}
+
+                {suplementacaoAdicional === 1 && (
+                  <>
+                    <Input
+                      name="racao"
+                      placeholder="Ração/Concentrado (kg/animal/dia)"
+                      color="#fff"
+                      keyboardType="numeric"
+                      returnKeyType="next"
+                      blurOnSubmit={false}
+                      onSubmitEditing={() => focusInput('feno')}
+                    />
+                    <Input
+                      name="feno"
+                      placeholder="Feno (kg/animal/dia)"
+                      color="#fff"
+                      keyboardType="numeric"
+                      returnKeyType="next"
+                      blurOnSubmit={false}
+                      onSubmitEditing={() => focusInput('silagem')}
+                    />
+                    <Input
+                      name="silagem"
+                      placeholder="Silagem (kg/animal/dia)"
+                      color="#fff"
+                      keyboardType="numeric"
+                      returnKeyType="done"
+                      blurOnSubmit={true}
+                    />
+                  </>
+                )}
+              </Form>
+            )}
+
+            {calc.value === 'Ajustar lotação animal' &&
+              calc.name === 'Pastoreio contínuo' && (
+                <Form ref={formRef} onSubmit={handleSubmit}>
+                  <Input
+                    name="nomeDoPotreiro"
+                    label="Identificação do Potreiro"
+                    placeholder="Nome ou número do potreiro"
+                    color="#fff"
+                    returnKeyType="next"
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
+                    <HelpButton data={help[0]} />
+                  </Input>
+                  <Input
+                    name="dataDeInicio"
+                    color="#fff"
+                    label="Data de início do pastejo"
+                    keyboardType="numeric"
+                    placeholder="DD/MM/YYYY"
+                    maskType="datetime"
+                    typeIcon="datetimepicker"
+                    options={{
+                      format: 'DD/MM/YYYY',
+                    }}
+                    returnKeyType="done"
+                    blurOnSubmit={true}
+                  />
+                  <SliderInput
+                    label="Altura do pasto"
+                    value={alturaDoPasto}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setAlturaDoPasto(value);
+                    }}
+                    minVal={0}
+                    maxVal={maxValuesToSlider[pasture.value]}
+                    unit="cm"
+                  />
+                  {/* <SliderInput
                   label="Período de ocupação"
                   value={tempoDePermanencia}
                   color="#fff"
@@ -1164,23 +1112,138 @@ const DimensionArea = ({navigation, route}) => {
                   unit="dias"
                 /> */}
 
-                <SliderInput
-                  label="Área do potreiro"
-                  value={areaDoPotreiro}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setAreaDoPotreiro(value);
-                  }}
-                  minVal={0}
-                  maxVal={100}
-                  unit="ha"
-                />
-              </Form>
-            )}
+                  <SliderInput
+                    label="Área do potreiro"
+                    value={areaDoPotreiro}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setAreaDoPotreiro(value);
+                    }}
+                    minVal={0}
+                    maxVal={parseInt(user.property_size) || 5}
+                    unit="ha"
+                  />
+                </Form>
+              )}
 
-          { calc.name === 'Pastoreio rotativo' &&
-            calc.value === 'Ajustar lotação animal' && (
+            {calc.name === 'Pastoreio rotativo' &&
+              calc.value === 'Ajustar lotação animal' && (
+                <Form ref={formRef} onSubmit={handleSubmit}>
+                  <Input
+                    name="nomeDoPotreiro"
+                    label="Identificação do Potreiro"
+                    placeholder="Nome ou número do potreiro"
+                    color="#fff"
+                    returnKeyType="next"
+                    blurOnSubmit={false}
+                    onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
+                    <HelpButton data={help[0]} />
+                  </Input>
+                  <Input
+                    name="dataDeInicio"
+                    color="#fff"
+                    label="Data de início do pastejo"
+                    keyboardType="numeric"
+                    placeholder="DD/MM/YYYY"
+                    maskType="datetime"
+                    typeIcon="datetimepicker"
+                    options={{
+                      format: 'DD/MM/YYYY',
+                    }}
+                    returnKeyType="done"
+                    blurOnSubmit={true}
+                  />
+                  <SliderInput
+                    label="Altura do pasto (cm)"
+                    value={alturaDoPasto}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setAlturaDoPasto(value);
+                    }}
+                    minVal={0}
+                    maxVal={maxValuesToSlider[pasture.value]}
+                  />
+
+                  <RadioButton
+                    label="Irá fornecer suplementação adicional?"
+                    onPress={value => setSuplementacaoAdicional(value)}
+                    animation={true}
+                    formHorizontal={true}
+                    options={options}
+                  />
+
+                  {suplementacaoAdicional === 1 && (
+                    <>
+                      <Input
+                        name="racao"
+                        placeholder="Ração/Concentrado (kg/animal/dia)"
+                        color="#fff"
+                        keyboardType="numeric"
+                        returnKeyType="next"
+                        blurOnSubmit={false}
+                        onSubmitEditing={() => focusInput('feno')}
+                      />
+                      <Input
+                        name="feno"
+                        placeholder="Feno (kg/animal/dia)"
+                        color="#fff"
+                        keyboardType="numeric"
+                        returnKeyType="next"
+                        blurOnSubmit={false}
+                        onSubmitEditing={() => focusInput('silagem')}
+                      />
+                      <Input
+                        name="silagem"
+                        placeholder="Silagem (kg/animal/dia)"
+                        color="#fff"
+                        keyboardType="numeric"
+                        returnKeyType="done"
+                        blurOnSubmit={true}
+                      />
+                    </>
+                  )}
+
+                  <Input
+                    name="numeroDePiquetes"
+                    color="#fff"
+                    label="Número de piquetes"
+                    keyboardType="numeric"
+                    returnKeyType="next"
+                    blurOnSubmit={false}>
+                    <HelpButton data={help[4]} />
+                  </Input>
+
+                  <SliderInput
+                    label="Período de ocupação"
+                    unit="dias"
+                    value={tempoDePermanencia}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setTempoDePermanencia(value);
+                    }}
+                    minVal={0}
+                    maxVal={90}
+                  />
+
+                  <SliderInput
+                    label="Área do potreiro"
+                    value={areaDoPotreiro}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setAreaDoPotreiro(value);
+                    }}
+                    minVal={0}
+                    maxVal={parseInt(user.property_size) || 5}
+                    unit="ha"
+                  />
+                </Form>
+              )}
+
+            {calc.value === 'Calcular números de piquetes' && (
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <Input
                   name="nomeDoPotreiro"
@@ -1206,8 +1269,113 @@ const DimensionArea = ({navigation, route}) => {
                   returnKeyType="done"
                   blurOnSubmit={true}
                 />
+                <Input
+                  name="quantidadeDeAnimais"
+                  color="#fff"
+                  label="Número de animais no potreiro"
+                  keyboardType="numeric"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('dataDeInicio')}>
+                  <HelpButton data={help[2]} />
+                </Input>
+
                 <SliderInput
-                  label="Altura do pasto (cm)"
+                  label="Área do potreiro"
+                  value={areaDoPotreiro}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setAreaDoPotreiro(value);
+                  }}
+                  minVal={0}
+                  maxVal={parseInt(user.property_size) || 5}
+                  unit="ha"
+                />
+
+                <RadioButton
+                  label="Irá fornecer suplementação adicional?"
+                  onPress={value => setSuplementacaoAdicional(value)}
+                  animation={true}
+                  formHorizontal={true}
+                  options={options}
+                />
+
+                {suplementacaoAdicional === 1 && (
+                  <>
+                    <Input
+                      name="racao"
+                      placeholder="Ração/Concentrado (kg/animal/dia)"
+                      color="#fff"
+                      keyboardType="numeric"
+                      returnKeyType="next"
+                      blurOnSubmit={false}
+                      onSubmitEditing={() => focusInput('feno')}>
+                      <HelpButton data={help[2]} />
+                    </Input>
+                    <Input
+                      name="feno"
+                      placeholder="Feno (kg/animal/dia)"
+                      color="#fff"
+                      keyboardType="numeric"
+                      returnKeyType="next"
+                      blurOnSubmit={false}
+                      onSubmitEditing={() => focusInput('silagem')}>
+                      <HelpButton data={help[2]} />
+                    </Input>
+                    <Input
+                      name="silagem"
+                      placeholder="Silagem (kg/animal/dia)"
+                      color="#fff"
+                      keyboardType="numeric"
+                      returnKeyType="done"
+                      blurOnSubmit={true}>
+                      <HelpButton data={help[2]} />
+                    </Input>
+                  </>
+                )}
+              </Form>
+            )}
+
+            {calc.value === 'Definir período de ocupação' && (
+              <Form ref={formRef} onSubmit={handleSubmit}>
+                <Input
+                  name="nomeDoPotreiro"
+                  label="Identificação do Potreiro"
+                  placeholder="Nome ou número do potreiro"
+                  color="#fff"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
+                  <HelpButton data={help[0]} />
+                </Input>
+                <Input
+                  name="dataDeInicio"
+                  color="#fff"
+                  label="Data de início do pastejo"
+                  keyboardType="numeric"
+                  placeholder="DD/MM/YYYY"
+                  maskType="datetime"
+                  typeIcon="datetimepicker"
+                  options={{
+                    format: 'DD/MM/YYYY',
+                  }}
+                  returnKeyType="done"
+                  blurOnSubmit={true}
+                />
+                <Input
+                  name="quantidadeDeAnimais"
+                  color="#fff"
+                  label="Número de animais no potreiro"
+                  keyboardType="numeric"
+                  returnKeyType="next"
+                  blurOnSubmit={false}
+                  onSubmitEditing={() => focusInput('dataDeInicio')}>
+                  <HelpButton data={help[2]} />
+                </Input>
+
+                <SliderInput
+                  label="Altura do pasto"
                   value={alturaDoPasto}
                   color="#fff"
                   mt={10}
@@ -1215,7 +1383,31 @@ const DimensionArea = ({navigation, route}) => {
                     setAlturaDoPasto(value);
                   }}
                   minVal={0}
-                  maxVal={maxValuesToSlider[pasture.key]}
+                  maxVal={maxValuesToSlider[pasture.value]}
+                  unit="cm"
+                />
+
+                <Input
+                  name="numeroDePiquetes"
+                  color="#fff"
+                  label="Número de piquetes"
+                  keyboardType="numeric"
+                  returnKeyType="next"
+                  blurOnSubmit={false}>
+                  <HelpButton data={help[4]} />
+                </Input>
+
+                <SliderInput
+                  label="Área do potreiro"
+                  value={areaDoPotreiro}
+                  color="#fff"
+                  mt={10}
+                  onValueChange={value => {
+                    setAreaDoPotreiro(value);
+                  }}
+                  minVal={0}
+                  maxVal={parseInt(user.property_size) || 5}
+                  unit="ha"
                 />
 
                 <RadioButton
@@ -1256,262 +1448,20 @@ const DimensionArea = ({navigation, route}) => {
                     />
                   </>
                 )}
-
-                <Input
-                  name="numeroDePiquetes"
-                  color="#fff"
-                  label="Número de piquetes"
-                  keyboardType="numeric"
-                  returnKeyType="next"
-                  blurOnSubmit={false}>
-                  <HelpButton data={help[4]} />
-                </Input>
-
-                <SliderInput
-                  label="Período de ocupação"
-                  unit="dias"
-                  value={tempoDePermanencia}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setTempoDePermanencia(value);
-                  }}
-                  minVal={0}
-                  maxVal={90}
-                />
-
-                <SliderInput
-                  label="Área do potreiro"
-                  value={areaDoPotreiro}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setAreaDoPotreiro(value);
-                  }}
-                  minVal={0}
-                  maxVal={100}
-                  unit="ha"
-                />
               </Form>
             )}
-
-          {calc.value === 'Calcular números de piquetes' && (
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="nomeDoPotreiro"
-                label="Identificação do Potreiro"
-                placeholder="Nome ou número do potreiro"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
-                <HelpButton data={help[0]} />
-              </Input>
-              <Input
-                name="dataDeInicio"
-                color="#fff"
-                label="Data de início do pastejo"
-                keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
-                maskType="datetime"
-                typeIcon="datetimepicker"
-                options={{
-                  format: 'DD/MM/YYYY',
-                }}
-                returnKeyType="done"
-                blurOnSubmit={true}
-              />
-              <Input
-                name="quantidadeDeAnimais"
-                color="#fff"
-                label="Número de animais no potreiro"
-                keyboardType="numeric"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('dataDeInicio')}>
-                <HelpButton data={help[2]} />
-              </Input>
-
-              <SliderInput
-                label="Área do potreiro"
-                value={areaDoPotreiro}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setAreaDoPotreiro(value);
-                }}
-                minVal={0}
-                maxVal={100}
-                unit="ha"
-              />
-
-              <RadioButton
-                label="Irá fornecer suplementação adicional?"
-                onPress={value => setSuplementacaoAdicional(value)}
-                animation={true}
-                formHorizontal={true}
-                options={options}
-              />
-
-              {suplementacaoAdicional === 1 && (
-                <>
-                  <Input
-                    name="racao"
-                    placeholder="Ração/Concentrado (kg/animal/dia)"
-                    color="#fff"
-                    keyboardType="numeric"
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    onSubmitEditing={() => focusInput('feno')}>
-                    <HelpButton data={help[2]} />
-                  </Input>
-                  <Input
-                    name="feno"
-                    placeholder="Feno (kg/animal/dia)"
-                    color="#fff"
-                    keyboardType="numeric"
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    onSubmitEditing={() => focusInput('silagem')}>
-                    <HelpButton data={help[2]} />
-                  </Input>
-                  <Input
-                    name="silagem"
-                    placeholder="Silagem (kg/animal/dia)"
-                    color="#fff"
-                    keyboardType="numeric"
-                    returnKeyType="done"
-                    blurOnSubmit={true}>
-                    <HelpButton data={help[2]} />
-                  </Input>
-                </>
-              )}
-            </Form>
-          )}
-
-          {calc.value === 'Definir período de ocupação' && (
-            <Form ref={formRef} onSubmit={handleSubmit}>
-              <Input
-                name="nomeDoPotreiro"
-                label="Identificação do Potreiro"
-                placeholder="Nome ou número do potreiro"
-                color="#fff"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
-                <HelpButton data={help[0]} />
-              </Input>
-              <Input
-                name="dataDeInicio"
-                color="#fff"
-                label="Data de início do pastejo"
-                keyboardType="numeric"
-                placeholder="DD/MM/YYYY"
-                maskType="datetime"
-                typeIcon="datetimepicker"
-                options={{
-                  format: 'DD/MM/YYYY',
-                }}
-                returnKeyType="done"
-                blurOnSubmit={true}
-              />
-              <Input
-                name="quantidadeDeAnimais"
-                color="#fff"
-                label="Número de animais no potreiro"
-                keyboardType="numeric"
-                returnKeyType="next"
-                blurOnSubmit={false}
-                onSubmitEditing={() => focusInput('dataDeInicio')}>
-                <HelpButton data={help[2]} />
-              </Input>
-
-              <SliderInput
-                label="Altura do pasto"
-                value={alturaDoPasto}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setAlturaDoPasto(value);
-                }}
-                minVal={0}
-                maxVal={maxValuesToSlider[pasture.key]}
-                unit="cm"
-              />
-
-              <Input
-                name="numeroDePiquetes"
-                color="#fff"
-                label="Número de piquetes"
-                keyboardType="numeric"
-                returnKeyType="next"
-                blurOnSubmit={false}>
-                <HelpButton data={help[4]} />
-              </Input>
-
-              <SliderInput
-                label="Área do potreiro"
-                value={areaDoPotreiro}
-                color="#fff"
-                mt={10}
-                onValueChange={value => {
-                  setAreaDoPotreiro(value);
-                }}
-                minVal={0}
-                maxVal={100}
-                unit="ha"
-              />
-
-              <RadioButton
-                label="Irá fornecer suplementação adicional?"
-                onPress={value => setSuplementacaoAdicional(value)}
-                animation={true}
-                formHorizontal={true}
-                options={options}
-              />
-
-              {suplementacaoAdicional === 1 && (
-                <>
-                  <Input
-                    name="racao"
-                    placeholder="Ração/Concentrado (kg/animal/dia)"
-                    color="#fff"
-                    keyboardType="numeric"
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    onSubmitEditing={() => focusInput('feno')}
-                  />
-                  <Input
-                    name="feno"
-                    placeholder="Feno (kg/animal/dia)"
-                    color="#fff"
-                    keyboardType="numeric"
-                    returnKeyType="next"
-                    blurOnSubmit={false}
-                    onSubmitEditing={() => focusInput('silagem')}
-                  />
-                  <Input
-                    name="silagem"
-                    placeholder="Silagem (kg/animal/dia)"
-                    color="#fff"
-                    keyboardType="numeric"
-                    returnKeyType="done"
-                    blurOnSubmit={true}
-                  />
-                </>
-              )}
-            </Form>
-          )}
-          <Button
-            content="Finalizar"
-            mt="20px"
-            color="#D69D2B"
-            onPress={() => formRef.current.submitForm()}
-          />
-        </Content>
+            <Button
+              content="Finalizar"
+              mt="20px"
+              mb="40px"
+              color="#D69D2B"
+              onPress={() => formRef.current.submitForm()}
+            />
+          </Content>
+        </View>
       </View>
     </Container>
   );
 };
 
-export default DimensionArea;
+export default FormContainer;

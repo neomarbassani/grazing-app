@@ -58,8 +58,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Aveia',
-                  key: 'aveia',
+                  value: 'aveia',
                 },
               });
             }}
@@ -75,8 +74,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Aveia e Azevém',
-                  key: 'aveiaAzevem',
+                  value: 'aveiaAzevem',
                 },
               });
             }}
@@ -92,8 +90,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Azevém',
-                  key: 'azevem',
+                  value: 'azevem',
                 },
               });
             }}
@@ -109,8 +106,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Campo Nativo',
-                  key: 'campoNativo',
+                  value: 'campoNativo',
                 },
               });
             }}
@@ -126,8 +122,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Campo Nativo Melhorado',
-                  key: 'campoNativoMelhorado',
+                  value: 'campoNativoMelhorado',
                 },
               });
             }}
@@ -143,8 +138,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Capim-Sudão',
-                  key: 'sudao',
+                  value: 'sudao',
                 },
               });
             }}
@@ -160,8 +154,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Milheto',
-                  key: 'milheto',
+                  value: 'milheto',
                 },
               });
             }}
@@ -177,8 +170,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Papuã',
-                  key: 'papua',
+                  value: 'papua',
                 },
               });
             }}
@@ -194,8 +186,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Sorgo',
-                  key: 'sorgo',
+                  value: 'sorgo',
                 },
               });
             }}
@@ -211,8 +202,7 @@ const ChoosePastureType = ({navigation, route}) => {
                 inputs,
                 pasture: {
                   name: 'Qual espécie forrageira?',
-                  value: 'Tifton',
-                  key: 'tifton',
+                  value: 'tifton',
                 },
               });
             }}

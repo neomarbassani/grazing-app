@@ -34,6 +34,7 @@ import locations from '../../services/locations';
 
 const Profile = () => {
   const user = useSelector(state => state.auth.user);
+  const dispatch = useDispatch();
 
   const [cities, setCities] = useState([]);
   const [states, setStates] = useState([]);
@@ -41,8 +42,6 @@ const Profile = () => {
   const [selectedCity, setSelectedCity] = useState(user.address.city);
 
   const formRef = useRef(null);
-
-  const dispatch = useDispatch();
 
   const loading = useSelector(state => state.auth.loading);
 
