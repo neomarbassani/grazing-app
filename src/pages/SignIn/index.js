@@ -61,12 +61,7 @@ export default function SignIn({navigation}) {
       <LogoHeader mt={50} mb={40} />
       <Form ref={formRef} onSubmit={handleSubmit}>
         <Input
-          maskType={'cel-phone'}
-          options={{
-            maskType: 'BRL',
-            withDDD: true,
-            dddMask: '(99) ',
-          }}
+          maskPhone
           name="phone"
           label="Telefone"
           placeholder="(XX) XXXXX-XXXX"
@@ -81,6 +76,8 @@ export default function SignIn({navigation}) {
           underlineColorAndroid="transparent"
           placeholder="*********"
           label="Senha"
+          returnKeyType="next"
+          blurOnSubmit={true}
         />
       </Form>
       <Link

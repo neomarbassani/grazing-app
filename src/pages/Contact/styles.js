@@ -4,4 +4,5 @@ export const Content = styled.View`
   width: 100%;
   height: 100%;
   padding: 15px;
+  flex: 1;
 `;

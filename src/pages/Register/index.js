@@ -170,7 +170,7 @@ export default function Register({navigation}) {
           <Input
             name="phone"
             label="Telefone"
-            maskType={'cel-phone'}
+            maskPhone
             placeholder="(00) 00000-0000"
             blurOnSubmit={false}
             returnKeyType="next"

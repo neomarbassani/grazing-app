@@ -6,12 +6,12 @@ import {TextInputMask} from 'react-native-masked-text';
 export const Container = styled.View`
   margin-bottom: ${props => (props.mb ? props.mb : '45')}px;
   align-items: flex-start;
-  height: ${props => (props.textarea ? '65%' : '42px')};
+  height: ${props => (props.textarea ? '300px' : '42px')};
   width: 100%;
 `;
 
 export const Content = styled.View`
-  height: ${props => (props.textarea ? '100%' : '42px')};
+  height: ${props => (props.textarea ? '300px' : '42px')};
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -46,7 +46,7 @@ export const InputField = styled.TextInput`
   text-align-vertical: top;
 
   width: 95%;
-  height: ${props => (props.textarea ? '100%' : '42px')};
+  height: ${props => (props.textarea ? 'auto' : '42px')};
   border: none;
   background-color: transparent;
   color: ${colors.placeholder};
@@ -59,7 +59,16 @@ export const InputError = styled.Text`
   font-size: 12px;
   color: ${colors.error};
 `;
-export const InputFieldMask = styled.TextInput`
+export const InputFieldDate = styled.TextInput`
+  width: 95%;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  color: ${colors.placeholder};
+  font-family: 'WorkSans-Regular';
+`;
+
+export const InputFieldMask = styled(TextInputMask)`
   width: 95%;
   height: 100%;
   border: none;

@@ -8,9 +8,10 @@ import {
   Container,
   InputField,
   ToogleVisility,
+  InputFieldMask,
   Content,
   InputError,
-  InputFieldMask,
+  InputFieldDate,
   Label,
 } from './styles';
 
@@ -21,6 +22,7 @@ export default function Input({
   next,
   mb,
   maskType,
+  maskPhone,
   typeIcon,
   textarea,
   color,
@@ -34,6 +36,7 @@ export default function Input({
   const {fieldName, registerField, defaultValue, error} = useField(name);
 
   const [date, setDate] = useState(new Date(1598051730000));
+  const [mask, setMask] = useState('');
 
   const [show, setShow] = useState(false);
 
@@ -59,10 +62,13 @@ export default function Input({
         inputRef.current.value = value;
       },
       getValue(ref) {
+        if (maskPhone) {
+          return ref.getRawValue() || '';
+        }
         return ref.value || '';
       },
     });
-  }, [fieldName, registerField]);
+  }, [fieldName, mask, maskPhone, registerField]);
 
   return (
     <>
@@ -71,7 +77,7 @@ export default function Input({
         <Content textarea={textarea}>
           {maskType ? (
             <>
-              <InputFieldMask
+              <InputFieldDate
                 ref={inputRef}
                 defaultValue={defaultValue}
                 placeholderTextColor="#888899"
@@ -89,6 +95,26 @@ export default function Input({
                 </ToogleVisility>
               )}
             </>
+          ) : maskPhone ? (
+            <InputFieldMask
+              ref={inputRef}
+              defaultValue={defaultValue}
+              value={mask}
+              keyboardType="numeric"
+              type={'cel-phone'}
+              options={{
+                maskType: 'BRL',
+                withDDD: true,
+                dddMask: '(99) ',
+              }}
+              onChangeText={value => {
+                setMask(value);
+                if (inputRef.current) {
+                  inputRef.current.value = value;
+                }
+              }}
+              {...rest}
+            />
           ) : (
             <>
               <InputField

@@ -93,8 +93,6 @@ const Contact = ({navigation, route}) => {
         </Form>
         <Button
           content="Enviar"
-          mt="20px"
-          mb="20px"
           color="#D69D2B"
           onPress={() => formRef.current.submitForm()}
         />

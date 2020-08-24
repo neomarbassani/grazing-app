@@ -106,7 +106,6 @@ const FormContainer = ({navigation, route}) => {
       value: animalType.type[an.value],
     };
   }
-  
 
   async function handleSubmit(data) {
     try {
@@ -879,19 +878,19 @@ const FormContainer = ({navigation, route}) => {
           style={{
             flex: 1,
             width: '100%',
+            paddingHorizontal: 15,
           }}>
+          <CalcRoutesTop items={items} color="#fff" />
+          <SubTitle
+            value="Informações sobre o sistema"
+            size={14}
+            mb={20}
+            color="#fff"
+          />
           <Content
             style={{
               width: '100%',
-              paddingHorizontal: 15,
             }}>
-            <CalcRoutesTop items={items} color="#fff" />
-            <SubTitle
-              value="Informações sobre o sistema"
-              size={14}
-              mb={20}
-              color="#fff"
-            />
             {calc.value === 'Fornecer suplemento' && (
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <Input

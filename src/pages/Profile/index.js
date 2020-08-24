@@ -248,7 +248,7 @@ const Profile = () => {
             <Input
               name="phone"
               label="Telefone"
-              maskedType={'cel-phone'}
+              maskPhone
               underlineColorAndroid="transparent"
               returnKeyType="next"
               onSubmitEditing={() => focusInput('property_size')}
