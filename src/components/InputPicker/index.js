@@ -11,7 +11,7 @@ import {
 import {StyleSheet} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
-export default function InputPicker({label, name, data, width, ...rest}) {
+export default function InputPicker({label, name, data, width, selectedValue, ...rest}) {
   const placeholder = {
     label: 'Selecione...',
     value: null,
@@ -25,6 +25,7 @@ export default function InputPicker({label, name, data, width, ...rest}) {
         style={{
           ...pickerSelectStyles,
         }}
+        value={selectedValue}
         placeholder={placeholder}
         items={data}
         {...rest}

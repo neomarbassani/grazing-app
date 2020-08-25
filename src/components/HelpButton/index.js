@@ -5,7 +5,7 @@ import {
   ModalContainer,
   ModalText,
   ModalTitle,
-  Letter,
+  Letter
 } from './styles';
 import Modal from 'react-native-modal';
 
@@ -20,21 +20,19 @@ const HelpButton = ({data, ...rest}) => {
       <Container {...rest} onPress={() => setIsVisible(true)}>
         <Letter>i</Letter>
       </Container>
-      <Modal isVisible={isVisible}>
-        <ModalContainer>
+      <Modal isVisible={isVisible} >
           <TouchableOpacity
             style={{
-              position: 'absolute',
-              top: 20,
-              right: 20,
-              padding: 5,
-              zIndex: 1000,
+              marginLeft: 'auto',
+              marginEnd: 10,
+              marginBottom: 10
             }}
-            onPress={() => setIsVisible(false)}>
-            <Icon name="x" size={20} />
+          >
+            <Icon name="x" size={25} onPress={() => setIsVisible(false)} style={{color: '#fff'}}/>
           </TouchableOpacity>
-          <ModalTitle>{data.title}</ModalTitle>
-          <ModalText>{data.content}</ModalText>
+        <ModalContainer>
+          <ModalTitle onPress={() => setIsVisible(false)}>{data.title}</ModalTitle>
+          <ModalText onPress={() => setIsVisible(false)}>{data.content}</ModalText>
         </ModalContainer>
       </Modal>
     </>

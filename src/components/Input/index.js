@@ -35,7 +35,7 @@ export default function Input({
 
   const {fieldName, registerField, defaultValue, error} = useField(name);
 
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
   const [mask, setMask] = useState('');
 
   const [show, setShow] = useState(false);
@@ -99,7 +99,7 @@ export default function Input({
             <InputFieldMask
               ref={inputRef}
               defaultValue={defaultValue}
-              value={mask}
+              value={defaultValue}
               keyboardType="numeric"
               type={'cel-phone'}
               options={{

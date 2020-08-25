@@ -6,12 +6,12 @@ import {TextInputMask} from 'react-native-masked-text';
 export const Container = styled.View`
   margin-bottom: ${props => (props.mb ? props.mb : '45')}px;
   align-items: flex-start;
-  height: ${props => (props.textarea ? '300px' : '42px')};
+  height: ${props => (props.textarea ? '200px' : '42px')};
   width: 100%;
 `;
 
 export const Content = styled.View`
-  height: ${props => (props.textarea ? '300px' : '42px')};
+  height: ${props => (props.textarea ? '200px' : '42px')};
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

@@ -221,13 +221,7 @@ const Profile = () => {
           <Form
             style={{flex: 1}}
             ref={formRef}
-            initialData={{
-              name: user.name ? user.name : '',
-              email: user.email ? user.email : '',
-              phone: user.phone ? user.phone : '',
-              property_size: user.property_size ? user.property_size : '',
-              current_password: '',
-            }}
+            initialData={user}
             onSubmit={handleSubmit}>
             <SectionTitle>INFORMAÇÕES PESSOAIS</SectionTitle>
             <Input
@@ -252,7 +246,7 @@ const Profile = () => {
               underlineColorAndroid="transparent"
               returnKeyType="next"
               onSubmitEditing={() => focusInput('property_size')}
-              inittialState={user.phone ? user.phone : null}
+              inittialState={user.phone}
             />
             <Input
               name="property_size"

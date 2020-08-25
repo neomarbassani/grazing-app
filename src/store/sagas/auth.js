@@ -132,6 +132,8 @@ export function* editUserData(data) {
       name: data.userData.name,
       phone: data.userData.phone,
       address: data.userData.address,
+      property_size: data.userData.property_size,
+      activity: data.userData.activity
     });
 
     yield put(AuthActions.editSuccess(response.data));

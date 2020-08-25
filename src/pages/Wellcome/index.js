@@ -56,7 +56,6 @@ const Wellcome = ({navigation}) => {
     }
   }, 5000);
 
-  console.log(index);
   return (
     <Background source={slides[index]}>
       <PanGestureHandler

@@ -74,7 +74,7 @@ const Contact = ({navigation, route}) => {
       source={backgroundLogo}
       imageStyle={{
         top: 0,
-        height: '90%',
+        height: '50%',
       }}>
       <Content>
         <SubTitle

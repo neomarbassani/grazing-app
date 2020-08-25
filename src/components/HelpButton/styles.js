@@ -37,7 +37,7 @@ export const Letter = styled.Text`
 export const ModalContainer = styled.View`
   padding: 20px;
   background-color: #fff;
-  border-radius: 7px;
+  border-radius: 10px;
 `;
 
 export const ModalText = styled.Text`

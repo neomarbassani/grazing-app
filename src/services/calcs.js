@@ -1,4 +1,4 @@
-// REV 19 / 08 / 2020
+// REV 25 / 08 / 2020
 /* eslint-disable radix */
 /* eslint-disable */
 
@@ -347,8 +347,9 @@ export function ajustarLotacaoAnimalRotativo({
     silagem,
   });
 
+  
   const resultado =
-(
+  (
     (
       (
         ( alturaDoPasto * relacaoMassaAltura ) -
@@ -356,17 +357,16 @@ export function ajustarLotacaoAnimalRotativo({
       ) * areaDoPotreiro / numeroDePiquetes
     ) + (
       taxaDeAcumulo * ( areaDoPotreiro / numeroDePiquetes ) *
-      ((( alturaOtima * 0.4 ) / ( taxaDeAcumulo / relacaoMassaAltura )) / ( numeroDePiquetes-1 ))
+      ((( alturaOtima * 0.4 ) / ( taxaDeAcumulo / relacaoMassaAltura )) / ( numeroDePiquetes < 2 ? 1 : numeroDePiquetes - 1 ))
     )
   ) / (
     ( consumoNRC - quantSuplemento ) *
     ((
       ( alturaOtima * 0.4 ) /
       ( taxaDeAcumulo / relacaoMassaAltura ) /
-      ( numeroDePiquetes - 1 )
+      ( numeroDePiquetes < 2 ? 1 : numeroDePiquetes -1 )
     ))
   )
-
 
   const resultados = [
     {
@@ -375,7 +375,28 @@ export function ajustarLotacaoAnimalRotativo({
     },
   ];
 
-  console.log(resultados);
+  console.log({
+    dataDeInicio,
+    peso,
+    racao,
+    feno,
+    silagem,
+    numeroDePiquetes,
+    alturaDoPasto,
+    tipoDePasto,
+    tempoDePermanencia,
+    areaDoPotreiro,
+    diasDeGestacao,
+    semanasDeLactacao,
+    quantidadeDeLeite,
+    tipoDeAnimal,
+    quantSuplemento,
+    consumoNRC,
+    taxaDeAcumulo,
+    alturaOtima,
+    relacaoMassaAltura,
+    resultados
+  });
 
   return resultados;
 }
@@ -709,8 +730,7 @@ export function definirPeriodoDeOcupacaoRotativo({
   if(resultado < 1) {
     resultados.push({ name: 'Não é possível colocar os animais na área. Aguarde até que a pastagem atinja altura pré-pastejo adequada.' })
   } else resultados.push({
-    name:
-      'Período de ocupação (tempo de permanência dos animais em cada faixa, em dias)',
+    name: 'Período de ocupação (tempo de permanência dos animais em cada faixa, em dias)',
     value: Math.round(resultado).toLocaleString('pt-BR'),
   });
 

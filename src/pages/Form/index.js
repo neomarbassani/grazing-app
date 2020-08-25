@@ -126,7 +126,6 @@ const FormContainer = ({navigation, route}) => {
         });
       }
 
-      // OK
       if (
         calc.name === 'Pastoreio contínuo' &&
         calc.value === 'Ajustar lotação animal'
@@ -191,7 +190,6 @@ const FormContainer = ({navigation, route}) => {
         navigation.navigate('Result', calcState);
       }
 
-      //OK
       if (
         calc.name === 'Pastoreio rotativo' &&
         calc.value === 'Ajustar lotação animal'
@@ -289,7 +287,6 @@ const FormContainer = ({navigation, route}) => {
         navigation.navigate('Result', calcState);
       }
 
-      // OK
       if (
         calc.name === 'Pastoreio rotativo' &&
         calc.value === 'Dimensionar área do potreiro'
@@ -373,7 +370,6 @@ const FormContainer = ({navigation, route}) => {
         navigation.navigate('Result', calcState);
       }
 
-      //OK
       if (
         calc.name === 'Pastoreio contínuo' &&
         calc.value === 'Dimensionar área do potreiro'
@@ -433,7 +429,6 @@ const FormContainer = ({navigation, route}) => {
         navigation.navigate('Result', calcState);
       }
 
-      // OK
       if (
         calc.name === 'Pastoreio contínuo' &&
         calc.value === 'Fornecer suplemento'
@@ -535,7 +530,6 @@ const FormContainer = ({navigation, route}) => {
         navigation.navigate('Result', calcState);
       }
 
-      // OK
       if (
         calc.name === 'Pastoreio rotativo' &&
         calc.value === 'Fornecer suplemento'
@@ -632,7 +626,6 @@ const FormContainer = ({navigation, route}) => {
         navigation.navigate('Result', calcState);
       }
 
-      // OK
       if (calc.value === 'Calcular números de piquetes') {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
@@ -948,7 +941,7 @@ const FormContainer = ({navigation, route}) => {
                   onValueChange={value => {
                     setAlturaDoPasto(value);
                   }}
-                  minVal={0}
+                  minVal={1}
                   maxVal={maxValuesToSlider[pasture.value]}
                   unit="cm"
                 />
@@ -960,7 +953,7 @@ const FormContainer = ({navigation, route}) => {
                   onValueChange={value => {
                     setAreaDoPotreiro(value);
                   }}
-                  minVal={0}
+                  minVal={1}
                   maxVal={parseInt(user.property_size) || 5}
                   unit="ha"
                 />
@@ -972,7 +965,7 @@ const FormContainer = ({navigation, route}) => {
                   onValueChange={value => {
                     setTempoDePermanencia(value);
                   }}
-                  minVal={0}
+                  minVal={1}
                   maxVal={10}
                   unit="dias"
                 />
@@ -1094,22 +1087,20 @@ const FormContainer = ({navigation, route}) => {
                     onValueChange={value => {
                       setAlturaDoPasto(value);
                     }}
-                    minVal={0}
+                    minVal={1}
                     maxVal={maxValuesToSlider[pasture.value]}
                     unit="cm"
                   />
-                  {/* <SliderInput
-                  label="Período de ocupação"
-                  value={tempoDePermanencia}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setTempoDePermanencia(value);
-                  }}
-                  minVal={0}
-                  maxVal={90}
-                  unit="dias"
-                /> */}
+                  <SliderInput
+                    label="Período de ocupação"
+                    value={tempoDePermanencia}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => { setTempoDePermanencia(value); }}
+                    minVal={1}
+                    maxVal={10}
+                    unit="dias"
+                  />
 
                   <SliderInput
                     label="Área do potreiro"
@@ -1119,7 +1110,7 @@ const FormContainer = ({navigation, route}) => {
                     onValueChange={value => {
                       setAreaDoPotreiro(value);
                     }}
-                    minVal={0}
+                    minVal={1}
                     maxVal={parseInt(user.property_size) || 5}
                     unit="ha"
                   />
@@ -1161,7 +1152,7 @@ const FormContainer = ({navigation, route}) => {
                     onValueChange={value => {
                       setAlturaDoPasto(value);
                     }}
-                    minVal={0}
+                    minVal={1}
                     maxVal={maxValuesToSlider[pasture.value]}
                   />
 
@@ -1223,7 +1214,7 @@ const FormContainer = ({navigation, route}) => {
                     onValueChange={value => {
                       setTempoDePermanencia(value);
                     }}
-                    minVal={0}
+                    minVal={1}
                     maxVal={90}
                   />
 
@@ -1235,7 +1226,7 @@ const FormContainer = ({navigation, route}) => {
                     onValueChange={value => {
                       setAreaDoPotreiro(value);
                     }}
-                    minVal={0}
+                    minVal={1}
                     maxVal={parseInt(user.property_size) || 5}
                     unit="ha"
                   />
@@ -1287,7 +1278,7 @@ const FormContainer = ({navigation, route}) => {
                   onValueChange={value => {
                     setAreaDoPotreiro(value);
                   }}
-                  minVal={0}
+                  minVal={1}
                   maxVal={parseInt(user.property_size) || 5}
                   unit="ha"
                 />
@@ -1381,7 +1372,7 @@ const FormContainer = ({navigation, route}) => {
                   onValueChange={value => {
                     setAlturaDoPasto(value);
                   }}
-                  minVal={0}
+                  minVal={1}
                   maxVal={maxValuesToSlider[pasture.value]}
                   unit="cm"
                 />
@@ -1404,7 +1395,7 @@ const FormContainer = ({navigation, route}) => {
                   onValueChange={value => {
                     setAreaDoPotreiro(value);
                   }}
-                  minVal={0}
+                  minVal={1}
                   maxVal={parseInt(user.property_size) || 5}
                   unit="ha"
                 />
