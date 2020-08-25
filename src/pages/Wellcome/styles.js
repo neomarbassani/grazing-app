@@ -14,7 +14,7 @@ export const Logo = styled.Image`
 `;
 
 export const BottomBox = styled.View`
-  background: #ffffff80;
+  background: #ffffff90;
   align-items: center;
   width: 100%;
   margin-top: auto;

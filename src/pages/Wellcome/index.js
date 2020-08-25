@@ -30,6 +30,12 @@ import {
 const Wellcome = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
 
+  const timeout = setTimeout(() => {
+    if((index +1) < slides.length) {
+      setIndex(index + 1)
+    }else setIndex(0)
+  }, 5000);
+
   const handleBackground = event => {
     let {translationX} = event.nativeEvent;
 
@@ -45,16 +51,6 @@ const Wellcome = ({navigation}) => {
       }
     }
   };
-
-  setTimeout(() => {
-    if (index < slides.length - 1) {
-      setIndex(index + 1);
-    }
-
-    if (index === slides.length - 1) {
-      setIndex(0);
-    }
-  }, 5000);
 
   return (
     <Background source={slides[index]}>

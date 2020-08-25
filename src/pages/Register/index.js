@@ -27,9 +27,9 @@ const help = {
 };
 
 const activities = [
-  {value: 'Consultor(a)', label: 'Consultor(a)'},
+  {value: 'Consultor(a)', label: 'Consultor(a) técnico(a)'},
   {value: 'Técnico(a)', label: 'Técnico(a)'},
-  {value: 'Produtor(a)', label: 'produtor(a)'},
+  {value: 'Produtor(a)', label: 'Produtor(a)'},
   {value: 'Rural', label: 'Rural'},
   {value: 'Pesquisador(a)', label: 'Pesquisador(a)'},
   {value: 'Estudante', label: 'Estudante'},
@@ -52,7 +52,7 @@ export default function Register({navigation}) {
 
   useEffect(() => {
     const statesArray = locations.reduce((acc, state) => {
-      return [...acc, {label: state.sigla, value: state.sigla}];
+      return [...acc, {label: `${state.sigla} - ${state.nome}`, value: state.sigla}];
     }, []);
     setStates(statesArray);
   }, []);
@@ -190,7 +190,7 @@ export default function Register({navigation}) {
               label="Estado"
               data={states}
               width={40}
-              prompt="Escolha um estado"
+              prompt="Selecione"
               selectedValue={selectedState}
               onValueChange={value => {
                 setSelectedState(value);
