@@ -29,15 +29,18 @@ import {
 
 const Wellcome = ({navigation}) => {
   const [index, setIndex] = React.useState(0);
-
-  const timeout = setTimeout(() => {
+  const [auto, setAuto] = React.useState(true);
+  
+  setTimeout(() => {
+    if(!auto) return
     if((index +1) < slides.length) {
       setIndex(index + 1)
     }else setIndex(0)
-  }, 5000);
+  }, 8000);
 
   const handleBackground = event => {
     let {translationX} = event.nativeEvent;
+    setAuto(false)
 
     if (translationX > 30) {
       if (index > 0) {

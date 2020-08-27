@@ -250,8 +250,9 @@ export const consumo = {
     }
   },
   vacaLactacao: ({peso, semanasDeLactacao, quantidadeDeLeite}) => {
-    const FC1 = 0.4 * quantidadeDeLeite + 15 * 0.03 * quantidadeDeLeite;
-    const FC2 = 1 - Math.pow(2.72, -1 * 0.192 * (semanasDeLactacao + 3.67));
+
+    const FC1 = 0.4 * (quantidadeDeLeite * 1) + 15 * 0.03 * quantidadeDeLeite;
+    const FC2 = 1 - Math.pow(2.72, (-1 * (0.192 * ((semanasDeLactacao * 1) + 3.67))));
 
     return (Math.pow(peso, 0.75) * 0.0968 + 0.372 * FC1 - 0.293) * FC2;
   },
@@ -263,10 +264,11 @@ export const quantidadeDeSuplemento = ({
   feno = 0,
   silagem = 0,
 }) => {
+  
   if (racao < 0 || feno < 0 || silagem < 0) {
     return peso * 0.01;
   }
-  return racao + feno * 0.85 + silagem * 0.3;
+  return (racao * 1) + (feno * 0.85) + (silagem * 0.3);
 };
 
 export const getMouth = data => new Date(data).getUTCMonth() + 1;
@@ -523,10 +525,7 @@ export function tamanhoPotreiroContinuo({
 
 export function fornecerSuplementoContinuo({
   dataDeInicio, //ok
-  peso, //
-  racao = 0, //
-  feno = 0, //
-  silagem = 0, //
+  peso,
   quantidadeDeAnimais,
   areaDoPotreiro,
   alturaDoPasto,
@@ -552,13 +551,6 @@ export function fornecerSuplementoContinuo({
     quantidadeDeLeite,
   });
 
-  const quantSuplemento = quantidadeDeSuplemento({
-    peso,
-    racao,
-    feno,
-    silagem,
-  });
-
   const resultado =
     (((quantidadeDeAnimais * peso) / areaDoPotreiro -
       (((alturaDoPasto * relacaoMassaAltura) / tempoDePermanencia +
@@ -572,16 +564,25 @@ export function fornecerSuplementoContinuo({
     consumoNRC *
     areaDoPotreiro;
 
-  const resultados = [
+  const resultadoMedio = resultado / quantidadeDeAnimais;
+  
+  let resultados
+  if(resultado <= 0) {
+    resultados = [{ name: 'Não há necessidade de suplementar os animais' }]
+  }else 
+  resultados = [
     {
       name:
-        'Quantidade de ração a ser fornecida por animal/dia (kg MS/animal/dia)',
-      value:
-        Math.sign(resultado) === -1
-          ? 'Não há necessidade de suplementar os animais'
-          : Math.round(resultado).toLocaleString('pt-BR'),
+        'Quantidade de suplemento para o lote de animais (kg/dia)',
+      value: Math.round(resultado).toLocaleString('pt-BR'),
     },
+    {
+      name: 'Quantidade de suplemento por animal (kg/dia)',
+      value: Math.round(resultadoMedio).toLocaleString('pt-BR'),
+    }
   ];
+
+  
 
   console.log(resultados);
 
@@ -648,7 +649,7 @@ export function fornecerSuplementoRotativo({
   const resultado2 = resultado1 / quantidadeDeAnimais;
   let resultados
   if(resultado1 <= 0) {
-    resultados = [{ value: 'Não há necessidade de suplementar os animais' }]
+    resultados = [{ name: 'Não há necessidade de suplementar os animais' }]
   }else 
   resultados = [
     {
@@ -730,7 +731,7 @@ export function definirPeriodoDeOcupacaoRotativo({
   if(resultado < 1) {
     resultados.push({ name: 'Não é possível colocar os animais na área. Aguarde até que a pastagem atinja altura pré-pastejo adequada.' })
   } else resultados.push({
-    name: 'Período de ocupação (tempo de permanência dos animais em cada faixa, em dias)',
+    name: 'Período de ocupação (dias)',
     value: Math.round(resultado).toLocaleString('pt-BR'),
   });
 
@@ -809,7 +810,7 @@ export function calcularNumeroDePiquetes({
     },
     {
       name: 'Área do potreiro adequada (ha) para manter o lote de animais',
-      value: Math.round(resultado2).toLocaleString('pt-BR'),
+      value: resultado2.toFixed(1)
     },
   ];
   

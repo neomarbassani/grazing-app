@@ -1,5 +1,5 @@
-import React from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Snackbar from 'react-native-snackbar';
 
 import CalcHistoryActions from '../../store/ducks/calcHistory';
@@ -13,40 +13,20 @@ import Button from '../../components/Button';
 import logo from '../../assets/logoResults.png';
 
 import {Description, ResultText, Title, Logo, Content} from './styles';
+import { View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
 
 const Result = ({navigation, route}) => {
   const calcState = route.params;
 
   const dispatch = useDispatch();
+  const isActive = useIsFocused();
 
-
-
-  const saveCalc = async () => {
-    try {
-      dispatch(CalcHistoryActions.addCalcToHistoryRequest(calcState));
-      Snackbar.show({
-        text: 'Salvo com sucesso.',
-        duration: Snackbar.LENGTH_SHORT,
-        textColor: '#fff',
-        backgroundColor: '#008000',
-      });
-      navigation.navigate('Home');
-    } catch (error) {
-      Snackbar.show({
-        text: 'Erro ao salvar, tente novamente.',
-        duration: Snackbar.LENGTH_SHORT,
-        textColor: '#fff',
-        backgroundColor: '#ff0000',
-        action: {
-          text: 'TENTAR NOVAMENTE',
-          textColor: 'white',
-          onPress: () => {
-            saveCalc();
-          },
-        },
-      });
-    }
-  };
+  useEffect(() => {
+    if(!isActive) return
+    
+    dispatch(CalcHistoryActions.addCalcToHistoryRequest(calcState));
+  }, [isActive])
 
   return (
     <Container results>
@@ -58,16 +38,16 @@ const Result = ({navigation, route}) => {
         {calcState.results.map(result => (
           <>
             <Description>{result.name}</Description>
-            <ResultText
-              size={
-                result.value ===
-                  'Não há necessidade de suplementar os animais' && '21px'
-              }>
+            <ResultText>
               {result.value}
             </ResultText>
           </>
         ))}
-        <Button content="Voltar ao início" mt="auto" onPress={saveCalc} />
+        <View style={{
+          marginBottom: 40
+        }}>
+          <Button content="Voltar ao início" onPress={() => {navigation.navigate('Home')}} />
+        </View>
       </Content>
     </Container>
   );

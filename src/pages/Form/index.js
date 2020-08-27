@@ -359,7 +359,7 @@ const FormContainer = ({navigation, route}) => {
               key: 'feno',
             },
             {
-              name: 'Numero de animais no potreiro',
+              name: 'Número de animais no potreiro',
               value: data.quantidadeDeAnimais,
               key: 'quantidadeDeAnimais',
             },
@@ -377,7 +377,7 @@ const FormContainer = ({navigation, route}) => {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
           dataDeInicio: Yup.date('Insira uma data válida').required(
-            'Insira a data de inicio.',
+            'Insira a data de início.',
           ),
           quantidadeDeAnimais: Yup.string().required(
             'Insira a quantidade de animais.',
@@ -387,8 +387,6 @@ const FormContainer = ({navigation, route}) => {
         await schema.validate(data, {
           abortEarly: false,
         });
-
-        console.log('results');
 
         const results = tamanhoPotreiroContinuo({
           dataDeInicio: data.dataDeInicio,
@@ -418,7 +416,7 @@ const FormContainer = ({navigation, route}) => {
               key: 'dataDeInicio',
             },
             {
-              name: 'Numero de animais no potreiro',
+              name: 'Número de animais no potreiro',
               value: data.quantidadeDeAnimais,
               key: 'quantidadeDeAnimais',
             },
@@ -453,9 +451,6 @@ const FormContainer = ({navigation, route}) => {
           tempoDePermanencia,
           dataDeInicio: data.dataDeInicio,
           peso: inputs.find(input => input.key === 'peso').value,
-          racao: suplementacaoAdicional === -1 ? -1 : data.racao,
-          feno: data.feno,
-          silagem: data.silagem,
           quantidadeDeAnimais: data.quantidadeDeAnimais,
           tipoDePasto: pasture.value,
           diasDeGestacao: inputs.find(input => input.key === 'diasDeGestacao')
@@ -626,7 +621,7 @@ const FormContainer = ({navigation, route}) => {
         navigation.navigate('Result', calcState);
       }
 
-      if (calc.value === 'Calcular números de piquetes') {
+      if (calc.value === 'Calcular número de piquetes') {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
           dataDeInicio: Yup.date('Insira uma data válida').required(
@@ -825,8 +820,6 @@ const FormContainer = ({navigation, route}) => {
     }
   }
 
-  console.log(calc);
-
   const options = [
     {label: 'Sim', value: 1},
     {label: 'Não', value: 0},
@@ -954,6 +947,7 @@ const FormContainer = ({navigation, route}) => {
                     setAreaDoPotreiro(value);
                   }}
                   minVal={1}
+                  step={0.5}
                   maxVal={parseInt(user.property_size) || 5}
                   unit="ha"
                 />
@@ -966,7 +960,7 @@ const FormContainer = ({navigation, route}) => {
                     setTempoDePermanencia(value);
                   }}
                   minVal={1}
-                  maxVal={10}
+                  maxVal={(calc.name === 'Pastoreio rotativo' ? 10:90)}
                   unit="dias"
                 />
               </Form>
@@ -1098,7 +1092,7 @@ const FormContainer = ({navigation, route}) => {
                     mt={10}
                     onValueChange={value => { setTempoDePermanencia(value); }}
                     minVal={1}
-                    maxVal={10}
+                    maxVal={90}
                     unit="dias"
                   />
 
@@ -1111,6 +1105,7 @@ const FormContainer = ({navigation, route}) => {
                       setAreaDoPotreiro(value);
                     }}
                     minVal={1}
+                    step={0.5}
                     maxVal={parseInt(user.property_size) || 5}
                     unit="ha"
                   />
@@ -1215,7 +1210,7 @@ const FormContainer = ({navigation, route}) => {
                       setTempoDePermanencia(value);
                     }}
                     minVal={1}
-                    maxVal={90}
+                    maxVal={10}
                   />
 
                   <SliderInput
@@ -1227,13 +1222,14 @@ const FormContainer = ({navigation, route}) => {
                       setAreaDoPotreiro(value);
                     }}
                     minVal={1}
+                    step={0.5}
                     maxVal={parseInt(user.property_size) || 5}
-                    unit="ha"
-                  />
+                    unit="ha">
+                  </SliderInput>
                 </Form>
               )}
 
-            {calc.value === 'Calcular números de piquetes' && (
+            {calc.value === 'Calcular número de piquetes' && (
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <Input
                   name="nomeDoPotreiro"
@@ -1278,6 +1274,7 @@ const FormContainer = ({navigation, route}) => {
                   onValueChange={value => {
                     setAreaDoPotreiro(value);
                   }}
+                  step={0.5}
                   minVal={1}
                   maxVal={parseInt(user.property_size) || 5}
                   unit="ha"
@@ -1396,6 +1393,7 @@ const FormContainer = ({navigation, route}) => {
                     setAreaDoPotreiro(value);
                   }}
                   minVal={1}
+                  step={0.5}
                   maxVal={parseInt(user.property_size) || 5}
                   unit="ha"
                 />

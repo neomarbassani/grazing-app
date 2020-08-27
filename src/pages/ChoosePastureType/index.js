@@ -12,6 +12,7 @@ import backgroundLogo from '../../assets/backgroundLogo.png';
 
 import aveia from '../../assets/aveiaLista.jpg';
 import azevem from '../../assets/azevemLista.jpg';
+import aveiaAzevem from '../../assets/aveiaAzevemLista.jpg';
 import campoNativo from '../../assets/campoNativoLista.jpg';
 import campoNativoMelhorado from '../../assets/campoNativoMelhoradoLista.jpg';
 import milheto from '../../assets/milhetoLista.jpg';
@@ -66,7 +67,7 @@ const ChoosePastureType = ({navigation, route}) => {
           <ChooseItemButton
             size={100}
             content="Aveia e Azevém"
-            source={azevem}
+            source={aveiaAzevem}
             onPress={() => {
               navigation.navigate('Form', {
                 animal,

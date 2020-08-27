@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useRef,useEffect } from 'react';
 import {Container, Text} from './styles';
 import Icon from 'react-native-vector-icons/Feather';
 import {colors} from '../../styles';
@@ -10,6 +10,8 @@ import {View} from 'react-native';
 
 const CalcRoutesTop = ({items, color}) => {
   const navigation = useNavigation();
+  const scroll = useRef(null)
+  
 
   const animalType = {
     type: {
@@ -33,7 +35,7 @@ const CalcRoutesTop = ({items, color}) => {
     sudao: 'Campim-Sudão',
     milheto: 'Milheto',
     sorgo: 'Sorgo',
-    tifton: 'TifTon',
+    tifton: 'Tifton',
     papua: 'Papuã',
     campoNativoMelhorado: 'Campo Nativo Melhorado',
     aveia: 'Aveia',
@@ -42,11 +44,16 @@ const CalcRoutesTop = ({items, color}) => {
   function getName(key) {
     const name =
       animalType.category[key] || animalType.type[key] || pastureType[key];
+
     if (name) {
       return name;
     }
     return key;
   }
+
+  useEffect(() => {
+    scroll.current.scrollToEnd()
+  }, [])
 
   return (
     <View
@@ -55,6 +62,7 @@ const CalcRoutesTop = ({items, color}) => {
         width: '100%',
       }}>
       <Container
+        ref={scroll}
         style={{flex: 1}}
         horizontal={true}
         showsHorizontalScrollIndicator={false}>

@@ -130,8 +130,9 @@ const AnimalInfo = ({navigation, route}) => {
             label="Peso vivo médio dos animais"
             keyboardType="numeric"
             placeholder="(kg PV)">
-            <HelpButton data={help[0]} />
+            <HelpButton data={help.peso} />
           </Input>
+          
           <SliderInput
             label="Escore de condição corporal"
             value={score}
@@ -142,8 +143,9 @@ const AnimalInfo = ({navigation, route}) => {
               setScore(value);
             }}
             minVal={1}
-            maxVal={5}
-          />
+            maxVal={5}>
+            <HelpButton data={help.escore} />
+          </SliderInput>
           {animal.value === 'vacaLactacao' && (
             <>
               <Input
@@ -151,14 +153,14 @@ const AnimalInfo = ({navigation, route}) => {
                 label="Semanas de Lactação"
                 keyboardType="numeric"
                 placeholder="10 semanas">
-                <HelpButton data={help[4]} />
+                <HelpButton data={help.semanasLactacao} />
               </Input>
               <Input
                 name="quantidadeDeLeite"
                 label="Produção de Leite (litros/dia)"
                 keyboardType="numeric"
                 placeholder="10 (litros/dia)">
-                <HelpButton data={help[3]} />
+                <HelpButton data={help.prodLeite} />
               </Input>
             </>
           )}
@@ -168,7 +170,7 @@ const AnimalInfo = ({navigation, route}) => {
               label="N° de dias de gestação"
               keyboardType="numeric"
               placeholder="10">
-              <HelpButton data={help[2]} />
+              <HelpButton data={help.diasGestacao} />
             </Input>
           )}
         </Form>

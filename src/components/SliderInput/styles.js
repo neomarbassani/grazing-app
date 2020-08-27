@@ -19,7 +19,7 @@ export const Label = styled.Text`
 
 export const SliderComponent = styled(Slider)`
   width: 100%;
-  height: 20px;
+  height: 40px;
 `;
 
 export const RangeBox = styled.View`

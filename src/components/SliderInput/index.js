@@ -1,11 +1,13 @@
 import React from 'react';
 
+import { View } from 'react-native';
+
 import {
   Container,
   Label,
   SliderComponent,
   RangeBox,
-  RangeValue,
+  RangeValue
 } from './styles';
 
 const SliderInput = ({
@@ -18,19 +20,24 @@ const SliderInput = ({
   color,
   step,
   unit,
+  children,
   ...rest
 }) => {
   return (
-    <Container mt={mt} mb={mb}>
-      <Label color={color}>
-        {label}: {value} {unit}
-      </Label>
+    <Container mt={mt} mb={mb}>    
+      <RangeBox>
+        <Label color={color}>
+          {label}: {value} {unit}
+        </Label>
+        <View style={{marginRight: 10}}>{children && children}</View>
+      </RangeBox>
+      
       <SliderComponent
         minimumTrackTintColor="#774D37"
         maximumTrackTintColor="#CCCCCC"
         minimumValue={minVal}
         maximumValue={maxVal}
-        thumbTintColor="#D69D2B"
+        thumbTintColor="#D69D00" 
         step={step ? step : 1}
         {...rest}
       />

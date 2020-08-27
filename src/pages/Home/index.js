@@ -71,13 +71,13 @@ const Home = ({navigation}) => {
           <HelpButton card data={help[2]} />
         </ChooseItemButton>
         <ChooseItemButton
-          content="Calcular números de piquetes"
+          content="Calcular número de piquetes"
           source={solution4}
           onPress={() => {
             navigation.navigate('ChooseBovineType', {
               calc: {
-                name: 'Pastoreio contínuo',
-                value: 'Calcular números de piquetes',
+                name: 'Pastoreio rotativo',
+                value: 'Calcular número de piquetes',
               },
             });
           }}>
@@ -89,7 +89,7 @@ const Home = ({navigation}) => {
           onPress={() => {
             navigation.navigate('ChooseBovineType', {
               calc: {
-                name: 'Pastoreio contínuo',
+                name: 'Pastoreio rotativo',
                 value: 'Definir período de ocupação',
               },
             });

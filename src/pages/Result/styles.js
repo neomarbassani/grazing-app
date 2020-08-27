@@ -1,13 +1,13 @@
 import styled from 'styled-components/native';
 
-export const Content = styled.View`
+export const Content = styled.ScrollView`
   width: 100%;
-  flex: 1;
-  padding: 17px 30px;
-  align-items: center;
+  padding: 17px;
 `;
 
-export const Logo = styled.Image``;
+export const Logo = styled.Image`
+  margin: auto;
+`;
 
 export const Title = styled.Text`
   font-family: 'WorkSans-Bold';

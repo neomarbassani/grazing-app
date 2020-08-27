@@ -29,11 +29,11 @@ const TabBar = ({state, navigation}) => {
               focused={state.routeNames[state.index] === 'Historico'}
             />
           </Page>
-          <Home onPress={() => navigation.navigate('Início')}>
+          <Home onPress={() => navigation.navigate('Home')}>
             <Icon
               source={home}
               resizeMode="contain"
-              focused={state.routeNames[state.index] === 'Início'}
+              focused={state.routeNames[state.index] === 'Home'}
             />
           </Home>
           <Page onPress={() => navigation.navigate('Contact')}>
