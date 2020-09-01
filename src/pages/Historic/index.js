@@ -222,13 +222,10 @@ const Historic = ({navigation}) => {
       'Dezembro',
     ];
 
+    
     const date = new Date(str);
 
-    const day = date.getUTCDay();
-
-    const mouthParse = date.getUTCMonth();
-
-    return `${day} de ${mouthArray[mouthParse]}`;
+    return `${date.getDate()} de ${mouthArray[date.getMonth()]}`;
   }
 
   return (
@@ -307,8 +304,7 @@ const Historic = ({navigation}) => {
                         source={
                           historicItem.config.animal.value === 'Terneiro(a)'
                             ? terneiro
-                            : historicItem.config.animal.value ===
-                              'Vaca em lactação'
+                            : historicItem.config.animal.value === 'Vaca em lactação'
                             ? vacaemlactacao
                             : historicItem.config.animal.value === 'Novilho(a)'
                             ? novilha
@@ -331,11 +327,11 @@ const Historic = ({navigation}) => {
                       <ResultBox>
                         <ResultTextTitle>Resultado:</ResultTextTitle>
                         <ResultTextContent>
-                          {historicItem.results[0].value} Animais
+                          {historicItem.results[0].value}
                         </ResultTextContent>
                       </ResultBox>
                     </MiddleSection>
-                    <DateItem>{historicItem.created_at_formatted}</DateItem>
+                    <DateItem>{formateDate(historicItem.created_at)}</DateItem>
                   </Item>
                 ))}
               </Group>
@@ -362,8 +358,7 @@ const Historic = ({navigation}) => {
               {modalConfig.item.config && modalConfig.item.config.calc.value}
             </ModalContainerTitle>
             <ModalContainerDateTime>
-              {formateDate(modalConfig.item.created_at)} às{' '}
-              {new Date(modalConfig.item.created_at).getHours()}h
+              {formateDate(modalConfig.item.created_at)}
             </ModalContainerDateTime>
             <ModalContainerTitle
               size={14}
@@ -379,18 +374,19 @@ const Historic = ({navigation}) => {
               </Value>
             </RowItem>
             <RowItem>
+              <Label>Forrageira:</Label>
+              <Value>
+                {modalConfig.item.config &&
+                  modalConfig.item.config.pasture.value}
+              </Value>
+            </RowItem>
+            <RowItem>
               <Label>Sistema de produção:</Label>
               <Value>
                 {modalConfig.item.config && modalConfig.item.config.animal.name}
               </Value>
             </RowItem>
-            <RowItem>
-              <Label>Categoria animal:</Label>
-              <Value>
-                {modalConfig.item.config &&
-                  modalConfig.item.config.animal.value}
-              </Value>
-            </RowItem>
+            
             <Separator />
 
             <ModalContainerTitle
@@ -409,14 +405,14 @@ const Historic = ({navigation}) => {
                 kg
               </Value>
             </RowItem>
-
             <RowItem>
-              <Label>Forrageira:</Label>
+              <Label>Categoria animal:</Label>
               <Value>
                 {modalConfig.item.config &&
-                  modalConfig.item.config.pasture.value}
+                  modalConfig.item.config.animal.value}
               </Value>
             </RowItem>
+
             <Separator />
 
             <ModalContainerTitle
@@ -458,7 +454,7 @@ const Historic = ({navigation}) => {
                     item.key === 'nomeDoPotreiro') && (
                     <RowItem>
                       <Label>{item.name}:</Label>
-                      <Value>{item.value}</Value>
+                      <Value>{item.value == '0' ? item.value : '-'}</Value>
                     </RowItem>
                   ),
               )}

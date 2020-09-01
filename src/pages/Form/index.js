@@ -132,9 +132,7 @@ const FormContainer = ({navigation, route}) => {
       ) {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required(
-            'Insira a data de inicio.',
-          ),
+          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.',),
         });
 
         await schema.validate(data, {
@@ -196,10 +194,8 @@ const FormContainer = ({navigation, route}) => {
       ) {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required(
-            'Insira a data de inicio.',
-          ),
-          numeroDePiquetes: Yup.string().required('Insira um valor.'),
+          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.',),
+          numeroDePiquetes: Yup.number().min(2, 'Mínimo são 2 piquetes').required('Insira um valor.'),
         });
 
         await schema.validate(data, {
@@ -531,15 +527,9 @@ const FormContainer = ({navigation, route}) => {
       ) {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required(
-            'Insira a data de inicio.',
-          ),
-          quantidadeDeAnimais: Yup.string().required(
-            'Insira a quantidade de animais.',
-          ),
-          numeroDePiquetes: Yup.string().required(
-            'Insira a quantidade de animais.',
-          ),
+          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.',),
+          quantidadeDeAnimais: Yup.string().required('Insira a quantidade de animais.',),
+          numeroDePiquetes: Yup.number().min(2, 'Mínimo são 2 piquetes').required('Insira um valor.'),
         });
 
         await schema.validate(data, {
@@ -707,10 +697,8 @@ const FormContainer = ({navigation, route}) => {
       if (calc.value === 'Definir período de ocupação') {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required(
-            'Insira a data de inicio.',
-          ),
-          numeroDePiquetes: Yup.string().required('Insira um valor.'),
+          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.'),
+          numeroDePiquetes: Yup.number().min(2, 'Mínimo são 2 piquetes').required('Insira um valor.'),
         });
 
         await schema.validate(data, {
@@ -1199,19 +1187,6 @@ const FormContainer = ({navigation, route}) => {
                     blurOnSubmit={false}>
                     <HelpButton data={help[4]} />
                   </Input>
-
-                  <SliderInput
-                    label="Período de ocupação"
-                    unit="dias"
-                    value={tempoDePermanencia}
-                    color="#fff"
-                    mt={10}
-                    onValueChange={value => {
-                      setTempoDePermanencia(value);
-                    }}
-                    minVal={1}
-                    maxVal={10}
-                  />
 
                   <SliderInput
                     label="Área do potreiro"

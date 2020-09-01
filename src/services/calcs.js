@@ -349,7 +349,8 @@ export function ajustarLotacaoAnimalRotativo({
     silagem,
   });
 
-  
+  let cons = consumoNRC - quantSuplemento
+  if(cons == 0) cons = 1
   const resultado =
   (
     (
@@ -362,7 +363,7 @@ export function ajustarLotacaoAnimalRotativo({
       ((( alturaOtima * 0.4 ) / ( taxaDeAcumulo / relacaoMassaAltura )) / ( numeroDePiquetes < 2 ? 1 : numeroDePiquetes - 1 ))
     )
   ) / (
-    ( consumoNRC - quantSuplemento ) *
+    ( cons ) *
     ((
       ( alturaOtima * 0.4 ) /
       ( taxaDeAcumulo / relacaoMassaAltura ) /
@@ -454,8 +455,10 @@ export function tamanhoPotreiroRotativo({
     silagem,
   });
 
+  let cons = consumoNRC - quantSuplemento
+  if(cons == 0) cons = 1
   const resultado =
-    (((consumoNRC - quantSuplemento) * quantidadeDeAnimais) /
+    ((cons * quantidadeDeAnimais) /
       (alturaOtima * 0.4 * relacaoMassaAltura + media)) *
     ((alturaOtima * 0.4) / (media / relacaoMassaAltura) + 1);
 
@@ -720,12 +723,14 @@ export function definirPeriodoDeOcupacaoRotativo({
     silagem,
   });
 
+  let cons = consumoNRC - quantSuplemento
+  if(cons == 0) cons = 1
   const resultado =
     ((alturaDoPasto * relacaoMassaAltura -
       alturaOtima * 0.6 * relacaoMassaAltura) *
       (areaDoPotreiro / numeroDePiquetes) +
       taxaDeAcumulo * (areaDoPotreiro / numeroDePiquetes)) /
-    ((consumoNRC - quantSuplemento) * quantidadeDeAnimais);
+    ((cons) * quantidadeDeAnimais);
 
   let resultados = []
   if(resultado < 1) {
@@ -794,13 +799,15 @@ export function calcularNumeroDePiquetes({
     silagem,
   });
 
+  let cons = consumoNRC - quantSuplemento
+  if(cons == 0) cons = 1
   const resultado1 = ( 
     (( alturaOtima* 0.4 / (media / relacaoMassaAltura)) + 1) + 
-    (areaDoPotreiro / (((consumoNRC-quantSuplemento) * quantidadeDeAnimais)/(((alturaOtima*0.4)*relacaoMassaAltura)+media)))
+    (areaDoPotreiro / (((cons) * quantidadeDeAnimais)/(((alturaOtima*0.4)*relacaoMassaAltura)+media)))
   )/2
   const resultado2 = Math.round(
     resultado1 *
-    (((consumoNRC - quantSuplemento) * quantidadeDeAnimais) /
+    (((cons) * quantidadeDeAnimais) /
       (alturaOtima * 0.4 * relacaoMassaAltura + media)));
   
   let resultados = [
