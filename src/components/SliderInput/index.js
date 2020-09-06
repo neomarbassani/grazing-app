@@ -21,13 +21,14 @@ const SliderInput = ({
   step,
   unit,
   children,
+  error,
   ...rest
 }) => {
   return (
     <Container mt={mt} mb={mb}>    
       <RangeBox>
         <Label color={color}>
-          {label}: {value} {unit}
+          {label}: {(step < 1 ? value.toFixed(1) : value)} {unit}
         </Label>
         <View style={{marginRight: 10}}>{children && children}</View>
       </RangeBox>
@@ -45,6 +46,7 @@ const SliderInput = ({
         <RangeValue color={color}>{minVal}</RangeValue>
         <RangeValue color={color}>{maxVal}</RangeValue>
       </RangeBox>
+      {error && <InputError>{error}</InputError>}
     </Container>
   );
 };

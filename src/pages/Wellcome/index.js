@@ -3,11 +3,12 @@ import {PanGestureHandler} from 'react-native-gesture-handler';
 import Link from '../../components/Link';
 import Button from '../../components/Button';
 
-import backgroundImage1 from '../../assets/loading1.jpg';
-import backgroundImage2 from '../../assets/loading2.jpg';
-import backgroundImage3 from '../../assets/loading3.jpg';
+import backgroundImage1 from '../../assets/loading3.jpg';
+import backgroundImage2 from '../../assets/loading_2.jpg';
+import backgroundImage3 from '../../assets/loading_3.jpg';
 
 import logo from '../../assets/logoWellcome.png';
+import logoWhite from '../../assets/logo_white.png';
 
 const slides = [backgroundImage3, backgroundImage2, backgroundImage1];
 const phrases = [

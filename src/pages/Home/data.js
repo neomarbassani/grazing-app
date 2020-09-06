@@ -2,12 +2,12 @@ export default [
   {
     title: 'Ajuste de lotação animal',
     content:
-      'Determina o número de animais (carga animal) mantidos no potreiro (no método de pastoreio contínuo), ou por piquete no módulo de pastoreio rotacionado (método de pastoreio rotativo)',
+      'Determina o número de animais (carga animal) mantidos no potreiro (método de pastoreio contínuo), ou por piquete (método de pastoreio rotativo)',
   },
   {
     title: 'Dimensionar área do potreiro',
     content:
-      ' Determina a área necessária (em hectares) para manter o lote de animais especificado',
+      'Determina a área necessária (em hectares) para manter o lote de animais especificado',
   },
   {
     title: 'Fornecer suplemento',
