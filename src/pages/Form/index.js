@@ -132,7 +132,7 @@ const FormContainer = ({navigation, route}) => {
       ) {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.',),
+          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.')
         });
 
         await schema.validate(data, {
@@ -195,7 +195,7 @@ const FormContainer = ({navigation, route}) => {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
           dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.',),
-          numeroDePiquetes: Yup.number().min(2, 'Mínimo são 2 piquetes').required('Insira um valor.'),
+          numeroDePiquetes: Yup.string().required('Insira o número de piquetes.').notOneOf(['1'], 'Mínimo 2 piquetes')
         });
 
         await schema.validate(data, {
@@ -355,7 +355,7 @@ const FormContainer = ({navigation, route}) => {
               key: 'feno',
             },
             {
-              name: 'Número de animais no potreiro',
+              name: 'Número de animais',
               value: data.quantidadeDeAnimais,
               key: 'quantidadeDeAnimais',
             },
@@ -391,8 +391,6 @@ const FormContainer = ({navigation, route}) => {
           tipoDePasto: pasture.value,
         });
 
-        console.log(results);
-
         const calcState = {
           config: {
             calc,
@@ -412,7 +410,7 @@ const FormContainer = ({navigation, route}) => {
               key: 'dataDeInicio',
             },
             {
-              name: 'Número de animais no potreiro',
+              name: 'Número de animais',
               value: data.quantidadeDeAnimais,
               key: 'quantidadeDeAnimais',
             },
@@ -429,12 +427,9 @@ const FormContainer = ({navigation, route}) => {
       ) {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required(
-            'Insira a data de inicio.',
-          ),
-          quantidadeDeAnimais: Yup.string().required(
-            'Insira a quantidade de animais.',
-          ),
+          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.'),
+          quantidadeDeAnimais: Yup.string().required('Insira a quantidade de animais.'),
+          alturaDoPasto: Yup.number().required('Informe a altura do pasto.')
         });
 
         await schema.validate(data, {
@@ -529,7 +524,7 @@ const FormContainer = ({navigation, route}) => {
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
           dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.',),
           quantidadeDeAnimais: Yup.string().required('Insira a quantidade de animais.',),
-          numeroDePiquetes: Yup.number().min(2, 'Mínimo são 2 piquetes').required('Insira um valor.'),
+          numeroDePiquetes: Yup.string().required('Insira o número de piquetes.').notOneOf(['1'], 'Mínimo 2 piquetes')
         });
 
         await schema.validate(data, {
@@ -544,9 +539,6 @@ const FormContainer = ({navigation, route}) => {
           tempoDePermanencia,
           dataDeInicio: data.dataDeInicio,
           peso: inputs.find(input => input.key === 'peso').value,
-          racao: suplementacaoAdicional === -1 ? -1 : data.racao,
-          feno: data.feno,
-          silagem: data.silagem,
           quantidadeDeAnimais: data.quantidadeDeAnimais,
           tipoDePasto: pasture.value,
           diasDeGestacao: inputs.find(input => input.key === 'diasDeGestacao')
@@ -600,7 +592,7 @@ const FormContainer = ({navigation, route}) => {
               key: 'numeroDePiquetes',
             },
             {
-              name: 'Periodo de ocupação',
+              name: 'Período de ocupação',
               value: tempoDePermanencia,
               key: 'tempoDePermanencia',
             },
@@ -698,7 +690,7 @@ const FormContainer = ({navigation, route}) => {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
           dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.'),
-          numeroDePiquetes: Yup.number().min(2, 'Mínimo são 2 piquetes').required('Insira um valor.'),
+          numeroDePiquetes: Yup.string().required('Insira o número de piquetes.').notOneOf(['1'], 'Mínimo 2 piquetes')
         });
 
         await schema.validate(data, {
@@ -875,7 +867,7 @@ const FormContainer = ({navigation, route}) => {
                   returnKeyType="next"
                   blurOnSubmit={false}
                   onSubmitEditing={() => focusInput('dataDeInicio')}>
-                  <HelpButton data={help[0]} />
+                  <HelpButton data={help.identificacao} />
                 </Input>
                 <Input
                   name="dataDeInicio"
@@ -894,12 +886,12 @@ const FormContainer = ({navigation, route}) => {
                 <Input
                   name="quantidadeDeAnimais"
                   color="#fff"
-                  label="Número de animais no potreiro"
+                  label="Número de animais"
                   keyboardType="numeric"
                   returnKeyType="next"
                   blurOnSubmit={false}
                   onSubmitEditing={() => focusInput('numeroDePiquetes')}>
-                  <HelpButton data={help[2]} />
+                  <HelpButton data={help.numeroAnimais} />
                 </Input>
 
                 {calc.name === 'Pastoreio rotativo' && (
@@ -910,7 +902,7 @@ const FormContainer = ({navigation, route}) => {
                     keyboardType="numeric"
                     returnKeyType="next"
                     blurOnSubmit={false}>
-                    <HelpButton data={help[4]} />
+                    <HelpButton data={help.numeroPiquetes} />
                   </Input>
                 )}
 
@@ -922,10 +914,12 @@ const FormContainer = ({navigation, route}) => {
                   onValueChange={value => {
                     setAlturaDoPasto(value);
                   }}
+                  step={0.1}
                   minVal={1}
                   maxVal={maxValuesToSlider[pasture.value]}
-                  unit="cm"
-                />
+                  unit="cm">
+                  <HelpButton data={help.alturaPasto} />
+                </SliderInput>
                 <SliderInput
                   label="Área do potreiro"
                   value={areaDoPotreiro}
@@ -935,10 +929,11 @@ const FormContainer = ({navigation, route}) => {
                     setAreaDoPotreiro(value);
                   }}
                   minVal={1}
-                  step={0.5}
+                  step={0.1}
                   maxVal={parseInt(user.property_size) || 5}
-                  unit="ha"
-                />
+                  unit="ha">
+                    <HelpButton data={help.areaDoPotreiro} />
+                </SliderInput>
                 <SliderInput
                   label="Período de ocupação"
                   value={tempoDePermanencia}
@@ -949,8 +944,9 @@ const FormContainer = ({navigation, route}) => {
                   }}
                   minVal={1}
                   maxVal={(calc.name === 'Pastoreio rotativo' ? 10:90)}
-                  unit="dias"
-                />
+                  unit="dias">
+                  <HelpButton data={calc.name === 'Pastoreio rotativo' ? help.periodoOcupacaoR:help.periodoOcupacaoC} />
+                </SliderInput>
               </Form>
             )}
 
@@ -964,7 +960,7 @@ const FormContainer = ({navigation, route}) => {
                   returnKeyType="next"
                   blurOnSubmit={false}
                   onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
-                  <HelpButton data={help[0]} />
+                  <HelpButton data={help.identificacao} />
                 </Input>
                 <Input
                   name="dataDeInicio"
@@ -983,12 +979,12 @@ const FormContainer = ({navigation, route}) => {
                 <Input
                   name="quantidadeDeAnimais"
                   color="#fff"
-                  label="Número de animais no potreiro"
+                  label="Número de animais"
                   keyboardType="numeric"
                   returnKeyType="next"
                   blurOnSubmit={false}
                   onSubmitEditing={() => focusInput('dataDeInicio')}>
-                  <HelpButton data={help[3]} />
+                  <HelpButton data={help.numeroAnimais} />
                 </Input>
 
                 {calc.name === 'Pastoreio rotativo' && (
@@ -1010,8 +1006,9 @@ const FormContainer = ({navigation, route}) => {
                       keyboardType="numeric"
                       returnKeyType="next"
                       blurOnSubmit={false}
-                      onSubmitEditing={() => focusInput('feno')}
-                    />
+                      onSubmitEditing={() => focusInput('feno')}>
+                      <HelpButton data={help.quantidadeSuplemento} />
+                    </Input>
                     <Input
                       name="feno"
                       placeholder="Feno (kg/animal/dia)"
@@ -1019,16 +1016,18 @@ const FormContainer = ({navigation, route}) => {
                       keyboardType="numeric"
                       returnKeyType="next"
                       blurOnSubmit={false}
-                      onSubmitEditing={() => focusInput('silagem')}
-                    />
+                      onSubmitEditing={() => focusInput('silagem')}>
+                      <HelpButton data={help.quantidadeSuplemento} />
+                    </Input>
                     <Input
                       name="silagem"
                       placeholder="Silagem (kg/animal/dia)"
                       color="#fff"
                       keyboardType="numeric"
                       returnKeyType="done"
-                      blurOnSubmit={true}
-                    />
+                      blurOnSubmit={true}>
+                      <HelpButton data={help.quantidadeSuplemento} />
+                    </Input>
                   </>
                 )}
               </Form>
@@ -1045,7 +1044,7 @@ const FormContainer = ({navigation, route}) => {
                     returnKeyType="next"
                     blurOnSubmit={false}
                     onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
-                    <HelpButton data={help[0]} />
+                    <HelpButton data={help.identificacao} />
                   </Input>
                   <Input
                     name="dataDeInicio"
@@ -1069,10 +1068,13 @@ const FormContainer = ({navigation, route}) => {
                     onValueChange={value => {
                       setAlturaDoPasto(value);
                     }}
+                    step={0.1}
                     minVal={1}
                     maxVal={maxValuesToSlider[pasture.value]}
-                    unit="cm"
-                  />
+                    unit="cm">
+                    <HelpButton data={help.alturaPasto} />
+                  </SliderInput>
+                    
                   <SliderInput
                     label="Período de ocupação"
                     value={tempoDePermanencia}
@@ -1081,8 +1083,9 @@ const FormContainer = ({navigation, route}) => {
                     onValueChange={value => { setTempoDePermanencia(value); }}
                     minVal={1}
                     maxVal={90}
-                    unit="dias"
-                  />
+                    unit="dias">
+                    <HelpButton data={help.periodoOcupacaoC} />
+                  </SliderInput>
 
                   <SliderInput
                     label="Área do potreiro"
@@ -1093,10 +1096,11 @@ const FormContainer = ({navigation, route}) => {
                       setAreaDoPotreiro(value);
                     }}
                     minVal={1}
-                    step={0.5}
+                    step={0.1}
                     maxVal={parseInt(user.property_size) || 5}
-                    unit="ha"
-                  />
+                    unit="ha">
+                    <HelpButton data={help.areaDoPotreiro} />
+                  </SliderInput>
                 </Form>
               )}
 
@@ -1111,7 +1115,7 @@ const FormContainer = ({navigation, route}) => {
                     returnKeyType="next"
                     blurOnSubmit={false}
                     onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
-                    <HelpButton data={help[0]} />
+                    <HelpButton data={help.identificacao} />
                   </Input>
                   <Input
                     name="dataDeInicio"
@@ -1135,10 +1139,11 @@ const FormContainer = ({navigation, route}) => {
                     onValueChange={value => {
                       setAlturaDoPasto(value);
                     }}
+                    step={0.1}
                     minVal={1}
-                    maxVal={maxValuesToSlider[pasture.value]}
-                  />
-
+                    maxVal={maxValuesToSlider[pasture.value]}>
+                    <HelpButton data={help.alturaPasto} />
+                  </SliderInput>
                   <RadioButton
                     label="Irá fornecer suplementação adicional?"
                     onPress={value => setSuplementacaoAdicional(value)}
@@ -1156,8 +1161,9 @@ const FormContainer = ({navigation, route}) => {
                         keyboardType="numeric"
                         returnKeyType="next"
                         blurOnSubmit={false}
-                        onSubmitEditing={() => focusInput('feno')}
-                      />
+                        onSubmitEditing={() => focusInput('feno')}>
+                        <HelpButton data={help.quantidadeSuplemento} />
+                      </Input>
                       <Input
                         name="feno"
                         placeholder="Feno (kg/animal/dia)"
@@ -1165,16 +1171,18 @@ const FormContainer = ({navigation, route}) => {
                         keyboardType="numeric"
                         returnKeyType="next"
                         blurOnSubmit={false}
-                        onSubmitEditing={() => focusInput('silagem')}
-                      />
+                        onSubmitEditing={() => focusInput('silagem')}>
+                        <HelpButton data={help.quantidadeSuplemento} />
+                      </Input>
                       <Input
                         name="silagem"
                         placeholder="Silagem (kg/animal/dia)"
                         color="#fff"
                         keyboardType="numeric"
                         returnKeyType="done"
-                        blurOnSubmit={true}
-                      />
+                        blurOnSubmit={true}>
+                        <HelpButton data={help.quantidadeSuplemento} />
+                      </Input>
                     </>
                   )}
 
@@ -1185,7 +1193,7 @@ const FormContainer = ({navigation, route}) => {
                     keyboardType="numeric"
                     returnKeyType="next"
                     blurOnSubmit={false}>
-                    <HelpButton data={help[4]} />
+                    <HelpButton data={help.numeroPiquetes} />
                   </Input>
 
                   <SliderInput
@@ -1197,9 +1205,10 @@ const FormContainer = ({navigation, route}) => {
                       setAreaDoPotreiro(value);
                     }}
                     minVal={1}
-                    step={0.5}
+                    step={0.1}
                     maxVal={parseInt(user.property_size) || 5}
                     unit="ha">
+                    <HelpButton data={help.areaDoPotreiro} />
                   </SliderInput>
                 </Form>
               )}
@@ -1214,7 +1223,7 @@ const FormContainer = ({navigation, route}) => {
                   returnKeyType="next"
                   blurOnSubmit={false}
                   onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
-                  <HelpButton data={help[0]} />
+                  <HelpButton data={help.identificacao} />
                 </Input>
                 <Input
                   name="dataDeInicio"
@@ -1233,12 +1242,12 @@ const FormContainer = ({navigation, route}) => {
                 <Input
                   name="quantidadeDeAnimais"
                   color="#fff"
-                  label="Número de animais no potreiro"
+                  label="Número de animais"
                   keyboardType="numeric"
                   returnKeyType="next"
                   blurOnSubmit={false}
                   onSubmitEditing={() => focusInput('dataDeInicio')}>
-                  <HelpButton data={help[2]} />
+                  <HelpButton data={help.numeroAnimais} />
                 </Input>
 
                 <SliderInput
@@ -1249,11 +1258,12 @@ const FormContainer = ({navigation, route}) => {
                   onValueChange={value => {
                     setAreaDoPotreiro(value);
                   }}
-                  step={0.5}
+                  step={0.1}
                   minVal={1}
                   maxVal={parseInt(user.property_size) || 5}
-                  unit="ha"
-                />
+                  unit="ha">
+                  <HelpButton data={help.areaDoPotreiro} />
+                </SliderInput>
 
                 <RadioButton
                   label="Irá fornecer suplementação adicional?"
@@ -1273,7 +1283,7 @@ const FormContainer = ({navigation, route}) => {
                       returnKeyType="next"
                       blurOnSubmit={false}
                       onSubmitEditing={() => focusInput('feno')}>
-                      <HelpButton data={help[2]} />
+                      <HelpButton data={help.quantidadeSuplemento} />
                     </Input>
                     <Input
                       name="feno"
@@ -1283,7 +1293,7 @@ const FormContainer = ({navigation, route}) => {
                       returnKeyType="next"
                       blurOnSubmit={false}
                       onSubmitEditing={() => focusInput('silagem')}>
-                      <HelpButton data={help[2]} />
+                      <HelpButton data={help.quantidadeSuplemento} />
                     </Input>
                     <Input
                       name="silagem"
@@ -1292,7 +1302,7 @@ const FormContainer = ({navigation, route}) => {
                       keyboardType="numeric"
                       returnKeyType="done"
                       blurOnSubmit={true}>
-                      <HelpButton data={help[2]} />
+                      <HelpButton data={help.quantidadeSuplemento} />
                     </Input>
                   </>
                 )}
@@ -1309,7 +1319,7 @@ const FormContainer = ({navigation, route}) => {
                   returnKeyType="next"
                   blurOnSubmit={false}
                   onSubmitEditing={() => focusInput('quantidadeDeAnimais')}>
-                  <HelpButton data={help[0]} />
+                  <HelpButton data={help.identificacao} />
                 </Input>
                 <Input
                   name="dataDeInicio"
@@ -1328,12 +1338,12 @@ const FormContainer = ({navigation, route}) => {
                 <Input
                   name="quantidadeDeAnimais"
                   color="#fff"
-                  label="Número de animais no potreiro"
+                  label="Número de animais"
                   keyboardType="numeric"
                   returnKeyType="next"
                   blurOnSubmit={false}
                   onSubmitEditing={() => focusInput('dataDeInicio')}>
-                  <HelpButton data={help[2]} />
+                  <HelpButton data={help.numeroAnimais} />
                 </Input>
 
                 <SliderInput
@@ -1344,10 +1354,12 @@ const FormContainer = ({navigation, route}) => {
                   onValueChange={value => {
                     setAlturaDoPasto(value);
                   }}
+                  step={0.1}
                   minVal={1}
                   maxVal={maxValuesToSlider[pasture.value]}
-                  unit="cm"
-                />
+                  unit="cm">
+                  <HelpButton data={help.alturaPasto} />
+                </SliderInput>
 
                 <Input
                   name="numeroDePiquetes"
@@ -1356,7 +1368,7 @@ const FormContainer = ({navigation, route}) => {
                   keyboardType="numeric"
                   returnKeyType="next"
                   blurOnSubmit={false}>
-                  <HelpButton data={help[4]} />
+                  <HelpButton data={help.numeroPiquetes} />
                 </Input>
 
                 <SliderInput
@@ -1368,10 +1380,11 @@ const FormContainer = ({navigation, route}) => {
                     setAreaDoPotreiro(value);
                   }}
                   minVal={1}
-                  step={0.5}
+                  step={0.1}
                   maxVal={parseInt(user.property_size) || 5}
-                  unit="ha"
-                />
+                  unit="ha">
+                  <HelpButton data={help.areaDoPotreiro} />
+                </SliderInput>
 
                 <RadioButton
                   label="Irá fornecer suplementação adicional?"
@@ -1390,8 +1403,9 @@ const FormContainer = ({navigation, route}) => {
                       keyboardType="numeric"
                       returnKeyType="next"
                       blurOnSubmit={false}
-                      onSubmitEditing={() => focusInput('feno')}
-                    />
+                      onSubmitEditing={() => focusInput('feno')}>
+                      <HelpButton data={help.quantidadeSuplemento} />
+                    </Input>
                     <Input
                       name="feno"
                       placeholder="Feno (kg/animal/dia)"
@@ -1399,16 +1413,18 @@ const FormContainer = ({navigation, route}) => {
                       keyboardType="numeric"
                       returnKeyType="next"
                       blurOnSubmit={false}
-                      onSubmitEditing={() => focusInput('silagem')}
-                    />
+                      onSubmitEditing={() => focusInput('silagem')}>
+                      <HelpButton data={help.quantidadeSuplemento} />
+                    </Input>
                     <Input
                       name="silagem"
                       placeholder="Silagem (kg/animal/dia)"
                       color="#fff"
                       keyboardType="numeric"
                       returnKeyType="done"
-                      blurOnSubmit={true}
-                    />
+                      blurOnSubmit={true}>
+                      <HelpButton data={help.quantidadeSuplemento} />
+                    </Input>
                   </>
                 )}
               </Form>

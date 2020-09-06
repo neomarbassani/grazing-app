@@ -243,14 +243,13 @@ export const consumo = {
     }
     if (diasDeGestacao > 259) {
       return (
-        ((1.71 - 0.69 * Math.pow(2.72, 0.35 * diasDeGestacao - 280)) / 100) *
+        ((1.71 - 0.69 * Math.pow(2.72, 0.35 * (diasDeGestacao - 280))) / 100) *
         peso *
         1.16
       );
     }
   },
   vacaLactacao: ({peso, semanasDeLactacao, quantidadeDeLeite}) => {
-
     const FC1 = 0.4 * (quantidadeDeLeite * 1) + 15 * 0.03 * quantidadeDeLeite;
     const FC2 = 1 - Math.pow(2.72, (-1 * (0.192 * ((semanasDeLactacao * 1) + 3.67))));
 
@@ -304,14 +303,7 @@ export function ajustarLotacaoAnimalContinuo({
 
   return resultados;
 }
-/* ajustarLotacaoAnimalContinuo({
-  dataDeInicio: Date.now(),
-  peso: 500,
-  alturaDoPasto: 30,
-  tipoDePasto: "campoNativo",
-  tempoDePermanencia: 10,
-  areaDoPotreiro: 5,
-}) */
+
 
 export function ajustarLotacaoAnimalRotativo({
   dataDeInicio,
@@ -349,8 +341,7 @@ export function ajustarLotacaoAnimalRotativo({
     silagem,
   });
 
-  let cons = consumoNRC - quantSuplemento
-  if(cons == 0) cons = 1
+  let _consumo = consumoNRC - quantSuplemento
   const resultado =
   (
     (
@@ -363,7 +354,7 @@ export function ajustarLotacaoAnimalRotativo({
       ((( alturaOtima * 0.4 ) / ( taxaDeAcumulo / relacaoMassaAltura )) / ( numeroDePiquetes < 2 ? 1 : numeroDePiquetes - 1 ))
     )
   ) / (
-    ( cons ) *
+    _consumo *
     ((
       ( alturaOtima * 0.4 ) /
       ( taxaDeAcumulo / relacaoMassaAltura ) /
@@ -371,12 +362,16 @@ export function ajustarLotacaoAnimalRotativo({
     ))
   )
 
-  const resultados = [
-    {
-      name: 'Número de animais no potreiro',
-      value: Math.round(resultado).toLocaleString('pt-BR'),
-    },
-  ];
+  let resultados = []
+  if(_consumo > 0) {
+    if(resultado > 0) {
+      resultados.push({ name: 'Número de animais no potreiro', value: Math.round(resultado).toLocaleString('pt-BR') })
+    }else {
+      resultados.push({ name: 'Não é possível colocar os animais na área. Recomenda-se aguardar até que a pastagem atinja altura pré-pastejo adequada.' })
+    }
+  }else {
+    resultados.push({ name: 'A quantidade de suplemento fornecida supera o consumo dos animais. Recomenda-se reduzir a quantidade de suplemento fornecida.' })
+  }
 
   console.log({
     dataDeInicio,
@@ -403,23 +398,6 @@ export function ajustarLotacaoAnimalRotativo({
 
   return resultados;
 }
-/* ajustarLotacaoAnimalRotativo({
-  dataDeInicio: Date.now(),
-  peso: 500,
-  racao:0,
-  feno:0,
-  silagem:0,
-  numeroDePiquetes: 1,
-  alturaDoPasto: 30,
-  tipoDePasto: 'campoNativo',
-  tempoDePermanencia: 20,
-  areaDoPotreiro: 5,
-  diasDeGestacao:0,
-  semanasDeLactacao:0,
-  quantidadeDeLeite:0,
-  categoriaAnimal: 'bovinoCorte',
-  tipoDeAnimal: 'novilha',
-}) */
 
 export function tamanhoPotreiroRotativo({
   dataDeInicio,
@@ -455,38 +433,25 @@ export function tamanhoPotreiroRotativo({
     silagem,
   });
 
-  let cons = consumoNRC - quantSuplemento
-  if(cons == 0) cons = 1
+  let _consumo = consumoNRC - quantSuplemento
+  
   const resultado =
-    ((cons * quantidadeDeAnimais) /
+    ((_consumo * quantidadeDeAnimais) /
       (alturaOtima * 0.4 * relacaoMassaAltura + media)) *
     ((alturaOtima * 0.4) / (media / relacaoMassaAltura) + 1);
 
-  const resultados = [
-    {
-      name: 'Área total do potreiro (ha)',
-      value: Math.round(resultado).toLocaleString('pt-BR'),
-    },
-  ];
+
+  let resultados = []
+  if(_consumo > 0) {
+    resultados.push({ name: 'Número de animais no potreiro', value: Math.round(resultado).toLocaleString('pt-BR') })
+  }else {
+    resultados.push({ name: 'A quantidade de suplemento fornecida supera o consumo dos animais. Recomenda-se reduzir a quantidade de suplemento fornecida.' })
+  }
 
   console.log(resultados);
 
   return resultados;
 }
-/* tamanhoPotreiroRotativo({
-  dataDeInicio: Date.now(),
-  peso: 300,
-  quantidadeDeAnimais: 50,
-  racao: 0,
-  silagem: 0,
-  feno: 0,
-  tipoDePasto: "campoNativo",
-  categoriaAnimal: "bovinoCorte",
-  tipoDeAnimal: "novilha",
-  daysOfLactation: 0,
-  weeksOfLactation: 0,
-  milkQuantity: 0,
-}); */
 
 export function tamanhoPotreiroContinuo({
   dataDeInicio,
@@ -511,7 +476,7 @@ export function tamanhoPotreiroContinuo({
   const resultados = [
     {
       name: 'Área total do potreiro (ha)',
-      value: Math.round(resultado).toLocaleString('pt-BR'),
+      value: resultado.toFixed(1),
     },
   ];
 
@@ -519,12 +484,6 @@ export function tamanhoPotreiroContinuo({
 
   return resultados;
 }
-/* tamanhoPotreiroContinuo({
-  dataDeInicio: Date.now(),
-  peso: 500,
-  tipoDePasto: "campoNativo",
-  quantidadeDeAnimais: 50,
-}); */
 
 export function fornecerSuplementoContinuo({
   dataDeInicio, //ok
@@ -554,7 +513,7 @@ export function fornecerSuplementoContinuo({
     quantidadeDeLeite,
   });
 
-  const resultado =
+  let resultado =
     (((quantidadeDeAnimais * peso) / areaDoPotreiro -
       (((alturaDoPasto * relacaoMassaAltura) / tempoDePermanencia +
         (taxaDeAcumulo -
@@ -567,69 +526,42 @@ export function fornecerSuplementoContinuo({
     consumoNRC *
     areaDoPotreiro;
 
-  const resultadoMedio = resultado / quantidadeDeAnimais;
-  
-  let resultados
-  if(resultado <= 0) {
-    resultados = [{ name: 'Não há necessidade de suplementar os animais' }]
-  }else 
-  resultados = [
-    {
-      name:
-        'Quantidade de suplemento para o lote de animais (kg/dia)',
-      value: Math.round(resultado).toLocaleString('pt-BR'),
-    },
-    {
-      name: 'Quantidade de suplemento por animal (kg/dia)',
-      value: Math.round(resultadoMedio).toLocaleString('pt-BR'),
-    }
-  ];
+  let resultadoMedio = resultado / quantidadeDeAnimais;
 
+  if(resultadoMedio > consumoNRC) {
+    resultado = consumoNRC * quantidadeDeAnimais
+    resultadoMedio = consumoNRC
+  }
   
+  let resultados = []
+  if(resultadoMedio <= 0) {
+    resultados.push({ name: 'Não há necessidade de suplementar os animais' })
+  }else {
+    resultados.push({ name: 'Quantidade de suplemento para o lote de animais (kg/dia)', value: resultado.toFixed(1) })
+    resultados.push({ name: 'Quantidade de suplemento por animal (kg/dia)', value: resultadoMedio.toFixed(1) })
+  }
 
   console.log(resultados);
 
   return resultados;
 }
-/* fornecerSuplementoContinuo({
-  dataDeInicio: Date.now(),
-  peso: 300,
-  quantidadeDeAnimais: 40,
-  areaDoPotreiro: 5,
-  alturaDoPasto: 40,
-  tempoDePermanencia: 15,
-  tipoDePasto: "campoNativo",
-  categoriaAnimal: "bovinoCorte",
-  tipoDeAnimal: "novilha",
-  diasDeGestacao: 0,
-  semanasDeLactacao: 0,
-  quantidadeDeLeite: 0,
-  racao: 0,
-  feno: 0,
-  silagem: 0,
-}); */
 
 export function fornecerSuplementoRotativo({
   dataDeInicio,
   peso,
-  racao = 0,
-  feno = 0,
-  silagem = 0,
   quantidadeDeAnimais,
   areaDoPotreiro,
   alturaDoPasto,
   numeroDePiquetes,
   diasDePermanencia,
   tipoDePasto,
-  categoriaAnimal,
   tipoDeAnimal,
   diasDeGestacao = 0,
   semanasDeLactacao = 0,
   quantidadeDeLeite = 0,
-}) {
+}) { 
   const relacaoMassaAltura = especie[tipoDePasto].relacaoMassaAltura;
   const alturaOtima = especie[tipoDePasto].alturaOtima;
-  const media = taxaDeAcumuloPorEspecie[tipoDePasto].media;
 
   const taxaDeAcumulo =
     taxaDeAcumuloPorEspecie[tipoDePasto][getMouth(dataDeInicio)];
@@ -641,7 +573,7 @@ export function fornecerSuplementoRotativo({
     quantidadeDeLeite,
   });
   
-  const resultado1 =
+  let resultado =
     (consumoNRC * diasDePermanencia * quantidadeDeAnimais -
       ((alturaDoPasto * relacaoMassaAltura -
         alturaOtima * 0.6 * relacaoMassaAltura) *
@@ -649,42 +581,26 @@ export function fornecerSuplementoRotativo({
         ((taxaDeAcumulo * areaDoPotreiro) / numeroDePiquetes) *
           diasDePermanencia)) /
     diasDePermanencia;
-  const resultado2 = resultado1 / quantidadeDeAnimais;
-  let resultados
-  if(resultado1 <= 0) {
-    resultados = [{ name: 'Não há necessidade de suplementar os animais' }]
-  }else 
-  resultados = [
-    {
-      name:
-        'Quantidade de suplemento para o lote de animais (kg/dia)',
-      value: Math.round(resultado1).toLocaleString('pt-BR'),
-    },
-    {
-      name: 'Quantidade de suplemento por animal (kg/dia)',
-      value: Math.round(resultado2).toLocaleString('pt-BR'),
-    },
-  ];
+  
+  let resultadoMedio = resultado / quantidadeDeAnimais;
+
+  if(resultadoMedio > consumoNRC) {
+    resultado = consumoNRC * quantidadeDeAnimais
+    resultadoMedio = consumoNRC
+  }
+  
+  let resultados = []
+  if(resultadoMedio <= 0) {
+    resultados.push({ name: 'Não há necessidade de suplementar os animais' })
+  }else {
+    resultados.push({ name: 'Quantidade de suplemento para o lote de animais (kg/dia)', value: resultado.toFixed(1) })
+    resultados.push({ name: 'Quantidade de suplemento por animal (kg/dia)', value: resultadoMedio.toFixed(1) })
+  }
 
   console.log(resultados);
 
   return resultados;
 }
-/* fornecerSuplementoRotativo({
-  dataDeInicio: Date.now(),
-  peso: 500,
-  quantidadeDeAnimais: 30,
-  areaDoPotreiro: 8,
-  alturaDoPasto: 30,
-  numeroDePiquetes: 5,
-  diasDePermanencia: 20,
-  tipoDePasto: "campoNativo",
-  categoriaAnimal: "bovinoCorte",
-  tipoDeAnimal: "novilha",
-  diasDeGestacao: 0,
-  semanasDeLactacao: 0,
-  quantidadeDeLeite: 0,
-}); */
 
 export function definirPeriodoDeOcupacaoRotativo({
   dataDeInicio,
@@ -723,44 +639,30 @@ export function definirPeriodoDeOcupacaoRotativo({
     silagem,
   });
 
-  let cons = consumoNRC - quantSuplemento
-  if(cons == 0) cons = 1
+  let _consumo = consumoNRC - quantSuplemento
   const resultado =
     ((alturaDoPasto * relacaoMassaAltura -
       alturaOtima * 0.6 * relacaoMassaAltura) *
       (areaDoPotreiro / numeroDePiquetes) +
       taxaDeAcumulo * (areaDoPotreiro / numeroDePiquetes)) /
-    ((cons) * quantidadeDeAnimais);
+    (_consumo * quantidadeDeAnimais);
 
   let resultados = []
-  if(resultado < 1) {
-    resultados.push({ name: 'Não é possível colocar os animais na área. Aguarde até que a pastagem atinja altura pré-pastejo adequada.' })
-  } else resultados.push({
-    name: 'Período de ocupação (dias)',
-    value: Math.round(resultado).toLocaleString('pt-BR'),
-  });
+  if(_consumo > 0) {
+    if(resultado < 1) {
+      resultados.push({ name: 'Não é possível colocar os animais na área. Aguarde até que a pastagem atinja altura pré-pastejo adequada.' })
+    } else resultados.push({
+      name: 'Período de ocupação (dias)',
+      value: resultado.toFixed(1),
+    });
+  }else {
+    resultados.push({ name: 'A quantidade de suplemento fornecida supera o consumo dos animais. Recomenda-se reduzir a quantidade de suplemento fornecida.' })
+  }
 
   console.log(resultados);
 
   return resultados;
 }
-/* definirPeriodoDeOcupacaoRotativo({
-  dataDeInicio: Date.now(),
-  peso: 500,
-  quantidadeDeAnimais: 30,
-  areaDoPotreiro: 5,
-  alturaDoPasto: 40,
-  numeroDePiquetes: 5,
-  tipoDePasto: "campoNativo",
-  categoriaAnimal: "bovinoCorte",
-  tipoDeAnimal: "novilha",
-  diasDeGestacao: 0,
-  semanasDeLactacao: 0,
-  quantidadeDeLeite: 0,
-  racao: 0,
-  feno: 0,
-  silagem: 0,
-}); */
 
 export function calcularNumeroDePiquetes({
   dataDeInicio,
@@ -799,27 +701,23 @@ export function calcularNumeroDePiquetes({
     silagem,
   });
 
-  let cons = consumoNRC - quantSuplemento
-  if(cons == 0) cons = 1
+  let _consumo = consumoNRC - quantSuplemento
   const resultado1 = ( 
     (( alturaOtima* 0.4 / (media / relacaoMassaAltura)) + 1) + 
-    (areaDoPotreiro / (((cons) * quantidadeDeAnimais)/(((alturaOtima*0.4)*relacaoMassaAltura)+media)))
+    (areaDoPotreiro / ((_consumo * quantidadeDeAnimais)/(((alturaOtima*0.4)*relacaoMassaAltura)+media)))
   )/2
   const resultado2 = Math.round(
     resultado1 *
-    (((cons) * quantidadeDeAnimais) /
+    ((_consumo * quantidadeDeAnimais) /
       (alturaOtima * 0.4 * relacaoMassaAltura + media)));
   
-  let resultados = [
-    {
-      name: 'Número de piquetes',
-      value: Math.round(resultado1).toLocaleString('pt-BR'),
-    },
-    {
-      name: 'Área do potreiro adequada (ha) para manter o lote de animais',
-      value: resultado2.toFixed(1)
-    },
-  ];
+  let resultados = []
+  if(_consumo > 0) {
+    resultados.push({ name: 'Número de piquetes', value: Math.round(resultado1).toLocaleString('pt-BR') })
+    resultados.push({ name: 'Área do potreiro adequada (ha) para manter o lote de animais', value: resultado2.toFixed(1) })
+  }else {
+    resultados.push({ name: 'A quantidade de suplemento fornecida supera o consumo dos animais. Recomenda-se reduzir a quantidade de suplemento fornecida.' })
+  }
   
   if(resultado2 == areaDoPotreiro) {
     resultados.push({name: 'A área do potreiro está adequada para manter o lote de animais.'})
@@ -833,19 +731,3 @@ export function calcularNumeroDePiquetes({
 
   return resultados;
 }
-/* calcularNumeroDePiquetes({
-  dataDeInicio: Date.now(),
-  tipoDePasto: "campoNativo",
-  peso: 500,
-  quantidadeDeAnimais: 30,
-  numeroDePiquetes: 5,
-  tipoDeAnimal: "novilha",
-  categoriaAnimal: "bovinoCorte",
-  diasDeGestacao: 0,
-  semanasDeLactacao: 0,
-  quantidadeDeLeite: 0,
-  racao: 0,
-  feno: 0,
-  silagem: 0,
-});
- */

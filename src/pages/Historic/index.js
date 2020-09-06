@@ -228,6 +228,12 @@ const Historic = ({navigation}) => {
     return `${date.getDate()} de ${mouthArray[date.getMonth()]}`;
   }
 
+  function formatTime(str) {
+    const date = new Date(str);
+
+    return `${date.getHours()}:${date.getMinutes() < 10 ? '0':''}${date.getMinutes()}`
+  }
+
   return (
     <>
       <Container
@@ -246,12 +252,12 @@ const Historic = ({navigation}) => {
           <Title size={24} value="Histórico" />
           <Avatar size={38} action={() => navigation.navigate('Perfil')} />
         </Header>
-        <InputPickerContainer>
+        {/* <InputPickerContainer>
           <InputPicker>
             <InputFieldItem label="Filtrar por data" value={null} />
           </InputPicker>
           <InputPickerIcon name="chevron-down" size={24} color="#d69d2b" />
-        </InputPickerContainer>
+        </InputPickerContainer> */}
         {loadingFirst ? (
           <Skeleton />
         ) : (
@@ -327,11 +333,13 @@ const Historic = ({navigation}) => {
                       <ResultBox>
                         <ResultTextTitle>Resultado:</ResultTextTitle>
                         <ResultTextContent>
-                          {historicItem.results[0].value}
+                          {historicItem.results.map(
+                            result => `${result.value} `
+                          )}
                         </ResultTextContent>
                       </ResultBox>
                     </MiddleSection>
-                    <DateItem>{formateDate(historicItem.created_at)}</DateItem>
+                    <DateItem>{formatTime(historicItem.created_at)}</DateItem>
                   </Item>
                 ))}
               </Group>
@@ -358,7 +366,6 @@ const Historic = ({navigation}) => {
               {modalConfig.item.config && modalConfig.item.config.calc.value}
             </ModalContainerTitle>
             <ModalContainerDateTime>
-              {formateDate(modalConfig.item.created_at)}
             </ModalContainerDateTime>
             <ModalContainerTitle
               size={14}
@@ -436,14 +443,7 @@ const Historic = ({navigation}) => {
             <RowItem>
               <Label>Data da avaliação:</Label>
               <Value>
-                {modalConfig.item.inputs &&
-                  new Date(modalConfig.item.created_at).getDay()}
-                /
-                {modalConfig.item.inputs &&
-                  new Date(modalConfig.item.created_at).getMonth()}
-                /
-                {modalConfig.item.inputs &&
-                  new Date(modalConfig.item.created_at).getFullYear()}
+                {formateDate(modalConfig.item.created_at)}
               </Value>
             </RowItem>
 
@@ -454,7 +454,9 @@ const Historic = ({navigation}) => {
                     item.key === 'nomeDoPotreiro') && (
                     <RowItem>
                       <Label>{item.name}:</Label>
-                      <Value>{item.value == '0' ? item.value : '-'}</Value>
+                      <Value>{item.value == '0' ? '-' : 
+                        (item.value)
+                      }</Value>
                     </RowItem>
                   ),
               )}

@@ -28,9 +28,7 @@ const help = {
 
 const activities = [
   {value: 'Consultor(a)', label: 'Consultor(a) técnico(a)'},
-  {value: 'Técnico(a)', label: 'Técnico(a)'},
-  {value: 'Produtor(a)', label: 'Produtor(a)'},
-  {value: 'Rural', label: 'Rural'},
+  {value: 'Produtor(a)', label: 'Produtor(a) rural'},
   {value: 'Pesquisador(a)', label: 'Pesquisador(a)'},
   {value: 'Estudante', label: 'Estudante'},
   {value: 'Outro', label: 'Outro'},
@@ -80,9 +78,8 @@ export default function Register({navigation}) {
         email: Yup.string()
           .email('Insira um e-mail válido.')
           .required('Um e-mail é obrigatório'),
-        property_size: Yup.string().required(
-          'Tamanho da propriedade é obrigatório',
-        ),
+        property_size: Yup.string()
+          .required('Tamanho da propriedade é obrigatório'),
         phone: Yup.string()
           .required('Telefone é obrigatório')
           .min(10, 'Telefone é obrigatório')
@@ -179,7 +176,7 @@ export default function Register({navigation}) {
           <Input
             name="property_size"
             label="Área destinada a pastagem (ha)"
-            placeholder="25 hectares"
+            placeholder="Área (ha)"
             keyboardType="numeric"
             returnKeyType="next"
             blurOnSubmit={true}>
