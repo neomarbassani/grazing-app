@@ -47,10 +47,7 @@ const AnimalInfo = ({navigation, route}) => {
         });
       }
 
-      if (
-        animal.name === 'bovinoLeite' &&
-        animal.value === 'vacaLactacao'
-      ) {
+      if (animal.name === 'bovinoLeite' && animal.value === 'vacaLactacao') {
         schema = Yup.object().shape({
           peso: Yup.string().required('Insira o peso médio dos animais'),
           semanasDeLactacao: Yup.string().required(
@@ -62,10 +59,7 @@ const AnimalInfo = ({navigation, route}) => {
         });
       }
 
-      if (
-        animal.name === 'bovinoLeite' &&
-        animal.value === 'novilhaLeite'
-      ) {
+      if (animal.name === 'bovinoLeite' && animal.value === 'novilhaLeite') {
         schema = Yup.object().shape({
           peso: Yup.string().required('Insira o peso médio dos animais'),
           diasDeGestacao: Yup.string().required(
@@ -112,6 +106,7 @@ const AnimalInfo = ({navigation, route}) => {
       }
     }
   }
+
   return (
     <Container
       source={backgroundLogo}
@@ -132,7 +127,7 @@ const AnimalInfo = ({navigation, route}) => {
             placeholder="(kg PV)">
             <HelpButton data={help.peso} />
           </Input>
-          
+
           <SliderInput
             label="Escore de condição corporal"
             value={score}
@@ -142,7 +137,7 @@ const AnimalInfo = ({navigation, route}) => {
             onValueChange={value => {
               setScore(value);
             }}
-            minVal={1}
+            minVal={0}
             maxVal={5}>
             <HelpButton data={help.escore} />
           </SliderInput>

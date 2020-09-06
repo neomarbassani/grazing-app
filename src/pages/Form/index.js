@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useRef, useState} from 'react';
 import {View, Dimensions} from 'react-native';
@@ -50,9 +51,9 @@ import tifton from '../../assets/tiftonFundo.jpg';
 import help from './data';
 
 const FormContainer = ({navigation, route}) => {
-  const [alturaDoPasto, setAlturaDoPasto] = useState(0);
-  const [tempoDePermanencia, setTempoDePermanencia] = useState(0);
-  const [areaDoPotreiro, setAreaDoPotreiro] = useState(0);
+  const [alturaDoPasto, setAlturaDoPasto] = useState(1);
+  const [tempoDePermanencia, setTempoDePermanencia] = useState(1);
+  const [areaDoPotreiro, setAreaDoPotreiro] = useState(1);
   const [suplementacaoAdicional, setSuplementacaoAdicional] = useState({
     label: 'Não',
     value: 0,
@@ -132,7 +133,9 @@ const FormContainer = ({navigation, route}) => {
       ) {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.')
+          dataDeInicio: Yup.date('Insira uma data válida').required(
+            'Insira a data de inicio.',
+          ),
         });
 
         await schema.validate(data, {
@@ -194,8 +197,12 @@ const FormContainer = ({navigation, route}) => {
       ) {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.',),
-          numeroDePiquetes: Yup.string().required('Insira o número de piquetes.').notOneOf(['1'], 'Mínimo 2 piquetes')
+          dataDeInicio: Yup.date('Insira uma data válida').required(
+            'Insira a data de inicio.',
+          ),
+          numeroDePiquetes: Yup.string()
+            .required('Insira o número de piquetes.')
+            .notOneOf(['1'], 'Mínimo 2 piquetes'),
         });
 
         await schema.validate(data, {
@@ -427,9 +434,13 @@ const FormContainer = ({navigation, route}) => {
       ) {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.'),
-          quantidadeDeAnimais: Yup.string().required('Insira a quantidade de animais.'),
-          alturaDoPasto: Yup.number().required('Informe a altura do pasto.')
+          dataDeInicio: Yup.date('Insira uma data válida').required(
+            'Insira a data de inicio.',
+          ),
+          quantidadeDeAnimais: Yup.string().required(
+            'Insira a quantidade de animais.',
+          ),
+          alturaDoPasto: Yup.number().required('Informe a altura do pasto.'),
         });
 
         await schema.validate(data, {
@@ -522,9 +533,15 @@ const FormContainer = ({navigation, route}) => {
       ) {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.',),
-          quantidadeDeAnimais: Yup.string().required('Insira a quantidade de animais.',),
-          numeroDePiquetes: Yup.string().required('Insira o número de piquetes.').notOneOf(['1'], 'Mínimo 2 piquetes')
+          dataDeInicio: Yup.date('Insira uma data válida').required(
+            'Insira a data de inicio.',
+          ),
+          quantidadeDeAnimais: Yup.string().required(
+            'Insira a quantidade de animais.',
+          ),
+          numeroDePiquetes: Yup.string()
+            .required('Insira o número de piquetes.')
+            .notOneOf(['1'], 'Mínimo 2 piquetes'),
         });
 
         await schema.validate(data, {
@@ -689,8 +706,12 @@ const FormContainer = ({navigation, route}) => {
       if (calc.value === 'Definir período de ocupação') {
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
-          dataDeInicio: Yup.date('Insira uma data válida').required('Insira a data de inicio.'),
-          numeroDePiquetes: Yup.string().required('Insira o número de piquetes.').notOneOf(['1'], 'Mínimo 2 piquetes')
+          dataDeInicio: Yup.date('Insira uma data válida').required(
+            'Insira a data de inicio.',
+          ),
+          numeroDePiquetes: Yup.string()
+            .required('Insira o número de piquetes.')
+            .notOneOf(['1'], 'Mínimo 2 piquetes'),
         });
 
         await schema.validate(data, {
@@ -932,7 +953,7 @@ const FormContainer = ({navigation, route}) => {
                   step={0.1}
                   maxVal={parseInt(user.property_size) || 5}
                   unit="ha">
-                    <HelpButton data={help.areaDoPotreiro} />
+                  <HelpButton data={help.areaDoPotreiro} />
                 </SliderInput>
                 <SliderInput
                   label="Período de ocupação"
@@ -943,9 +964,15 @@ const FormContainer = ({navigation, route}) => {
                     setTempoDePermanencia(value);
                   }}
                   minVal={1}
-                  maxVal={(calc.name === 'Pastoreio rotativo' ? 10:90)}
+                  maxVal={calc.name === 'Pastoreio rotativo' ? 10 : 90}
                   unit="dias">
-                  <HelpButton data={calc.name === 'Pastoreio rotativo' ? help.periodoOcupacaoR:help.periodoOcupacaoC} />
+                  <HelpButton
+                    data={
+                      calc.name === 'Pastoreio rotativo'
+                        ? help.periodoOcupacaoR
+                        : help.periodoOcupacaoC
+                    }
+                  />
                 </SliderInput>
               </Form>
             )}
@@ -1074,13 +1101,15 @@ const FormContainer = ({navigation, route}) => {
                     unit="cm">
                     <HelpButton data={help.alturaPasto} />
                   </SliderInput>
-                    
+
                   <SliderInput
                     label="Período de ocupação"
                     value={tempoDePermanencia}
                     color="#fff"
                     mt={10}
-                    onValueChange={value => { setTempoDePermanencia(value); }}
+                    onValueChange={value => {
+                      setTempoDePermanencia(value);
+                    }}
                     minVal={1}
                     maxVal={90}
                     unit="dias">

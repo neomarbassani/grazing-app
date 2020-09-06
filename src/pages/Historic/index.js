@@ -184,6 +184,7 @@ const Historic = ({navigation}) => {
         setLoading(false);
       }
     } catch (error) {
+      console.log(error);
       setLoadingFirst(false);
       setLoading(false);
 
@@ -222,7 +223,6 @@ const Historic = ({navigation}) => {
       'Dezembro',
     ];
 
-    
     const date = new Date(str);
 
     return `${date.getDate()} de ${mouthArray[date.getMonth()]}`;
@@ -231,7 +231,9 @@ const Historic = ({navigation}) => {
   function formatTime(str) {
     const date = new Date(str);
 
-    return `${date.getHours()}:${date.getMinutes() < 10 ? '0':''}${date.getMinutes()}`
+    return `${date.getHours()}:${
+      date.getMinutes() < 10 ? '0' : ''
+    }${date.getMinutes()}`;
   }
 
   return (
@@ -310,7 +312,8 @@ const Historic = ({navigation}) => {
                         source={
                           historicItem.config.animal.value === 'Terneiro(a)'
                             ? terneiro
-                            : historicItem.config.animal.value === 'Vaca em lactação'
+                            : historicItem.config.animal.value ===
+                              'Vaca em lactação'
                             ? vacaemlactacao
                             : historicItem.config.animal.value === 'Novilho(a)'
                             ? novilha
@@ -334,7 +337,7 @@ const Historic = ({navigation}) => {
                         <ResultTextTitle>Resultado:</ResultTextTitle>
                         <ResultTextContent>
                           {historicItem.results.map(
-                            result => `${result.value} `
+                            result => `${result.value} `,
                           )}
                         </ResultTextContent>
                       </ResultBox>
@@ -365,8 +368,7 @@ const Historic = ({navigation}) => {
             <ModalContainerTitle size={19}>
               {modalConfig.item.config && modalConfig.item.config.calc.value}
             </ModalContainerTitle>
-            <ModalContainerDateTime>
-            </ModalContainerDateTime>
+            <ModalContainerDateTime />
             <ModalContainerTitle
               size={14}
               alignSelf="flex-start"
@@ -393,7 +395,7 @@ const Historic = ({navigation}) => {
                 {modalConfig.item.config && modalConfig.item.config.animal.name}
               </Value>
             </RowItem>
-            
+
             <Separator />
 
             <ModalContainerTitle
@@ -442,9 +444,7 @@ const Historic = ({navigation}) => {
 
             <RowItem>
               <Label>Data da avaliação:</Label>
-              <Value>
-                {formateDate(modalConfig.item.created_at)}
-              </Value>
+              <Value>{formateDate(modalConfig.item.created_at)}</Value>
             </RowItem>
 
             {modalConfig.item.inputs &&
@@ -454,9 +454,7 @@ const Historic = ({navigation}) => {
                     item.key === 'nomeDoPotreiro') && (
                     <RowItem>
                       <Label>{item.name}:</Label>
-                      <Value>{item.value == '0' ? '-' : 
-                        (item.value)
-                      }</Value>
+                      <Value>{item.value == '0' ? '-' : item.value}</Value>
                     </RowItem>
                   ),
               )}

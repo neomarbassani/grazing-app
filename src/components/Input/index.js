@@ -35,7 +35,7 @@ export default function Input({
 
   const {fieldName, registerField, defaultValue, error} = useField(name);
 
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState();
   const [mask, setMask] = useState(defaultValue);
 
   const [show, setShow] = useState(false);
@@ -67,7 +67,7 @@ export default function Input({
         }
         return ref.value || '';
       },
-    })
+    });
   }, [fieldName, mask, maskPhone, registerField]);
 
   return (
@@ -79,14 +79,10 @@ export default function Input({
             <>
               <InputFieldDate
                 ref={inputRef}
-                defaultValue={defaultValue}
                 placeholderTextColor="#888899"
                 editable={false}
                 pointerEvents="none"
-                onTouchStart={() => {
-                  setShow(true);
-                }}
-                value={moment(date).format('DD-MM-YYYY')}
+                value={date && moment(date).format('DD-MM-YYYY')}
                 {...rest}
               />
               {typeIcon === 'datetimepicker' && (
@@ -152,10 +148,11 @@ export default function Input({
 
           {show && (
             <DateTimePicker
-              value={date}
+              value={date || new Date()}
               display="calendar"
               onChange={(event, selectedDate) => {
-                const currentDate = selectedDate || date;
+                const currentDate = selectedDate;
+                console.log(currentDate);
                 setDate(currentDate);
                 if (inputRef.current) {
                   inputRef.current.value = currentDate;

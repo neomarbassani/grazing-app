@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { View } from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 import {
   Container,
   Label,
   SliderComponent,
   RangeBox,
-  RangeValue
+  RangeValue,
 } from './styles';
+import {InputError} from '../Input/styles';
 
 const SliderInput = ({
   label,
@@ -25,20 +26,31 @@ const SliderInput = ({
   ...rest
 }) => {
   return (
-    <Container mt={mt} mb={mb}>    
+    <Container mt={mt} mb={mb}>
       <RangeBox>
         <Label color={color}>
-          {label}: {(step < 1 ? value.toFixed(1) : value)} {unit}
+          {label}: {step < 1 ? value.toFixed(1) : value} {unit}
         </Label>
         <View style={{marginRight: 10}}>{children && children}</View>
       </RangeBox>
-      
+
       <SliderComponent
         minimumTrackTintColor="#774D37"
         maximumTrackTintColor="#CCCCCC"
         minimumValue={minVal}
         maximumValue={maxVal}
-        thumbTintColor="#D69D00" 
+        value={value}
+        trackStyle={{height: 5, borderRadius: 1}}
+        thumbStyle={{
+          width: 30,
+          height: 30,
+          borderRadius: 30 / 2,
+          shadowColor: 'black',
+          shadowOffset: {width: 0, height: 2},
+          shadowRadius: 2,
+          shadowOpacity: 0.35,
+        }}
+        thumbTintColor="#D69D00"
         step={step ? step : 1}
         {...rest}
       />
