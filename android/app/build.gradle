@@ -135,8 +135,8 @@ android {
         applicationId "com.agenciarazzo.grazing"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.4.2"
+        versionCode 10
+        versionName "1.4.5"
         multiDexEnabled true
     }
     splits {
