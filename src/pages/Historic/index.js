@@ -236,6 +236,18 @@ const Historic = ({navigation}) => {
     }${date.getMinutes()}`;
   }
 
+  const isInt = value => {
+    console.log(typeof parseInt(value));
+    if (isNaN(parseInt(value))) {
+      return value;
+    }
+    if (parseInt(value).toString() === value) {
+      return value;
+    } else {
+      return parseFloat(value).toFixed(2);
+    }
+  };
+
   return (
     <>
       <Container
@@ -454,7 +466,9 @@ const Historic = ({navigation}) => {
                     item.key === 'nomeDoPotreiro') && (
                     <RowItem>
                       <Label>{item.name}:</Label>
-                      <Value>{item.value == '0' ? '-' : item.value}</Value>
+                      <Value>
+                        {item.value == '0' ? '-' : isInt(item.value)}
+                      </Value>
                     </RowItem>
                   ),
               )}
