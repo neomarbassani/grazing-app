@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import Snackbar from 'react-native-snackbar';
 
 import CalcHistoryActions from '../../store/ducks/calcHistory';
@@ -13,20 +14,22 @@ import Button from '../../components/Button';
 import logo from '../../assets/logoResults.png';
 
 import {Description, ResultText, Title, Logo, Content} from './styles';
-import { View } from 'react-native';
-import { useIsFocused } from '@react-navigation/native';
+import {View} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
 
 const Result = ({navigation, route}) => {
   const calcState = route.params;
 
   const dispatch = useDispatch();
   const isActive = useIsFocused();
+  const [sended, setSended] = useState(false);
 
   useEffect(() => {
-    if(!isActive) return
+    if (!isActive || sended) return;
     
     dispatch(CalcHistoryActions.addCalcToHistoryRequest(calcState));
-  }, [isActive])
+    setSended(true);
+  }, [isActive]);
 
   return (
     <Container results>
@@ -38,15 +41,19 @@ const Result = ({navigation, route}) => {
         {calcState.results.map(result => (
           <>
             <Description>{result.name}</Description>
-            <ResultText>
-              {result.value}
-            </ResultText>
+            <ResultText>{result.value}</ResultText>
           </>
         ))}
-        <View style={{
-          marginBottom: 40
-        }}>
-          <Button content="Voltar ao início" onPress={() => {navigation.navigate('Home')}} />
+        <View
+          style={{
+            marginBottom: 40,
+          }}>
+          <Button
+            content="Voltar ao início"
+            onPress={() => {
+              navigation.navigate('Home');
+            }}
+          />
         </View>
       </Content>
     </Container>

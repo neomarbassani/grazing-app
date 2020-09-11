@@ -35,7 +35,7 @@ export default function Input({
 
   const {fieldName, registerField, defaultValue, error} = useField(name);
 
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(null);
   const [mask, setMask] = useState(defaultValue);
 
   const [show, setShow] = useState(false);
@@ -82,8 +82,7 @@ export default function Input({
                 placeholderTextColor="#888899"
                 editable={false}
                 pointerEvents="none"
-                value={date && moment(date).format('DD-MM-YYYY')}
-                {...rest}
+                value={date ? moment(date).format('DD-MM-YYYY') : null}
               />
               {typeIcon === 'datetimepicker' && (
                 <ToogleVisility onPress={() => setShow(true)}>
@@ -151,13 +150,14 @@ export default function Input({
               value={date || new Date()}
               display="calendar"
               onChange={(event, selectedDate) => {
+                setShow(false);
+
                 const currentDate = selectedDate;
                 console.log(currentDate);
                 setDate(currentDate);
                 if (inputRef.current) {
                   inputRef.current.value = currentDate;
                 }
-                setShow(false);
               }}
             />
           )}

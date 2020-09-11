@@ -172,6 +172,7 @@ const AnimalInfo = ({navigation, route}) => {
         <Button
           content="Próximo"
           mt="20px"
+          mb="30px"
           color="#D69D2B"
           onPress={() => formRef.current.submitForm()}
           disabled={score === 0}
