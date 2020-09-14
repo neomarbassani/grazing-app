@@ -114,6 +114,16 @@ const FormContainer = ({navigation, route}) => {
 
       const mouth = moment(data.dataDeInicio).format('M');
 
+      const schema = Yup.object().shape({
+        dataDeInicio: Yup.date('Insira uma data válida').required(
+          'Insira a data de inicio.',
+        ).typeError('Insira uma data válida'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      }); 
+
       const checkIfAnyValueExistsForPastureInfo =
         taxaDeAcumuloPorEspecie[pasture.value][mouth];
 
@@ -432,6 +442,7 @@ const FormContainer = ({navigation, route}) => {
         calc.name === 'Pastoreio contínuo' &&
         calc.value === 'Fornecer suplemento'
       ) {
+        data.alturaDoPasto = alturaDoPasto
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
           dataDeInicio: Yup.date('Insira uma data válida').required(
@@ -445,7 +456,7 @@ const FormContainer = ({navigation, route}) => {
 
         await schema.validate(data, {
           abortEarly: false,
-        });
+        }); 
 
         const results = fornecerSuplementoContinuo({
           areaDoPotreiro,
@@ -801,6 +812,7 @@ const FormContainer = ({navigation, route}) => {
 
       navigation.navigate('Result');
     } catch (err) {
+      console.log(err)
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {
@@ -866,6 +878,8 @@ const FormContainer = ({navigation, route}) => {
             flex: 1,
             width: '100%',
             paddingHorizontal: 15,
+            marginBottom: 40
+
           }}>
           <CalcRoutesTop items={items} color="#fff" />
           <SubTitle
