@@ -443,9 +443,9 @@ export function tamanhoPotreiroRotativo({
 
   let resultados = []
   if(_consumo > 0) {
-    resultados.push({ name: 'Número de animais no potreiro', value: Math.round(resultado).toLocaleString('pt-BR') })
+    resultados.push({ name: 'Área total do potreiro (ha)', value: resultado.toFixed(1) })
   }else {
-    resultados.push({ name: 'A quantidade de suplemento fornecida supera o consumo dos animais. Recomenda-se reduzir a quantidade de suplemento fornecida.' })
+    resultados.push({ name: 'A quantidade de suplemento fornecida supera o consumo dos animais. Recomenda-se reduzir a quantidade de suplemento fornecida e refazer o cálculo.' })
   }
 
   console.log(resultados);
@@ -649,11 +649,11 @@ export function definirPeriodoDeOcupacaoRotativo({
 
   let resultados = []
   if(_consumo > 0) {
-    if(resultado < 1) {
+    if(resultado < 0.3) {
       resultados.push({ name: 'Não é possível colocar os animais na área. Aguarde até que a pastagem atinja altura pré-pastejo adequada.' })
     } else resultados.push({
       name: 'Período de ocupação (dias)',
-      value: resultado.toFixed(1),
+      value: (Math.round(resultado * 2) / 2).toFixed(1),
     });
   }else {
     resultados.push({ name: 'A quantidade de suplemento fornecida supera o consumo dos animais. Recomenda-se reduzir a quantidade de suplemento fornecida.' })
