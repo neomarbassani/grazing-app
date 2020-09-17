@@ -17,7 +17,7 @@ export default [
   {
     title: 'Calcular número de piquetes',
     content:
-      ' Determina o número de subdivisões (faixas) no potreiro, no método de pastoreio rotativo',
+      ' Determina o número de subdivisões (faixas) no potreiro, no método de pastoreio rotativo. Recomenda-se, PREVIAMENTE, dimensionar a área do potreiro',
   },
   {
     title: 'Definir período de ocupação',

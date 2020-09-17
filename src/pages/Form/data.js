@@ -13,8 +13,7 @@ export default {
   },
   numeroPiquetes: {
     title: 'Número de piquetes',
-    content:
-      'Número de subdivisões, ou seja, o número de faixas no potreiro que compõe o método de pastoreio rotativo.',
+    content: 'Número de subdivisões, ou seja, o número de faixas no potreiro que compõe o método de pastoreio rotativo.',
   },
   periodoOcupacaoC: {
     title: 'Período de ocupação',
