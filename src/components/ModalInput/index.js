@@ -78,7 +78,7 @@ const ModalInput = ({children, name, value, minValue, maxValue, onChange}) => {
               blurOnSubmit={false}
             />
             <Button
-              content="Finalizar"
+              content="Alterar"
               color="#D69D2B"
               onPress={() => formRef.current.submitForm()}
             />

@@ -23,7 +23,7 @@ import help from './data';
 import ModalInput from '../../components/ModalInput';
 
 const AnimalInfo = ({navigation, route}) => {
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(1);
 
   const {calc, animal} = route.params;
 
@@ -131,7 +131,7 @@ const AnimalInfo = ({navigation, route}) => {
 
           <ModalInput
             name="Escore de condição corporal"
-            minValue={0}
+            minValue={1}
             maxValue={5}
             value={score}
             onChange={setScore}>
@@ -142,7 +142,7 @@ const AnimalInfo = ({navigation, route}) => {
               step={0.5}
               mt={10}
               onValueChange={value => setScore(value)}
-              minVal={0}
+              minVal={1}
               maxVal={5}>
               <HelpButton data={help.escore} />
             </SliderInput>
