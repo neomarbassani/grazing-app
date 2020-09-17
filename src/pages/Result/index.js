@@ -26,9 +26,11 @@ const Result = ({navigation, route}) => {
 
   useEffect(() => {
     if (!isActive || sended) return;
-    
-    dispatch(CalcHistoryActions.addCalcToHistoryRequest(calcState));
-    setSended(true);
+    else {
+      dispatch(CalcHistoryActions.addCalcToHistoryRequest(calcState));
+      setSended(true);
+    }
+    return () => setSended(false);
   }, [isActive]);
 
   return (

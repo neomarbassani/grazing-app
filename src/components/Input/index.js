@@ -23,6 +23,7 @@ export default function Input({
   mb,
   maskType,
   maskPhone,
+  maskMoney,
   typeIcon,
   textarea,
   color,
@@ -58,8 +59,12 @@ export default function Input({
         ref.clear();
       },
       setValue(ref, value) {
-        ref.setNativeProps({text: value});
-        inputRef.current.value = value;
+        if (!maskMoney) {
+          ref.setNativeProps({text: value});
+          inputRef.current.value = value;
+        } else {
+          setMask(value);
+        }
       },
       getValue(ref) {
         if (maskPhone) {
@@ -90,26 +95,53 @@ export default function Input({
                 </ToogleVisility>
               )}
             </>
-          ) : maskPhone ? (
-            <InputFieldMask
-              ref={inputRef}
-              defaultValue={defaultValue}
-              value={mask}
-              keyboardType="numeric"
-              type={'cel-phone'}
-              options={{
-                maskType: 'BRL',
-                withDDD: true,
-                dddMask: '(99) ',
-              }}
-              onChangeText={value => {
-                setMask(value);
-                if (inputRef.current) {
-                  inputRef.current.value = value;
-                }
-              }}
-              {...rest}
-            />
+          ) : maskPhone || maskMoney ? (
+            <>
+              {maskPhone && (
+                <InputFieldMask
+                  ref={inputRef}
+                  defaultValue={defaultValue}
+                  value={mask}
+                  keyboardType="numeric"
+                  type={'cel-phone'}
+                  options={{
+                    maskType: 'BRL',
+                    withDDD: true,
+                    dddMask: '(99) ',
+                  }}
+                  onChangeText={value => {
+                    setMask(value);
+                    if (inputRef.current) {
+                      inputRef.current.value = value;
+                    }
+                  }}
+                  {...rest}
+                />
+              )}
+              {maskMoney && (
+                <InputFieldMask
+                  ref={inputRef}
+                  defaultValue={defaultValue}
+                  value={mask}
+                  keyboardType="numeric"
+                  type={'money'}
+                  options={{
+                    precision: 2,
+                    separator: '.',
+                    delimiter: '.',
+                    unit: '',
+                    suffixUnit: '',
+                  }}
+                  onChangeText={value => {
+                    setMask(value);
+                    if (inputRef.current) {
+                      inputRef.current.value = value;
+                    }
+                  }}
+                  {...rest}
+                />
+              )}
+            </>
           ) : (
             <>
               <InputField

@@ -49,6 +49,7 @@ import sudao from '../../assets/sudaoFundo.jpg';
 import tifton from '../../assets/tiftonFundo.jpg';
 
 import help from './data';
+import ModalInput from '../../components/ModalInput';
 
 const FormContainer = ({navigation, route}) => {
   const [alturaDoPasto, setAlturaDoPasto] = useState(1);
@@ -115,14 +116,14 @@ const FormContainer = ({navigation, route}) => {
       const mouth = moment(data.dataDeInicio).format('M');
 
       const schema = Yup.object().shape({
-        dataDeInicio: Yup.date('Insira uma data válida').required(
-          'Insira a data de inicio.',
-        ).typeError('Insira uma data válida'),
+        dataDeInicio: Yup.date('Insira uma data válida')
+          .required('Insira a data de inicio.')
+          .typeError('Insira uma data válida'),
       });
 
       await schema.validate(data, {
         abortEarly: false,
-      }); 
+      });
 
       const checkIfAnyValueExistsForPastureInfo =
         taxaDeAcumuloPorEspecie[pasture.value][mouth];
@@ -181,17 +182,17 @@ const FormContainer = ({navigation, route}) => {
             },
             {
               name: 'Área do potreiro (ha)',
-              value: areaDoPotreiro,
+              value: parseFloat(areaDoPotreiro),
               key: 'areaDoPotreiro',
             },
             {
               name: 'Altura do pasto (cm)',
-              value: alturaDoPasto,
+              value: parseFloat(alturaDoPasto),
               key: 'alturaDoPasto',
             },
             {
               name: 'Tempo de permanência',
-              value: tempoDePermanencia,
+              value: parseFloat(tempoDePermanencia),
               key: 'tempoDePermanencia',
             },
           ],
@@ -260,7 +261,7 @@ const FormContainer = ({navigation, route}) => {
             },
             {
               name: 'Altura do pasto (cm)',
-              value: alturaDoPasto,
+              value: parseFloat(alturaDoPasto),
               key: 'alturaDoPasto',
             },
             {
@@ -285,12 +286,12 @@ const FormContainer = ({navigation, route}) => {
             },
             {
               name: 'Tempo de permanência em cada faixa',
-              value: tempoDePermanencia,
+              value: parseFloat(tempoDePermanencia),
               key: 'tempoDePermanencia',
             },
             {
               name: 'Área do potreiro (ha)',
-              value: areaDoPotreiro,
+              value: parseFloat(areaDoPotreiro),
               key: 'areaDoPotreiro',
             },
           ],
@@ -442,7 +443,7 @@ const FormContainer = ({navigation, route}) => {
         calc.name === 'Pastoreio contínuo' &&
         calc.value === 'Fornecer suplemento'
       ) {
-        data.alturaDoPasto = alturaDoPasto
+        data.alturaDoPasto = parseFloat(alturaDoPasto);
         const schema = Yup.object().shape({
           nomeDoPotreiro: Yup.string().required('Insira o nome do potreiro.'),
           dataDeInicio: Yup.date('Insira uma data válida').required(
@@ -456,7 +457,7 @@ const FormContainer = ({navigation, route}) => {
 
         await schema.validate(data, {
           abortEarly: false,
-        }); 
+        });
 
         const results = fornecerSuplementoContinuo({
           areaDoPotreiro,
@@ -498,7 +499,7 @@ const FormContainer = ({navigation, route}) => {
             },
             {
               name: 'Altura do pasto (cm)',
-              value: alturaDoPasto,
+              value: parseFloat(alturaDoPasto),
               key: 'alturaDoPasto',
             },
             {
@@ -508,12 +509,12 @@ const FormContainer = ({navigation, route}) => {
             },
             {
               name: 'Tempo de permanência em cada faixa',
-              value: tempoDePermanencia,
+              value: parseFloat(tempoDePermanencia),
               key: 'tempoDePermanencia',
             },
             {
               name: 'Área do potreiro (ha)',
-              value: areaDoPotreiro,
+              value: parseFloat(areaDoPotreiro),
               key: 'areaDoPotreiro',
             },
             {
@@ -606,12 +607,12 @@ const FormContainer = ({navigation, route}) => {
             },
             {
               name: 'Área do potreiro (ha)',
-              value: areaDoPotreiro,
+              value: parseFloat(areaDoPotreiro),
               key: 'areaDoPotreiro',
             },
             {
               name: 'Altura do pasto (cm)',
-              value: alturaDoPasto,
+              value: parseFloat(alturaDoPasto),
               key: 'alturaDoPasto',
             },
             {
@@ -621,7 +622,7 @@ const FormContainer = ({navigation, route}) => {
             },
             {
               name: 'Período de ocupação',
-              value: tempoDePermanencia,
+              value: parseFloat(tempoDePermanencia),
               key: 'tempoDePermanencia',
             },
           ],
@@ -704,7 +705,7 @@ const FormContainer = ({navigation, route}) => {
             },
             {
               name: 'Área do potreiro (ha)',
-              value: areaDoPotreiro,
+              value: parseFloat(areaDoPotreiro),
               key: 'areaDoPotreiro',
             },
           ],
@@ -770,12 +771,12 @@ const FormContainer = ({navigation, route}) => {
             },
             {
               name: 'Área do potreiro (ha)',
-              value: areaDoPotreiro,
+              value: parseFloat(areaDoPotreiro),
               key: 'areaDoPotreiro',
             },
             {
               name: 'Altura do pasto (cm)',
-              value: alturaDoPasto,
+              value: parseFloat(alturaDoPasto),
               key: 'alturaDoPasto',
             },
             {
@@ -812,7 +813,7 @@ const FormContainer = ({navigation, route}) => {
 
       navigation.navigate('Result');
     } catch (err) {
-      console.log(err)
+      console.log(err);
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {
@@ -878,8 +879,7 @@ const FormContainer = ({navigation, route}) => {
             flex: 1,
             width: '100%',
             paddingHorizontal: 15,
-            marginBottom: 40
-
+            marginBottom: 40,
           }}>
           <CalcRoutesTop items={items} color="#fff" />
           <SubTitle
@@ -941,53 +941,76 @@ const FormContainer = ({navigation, route}) => {
                   </Input>
                 )}
 
-                <SliderInput
-                  label="Altura do pasto"
+                <ModalInput
+                  name="Altura do pasto"
+                  minValue={1}
+                  maxValue={maxValuesToSlider[pasture.value]}
                   value={alturaDoPasto}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setAlturaDoPasto(value);
-                  }}
-                  step={0.1}
-                  minVal={1}
-                  maxVal={maxValuesToSlider[pasture.value]}
-                  unit="cm">
-                  <HelpButton data={help.alturaPasto} />
-                </SliderInput>
-                <SliderInput
-                  label="Área do potreiro"
+                  onChange={setAlturaDoPasto}>
+                  <SliderInput
+                    label="Altura do pasto"
+                    value={parseFloat(alturaDoPasto)}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setAlturaDoPasto(value);
+                    }}
+                    step={0.1}
+                    minVal={1}
+                    maxVal={maxValuesToSlider[pasture.value]}
+                    unit="cm">
+                    <HelpButton data={help.alturaPasto} />
+                  </SliderInput>
+                </ModalInput>
+
+                <ModalInput
+                  name="Área do potreiro"
+                  minValue={1}
+                  maxValue={parseInt(user.property_size) || 5}
                   value={areaDoPotreiro}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setAreaDoPotreiro(value);
-                  }}
-                  minVal={1}
-                  step={0.1}
-                  maxVal={parseInt(user.property_size) || 5}
-                  unit="ha">
-                  <HelpButton data={help.areaDoPotreiro} />
-                </SliderInput>
-                <SliderInput
-                  label="Período de ocupação"
+                  onChange={setAreaDoPotreiro}>
+                  <SliderInput
+                    label="Área do potreiro"
+                    value={parseFloat(areaDoPotreiro)}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setAreaDoPotreiro(value);
+                    }}
+                    minVal={1}
+                    step={0.1}
+                    maxVal={parseInt(user.property_size) || 5}
+                    unit="ha">
+                    <HelpButton data={help.areaDoPotreiro} />
+                  </SliderInput>
+                </ModalInput>
+
+                <ModalInput
+                  name="Período de ocupação"
+                  minValue={1}
+                  maxValue={calc.name === 'Pastoreio rotativo' ? 10 : 90}
                   value={tempoDePermanencia}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setTempoDePermanencia(value);
-                  }}
-                  minVal={1}
-                  maxVal={calc.name === 'Pastoreio rotativo' ? 10 : 90}
-                  unit="dias">
-                  <HelpButton
-                    data={
-                      calc.name === 'Pastoreio rotativo'
-                        ? help.periodoOcupacaoR
-                        : help.periodoOcupacaoC
-                    }
-                  />
-                </SliderInput>
+                  onChange={setTempoDePermanencia}>
+                  <SliderInput
+                    label="Período de ocupação"
+                    value={parseFloat(tempoDePermanencia)}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setTempoDePermanencia(value);
+                    }}
+                    minVal={1}
+                    maxVal={calc.name === 'Pastoreio rotativo' ? 10 : 90}
+                    unit="dias">
+                    <HelpButton
+                      data={
+                        calc.name === 'Pastoreio rotativo'
+                          ? help.periodoOcupacaoR
+                          : help.periodoOcupacaoC
+                      }
+                    />
+                  </SliderInput>
+                </ModalInput>
               </Form>
             )}
 
@@ -1101,49 +1124,71 @@ const FormContainer = ({navigation, route}) => {
                     returnKeyType="done"
                     blurOnSubmit={true}
                   />
-                  <SliderInput
-                    label="Altura do pasto"
+
+                  <ModalInput
+                    name="Altura do pasto"
+                    minValue={1}
+                    maxValue={maxValuesToSlider[pasture.value]}
                     value={alturaDoPasto}
-                    color="#fff"
-                    mt={10}
-                    onValueChange={value => {
-                      setAlturaDoPasto(value);
-                    }}
-                    step={0.1}
-                    minVal={1}
-                    maxVal={maxValuesToSlider[pasture.value]}
-                    unit="cm">
-                    <HelpButton data={help.alturaPasto} />
-                  </SliderInput>
+                    onChange={setAlturaDoPasto}>
+                    <SliderInput
+                      label="Altura do pasto"
+                      value={parseFloat(alturaDoPasto)}
+                      color="#fff"
+                      mt={10}
+                      onValueChange={value => {
+                        setAlturaDoPasto(value);
+                      }}
+                      step={0.1}
+                      minVal={1}
+                      maxVal={maxValuesToSlider[pasture.value]}
+                      unit="cm">
+                      <HelpButton data={help.alturaPasto} />
+                    </SliderInput>
+                  </ModalInput>
 
-                  <SliderInput
-                    label="Período de ocupação"
+                  <ModalInput
+                    name="Período de ocupação"
+                    minValue={1}
+                    maxValue={90}
                     value={tempoDePermanencia}
-                    color="#fff"
-                    mt={10}
-                    onValueChange={value => {
-                      setTempoDePermanencia(value);
-                    }}
-                    minVal={1}
-                    maxVal={90}
-                    unit="dias">
-                    <HelpButton data={help.periodoOcupacaoC} />
-                  </SliderInput>
+                    onChange={setTempoDePermanencia}>
+                    <SliderInput
+                      label="Período de ocupação"
+                      value={parseFloat(tempoDePermanencia)}
+                      color="#fff"
+                      mt={10}
+                      onValueChange={value => {
+                        setTempoDePermanencia(value);
+                      }}
+                      minVal={1}
+                      maxVal={90}
+                      unit="dias">
+                      <HelpButton data={help.periodoOcupacaoC} />
+                    </SliderInput>
+                  </ModalInput>
 
-                  <SliderInput
-                    label="Área do potreiro"
+                  <ModalInput
+                    name="Área do potreiro"
+                    minValue={1}
+                    maxValue={parseInt(user.property_size) || 5}
                     value={areaDoPotreiro}
-                    color="#fff"
-                    mt={10}
-                    onValueChange={value => {
-                      setAreaDoPotreiro(value);
-                    }}
-                    minVal={1}
-                    step={0.1}
-                    maxVal={parseInt(user.property_size) || 5}
-                    unit="ha">
-                    <HelpButton data={help.areaDoPotreiro} />
-                  </SliderInput>
+                    onChange={setAreaDoPotreiro}>
+                    <SliderInput
+                      label="Área do potreiro"
+                      value={parseFloat(areaDoPotreiro)}
+                      color="#fff"
+                      mt={10}
+                      onValueChange={value => {
+                        setAreaDoPotreiro(value);
+                      }}
+                      minVal={1}
+                      step={0.1}
+                      maxVal={parseInt(user.property_size) || 5}
+                      unit="ha">
+                      <HelpButton data={help.areaDoPotreiro} />
+                    </SliderInput>
+                  </ModalInput>
                 </Form>
               )}
 
@@ -1174,19 +1219,28 @@ const FormContainer = ({navigation, route}) => {
                     returnKeyType="done"
                     blurOnSubmit={true}
                   />
-                  <SliderInput
-                    label="Altura do pasto (cm)"
+
+                  <ModalInput
+                    name="Altura do pasto (cm)"
+                    minValue={1}
+                    maxValue={maxValuesToSlider[pasture.value]}
                     value={alturaDoPasto}
-                    color="#fff"
-                    mt={10}
-                    onValueChange={value => {
-                      setAlturaDoPasto(value);
-                    }}
-                    step={0.1}
-                    minVal={1}
-                    maxVal={maxValuesToSlider[pasture.value]}>
-                    <HelpButton data={help.alturaPasto} />
-                  </SliderInput>
+                    onChange={setAlturaDoPasto}>
+                    <SliderInput
+                      label="Altura do pasto (cm)"
+                      value={parseFloat(alturaDoPasto)}
+                      color="#fff"
+                      mt={10}
+                      onValueChange={value => {
+                        setAlturaDoPasto(value);
+                      }}
+                      step={0.1}
+                      minVal={1}
+                      maxVal={maxValuesToSlider[pasture.value]}>
+                      <HelpButton data={help.alturaPasto} />
+                    </SliderInput>
+                  </ModalInput>
+
                   <RadioButton
                     label="Irá fornecer suplementação adicional?"
                     onPress={value => setSuplementacaoAdicional(value)}
@@ -1239,20 +1293,27 @@ const FormContainer = ({navigation, route}) => {
                     <HelpButton data={help.numeroPiquetes} />
                   </Input>
 
-                  <SliderInput
-                    label="Área do potreiro"
+                  <ModalInput
+                    name="Área do potreiro"
+                    minValue={1}
+                    maxValue={parseInt(user.property_size) || 5}
                     value={areaDoPotreiro}
-                    color="#fff"
-                    mt={10}
-                    onValueChange={value => {
-                      setAreaDoPotreiro(value);
-                    }}
-                    minVal={1}
-                    step={0.1}
-                    maxVal={parseInt(user.property_size) || 5}
-                    unit="ha">
-                    <HelpButton data={help.areaDoPotreiro} />
-                  </SliderInput>
+                    onChange={setAreaDoPotreiro}>
+                    <SliderInput
+                      label="Área do potreiro"
+                      value={parseFloat(areaDoPotreiro)}
+                      color="#fff"
+                      mt={10}
+                      onValueChange={value => {
+                        setAreaDoPotreiro(value);
+                      }}
+                      minVal={1}
+                      step={0.1}
+                      maxVal={parseInt(user.property_size) || 5}
+                      unit="ha">
+                      <HelpButton data={help.areaDoPotreiro} />
+                    </SliderInput>
+                  </ModalInput>
                 </Form>
               )}
 
@@ -1293,20 +1354,27 @@ const FormContainer = ({navigation, route}) => {
                   <HelpButton data={help.numeroAnimais} />
                 </Input>
 
-                <SliderInput
-                  label="Área do potreiro"
+                <ModalInput
+                  name="Área do potreiro"
+                  minValue={1}
+                  maxValue={parseInt(user.property_size) || 5}
                   value={areaDoPotreiro}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setAreaDoPotreiro(value);
-                  }}
-                  step={0.1}
-                  minVal={1}
-                  maxVal={parseInt(user.property_size) || 5}
-                  unit="ha">
-                  <HelpButton data={help.areaDoPotreiro} />
-                </SliderInput>
+                  onChange={setAreaDoPotreiro}>
+                  <SliderInput
+                    label="Área do potreiro"
+                    value={parseFloat(areaDoPotreiro)}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setAreaDoPotreiro(value);
+                    }}
+                    step={0.1}
+                    minVal={1}
+                    maxVal={parseInt(user.property_size) || 5}
+                    unit="ha">
+                    <HelpButton data={help.areaDoPotreiro} />
+                  </SliderInput>
+                </ModalInput>
 
                 <RadioButton
                   label="Irá fornecer suplementação adicional?"
@@ -1389,20 +1457,27 @@ const FormContainer = ({navigation, route}) => {
                   <HelpButton data={help.numeroAnimais} />
                 </Input>
 
-                <SliderInput
-                  label="Altura do pasto"
+                <ModalInput
+                  name="Altura do pasto"
+                  minValue={1}
+                  maxValue={maxValuesToSlider[pasture.value]}
                   value={alturaDoPasto}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setAlturaDoPasto(value);
-                  }}
-                  step={0.1}
-                  minVal={1}
-                  maxVal={maxValuesToSlider[pasture.value]}
-                  unit="cm">
-                  <HelpButton data={help.alturaPasto} />
-                </SliderInput>
+                  onChange={setAlturaDoPasto}>
+                  <SliderInput
+                    label="Altura do pasto"
+                    value={parseFloat(alturaDoPasto)}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setAlturaDoPasto(value);
+                    }}
+                    step={0.1}
+                    minVal={1}
+                    maxVal={maxValuesToSlider[pasture.value]}
+                    unit="cm">
+                    <HelpButton data={help.alturaPasto} />
+                  </SliderInput>
+                </ModalInput>
 
                 <Input
                   name="numeroDePiquetes"
@@ -1414,20 +1489,27 @@ const FormContainer = ({navigation, route}) => {
                   <HelpButton data={help.numeroPiquetes} />
                 </Input>
 
-                <SliderInput
-                  label="Área do potreiro"
+                <ModalInput
+                  name="Área do potreiro"
+                  minValue={1}
+                  maxValue={parseInt(user.property_size) || 5}
                   value={areaDoPotreiro}
-                  color="#fff"
-                  mt={10}
-                  onValueChange={value => {
-                    setAreaDoPotreiro(value);
-                  }}
-                  minVal={1}
-                  step={0.1}
-                  maxVal={parseInt(user.property_size) || 5}
-                  unit="ha">
-                  <HelpButton data={help.areaDoPotreiro} />
-                </SliderInput>
+                  onChange={setAreaDoPotreiro}>
+                  <SliderInput
+                    label="Área do potreiro"
+                    value={parseFloat(areaDoPotreiro)}
+                    color="#fff"
+                    mt={10}
+                    onValueChange={value => {
+                      setAreaDoPotreiro(value);
+                    }}
+                    minVal={1}
+                    step={0.1}
+                    maxVal={parseInt(user.property_size) || 5}
+                    unit="ha">
+                    <HelpButton data={help.areaDoPotreiro} />
+                  </SliderInput>
+                </ModalInput>
 
                 <RadioButton
                   label="Irá fornecer suplementação adicional?"

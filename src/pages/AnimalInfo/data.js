@@ -6,7 +6,8 @@ export default {
   },
   escore: {
     title: 'Escore de condição corporal',
-    content: 'Indica a reserva corporal dos animais a partir de uma escala numérica de 1 a 5 pontos. 1: animal muito magro; 5: animal muito gordo. Utilizar escore médio do lote.',
+    content:
+      'Indica a reserva corporal dos animais a partir de uma escala numérica de 1 a 5 pontos. 1: animal muito magro; 5: animal muito gordo. Utilizar escore médio do lote.',
   },
   diasGestacao: {
     title: 'Nº de dias de gestação',

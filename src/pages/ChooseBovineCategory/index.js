@@ -19,6 +19,7 @@ import vacaprenha from '../../assets/vacaprenha.jpeg';
 import vacaseca from '../../assets/vacaseca.jpg';
 import novilha from '../../assets/novilha.jpg';
 import novilhaleiteira from '../../assets/novilhaleiteira.jpg';
+import {ContentScroll} from '../ChooseBovineType/styles';
 
 const ChooseBovineCategory = ({navigation, route}) => {
   const {calc, animalCategory} = route.params;
@@ -34,104 +35,106 @@ const ChooseBovineCategory = ({navigation, route}) => {
       }}>
       <ProgressBar size={50} />
       <CalcHeader />
-      <Content>
-        <CalcRoutesTop items={items} />
-        <SubTitle value="Qual é a categoria animal?" size={14} mb={20} />
-        {animalCategory === 'bovinoCorte' && (
-          <>
-            <ChooseItemButton
-              size={47}
-              content={'Terneiro(a)'}
-              source={terneiro}
-              onPress={() => {
-                navigation.navigate('AnimalInfo', {
-                  calc,
-                  animal: {
-                    name: animalCategory,
-                    value: 'terneiro',
-                  },
-                });
-              }}
-            />
-            <ChooseItemButton
-              content={'Novilho(a)'}
-              source={novilha}
-              size={47}
-              onPress={() => {
-                navigation.navigate('AnimalInfo', {
-                  calc,
-                  animal: {
-                    name: animalCategory,
-                    value: 'novilha',
-                  },
-                });
-              }}
-            />
-            <ChooseItemButton
-              content={'Vaca seca'}
-              size={47}
-              source={vacaseca}
-              onPress={() => {
-                navigation.navigate('AnimalInfo', {
-                  calc,
-                  animal: {
-                    name: animalCategory,
-                    value: 'vacaSeca',
-                  },
-                });
-              }}
-            />
-            <ChooseItemButton
-              content={'Vaca prenha'}
-              size={47}
-              source={vacaprenha}
-              onPress={() => {
-                navigation.navigate('AnimalInfo', {
-                  calc,
-                  animal: {
-                    name: animalCategory,
-                    value: 'vacaPrenha',
-                  },
-                });
-              }}
-            />
-          </>
-        )}
+      <ContentScroll>
+        <Content>
+          <CalcRoutesTop items={items} />
+          <SubTitle value="Qual é a categoria animal?" size={14} mb={20} />
+          {animalCategory === 'bovinoCorte' && (
+            <>
+              <ChooseItemButton
+                size={47}
+                content={'Terneiro(a)'}
+                source={terneiro}
+                onPress={() => {
+                  navigation.navigate('AnimalInfo', {
+                    calc,
+                    animal: {
+                      name: animalCategory,
+                      value: 'terneiro',
+                    },
+                  });
+                }}
+              />
+              <ChooseItemButton
+                content={'Novilho(a)'}
+                source={novilha}
+                size={47}
+                onPress={() => {
+                  navigation.navigate('AnimalInfo', {
+                    calc,
+                    animal: {
+                      name: animalCategory,
+                      value: 'novilha',
+                    },
+                  });
+                }}
+              />
+              <ChooseItemButton
+                content={'Vaca seca'}
+                size={47}
+                source={vacaseca}
+                onPress={() => {
+                  navigation.navigate('AnimalInfo', {
+                    calc,
+                    animal: {
+                      name: animalCategory,
+                      value: 'vacaSeca',
+                    },
+                  });
+                }}
+              />
+              <ChooseItemButton
+                content={'Vaca prenha'}
+                size={47}
+                source={vacaprenha}
+                onPress={() => {
+                  navigation.navigate('AnimalInfo', {
+                    calc,
+                    animal: {
+                      name: animalCategory,
+                      value: 'vacaPrenha',
+                    },
+                  });
+                }}
+              />
+            </>
+          )}
 
-        {animalCategory === 'bovinoLeite' && (
-          <>
-            <ChooseItemButton
-              content={'Vaca em lactação'}
-              size={47}
-              source={vacaemlactacao}
-              onPress={() => {
-                navigation.navigate('AnimalInfo', {
-                  calc,
-                  animal: {
-                    name: animalCategory,
-                    value: 'vacaLactacao',
-                  },
-                });
-              }}
-            />
+          {animalCategory === 'bovinoLeite' && (
+            <>
+              <ChooseItemButton
+                content={'Vaca em lactação'}
+                size={47}
+                source={vacaemlactacao}
+                onPress={() => {
+                  navigation.navigate('AnimalInfo', {
+                    calc,
+                    animal: {
+                      name: animalCategory,
+                      value: 'vacaLactacao',
+                    },
+                  });
+                }}
+              />
 
-            <ChooseItemButton
-              content={'Novilha'}
-              source={novilhaleiteira}
-              size={47}
-              onPress={() => {
-                navigation.navigate('AnimalInfo', {
-                  calc,
-                  animal: {
-                    name: animalCategory,
-                    value: 'novilhaLeite',
-                  },
-                });
-              }}
-            />
-          </>
-        )}
-      </Content>
+              <ChooseItemButton
+                content={'Novilha'}
+                source={novilhaleiteira}
+                size={47}
+                onPress={() => {
+                  navigation.navigate('AnimalInfo', {
+                    calc,
+                    animal: {
+                      name: animalCategory,
+                      value: 'novilhaLeite',
+                    },
+                  });
+                }}
+              />
+            </>
+          )}
+        </Content>
+      </ContentScroll>
     </Container>
   );
 };

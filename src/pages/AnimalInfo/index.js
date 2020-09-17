@@ -20,6 +20,7 @@ import HelpButton from '../../components/HelpButton';
 import {Content} from './styles';
 
 import help from './data';
+import ModalInput from '../../components/ModalInput';
 
 const AnimalInfo = ({navigation, route}) => {
   const [score, setScore] = useState(0);
@@ -128,19 +129,25 @@ const AnimalInfo = ({navigation, route}) => {
             <HelpButton data={help.peso} />
           </Input>
 
-          <SliderInput
-            label="Escore de condição corporal"
+          <ModalInput
+            name="Escore de condição corporal"
+            minValue={0}
+            maxValue={5}
             value={score}
-            color="#888899"
-            step={0.5}
-            mt={10}
-            onValueChange={value => {
-              setScore(value);
-            }}
-            minVal={0}
-            maxVal={5}>
-            <HelpButton data={help.escore} />
-          </SliderInput>
+            onChange={setScore}>
+            <SliderInput
+              label="Escore de condição corporal"
+              value={parseFloat(score)}
+              color="#888899"
+              step={0.5}
+              mt={10}
+              onValueChange={value => setScore(value)}
+              minVal={0}
+              maxVal={5}>
+              <HelpButton data={help.escore} />
+            </SliderInput>
+          </ModalInput>
+
           {animal.value === 'vacaLactacao' && (
             <>
               <Input

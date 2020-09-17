@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 
 import {View, StyleSheet} from 'react-native';
@@ -40,11 +41,11 @@ const SliderInput = ({
         minimumValue={minVal}
         maximumValue={maxVal}
         value={value}
-        trackStyle={{height: 5, borderRadius: 1}}
+        trackStyle={{height: 7, borderRadius: 1}}
         thumbStyle={{
-          width: 30,
-          height: 30,
-          borderRadius: 30 / 2,
+          width: 35,
+          height: 35,
+          borderRadius: 35 / 2,
           shadowColor: 'black',
           shadowOffset: {width: 0, height: 2},
           shadowRadius: 2,

@@ -14,6 +14,7 @@ import grazingmethod1 from '../../assets/grazingmethod1.jpg';
 import grazingmethod2 from '../../assets/grazingmethod2.jpg';
 
 import {Content} from './styles';
+import {ContentScroll} from '../ChooseBovineType/styles';
 
 const ChooseGrazingMethod = ({navigation, route}) => {
   const {calcName} = route.params;
@@ -27,42 +28,44 @@ const ChooseGrazingMethod = ({navigation, route}) => {
       }}>
       <ProgressBar size={25} />
       <CalcHeader />
-      <Content>
-        <SubTitle
-          value="Qual método de pastoreio você utiliza?"
-          size={14}
-          mb={20}
-        />
-        {calcName !== 'Calcular números de piquetes' &&
-          calcName !== 'Definir período de ocupação' && (
-            <ChooseItemButton
-              size={47}
-              source={grazingmethod1}
-              content="Contínuo"
-              onPress={() => {
-                navigation.navigate('ChooseBovineType', {
-                  calc: {
-                    name: 'Pastoreio contínuo',
-                    value: calcName,
-                  },
-                });
-              }}
-            />
-          )}
-        <ChooseItemButton
-          content="Rotativo"
-          source={grazingmethod2}
-          size={47}
-          onPress={() => {
-            navigation.navigate('ChooseBovineType', {
-              calc: {
-                name: 'Pastoreio rotativo',
-                value: calcName,
-              },
-            });
-          }}
-        />
-      </Content>
+      <ContentScroll>
+        <Content>
+          <SubTitle
+            value="Qual método de pastoreio você utiliza?"
+            size={14}
+            mb={20}
+          />
+          {calcName !== 'Calcular números de piquetes' &&
+            calcName !== 'Definir período de ocupação' && (
+              <ChooseItemButton
+                size={47}
+                source={grazingmethod1}
+                content="Contínuo"
+                onPress={() => {
+                  navigation.navigate('ChooseBovineType', {
+                    calc: {
+                      name: 'Pastoreio contínuo',
+                      value: calcName,
+                    },
+                  });
+                }}
+              />
+            )}
+          <ChooseItemButton
+            content="Rotativo"
+            source={grazingmethod2}
+            size={47}
+            onPress={() => {
+              navigation.navigate('ChooseBovineType', {
+                calc: {
+                  name: 'Pastoreio rotativo',
+                  value: calcName,
+                },
+              });
+            }}
+          />
+        </Content>
+      </ContentScroll>
     </Container>
   );
 };

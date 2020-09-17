@@ -8,3 +8,8 @@ export const Content = styled.View`
   flex-direction: row;
   justify-content: space-between;
 `;
+
+export const ContentScroll = styled.ScrollView`
+  flex: 1;
+  width: 100%;
+`;

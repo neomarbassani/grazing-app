@@ -14,7 +14,7 @@ import backgroundLogo from '../../assets/backgroundLogo.png';
 import bovinetype1 from '../../assets/bovinetype1.jpg';
 import bovinetype2 from '../../assets/bovinetype2.jpg';
 
-import {Content} from './styles';
+import {Content, ContentScroll} from './styles';
 
 const ChooseBovineType = ({navigation, route}) => {
   const {calc} = route.params;
@@ -30,32 +30,34 @@ const ChooseBovineType = ({navigation, route}) => {
       }}>
       <ProgressBar size={37.5} />
       <CalcHeader />
-      <Content>
-        <CalcRoutesTop items={items} />
-        <SubTitle value="Qual é o sistema de produção?" size={14} mb={20} />
-        <ChooseItemButton
-          size={47}
-          source={bovinetype1}
-          content={'Bovinocultura\n de corte'}
-          onPress={() => {
-            navigation.navigate('ChooseBovineCategory', {
-              calc,
-              animalCategory: 'bovinoCorte',
-            });
-          }}
-        />
-        <ChooseItemButton
-          content={'Bovinocultura\n de leite'}
-          source={bovinetype2}
-          size={47}
-          onPress={() => {
-            navigation.navigate('ChooseBovineCategory', {
-              calc,
-              animalCategory: 'bovinoLeite',
-            });
-          }}
-        />
-      </Content>
+      <ContentScroll>
+        <Content>
+          <CalcRoutesTop items={items} />
+          <SubTitle value="Qual é o sistema de produção?" size={14} mb={20} />
+          <ChooseItemButton
+            size={47}
+            source={bovinetype1}
+            content={'Bovinocultura\n de corte'}
+            onPress={() => {
+              navigation.navigate('ChooseBovineCategory', {
+                calc,
+                animalCategory: 'bovinoCorte',
+              });
+            }}
+          />
+          <ChooseItemButton
+            content={'Bovinocultura\n de leite'}
+            source={bovinetype2}
+            size={47}
+            onPress={() => {
+              navigation.navigate('ChooseBovineCategory', {
+                calc,
+                animalCategory: 'bovinoLeite',
+              });
+            }}
+          />
+        </Content>
+      </ContentScroll>
     </Container>
   );
 };
