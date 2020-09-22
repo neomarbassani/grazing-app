@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import Slider from 'react-native-slider';
 
 export const Container = styled.View`
-  width: 100%;
+  flex: 1;
   margin-top: ${props => (props.mt ? props.mt : 0)}px;
   margin-bottom: ${props => (props.mb ? props.mb : 0)}px;
 `;
@@ -20,7 +20,7 @@ export const Label = styled.Text`
 export const SliderComponent = styled(Slider)``;
 
 export const RangeBox = styled.View`
-  width: 100%;
+  flex: 1;
   flex-direction: row;
   justify-content: space-between;
 `;

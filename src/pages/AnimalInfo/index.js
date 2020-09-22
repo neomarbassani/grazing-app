@@ -133,6 +133,7 @@ const AnimalInfo = ({navigation, route}) => {
             name="Escore de condição corporal"
             minValue={1}
             maxValue={5}
+            precision={1}
             value={score}
             onChange={setScore}>
             <SliderInput
@@ -142,8 +143,8 @@ const AnimalInfo = ({navigation, route}) => {
               step={0.5}
               mt={10}
               onValueChange={value => setScore(value)}
-              minVal={1}
-              maxVal={5}>
+              minVal={1.0}
+              maxVal={5.0}>
               <HelpButton data={help.escore} />
             </SliderInput>
           </ModalInput>

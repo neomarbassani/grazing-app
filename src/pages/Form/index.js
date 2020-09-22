@@ -945,6 +945,7 @@ const FormContainer = ({navigation, route}) => {
                   name="Altura do pasto"
                   minValue={1}
                   maxValue={maxValuesToSlider[pasture.value]}
+                  precision={1}
                   value={alturaDoPasto}
                   onChange={setAlturaDoPasto}>
                   <SliderInput
@@ -968,6 +969,7 @@ const FormContainer = ({navigation, route}) => {
                   minValue={1}
                   maxValue={parseInt(user.property_size) || 5}
                   value={areaDoPotreiro}
+                  precision={1}
                   onChange={setAreaDoPotreiro}>
                   <SliderInput
                     label="Área do potreiro"
@@ -990,6 +992,7 @@ const FormContainer = ({navigation, route}) => {
                   minValue={1}
                   maxValue={calc.name === 'Pastoreio rotativo' ? 10 : 90}
                   value={tempoDePermanencia}
+                  precision={0}
                   onChange={setTempoDePermanencia}>
                   <SliderInput
                     label="Período de ocupação"
@@ -1130,6 +1133,7 @@ const FormContainer = ({navigation, route}) => {
                     minValue={1}
                     maxValue={maxValuesToSlider[pasture.value]}
                     value={alturaDoPasto}
+                    precision={1}
                     onChange={setAlturaDoPasto}>
                     <SliderInput
                       label="Altura do pasto"
@@ -1151,6 +1155,7 @@ const FormContainer = ({navigation, route}) => {
                     name="Período de ocupação"
                     minValue={1}
                     maxValue={90}
+                    precision={0}
                     value={tempoDePermanencia}
                     onChange={setTempoDePermanencia}>
                     <SliderInput
@@ -1173,6 +1178,7 @@ const FormContainer = ({navigation, route}) => {
                     minValue={1}
                     maxValue={parseInt(user.property_size) || 5}
                     value={areaDoPotreiro}
+                    precision={1}
                     onChange={setAreaDoPotreiro}>
                     <SliderInput
                       label="Área do potreiro"
@@ -1225,6 +1231,7 @@ const FormContainer = ({navigation, route}) => {
                     minValue={1}
                     maxValue={maxValuesToSlider[pasture.value]}
                     value={alturaDoPasto}
+                    precision={1}
                     onChange={setAlturaDoPasto}>
                     <SliderInput
                       label="Altura do pasto (cm)"
@@ -1298,6 +1305,7 @@ const FormContainer = ({navigation, route}) => {
                     minValue={1}
                     maxValue={parseInt(user.property_size) || 5}
                     value={areaDoPotreiro}
+                    precision={1}
                     onChange={setAreaDoPotreiro}>
                     <SliderInput
                       label="Área do potreiro"
@@ -1359,6 +1367,7 @@ const FormContainer = ({navigation, route}) => {
                   minValue={1}
                   maxValue={parseInt(user.property_size) || 5}
                   value={areaDoPotreiro}
+                  precision={1}
                   onChange={setAreaDoPotreiro}>
                   <SliderInput
                     label="Área do potreiro"
@@ -1462,6 +1471,7 @@ const FormContainer = ({navigation, route}) => {
                   minValue={1}
                   maxValue={maxValuesToSlider[pasture.value]}
                   value={alturaDoPasto}
+                  precision={1}
                   onChange={setAlturaDoPasto}>
                   <SliderInput
                     label="Altura do pasto"
@@ -1494,6 +1504,7 @@ const FormContainer = ({navigation, route}) => {
                   minValue={1}
                   maxValue={parseInt(user.property_size) || 5}
                   value={areaDoPotreiro}
+                  precision={1}
                   onChange={setAreaDoPotreiro}>
                   <SliderInput
                     label="Área do potreiro"

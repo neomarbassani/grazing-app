@@ -24,6 +24,7 @@ export default function Input({
   maskType,
   maskPhone,
   maskMoney,
+  precision,
   typeIcon,
   textarea,
   color,
@@ -73,7 +74,7 @@ export default function Input({
         return ref.value || '';
       },
     });
-  }, [fieldName, mask, maskPhone, registerField]);
+  }, [fieldName, mask, maskMoney, maskPhone, registerField]);
 
   return (
     <>
@@ -126,7 +127,7 @@ export default function Input({
                   keyboardType="numeric"
                   type={'money'}
                   options={{
-                    precision: 2,
+                    precision: precision || 0,
                     separator: '.',
                     delimiter: '.',
                     unit: '',

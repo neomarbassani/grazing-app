@@ -1,13 +1,21 @@
 import React, {useEffect, useRef, useState} from 'react';
 import Modal from 'react-native-modal';
-import {ModalContainer, ButtonClose, Title} from './styles';
+import {ModalContainer, ButtonClose, Title, Container} from './styles';
 import Icon from 'react-native-vector-icons/Feather';
 import Button from '../Button';
 import Input from '../Input';
 import * as Yup from 'yup';
 import {Form} from '@unform/mobile';
 
-const ModalInput = ({children, name, value, minValue, maxValue, onChange}) => {
+const ModalInput = ({
+  children,
+  name,
+  value,
+  minValue,
+  maxValue,
+  onChange,
+  precision,
+}) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const formRef = useRef(null);
@@ -46,17 +54,17 @@ const ModalInput = ({children, name, value, minValue, maxValue, onChange}) => {
       if (formRef && formRef.current) {
         formRef.current.setData({
           value: parseFloat(value)
-            .toFixed(2)
+            .toFixed(precision || 0)
             .toString(),
         });
         const focusInputField = formRef.current.getFieldRef('value');
         focusInputField.getElement().focus();
       }
     }
-  }, [isVisible, value]);
+  }, [isVisible, precision, value]);
 
   return (
-    <ButtonClose onPress={() => setIsVisible(true)}>
+    <Container onPress={() => setIsVisible(true)}>
       <Modal isVisible={isVisible}>
         <ButtonClose>
           <Icon
@@ -73,6 +81,7 @@ const ModalInput = ({children, name, value, minValue, maxValue, onChange}) => {
             <Input
               name="value"
               maskMoney
+              precision={precision}
               keyboardType="numeric"
               returnKeyType="next"
               blurOnSubmit={false}
@@ -86,7 +95,7 @@ const ModalInput = ({children, name, value, minValue, maxValue, onChange}) => {
         </ModalContainer>
       </Modal>
       {children}
-    </ButtonClose>
+    </Container>
   );
 };
 
