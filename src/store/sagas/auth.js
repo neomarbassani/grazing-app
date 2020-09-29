@@ -46,6 +46,7 @@ export function* getMe({userId}) {
     });
 
     yield put(AuthActions.signInFailure());
+    yield put(AuthActions.signOut());
   }
 }
 
@@ -133,7 +134,7 @@ export function* editUserData(data) {
       phone: data.userData.phone,
       address: data.userData.address,
       property_size: data.userData.property_size,
-      activity: data.userData.activity
+      activity: data.userData.activity,
     });
 
     yield put(AuthActions.editSuccess(response.data));

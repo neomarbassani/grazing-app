@@ -77,6 +77,7 @@ const AnimalInfo = ({navigation, route}) => {
         calc,
         animal,
         inputs: [
+          {name: 'Escore de condição corporal', value: score, key: 'escore'},
           {name: 'Peso médio', value: data.peso, key: 'peso'},
           {
             name: 'Semanas de Lactação',

@@ -29,10 +29,6 @@ import CalcHistoryActions from '../../store/ducks/calcHistory';
 
 import {
   FlatListContainer,
-  InputPickerContainer,
-  InputPicker,
-  InputPickerIcon,
-  InputFieldItem,
   ResultBox,
   CategoryItem,
   CowContainer,
@@ -62,6 +58,7 @@ import {
   ResultBoxModalTitle,
   ResultBoxModalValue,
 } from './styles';
+import {useIsFocused} from '@react-navigation/native';
 
 const Skeleton = () => {
   return (
@@ -134,6 +131,8 @@ const Historic = ({navigation}) => {
 
   const dispatch = useDispatch();
 
+  const isFocused = useIsFocused();
+
   const {isConnected} = useSelector(state => state.offline);
 
   const {calcState} = useSelector(state => state.calcHistory);
@@ -184,7 +183,6 @@ const Historic = ({navigation}) => {
         setLoading(false);
       }
     } catch (error) {
-      console.log(error);
       setLoadingFirst(false);
       setLoading(false);
 
@@ -204,8 +202,10 @@ const Historic = ({navigation}) => {
   };
 
   useEffect(() => {
-    getHistoric();
-  }, []);
+    if (isFocused) {
+      getHistoric();
+    }
+  }, [isFocused]);
 
   function formateDate(str) {
     var mouthArray = [
@@ -237,7 +237,6 @@ const Historic = ({navigation}) => {
   }
 
   const isInt = value => {
-    console.log(typeof parseInt(value));
     if (isNaN(parseInt(value))) {
       return value;
     }
@@ -246,6 +245,61 @@ const Historic = ({navigation}) => {
     } else {
       return parseFloat(value).toFixed(2);
     }
+  };
+
+  const RenderInfoAnimais = ({item}) => {
+    let arrays = [
+      'Semanas de Lactação',
+      'Produção de Leite (litros/dia)',
+      'N° de dias de gestação',
+      'Escore de condição corporal',
+    ];
+
+    if (arrays.find(element => element === item.name)) {
+      return (
+        <RowItem>
+          <Label>{item.name}:</Label>
+          <Value>{item.value == '0' ? '-' : isInt(item.value)}</Value>
+        </RowItem>
+      );
+    }
+    return <></>;
+  };
+
+  const RenderInfoSistema = ({item}) => {
+    let arrays = [
+      'Semanas de Lactação',
+      'Produção de Leite (litros/dia)',
+      'N° de dias de gestação',
+      'Escore de condição corporal',
+      'Peso médio',
+    ];
+
+    if (!arrays.find(element => element === item.name)) {
+      if (item.name === 'Data de início do pastejo') {
+        return (
+          <RowItem>
+            <Label>{item.name}:</Label>
+            <Value>{formateDate(item.value)}</Value>
+          </RowItem>
+        );
+      } else if (item.name === 'Tempo de permanência em cada faixa') {
+        return (
+          <RowItem>
+            <Label>{item.name}:</Label>
+            <Value>{'-'}</Value>
+          </RowItem>
+        );
+      } else {
+        return (
+          <RowItem>
+            <Label>{item.name}:</Label>
+            <Value>{item.value == '0' ? '-' : isInt(item.value)}</Value>
+          </RowItem>
+        );
+      }
+    }
+    return <></>;
   };
 
   return (
@@ -389,6 +443,20 @@ const Historic = ({navigation}) => {
               Histórico da análise
             </ModalContainerTitle>
             <RowItem>
+              <Label>Identificação do Potreiro:</Label>
+              <Value>
+                {modalConfig.item.inputs &&
+                  modalConfig.item.inputs.find(
+                    input => input.key === 'nomeDoPotreiro',
+                  ).value}
+              </Value>
+            </RowItem>
+
+            <RowItem>
+              <Label>Data da avaliação:</Label>
+              <Value>{formateDate(modalConfig.item.created_at)}</Value>
+            </RowItem>
+            <RowItem>
               <Label>Método de pastoreio:</Label>
               <Value>
                 {modalConfig.item.config && modalConfig.item.config.calc.name}
@@ -421,9 +489,13 @@ const Historic = ({navigation}) => {
               <Label>Peso:</Label>
               <Value>
                 {modalConfig.item.inputs &&
-                  modalConfig.item.inputs.find(input => input.key === 'peso')
-                    .value}
-                kg
+                modalConfig.item.inputs.find(input => input.key === 'peso')
+                  ? `${
+                      modalConfig.item.inputs.find(
+                        input => input.key === 'peso',
+                      ).value
+                    } kg`
+                  : '-'}
               </Value>
             </RowItem>
             <RowItem>
@@ -433,6 +505,11 @@ const Historic = ({navigation}) => {
                   modalConfig.item.config.animal.value}
               </Value>
             </RowItem>
+
+            {modalConfig.item.inputs &&
+              modalConfig.item.inputs.map(item => (
+                <RenderInfoAnimais item={item} />
+              ))}
 
             <Separator />
 
@@ -444,32 +521,11 @@ const Historic = ({navigation}) => {
               Informações sobre o sistema
             </ModalContainerTitle>
 
-            <RowItem>
-              <Label>Identificação do Potreiro:</Label>
-              <Value>
-                {modalConfig.item.inputs &&
-                  modalConfig.item.inputs.find(
-                    input => input.key === 'nomeDoPotreiro',
-                  ).value}
-              </Value>
-            </RowItem>
-
-            <RowItem>
-              <Label>Data da avaliação:</Label>
-              <Value>{formateDate(modalConfig.item.created_at)}</Value>
-            </RowItem>
-
             {modalConfig.item.inputs &&
               modalConfig.item.inputs.map(
                 item =>
-                  (item.name !== 'Data de início do pastejo' ||
-                    item.key === 'nomeDoPotreiro') && (
-                    <RowItem>
-                      <Label>{item.name}:</Label>
-                      <Value>
-                        {item.value == '0' ? '-' : isInt(item.value)}
-                      </Value>
-                    </RowItem>
+                  item.key !== 'nomeDoPotreiro' && (
+                    <RenderInfoSistema item={item} />
                   ),
               )}
             <RowItem />

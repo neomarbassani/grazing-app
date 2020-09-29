@@ -669,10 +669,11 @@ const FormContainer = ({navigation, route}) => {
         const calcState = {
           config: {
             calc,
-            animal: animal ? animal : null,
+            animal: animal ? getAnimal(animal) : null,
             pasture,
           },
           inputs: [
+            ...inputs,
             {
               name: 'Nome do Potreiro',
               value: data.nomeDoPotreiro,
@@ -711,7 +712,6 @@ const FormContainer = ({navigation, route}) => {
           ],
           results,
         };
-
         navigation.navigate('Result', calcState);
       }
 
@@ -810,8 +810,6 @@ const FormContainer = ({navigation, route}) => {
 
         navigation.navigate('Result', calcState);
       }
-
-      navigation.navigate('Result');
     } catch (err) {
       console.log(err);
       const validationErrors = {};
